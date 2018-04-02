@@ -1,0 +1,27 @@
+{% block extends %}
+{{ "{% extends 'base.html.twig' %}" }}
+{{ "{% form_theme edit_form 'Form/fields.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block content %}" }}
+
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">{{ entity_singularized|capitalize }} edit<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+            <div class="heading-elements">
+                <a href="{{ "{{ path('" ~ route_name_prefix ~ "_index') }}" }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> Retour à la liste</a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <p class="content-group-lg"></p>
+
+            {{ '{{ form_start(edit_form, {\'attr\': {\'class\': \'form-horizontal\'}}) }}' }}
+            {{ '{{ form_widget(edit_form) }}' }}
+            {% set hide_edit, hide_delete = false, false %}
+            {{ include('crud/views/others/record_actions.html.twig.twig') -}}
+            {{ '{{ form_end(edit_form) }}' }}
+        </div>
+    </div>
+{{ "{% endblock %}" }}
+{% endblock body %}

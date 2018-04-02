@@ -1,0 +1,159 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="col-lg-9">
+    <div class="navbar navbar-default navbar-component navbar-xs">
+        <ul class="nav navbar-nav visible-xs-block">
+            <li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter" class="legitRipple"><i class="icon-menu7"></i></a></li>
+        </ul>
+
+        <div class="navbar-collapse collapse" id="navbar-filter">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#activity" data-toggle="tab" class="legitRipple" aria-expanded="false"><i class="icon-menu7 position-left"></i> Activity</a></li>
+                <li class=""><a href="#schedule" data-toggle="tab" class="legitRipple" aria-expanded="false"><i class="icon-calendar3 position-left"></i> Schedule <span class="badge badge-success badge-inline position-right">32</span></a></li>
+                <li class=""><a href="#settings" data-toggle="tab" class="legitRipple" aria-expanded="true"><i class="icon-cog3 position-left"></i> Settings</a></li>
+            </ul>
+
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="#" class="legitRipple"><i class="icon-stack-text position-left"></i> Notes</a></li>
+                    <li><a href="#" class="legitRipple"><i class="icon-collaboration position-left"></i> Friends</a></li>
+                    <li><a href="#" class="legitRipple"><i class="icon-images3 position-left"></i> Photos</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle legitRipple" data-toggle="dropdown"><i class="icon-gear"></i> <span class="visible-xs-inline-block position-right"> Options</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="#"><i class="icon-image2"></i> Update cover</a></li>
+                            <li><a href="#"><i class="icon-clippy"></i> Update info</a></li>
+                            <li><a href="#"><i class="icon-make-group"></i> Manage sections</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><i class="icon-three-bars"></i> Activity log</a></li>
+                            <li><a href="#"><i class="icon-cog5"></i> Profile settings</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title"> Mon profil<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+        </div>
+
+        <div class="panel-body">
+            <div class="row">
+            <div class="col-sm-6 content-group">
+                <img src="{{ asset('images/avatar.png') }}" class="content-group mt-10" alt="" style="width: 120px;">
+                <ul class="list-condensed list-unstyled">
+                    <li>{{ user.zipCode|default('') }} {{ user.lastName|default('') }} {{ user.firstName|default('') }}</li>
+                    <li>{{ user.phoneNumber|default('') }}</li>
+                </ul>
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Nom</th>
+                            <td>{{ user.firstName|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Prénom</th>
+                            <td>{{ user.lastName|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{  'profile.show.email'|trans }}</th>
+                            <td>{{ user.email|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'profile.show.username'|trans }}</th>
+                            <td>{{ user.username|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Adresse</th>
+                            <td>{{ user.address|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Complément adresse</th>
+                            <td>{{ user.addressComplement|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Code postal</th>
+                            <td>{{ user.zipCode|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ville</th>
+                            <td>{{ user.city|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Téléphone</th>
+                            <td>{{ user.phoneNumber|default('') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Rôles</th>
+                            <td>
+                                {% for role in user.roles %}
+                                    <span class="label label-success">{{ role }}</span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Date de création</th>
+                            <td>{% if user.createdAt|default %}{{ user.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Dernière modification</th>
+                            <td>{% if user.updatedAt|default %}{{ user.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Dernière connexion</th>
+                            <td>{% if user.updatedAt|default %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>Statut</th>
+                            <td>
+                                {% if user.enabled %}
+                                    <span class="label label-success">Activé</span>
+                                    {% set labelEnable = 'Désactiver'%}
+                                {% else %}
+                                    <span class="label label-danger">Désactivé</span>
+                                    {% set labelEnable = 'Activer'%}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="heading-elements pull-right">
+                <div class="col-md-12">
+                    <div class="btn-group">
+                        <a href="{{ path('fos_user_profile_edit')}}" class="btn btn-primary btn-labeled btn-xs legitRipple"><b><i class="icon-pencil"></i></b> Modifier</a>
+                        <a  href="{{ path('fos_user_change_password') }}" name="update_password" title="Modifier votre mot de passe" type="submit" class="btn bg-teal-400 btn-labeled btn-xs legitRipple"><b><i class="icon-key"></i></b> Modifier mot de passe </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-3">
+
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title">Skills</h6>
+        </div>
+        <div class="panel-body">
+            <a href="#" class="label label-info label-rounded">Programming</a>
+            <a href="#" class="label label-info label-rounded">PHP</a>
+            <a href="#" class="label label-info label-rounded">C++</a>
+            <a href="#" class="label label-info label-rounded">Java/JEE</a>
+            <a href="#" class="label label-info label-rounded">Web Development</a>
+            <a href="#" class="label label-info label-rounded">Mobile Development</a>
+        </div>
+    </div>
+</div>

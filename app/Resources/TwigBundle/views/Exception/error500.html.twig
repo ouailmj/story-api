@@ -1,0 +1,25 @@
+{% extends "TwigBundle:Exception:error.html.twig" %}
+
+{% block content_error %}
+
+    <!-- Error title -->
+    <div class="text-center content-group">
+        <h1 class="error-title">500</h1>
+        <h5>Oops, une erreur interne du serveur !</h5>
+    </div>
+    <!-- /error title -->
+
+
+    <!-- Error content -->
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-offset-3">
+            <form action="#" class="main-search panel panel-body">
+                <div class="text-center">
+                    <a href="{{ path('app_default_index') }}" class="btn btn-primary legitRipple"><i class="icon-circle-left2 position-left"></i> Retour à la page d'accueil</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /error wrapper -->
+
+{% endblock %}

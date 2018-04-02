@@ -1,0 +1,76 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+{% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+{% endblock  %}
+
+{% block left_sidebar %}
+    <div class="sidebar sidebar-main sidebar-default">
+        <div class="sidebar-content">
+            <!-- Task navigation -->
+            <div class="sidebar-category sidebar-category-visible">
+                <div class="category-title">
+                    <span>Paramètrage du profil</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-main navigation-accordion">
+                        <li class="active current"><a href="#"><i class="icon-googleplus5"></i> <span>Profile</span></a></li>
+                        <li><a href="#"><i class="icon-portfolio"></i> <span>Account</span></a></li>
+                        <li><a href="#"><i class="icon-bell2"></i> <span>Alerts & Notifications</span></a></li>
+                        <li><a href="#"><i class="icon-collaboration"></i> <span>Security</span></a></li>
+                        <li><a href="#"><i class="icon-lock4"></i> <span>Privacy</span></a></li>
+                        <li><a href="#"><i class="icon-comment-discussion"></i> <span>Discussions</span></a></li>
+                        <li><a href="#"><i class="icon-make-group"></i> <span>Network</span></a></li>
+                        <li><a href="#"><i class="icon-cog3"></i> <span>Preferences</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /task navigation -->
+        </div>
+        <div class="sidebar-content">
+            <!-- Task navigation -->
+            <div class="sidebar-category sidebar-category-visible">
+                <div class="category-title">
+                    <span>Resources</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-main navigation-accordion">
+                        <li><a href="#"><i class="icon-file-check"></i> <span>Courses</span></a></li>
+                        <li><a href="#"><i class="icon-file-check"></i> <span>Trainings</span></a></li>
+                        <li><a href="#"><i class="icon-reading"></i> <span>Tutos</span></a></li>
+                        <li><a href="#"><i class="icon-folder"></i> <span>Documents</span></a></li>
+                        <li><a href="#"><i class="icon-price-tags2"></i> <span>Skills</span></a></li>
+                        <li><a href="#"><i class="icon-newspaper"></i> <span>Posts</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /task navigation -->
+        </div>
+        <div class="sidebar-content">
+            <!-- Task navigation -->
+            <div class="sidebar-category sidebar-category-visible">
+                <div class="category-title">
+                    <span>Organizations</span>
+                    <ul class="icons-list">
+                        <li><a href="#" data-action="collapse"></a></li>
+                    </ul>
+                </div>
+
+                <div class="category-content no-padding">
+                    <ul class="navigation navigation-main navigation-accordion">
+                        <li class=""><a href="#"><i class="icon-googleplus5"></i> <span>Multi Info</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /task navigation -->
+        </div>
+    </div>
+{% endblock %}

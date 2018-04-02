@@ -1,0 +1,36 @@
+{
+  "name": "sf3-skeleton",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev-server": "./node_modules/.bin/encore dev-server",
+    "dev": "./node_modules/.bin/encore dev",
+    "watch": "./node_modules/.bin/encore dev --watch",
+    "build": "./node_modules/.bin/encore production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MedAhamada/trainingo.git"
+  },
+  "author": "",
+  "dependencies": {
+    "fullcalendar": "2.9.1",
+    "jquery": "1",
+    "moment": "2.17.1",
+    "pace-js": "^1.0.2",
+    "symfony-collection": "ninsuo/symfony-collection",
+    "typeahead.js": "^0.11.1"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.15.1",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^3.3.7",
+    "bootstrap-sass": "^3.3.7",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}

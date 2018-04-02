@@ -1,0 +1,21 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form 'Form/fields.html.twig' %}
+
+{% block content %}
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title">Profil <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+        </div>
+
+        <div class="panel-body">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_widget(form) }}
+            <div class="text-right">
+                <div class="btn-group">
+                    <button name="update" type="submit" class="btn btn-primary legitRipple">Modifier <i class="icon-arrow-right14 position-right"></i></button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

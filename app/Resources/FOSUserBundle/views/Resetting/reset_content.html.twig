@@ -1,0 +1,24 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="panel panel-body login-form">
+    {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset form-horizontal' } }) }}
+    <div class="text-center">
+        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-lock4"></i></div>
+        <h5 class="content-group">Récupération de mot de passe <small class="display-block">Remplissez le formulaire ci-dessous</small></h5>
+    </div>
+
+    <div class="form-group {% if not form.vars.valid %} has-error{% endif %}">
+        {{- form_widget(form.plainPassword.first, { 'attr': { 'placeholder': 'form.new_password'|trans } }) -}}
+        {{- form_errors(form.plainPassword.first) -}}
+    </div>
+
+    <div class="form-group {% if not form.vars.valid %} has-error{% endif %}">
+        {{- form_widget(form.plainPassword.second, {'attr': {'placeholder': 'form.new_password_confirmation'|trans }}) -}}
+        {{- form_errors(form.plainPassword.second) -}}
+    </div>
+
+    <div class="form-group">
+        <input class="btn btn-primary btn-block" type="submit" value="{{ 'resetting.reset.submit'|trans }}" />
+    </div>
+    {{ form_end(form) }}
+</div>
+

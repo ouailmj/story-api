@@ -1,0 +1,90 @@
+{% block extends %}
+{{ "{% extends 'base.html.twig' %}" }}
+{% endblock extends %}
+
+{% block body %}
+{{ "{% block content %}" }}
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">{{ entity_pluralized|capitalize }} list</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <span title="Create a new {{ entity_singularized }}" class="pull-right"><a href="{{ "{{ path('" ~ route_name_prefix ~ "_new') }}" }}" class="btn btn-labeled btn-labeled-left bg-blue heading-btn"><b><i class="icon-plus3"></i></b> Ajouter</a></span>
+        </div>
+
+        <table class="table datatable-responsive table-bordered table-hover datatable-highlight">
+            <thead>
+                <tr>
+                {%- for field, metadata in fields %}
+
+                    <th>{{ field|capitalize }}</th>
+
+                {%- endfor %}
+
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {{ '{% for ' ~ entity_singularized ~ ' in ' ~ entity_pluralized ~ ' %}' }}
+                <tr>
+
+            {%- for field, metadata in fields %}
+                {%- if loop.first and ('show' in actions) %}
+
+                    <td><a href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { '"~ identifier ~"': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</a></td>
+
+                {%- elseif metadata.type in ['datetime'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d H:i:s\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['date'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'Y-m-d\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['time'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|date(\'H:i:s\') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['array'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ '|join(\', \') }}{% endif %}' }}</td>
+
+                {%- elseif metadata.type in ['boolean'] %}
+
+                    <td>{{ '{% if ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' %}Yes{% else %}No{% endif %}' }}</td>
+
+                {%- else %}
+
+                    <td>{{ '{{ ' ~ entity_singularized ~ '.' ~ field|replace({'_': ''}) ~ ' }}' }}</td>
+
+                {%- endif %}
+
+                {%- if loop.last %}
+
+                    <td class="text-center">
+                        <div class="">
+                            <a title="Afficher les détails" href="{{ "{{ path('" ~ route_name_prefix ~ "_show', { '"~ identifier ~"': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="text-primary legitRipple"><i class="icon-eye position-left"></i></a>
+                            <a title="Modifier" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { '"~ identifier ~"': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="text-primary legitRipple"><i class="icon-pen position-left"></i></a>
+                            <a title="Supprimer" onclick="return confirm('Êtes-vous sûr ? Cette action est irréversible.');" href="{{ "{{ path('" ~ route_name_prefix ~ "_delete', { '"~ identifier ~"': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}" class="text-danger legitRipple"><i class="icon-trash position-left"></i></a>
+                        </div>
+                    </td>
+
+                {%- endif %}
+            {%- endfor %}
+
+                </tr>
+            {{ '{% endfor %}' }}
+            </tbody>
+        </table>
+
+    </div>
+{{ "{% endblock %}" }}
+{% endblock body %}

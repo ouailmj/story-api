@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block navbar %}
+
+    <div class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('app_default_index') }}"><img src="{{ asset('assets/images/logo.png') }}" alt="Extranet AXA"></a>
+            <ul class="nav navbar-nav pull-right visible-xs-block">
+                <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-mobile">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a title=" Retourner au site web" href="http://www.jdg-assurances.fr">
+                        <i class="icon-home9"></i> <span class="visible-xs-inline-block position-right"> Retouner au site web</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content %}
+    <div>
+        {#
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a>
+        {% else %}
+            <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+        {% endif %}
+        #}
+    </div>
+    <div>
+        {% block content_error %}
+        {% endblock content_error %}
+    </div>
+{% endblock %}

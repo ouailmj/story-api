@@ -1,0 +1,10 @@
+<div class="text-right">
+    <div class="btn-group">
+        {%- if ('edit' in actions) and (not hide_edit) %}
+            <button class="btn btn-primary legitRipple" type="submit">Mettre à jour<i class="icon-rotate-cw2 position-right"></i></button>
+        {%- else -%}
+            <a class="btn btn-primary legitRipple" href="{{ "{{ path('" ~ route_name_prefix ~ "_edit', { '"~ identifier ~"': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">Mettre à jour<i class="icon-rotate-cw2 position-right"></i></a>
+        {%- endif %}
+        <a onclick="return confirm('Êtes-vous sûr ? Cette action est irréversible.');"  class="btn btn-danger legitRipple" href="{{ "{{ path('" ~ route_name_prefix ~ "_delete', { '"~ identifier ~"': " ~ entity_singularized ~ "."~ identifier ~" }) }}" }}">Supprimer <i class="icon-trash-alt position-right"></i></a>
+    </div>
+</div>

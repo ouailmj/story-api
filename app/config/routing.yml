@@ -1,0 +1,51 @@
+api:
+    resource: '.'
+    type: 'api_platform'
+    prefix: /api
+
+app:
+    resource: '@AppBundle/Action/'
+    type: 'annotation'
+    prefix: /api
+
+app_routing:
+    resource: '@AppBundle/Controller/'
+    type: 'annotation'
+    prefix: /
+
+home:
+    path: /
+
+app_logout:
+    path: /logout
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /auth/logout
+        permanent: true
+
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+  prefix: /auth
+
+facebook_login:
+    path: /auth/login/check-facebook
+
+google_login:
+    path: /auth/login/check-google
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /auth/connect
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /auth/connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /auth/login
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+    

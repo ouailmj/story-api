@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SF3</title>
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+    <!-- /global stylesheets -->
+    <style>
+        body{
+            background-color: #eeeeee;
+        }
+    </style>
+
+</head>
+{% block body %}
+
+    <body {% block body_attributes %}class="layout-boxed"{% endblock %}>
+
+    <!-- Main navbar -->
+    {% block main_navbar %}
+        {% include 'layout/main_navbar.html.twig' %}
+    {% endblock %}
+    <!-- /main navbar -->
+
+
+    <!-- Second navbar -->
+    {% block second_navbar %}
+        {% include 'layout/second_navbar.html.twig' %}
+    {% endblock %}
+    <!-- /second navbar -->
+    {% block home_jumbotron %}{% endblock %}
+    <!-- Page header -->
+    {% block header_page %}
+        {#
+
+
+        <div class="page-header">
+            <div class="page-header-content">
+                {% block header_content %}
+                    <div class="page-title">
+                        <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Starters</span> - Boxed Layout</h4>
+
+                        <ul class="breadcrumb breadcrumb-caret position-right">
+                            <li><a href="{{ path('app_home_index') }}">Home</a></li>
+                            <li><a href="#">Starters</a></li>
+                            <li class="active">Boxed layout</li>
+                        </ul>
+                    </div>
+
+                    <div class="heading-elements">
+                        <a href="#" class="btn btn-labeled btn-labeled-right bg-blue heading-btn">Button <b><i class="icon-menu7"></i></b></a>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+
+        #}
+    {% endblock %}
+    <!-- /page header -->
+
+
+    <!-- Page container -->
+    <div class="page-container">
+        {% block container %}
+            <!-- Page content -->
+            <div class="page-content">
+                {% block left_sidebar %}
+                    {# {% include 'layout/left_sidebar.html.twig' %} #}
+                {% endblock %}
+                <!-- Main content -->
+                <div class="content-wrapper">
+                    {% block content %}{% endblock %}
+                </div>
+                <!-- /main content -->
+                {% block right_sidebar %}
+                    {# {% include 'layout/right_sidebar.html.twig' %} #}
+                {% endblock %}
+            </div>
+            <!-- /page content -->
+        {% endblock %}
+    </div>
+    <!-- /page container -->
+
+
+    <!-- Footer -->
+    <div class="footer footer-boxed text-muted">
+        &copy; {{ 'now'|date('Y') }}. <a href="#">Trainingo</a> by <a href="#" target="_blank">Agence MIT</a>
+    </div>
+    <!-- /footer -->
+    <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+    <script src="{{ asset('build/manifest.js') }}"></script>
+    <script src="{{ asset('build/js/app.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+    </body>
+{% endblock %}
+
+</html>

@@ -1,0 +1,27 @@
+.login-form{
+    width: 420px !important;
+}
+
+.navbar-search{
+    min-width: 300px !important;
+}
+
+.border-google{
+    border-color: #d34836;
+}
+.text-google{
+    color: #d34836;
+}
+.bg-google{
+    background-color: #d34836;
+}
+
+.border-facebook{
+    border-color: #3b5998;
+}
+.bg-facebook{
+    background-color: #3b5998;
+}
+.text-facebook{
+    color: #3b5998;
+}
