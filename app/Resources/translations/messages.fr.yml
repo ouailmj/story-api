@@ -1,0 +1,5 @@
+registration:
+    fields:
+        time_zone: 'Fuseau horaire '
+        full_name: 'Nom complet '
+        phone_number: 'Numéro de téléphone '
