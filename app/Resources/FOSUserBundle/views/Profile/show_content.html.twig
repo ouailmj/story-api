@@ -134,6 +134,8 @@
                     <div class="btn-group">
                         <a href="{{ path('fos_user_profile_edit')}}" class="btn btn-primary btn-labeled btn-xs legitRipple"><b><i class="icon-pencil"></i></b> Modifier</a>
                         <a  href="{{ path('fos_user_change_password') }}" name="update_password" title="Modifier votre mot de passe" type="submit" class="btn bg-teal-400 btn-labeled btn-xs legitRipple"><b><i class="icon-key"></i></b> Modifier mot de passe </a>
+                       {% set onclick = "return confirm('"~'profile.show.delete_account'|trans~"');" %}
+                        <a onclick="{{ onclick }}"  class="btn btn-danger btn-labeled btn-xs legitRipple" href="{{ path('app_profile_delete') }}">Delete Account <i class="icon-trash-alt position-right"></i></a>
                     </div>
                 </div>
             </div>

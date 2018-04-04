@@ -24,6 +24,7 @@ profile:
         time_zone: 'Time zone '
         full_name: 'Full name '
         phone_number: 'Phone number '
+        delete_account: 'Are you sure ? This action is irreversible.'
     edit:
         submit: Update
     flash:
