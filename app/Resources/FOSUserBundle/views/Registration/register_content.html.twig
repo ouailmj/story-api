@@ -13,7 +13,13 @@
         <div class="form-group "><span class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</span></div>
     {% endif %}
 
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.fullName)}}
+    {{ form_row(form.username)}}
+    {{ form_row(form.email)}}
+
+    {{ form_rest(form) }}
     <div class="form-group">
         <input class="btn btn-primary btn-block" type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
