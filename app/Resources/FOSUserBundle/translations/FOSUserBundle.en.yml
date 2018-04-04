@@ -21,6 +21,9 @@ profile:
     show:
         username: Username
         email: Email
+        time_zone: 'Time zone '
+        full_name: 'Full name '
+        phone_number: 'Phone number '
     edit:
         submit: Update
     flash:

@@ -40,15 +40,15 @@
         </div>
 
         <div class="panel-body">
-            <div class="row">
-            <div class="col-sm-6 content-group">
-                <img src="{{ asset('images/avatar.png') }}" class="content-group mt-10" alt="" style="width: 120px;">
-                <ul class="list-condensed list-unstyled">
-                    <li>{{ user.zipCode|default('') }} {{ user.lastName|default('') }} {{ user.firstName|default('') }}</li>
-                    <li>{{ user.phoneNumber|default('') }}</li>
-                </ul>
-            </div>
-        </div>
+            {#  <div class="row">
+                <div class="col-sm-6 content-group">
+                  <img src="{{ asset('images/avatar.png') }}" class="content-group mt-10" alt="" style="width: 120px;">
+                  <ul class="list-condensed list-unstyled">
+                      <li>{{ user.zipCode|default('') }} {{ user.lastName|default('') }} {{ user.firstName|default('') }}</li>
+                      <li>{{ user.phoneNumber|default('') }}</li>
+                  </ul>
+              </div>
+              </div>#}
 
             <div class="row">
                 <div class="col-md-12 col-lg-12">
@@ -56,12 +56,8 @@
                     <table class="table">
                         <tbody>
                         <tr>
-                            <th>Nom</th>
-                            <td>{{ user.firstName|default('') }}</td>
-                        </tr>
-                        <tr>
-                            <th>Prénom</th>
-                            <td>{{ user.lastName|default('') }}</td>
+                            <th>{{ 'profile.show.full_name'|trans }}</th>
+                            <td>{{ user.fullName|default('') }}</td>
                         </tr>
                         <tr>
                             <th>{{  'profile.show.email'|trans }}</th>
@@ -72,10 +68,14 @@
                             <td>{{ user.username|default('') }}</td>
                         </tr>
                         <tr>
-                            <th>Adresse</th>
-                            <td>{{ user.address|default('') }}</td>
+                            <th>{{ 'profile.show.phone_number'|trans }}</th>
+                            <td>{{ user.phoneNumber|default('') }}</td>
                         </tr>
                         <tr>
+                            <th>{{ 'profile.show.time_zone'|trans }}</th>
+                            <td>{{ user.timezoneId|default('') }}</td>
+                        </tr>
+                      {#<tr>
                             <th>Complément adresse</th>
                             <td>{{ user.addressComplement|default('') }}</td>
                         </tr>
@@ -122,7 +122,7 @@
                                     {% set labelEnable = 'Activer'%}
                                 {% endif %}
                             </td>
-                        </tr>
+                        </tr>#}
                         </tbody>
                     </table>
                 </div>
