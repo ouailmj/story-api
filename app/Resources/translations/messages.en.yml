@@ -3,3 +3,21 @@ registration:
         time_zone: 'Time zone '
         full_name: 'Full name '
         phone_number: 'Phone number '
+user:
+    fields:
+        time_zone: 'Time zone '
+        full_name: 'Full name '
+        phone_number: 'Phone number '
+        email: 'Email'
+        role: 'Role'
+        state: 'State'
+        lastLogin: 'Last Login'
+        admin: 'Admin'
+        user: 'User'
+        username: 'Username'
+    index:
+        title: 'Users list'
+        add: 'Add'
+        action: 'Actions'
+        enable: 'Enable'
+        disable: 'Disable'

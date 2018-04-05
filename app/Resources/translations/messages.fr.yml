@@ -3,3 +3,22 @@ registration:
         time_zone: 'Fuseau horaire '
         full_name: 'Nom complet '
         phone_number: 'Numéro de téléphone '
+user:
+    fields:
+        time_zone: 'Fuseau horaire '
+        full_name: 'Nom complet '
+        phone_number: 'Numéro de téléphone '
+        email: 'Email'
+        role: 'Rôle'
+        state: 'Statut'
+        lastLogin: 'Dernière connexion'
+        admin: 'Administrateur'
+        user: 'Utilisateur'
+        username: 'Nom d''utilisateur'
+    index:
+        title: 'Liste des utilisateurs'
+        add: 'Ajouter'
+        lastLogin: 'Dernière connexion'
+        action: 'Actions'
+        enable: 'Actif'
+        disable: 'Inactif'

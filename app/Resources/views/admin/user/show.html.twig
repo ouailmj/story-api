@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<div class="panel panel-flat">
+    <div class="panel-heading">
+        <h6 class="panel-title">User<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+        <div class="heading-elements">
+            <a href="{{ path('user_index') }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> Retour à la liste</a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th>Id</th>
+                                <td>{{ user.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Facebookid</th>
+                                <td>{{ user.facebookId }}</td>
+                        </tr>
+                        <tr>
+                            <th>Googleid</th>
+                                <td>{{ user.googleId }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phonenumber</th>
+                                <td>{{ user.phoneNumber }}</td>
+                        </tr>
+                        <tr>
+                            <th>Fullname</th>
+                                <td>{{ user.fullName }}</td>
+                        </tr>
+                        <tr>
+                            <th>Timezoneid</th>
+                                <td>{{ user.timezoneId }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="heading-elements pull-right">
+            <div class="col-md-12">
+                                <div class="text-right">
+    <div class="btn-group"><a class="btn btn-primary legitRipple" href="{{ path('user_edit', { 'id': user.id }) }}">Mettre à jour<i class="icon-rotate-cw2 position-right"></i></a>        <a onclick="return confirm('Êtes-vous sûr ? Cette action est irréversible.');"  class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">Supprimer <i class="icon-trash-alt position-right"></i></a>
+    </div>
+</div>
+</div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
