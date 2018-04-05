@@ -3,9 +3,9 @@
 {% block content %}
 <div class="panel panel-flat">
     <div class="panel-heading">
-        <h6 class="panel-title">User<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+        <h6 class="panel-title">{{ 'user.name'|trans }}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
         <div class="heading-elements">
-            <a href="{{ path('user_index') }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> Retour à la liste</a>
+            <a href="{{ path('user_index') }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> {{ 'user.index.back-list'|trans }}</a>
         </div>
     </div>
     <div class="panel-body">
@@ -15,27 +15,57 @@
                     <tbody>
                         <tr>
                             <th>Id</th>
-                                <td>{{ user.id }}</td>
+                            <td>{{ user.id }}</td>
                         </tr>
                         <tr>
-                            <th>Facebookid</th>
-                                <td>{{ user.facebookId }}</td>
+                            <td>{{ 'user.fields.username'|trans }}</td>
+                            <td>{{ user.username }}</td>
                         </tr>
                         <tr>
-                            <th>Googleid</th>
-                                <td>{{ user.googleId }}</td>
+                            <td>{{ 'user.fields.full_name'|trans }}</td>
+                            <td>{{ user.fullName }}</td>
                         </tr>
                         <tr>
-                            <th>Phonenumber</th>
-                                <td>{{ user.phoneNumber }}</td>
+                            <td>{{ 'user.fields.email'|trans }}</td>
+                            <td>{{ user.email }}</td>
                         </tr>
                         <tr>
-                            <th>Fullname</th>
-                                <td>{{ user.fullName }}</td>
+                            <td>{{ 'user.fields.phone_number'|trans }}</td>
+                            <td>{{ user.phoneNumber }}</td>
                         </tr>
                         <tr>
-                            <th>Timezoneid</th>
-                                <td>{{ user.timezoneId }}</td>
+                            <td>{{ 'user.fields.time_zone'|trans }}</td>
+                            <td>{{ user.timezoneId }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'user.fields.role'|trans }}</td>
+                            <td>
+                                <span class="label label-info">
+                                    {% if user.roles.0 == 'ROLE_USER' %}
+                                        {{ 'user.fields.user'|trans }}
+                                    {% elseif user.roles.0 == 'ROLE_ADMIN' %}
+                                        {{ 'user.fields.admin'|trans }}
+                                    {% elseif user.roles.0 == 'ROLE_SUPER_ADMIN' %}
+                                        Super Admin
+                                    {% else %}
+                                        No Role
+                                    {% endif %}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'user.fields.state'|trans }}</td>
+                            <td>
+                                {% if user.enabled ==1 %}
+                                    <span class="label bg-success heading-text">{{ 'user.index.enable'|trans }}</span>
+                                {% else %}
+                                    <span class="label bg-danger heading-text">{{ 'user.index.disable'|trans }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'user.fields.lastLogin'|trans }}</td>
+                            <td>{{ user.lastLogin|date }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -45,11 +75,17 @@
     <div class="panel-footer">
         <div class="heading-elements pull-right">
             <div class="col-md-12">
-                                <div class="text-right">
-    <div class="btn-group"><a class="btn btn-primary legitRipple" href="{{ path('user_edit', { 'id': user.id }) }}">Mettre à jour<i class="icon-rotate-cw2 position-right"></i></a>        <a onclick="return confirm('Êtes-vous sûr ? Cette action est irréversible.');"  class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">Supprimer <i class="icon-trash-alt position-right"></i></a>
-    </div>
-</div>
-</div>
+                <div class="text-right">
+                    <div class="btn-group">
+                        {{ form_start(delete_form) }}
+                        {{ form_widget(delete_form) }}
+                        <a class="btn btn-primary legitRipple" href="{{ path('user_edit', { 'id': user.id }) }}"> {{ 'user.index.update'|trans }}<i class="icon-rotate-cw2 position-right"></i></a>
+                        {% set  confirm =  'user.delete_account'|trans %}
+                        <button type="submit" onclick="return confirm('{{ confirm }}');"  class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">{{ 'user.index.delete'|trans }} <i class="icon-trash-alt position-right"></i></button>
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -4,6 +4,7 @@ registration:
         full_name: 'Nom complet '
         phone_number: 'Numéro de téléphone '
 user:
+    name: 'Utilisateur'
     fields:
         time_zone: 'Fuseau horaire '
         full_name: 'Nom complet '
@@ -18,7 +19,10 @@ user:
     index:
         title: 'Liste des utilisateurs'
         add: 'Ajouter'
-        lastLogin: 'Dernière connexion'
+        update: 'Mettre à jour'
+        delete: 'Supprimer'
+        back-list: ' Retour à la liste'
         action: 'Actions'
         enable: 'Actif'
         disable: 'Inactif'
+    delete_account: 'Êtes-vous sûr ? Cette action est irréversible.'
