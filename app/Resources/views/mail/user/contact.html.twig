@@ -1,0 +1,37 @@
+{% extends "mail/layout.html.twig" %}
+
+{% block content %}
+ <br><br>
+ <table class="row">
+  <tr>
+   <th class="small-12 large-12 first columns">
+       {{ email  }}
+   </th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+      {{ subject }}
+   </th>
+   <th class="expander"></th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+       {{ name }} <br>
+   </th>
+   <th class="expander"></th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+       {{ tele }} <br>
+   </th>
+   <th class="expander"></th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+       {{ message }}<br>
+   </th>
+   <th class="expander"></th>
+  </tr>
+ </table>
+
+{% endblock %}

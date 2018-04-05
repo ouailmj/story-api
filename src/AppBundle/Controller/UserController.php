@@ -3,16 +3,17 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
  *
  * @Route("admin/user")
  */
-class UserController extends Controller
+class UserController extends BaseController
 {
     /**
      * Lists all user entities.
@@ -20,11 +21,11 @@ class UserController extends Controller
      * @Route("/", name="user_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(UserManager $userManager)
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('AppBundle:User')->findAll();
+        $users = $userManager->allUsers();
+
 
         return $this->render('admin/user/index.html.twig', array(
             'users' => $users,
@@ -37,14 +38,13 @@ class UserController extends Controller
      * @Route("/new", name="user_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request , UserManager $userManager)
     {
         $user = new User();
         $form = $this->createForm('AppBundle\Form\UserType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             if (!empty($plainPassword = $form->get('new_password')->getData())) {
                 $user->setPlainPassword($plainPassword);
             }
@@ -52,8 +52,8 @@ class UserController extends Controller
                 $user->addRole($role);
             }
 
-            $em->persist($user);
-            $em->flush();
+            $userManager->createUser($user);
+            $this->addSuccessFlash();
 
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
@@ -86,13 +86,18 @@ class UserController extends Controller
      * @Route("/{id}/edit", name="user_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, User $user)
+    public function editAction(Request $request, UserManager $userManager, User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('AppBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            if (!empty($plainPassword = $editForm->get('new_password')->getData())) {
+                $user->setPlainPassword($plainPassword);
+                $userManager->updatePassword($user);
+                $this->addSuccessFlash();
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_edit', array('id' => $user->getId()));
@@ -111,15 +116,15 @@ class UserController extends Controller
      * @Route("/{id}", name="user_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, User $user)
+    public function deleteAction(Request $request, UserManager $userManager, User $user)
     {
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
+
+            $userManager->deleteUser($user);
+            $this->addSuccessFlash();
         }
 
         return $this->redirectToRoute('user_index');

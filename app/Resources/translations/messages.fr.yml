@@ -31,3 +31,14 @@ user:
         disable: 'Inactif'
     delete_account: 'Êtes-vous sûr ? Cette action est irréversible.'
     submit: 'Envoyer'
+mail:
+    user_created:
+        header: 'Création Compte MyStorytelling'
+        title: '   Votre compte sur MyStorytelling vient d''être créé. Ci-dessous les accès:'
+        password: 'Mot de Passe'
+        url: 'Lien'
+        mail: 'E-Mail'
+    password_updated_title: 'Les identifiants de connexion sur EyeGoFast ont été mis à jour. Ci-dessous les nouveaux identifiants:'
+    password_updated_header: 'Mise à jour Compte MyStorytelling'
+    header: 'Bonjour'
+    footer: 'Cordialement'

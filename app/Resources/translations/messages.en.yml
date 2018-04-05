@@ -31,3 +31,14 @@ user:
         disable: 'Disable'
     delete_account: 'Are you sure ? This action is irreversible.'
     submit: 'Send'
+mail:
+    user_created:
+        header: 'MyStorytelling Account Creation'
+        title: '  Your account on MyStorytelling has just been created. the accesses is below:'
+        password: 'Password'
+        url: 'URL'
+        mail: 'E-Mail'
+    password_updated_title: 'Login credentials on EyeGoFast have been updated. Below the new identifiers:'
+    password_updated_header: 'MyStorytelling Account Update'
+    header: 'Dear'
+    footer: 'Sincerely'
