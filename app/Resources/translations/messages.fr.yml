@@ -17,7 +17,8 @@ user:
         user: 'Utilisateur'
         username: 'Nom d''utilisateur'
     index:
-        title: 'Liste des utilisateurs'
+        list_title: 'Liste des utilisateurs'
+        edit_title: 'Modification de l''utilisateur'
         add: 'Ajouter'
         update: 'Mettre à jour'
         delete: 'Supprimer'

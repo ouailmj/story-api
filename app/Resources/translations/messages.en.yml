@@ -17,7 +17,8 @@ user:
         user: 'User'
         username: 'Username'
     index:
-        title: 'Users list'
+        list_title: 'Users list'
+        edit_title: 'User edit'
         add: 'Add'
         update: 'Update'
         delete: 'Delete'

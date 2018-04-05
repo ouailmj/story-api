@@ -5,9 +5,9 @@
 
     <div class="panel panel-flat">
         <div class="panel-heading">
-            <h6 class="panel-title">User edit<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+            <h6 class="panel-title">{{ 'user.index.edit_title'|trans }}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
             <div class="heading-elements">
-                <a href="{{ path('user_index') }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> Retour à la liste</a>
+                <a href="{{ path('user_index') }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> {{ 'user.index.back-list'|trans }}</a>
             </div>
         </div>
         <div class="panel-body">
@@ -15,11 +15,14 @@
 
             {{ form_start(edit_form, {'attr': {'class': 'form-horizontal'}}) }}
             {{ form_widget(edit_form) }}
-                        <div class="text-right">
-    <div class="btn-group">            <button class="btn btn-primary legitRipple" type="submit">Mettre à jour<i class="icon-rotate-cw2 position-right"></i></button>        <a onclick="return confirm('Êtes-vous sûr ? Cette action est irréversible.');"  class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">Supprimer <i class="icon-trash-alt position-right"></i></a>
-    </div>
-</div>
-{{ form_end(edit_form) }}
+            <div class="text-right">
+                <div class="btn-group">
+                    {% set  confirm =  'user.delete_account'|trans %}
+                    <button class="btn btn-primary legitRipple" type="submit">{{ 'user.index.update'|trans }}<i class="icon-rotate-cw2 position-right"></i></button>
+                    <a onclick="return confirm('{{ confirm }}');"  class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">{{ 'user.index.delete'|trans }} <i class="icon-trash-alt position-right"></i></a>
+                </div>
+            </div>
+            {{ form_end(edit_form) }}
         </div>
     </div>
 {% endblock %}
