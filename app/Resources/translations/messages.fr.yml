@@ -16,9 +16,12 @@ user:
         admin: 'Administrateur'
         user: 'Utilisateur'
         username: 'Nom d''utilisateur'
+        password: 'Mot de Passe'
+        password_confirmation: 'Confirmer le mot de passe'
     index:
         list_title: 'Liste des utilisateurs'
         edit_title: 'Modification de l''utilisateur'
+        create_title: 'Création d''utilisateur'
         add: 'Ajouter'
         update: 'Mettre à jour'
         delete: 'Supprimer'
@@ -27,3 +30,4 @@ user:
         enable: 'Actif'
         disable: 'Inactif'
     delete_account: 'Êtes-vous sûr ? Cette action est irréversible.'
+    submit: 'Envoyer'

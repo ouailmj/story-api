@@ -45,6 +45,13 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            if (!empty($plainPassword = $form->get('new_password')->getData())) {
+                $user->setPlainPassword($plainPassword);
+            }
+            if (!empty($role = $form->get('role')->getData())) {
+                $user->addRole($role);
+            }
+
             $em->persist($user);
             $em->flush();
 
