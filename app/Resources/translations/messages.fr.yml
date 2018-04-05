@@ -1,0 +1,33 @@
+registration:
+    fields:
+        time_zone: 'Fuseau horaire '
+        full_name: 'Nom complet '
+        phone_number: 'Numéro de téléphone '
+user:
+    name: 'Utilisateur'
+    fields:
+        time_zone: 'Fuseau horaire '
+        full_name: 'Nom complet '
+        phone_number: 'Numéro de téléphone '
+        email: 'Email'
+        role: 'Rôle'
+        state: 'Statut'
+        lastLogin: 'Dernière connexion'
+        admin: 'Administrateur'
+        user: 'Utilisateur'
+        username: 'Nom d''utilisateur'
+        password: 'Mot de Passe'
+        password_confirmation: 'Confirmer le mot de passe'
+    index:
+        list_title: 'Liste des utilisateurs'
+        edit_title: 'Modification de l''utilisateur'
+        create_title: 'Création d''utilisateur'
+        add: 'Ajouter'
+        update: 'Mettre à jour'
+        delete: 'Supprimer'
+        back-list: ' Retour à la liste'
+        action: 'Actions'
+        enable: 'Actif'
+        disable: 'Inactif'
+    delete_account: 'Êtes-vous sûr ? Cette action est irréversible.'
+    submit: 'Envoyer'

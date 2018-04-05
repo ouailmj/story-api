@@ -9,7 +9,11 @@
 
         <div class="panel-body">
             {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-            {{ form_widget(form) }}
+
+            {{ form_errors(form) }}
+            {{ form_row(form.fullName)}}
+            {{ form_rest(form) }}
+
             <div class="text-right">
                 <div class="btn-group">
                     <button name="update" type="submit" class="btn btn-primary legitRipple">Modifier <i class="icon-arrow-right14 position-right"></i></button>

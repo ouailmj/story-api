@@ -101,12 +101,19 @@ fos_user:
         address: "%mailer_user%"
         sender_name: "%mailer_name%"
     registration:
+        form:
+            type: AppBundle\Form\Type\RegistrationType
+            validation_groups: [App]
         confirmation:
             enabled:              true
             template:             '@FOSUser/Registration/email.html.twig'
             from_email:
                 address: "%mailer_user%"
                 sender_name: "%mailer_name%"
+    profile:
+        form:
+            type: AppBundle\Form\Type\ProfileType
+
 
 lexik_jwt_authentication:
     private_key_path: '%jwt_private_key_path%'
