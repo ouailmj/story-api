@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">{{ 'user.index.list_title'|trans }}</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <span title="Create a new user" class="pull-right"><a href="{{ path('user_new') }}" class="btn btn-labeled btn-labeled-left bg-blue heading-btn"><b><i class="icon-plus3"></i></b> {{ 'user.index.add'|trans }}</a></span>
+        </div>
+
+        <table class="table datatable-responsive table-bordered table-hover datatable-highlight">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{{ 'user.fields.username'|trans }}</th>
+                    <th>{{ 'user.fields.full_name'|trans }}</th>
+                    <th>{{ 'user.fields.email'|trans }}</th>
+                    <th>{{ 'user.fields.phone_number'|trans }}</th>
+                    <th>{{ 'user.fields.time_zone'|trans }}</th>
+                    <th>{{ 'user.fields.role'|trans }}</th>
+                    <th>{{ 'user.fields.state'|trans }}</th>
+                    <th>{{ 'user.fields.lastLogin'|trans }}</th>
+                    <th class="text-center">{{ 'user.index.action'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.fullName }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phoneNumber }}</td>
+                    <td>{{ user.timezoneId }}</td>
+
+                    <td>
+
+                        <span class="label label-info">
+                            {% if user.roles.0 == 'ROLE_USER' %}
+                                {{ 'user.fields.user'|trans }}
+                            {% elseif user.roles.0 == 'ROLE_ADMIN' %}
+                                {{ 'user.fields.admin'|trans }}
+                            {% elseif user.roles.0 == 'ROLE_SUPER_ADMIN' %}
+                                Super Admin
+                            {% else %}
+                                No Role
+                            {% endif %}
+                        </span>
+                    </td>
+
+                    <td>
+                        {% if user.enabled ==1 %}
+                            <span class="label bg-success heading-text">{{ 'user.index.enable'|trans }}</span>
+                        {% else %}
+                            <span class="label bg-danger heading-text">{{ 'user.index.disable'|trans }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.lastLogin|date }}</td>
+                    <td class="text-center">
+                        <div class="">
+                            {% set  confirm =  'user.delete_account'|trans %}
+                            <a title="Afficher les détails" href="{{ path('user_show', { 'id': user.id }) }}" class="text-primary legitRipple"><i class="icon-eye position-left"></i></a>
+                            <a title="Modifier" href="{{ path('user_edit', { 'id': user.id }) }}" class="text-primary legitRipple"><i class="icon-pen position-left"></i></a>
+                            <a title="Supprimer" onclick="return confirm('{{ confirm }}');" href="{{ path('user_delete', { 'id': user.id }) }}" class="text-danger legitRipple"><i class="icon-trash position-left"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

@@ -13,7 +13,13 @@
         <div class="form-group "><span class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</span></div>
     {% endif %}
 
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.fullName)}}
+    {{ form_row(form.username)}}
+    {{ form_row(form.email)}}
+
+    {{ form_rest(form) }}
     <div class="form-group">
         <input class="btn btn-primary btn-block" type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
@@ -22,7 +28,7 @@
 
     <ul class="list-inline form-group list-inline-condensed text-center">
         {% for owner in hwi_oauth_resource_owners() %}
-            <li><a href="{{ hwi_oauth_login_url(owner) }}" class="btn bg-{{ owner }} text-white btn-flat btn-icon btn-rounded"><i class="icon-{{ owner }}"></i></a></li>
+            <li><a href="/" class="btn bg-{{ owner }} text-white btn-flat btn-icon btn-rounded"><i class="icon-{{ owner }}"></i></a></li>
         {% endfor %}
     </ul>
 

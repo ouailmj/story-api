@@ -40,6 +40,26 @@ class User extends BaseUser
 
     private $googleAccessToken;
 
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", length=20, nullable=true)
+     */
+    protected $phoneNumber;
+
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", length=250, nullable=true)
+     */
+    protected $fullName;
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", length=50, nullable=true)
+     */
+    protected $timezoneId;
+
     /**
      * Get id
      *
@@ -139,4 +159,53 @@ class User extends BaseUser
         parent::__construct();
         $this->enabled = true;
     }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber(string $phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     */
+    public function setFullName(string $fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezoneId()
+    {
+        return $this->timezoneId;
+    }
+
+    /**
+     * @param string $timezoneId
+     */
+    public function setTimezoneId(string $timezoneId)
+    {
+        $this->timezoneId = $timezoneId;
+    }
+
 }

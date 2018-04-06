@@ -19,6 +19,10 @@ profile:
     show:
         username: 'Nom d''utilisateur'
         email: 'Adresse e-mail'
+        time_zone: 'Fuseau horaire '
+        full_name: 'Nom complet '
+        phone_number: 'Numéro de téléphone '
+        delete_account: 'Êtes-vous sûr ? Cette action est irréversible.'
     edit:
         submit: 'Mettre à jour'
     flash:

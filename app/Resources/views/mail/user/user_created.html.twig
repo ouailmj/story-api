@@ -1,0 +1,34 @@
+{% extends "mail/layout.html.twig" %}
+
+{% block content %}
+ <br><br>
+ <table class="row">
+  <tr>
+   <th class="small-12 large-12 first columns">
+       {{ 'mail.user_created.title'|trans }}
+   </th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+       {{ 'mail.user_created.url'|trans }}: <strong>
+     <a href="{{ url('fos_user_security_login') }}">
+         {{ url('fos_user_security_login') }}
+     </a></strong><br>
+   </th>
+   <th class="expander"></th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+       {{ 'mail.user_created.mail'|trans }}: <strong>{{ email }}</strong><br>
+   </th>
+   <th class="expander"></th>
+  </tr>
+  <tr>
+   <th class="small-12 large-6 first columns">
+       {{ 'mail.user_created.password'|trans }}: <strong>{{ password }}</strong><br>
+   </th>
+   <th class="expander"></th>
+  </tr>
+ </table>
+
+{% endblock %}
