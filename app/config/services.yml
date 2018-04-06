@@ -38,3 +38,9 @@ services:
         class:        AppBundle\Security\Core\User\AppUserProvider
         arguments: ['@fos_user.user_manager.default', { facebook: facebookId, google: googleId }]
         public: true
+
+    acme_api.event.authentication_success_listener:
+        class: AppBundle\EventListener\AuthenticationSuccessListener
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+        arguments: [ '%jwt_token_ttl%' ]
