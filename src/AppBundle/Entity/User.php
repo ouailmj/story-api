@@ -1,14 +1,21 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="app_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -16,7 +23,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class User extends BaseUser
 {
-
     /**
      * @var int
      *
@@ -41,7 +47,7 @@ class User extends BaseUser
     private $googleAccessToken;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -60,11 +66,13 @@ class User extends BaseUser
 
     /**
      * @param mixed $facebookId
+     *
      * @return User
      */
     public function setFacebookId($facebookId)
     {
         $this->facebookId = $facebookId;
+
         return $this;
     }
 
@@ -78,11 +86,13 @@ class User extends BaseUser
 
     /**
      * @param mixed $facebookAccessToken
+     *
      * @return User
      */
     public function setFacebookAccessToken($facebookAccessToken)
     {
         $this->facebookAccessToken = $facebookAccessToken;
+
         return $this;
     }
 
@@ -96,11 +106,13 @@ class User extends BaseUser
 
     /**
      * @param mixed $googleId
+     *
      * @return User
      */
     public function setGoogleId($googleId)
     {
         $this->googleId = $googleId;
+
         return $this;
     }
 
@@ -114,23 +126,27 @@ class User extends BaseUser
 
     /**
      * @param mixed $googleAccessToken
+     *
      * @return User
      */
     public function setGoogleAccessToken($googleAccessToken)
     {
         $this->googleAccessToken = $googleAccessToken;
+
         return $this;
     }
 
     /**
      * @ORM\PrePersist()
+     *
      * @return User
      */
     public function setUsernameValue()
     {
-        if (empty($this->username)){
+        if (empty($this->username)) {
             $this->username = $this->email;
         }
+
         return $this;
     }
 

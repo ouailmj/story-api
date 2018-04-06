@@ -23,7 +23,7 @@
 /web/uploads/
 /web/media/
 /composer.phar
-/composer.lock
+/.php_cs.cache
 
 /web/assets/vendors/*
 /web/build/*

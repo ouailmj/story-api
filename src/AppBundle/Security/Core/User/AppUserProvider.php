@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppBundle\Security\Core\User;
 
 use AppBundle\Entity\User;
@@ -6,11 +16,10 @@ use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
 class AppUserProvider extends FOSUBUserProvider
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
@@ -19,7 +28,7 @@ class AppUserProvider extends FOSUBUserProvider
         $property = $this->getProperty($response);
         $username = $response->getUsername(); // get the unique user identifier
         //we "disconnect" previously connected users
-        $existingUser = $this->userManager->findUserBy(array($property => $username));
+        $existingUser = $this->userManager->findUserBy([$property => $username]);
         if (null !== $existingUser) {
             // set current user id and token to null for disconnect
             // ...
@@ -29,6 +38,7 @@ class AppUserProvider extends FOSUBUserProvider
         // ...
         $this->userManager->updateUser($user);
     }
+
     /**
      * {@inheritdoc}
      */
@@ -48,12 +58,13 @@ class AppUserProvider extends FOSUBUserProvider
             ;
             // ... save user to database
             $this->userManager->updateUser($user);
+
             return $user;
         }
         // else update access token of existing user
         $serviceName = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
-        $user->$setter($response->getAccessToken());//update access token
+        $setter = 'set'.ucfirst($serviceName).'AccessToken';
+        $user->$setter($response->getAccessToken()); //update access token
         return $user;
     }
 }
