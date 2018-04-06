@@ -1,39 +1,59 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
     {% form_theme form 'Form/login_fields.html.twig' %}
+    {# Container #}
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img height="300" class="instant-logo" width="80" src="{{ asset('assets/images/logo.png') }}" alt="IMG">
+                    <div class="img1">
+						<a href=""><img height="40" width="136" id="app-store-img" src="{{ asset('assets/images/46d21e8e5b0d.png') }}" alt=""></a>
+						<a href=""><img height="40" width="136" id="play-store-img" src="{{ asset('assets/images/85c0830b7353.png') }}" alt=""></a>
+				    </div>
+				</div>
+				<form class="login100-form validate-form">
+					<span class="login100-form-title">
+						Enregistrement
+					</span>
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form-horizontal '}}) }}
-<div class="panel panel-body login-form">
-    <div class="text-center">
-        <div class="icon-object border-slate-300 text-slate-300"><i class="icon-lock4"></i></div>
-        <h5 class="content-group">Espace de connexion <small class="display-block">Remplissez le formulaire ci-dessous</small></h5>
-    </div>
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="peudo" placeholder="Pseudo">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-smile-o" aria-hidden="true"></i>
+						</span>
+					</div>
 
-    {% if error|default %}
-        <div class="form-group "><span class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</span></div>
-    {% endif %}
+					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" name="email" placeholder="Email">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-envelope" aria-hidden="true"></i>
+						</span>
+					</div>
 
-    {{ form_errors(form) }}
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input class="input100" type="password" name="pass" placeholder="Mot de passe">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Créer un compte
+						</button>
+					</div>
 
-    {{ form_row(form.fullName)}}
-    {{ form_row(form.username)}}
-    {{ form_row(form.email)}}
-
-    {{ form_rest(form) }}
-    <div class="form-group">
-        <input class="btn btn-primary btn-block" type="submit" value="{{ 'registration.submit'|trans }}" />
-    </div>
-
-    <div class="content-divider text-muted form-group"><span>or register with</span></div>
-
-    <ul class="list-inline form-group list-inline-condensed text-center">
-        {% for owner in hwi_oauth_resource_owners() %}
-            <li><a href="/" class="btn bg-{{ owner }} text-white btn-flat btn-icon btn-rounded"><i class="icon-{{ owner }}"></i></a></li>
-        {% endfor %}
-    </ul>
-
-    <div class="content-divider text-muted form-group"><span>Do you have an account?</span></div>
-    <a href="{{ path('fos_user_security_login') }}" class="btn btn-default btn-block content-group">Sign in</a>
-    <span class="help-block text-center no-margin">By continuing, you're confirming that you've read our <a href="#">Terms &amp; Conditions</a> and <a href="#">Cookie Policy</a></span>
-</div>
-{{ form_end(form) }}
+					<div class="text-center p-t-136">
+						<a class="txt2" href="index.html">
+							Avez-vous un compte?
+							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>

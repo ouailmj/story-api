@@ -101,9 +101,9 @@ fos_user:
         address: "%mailer_user%"
         sender_name: "%mailer_name%"
     registration:
-        form:
-            type: AppBundle\Form\Type\RegistrationType
-            validation_groups: [App]
+      #  form:
+       #     type: AppBundle\Form\Type\RegistrationType
+        #    validation_groups: [App]
         confirmation:
             enabled:              true
             template:             '@FOSUser/Registration/email.html.twig'
