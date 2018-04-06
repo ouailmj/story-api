@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SF3</title>
+    <title>Mystorytelling</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -27,12 +27,6 @@
     {% endblock %}
     <!-- /main navbar -->
 
-
-    <!-- Second navbar -->
-    {% block second_navbar %}
-        {% include 'layout/second_navbar.html.twig' %}
-    {% endblock %}
-    <!-- /second navbar -->
     {% block home_jumbotron %}{% endblock %}
     <!-- Page header -->
     {% block header_page %}
@@ -88,8 +82,8 @@
 
 
     <!-- Footer -->
-    <div class="footer footer-boxed text-muted">
-        &copy; {{ 'now'|date('Y') }}. <a href="#">Trainingo</a> by <a href="#" target="_blank">Agence MIT</a>
+    <div class="footer footer-boxed">
+        &copy; {{ 'now'|date('Y') }}. <a href="#">Mystorytelling</a> by <a href="#" target="_blank">Agence MIT</a>
     </div>
     <!-- /footer -->
     <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>

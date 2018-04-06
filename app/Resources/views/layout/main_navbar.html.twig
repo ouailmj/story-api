@@ -1,103 +1,24 @@
-<div class="navbar navbar-inverse bg-indigo">
+<style>
+    .btn-storytelling-login{
+    background-color: #43c6ac;
+    color: #fff;
+    border-color: #43c6ac;
+}
+
+.navbar-brand{
+    margin:0;
+    padding:0;
+}
+</style>
+<div class="navbar navbar-inverse bg-storytelling">
     <div class="navbar-boxed">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ path('app_default_index') }}"><img src="{{ asset('images/logo_light.png') }}" alt=""></a>
+            <a class="navbar-brand" href="{{ path('app_default_index') }}"><img src="{{ asset('assets/images/logo.png') }}" alt=""></a>
 
             <ul class="nav navbar-nav pull-right visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
             </ul>
         </div>
-
-        <div class="navbar-collapse collapse" id="navbar-mobile">
-            <ul class="nav navbar-nav">
-                <li class="dropdown mega-menu mega-menu-wide">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Catalogue <span class="caret"></span></a>
-
-                    <div class="dropdown-menu dropdown-content">
-                        <div class="dropdown-content-body">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Column 1 title</span>
-                                    <ul class="menu-list">
-                                        <li><a href="#">First link, first column</a></li>
-                                        <li>
-                                            <a href="#">Second link (multilevel)</a>
-                                            <ul>
-                                                <li><a href="#">Second level, first link</a></li>
-                                                <li><a href="#">Second level, second link</a></li>
-                                                <li><a href="#">Second level, third link</a></li>
-                                                <li><a href="#">Second level, fourth link</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Third link, first column</a></li>
-                                        <li><a href="#">Fourth link, first column</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Column 2 title</span>
-                                    <ul class="menu-list">
-                                        <li><a href="#">First link, second column</a></li>
-                                        <li>
-                                            <a href="#">Second link (multilevel)</a>
-                                            <ul>
-                                                <li><a href="#">Second level, first link</a></li>
-                                                <li><a href="#">Second level, second link</a></li>
-                                                <li><a href="#">Second level, third link</a></li>
-                                                <li><a href="#">Second level, fourth link</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Third link, second column</a></li>
-                                        <li><a href="#">Fourth link, second column</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Column 3 title</span>
-                                    <ul class="menu-list">
-                                        <li><a href="#">First link, third column</a></li>
-                                        <li>
-                                            <a href="#">Second link (multilevel)</a>
-                                            <ul>
-                                                <li><a href="#">Second level, first link</a></li>
-                                                <li><a href="#">Second level, second link</a></li>
-                                                <li><a href="#">Second level, third link</a></li>
-                                                <li><a href="#">Second level, fourth link</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Third link, third column</a></li>
-                                        <li><a href="#">Fourth link, third column</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="menu-heading underlined">Column 4 title</span>
-                                    <ul class="menu-list">
-                                        <li><a href="#">First link, fourth column</a></li>
-                                        <li>
-                                            <a href="#">Second link (multilevel)</a>
-                                            <ul>
-                                                <li><a href="#">Second level, first link</a></li>
-                                                <li><a href="#">Second level, second link</a></li>
-                                                <li><a href="#">Second level, third link</a></li>
-                                                <li><a href="#">Second level, fourth link</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Third link, fourth column</a></li>
-                                        <li><a href="#">Fourth link, fourth column</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group has-feedback">
-                    <input class="form-control navbar-search" placeholder="Search field" type="search">
-                    <div class="form-control-feedback">
-                        <i class="icon-search4 text-muted text-size-base"></i>
-                    </div>
-                </div>
-            </form>
-
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown language-switch">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -109,16 +30,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="english"><img src="{{ asset('images/flags/gb.png') }}" alt=""> English</a></li>
                         <li><a class="french"><img src="{{ asset('images/flags/fr.png') }}" alt=""> Français</a></li>
-                        <li><a class="arab"><img src="{{ asset('images/flags/es.png') }}" alt=""> Espagnol</a></li>
                     </ul>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <i class="icon-station"></i>
-                        <span class="visible-xs-inline-block position-right">Icon link</span>
-                    </a>
-                </li>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -139,10 +51,7 @@
                 {% endif %}
             </ul>
             {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ path('fos_user_security_login') }}">Login</a></li>
-                </ul>
-                <a class="btn btn-success navbar-btn navbar-right" href="{{ path('fos_user_registration_register') }}">S'inscrire</a>
+                <a class="btn btn-storytelling-login navbar-btn navbar-right" href="{{ path('fos_user_registration_register') }}">S'inscrire / Connexion</a>
             {% endif %}
         </div>
     </div>
