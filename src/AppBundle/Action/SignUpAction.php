@@ -28,7 +28,7 @@ class SignUpAction extends Controller
      *
      * @Route(
      *     name="signUpAPI",
-     *     path="/users/sign_up",
+     *     path="/users/sign-up",
      *     defaults={
      *          "_api_resource_class"=User::class,
      *
@@ -44,7 +44,7 @@ class SignUpAction extends Controller
         $userManager->createUser($data);
 
         $response = new Response(json_encode($data->getId()));
-        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Type', 'application/ld+json');
 
         return $response;
     }
