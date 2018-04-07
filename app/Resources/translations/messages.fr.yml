@@ -3,6 +3,10 @@ registration:
         time_zone: 'Fuseau horaire '
         full_name: 'Nom complet '
         phone_number: 'Numéro de téléphone '
+    placeholder:
+        username: 'Pseudo'
+        plainPassword: 'Mot de passe'
+        email: 'Email'
 user:
     name: 'Utilisateur'
     fields:

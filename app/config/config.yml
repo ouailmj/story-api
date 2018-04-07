@@ -87,7 +87,7 @@ api_platform:
     http_cache:
         invalidation:
             enabled: true
-            varnish_urls: '%varnish_urls%'
+            #varnish_urls: '%varnish_urls%'
         max_age: 0
         shared_max_age: 3600
         vary: ['Content-Type', 'Authorization']
@@ -101,9 +101,9 @@ fos_user:
         address: "%mailer_user%"
         sender_name: "%mailer_name%"
     registration:
-      #  form:
-       #     type: AppBundle\Form\Type\RegistrationType
-        #    validation_groups: [App]
+        form:
+            type: AppBundle\Form\Type\RegistrationType
+            validation_groups: [App]
         confirmation:
             enabled:              true
             template:             '@FOSUser/Registration/email.html.twig'

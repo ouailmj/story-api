@@ -3,6 +3,10 @@ registration:
         time_zone: 'Time zone '
         full_name: 'Full name '
         phone_number: 'Phone number '
+    placeholder:
+        username: 'Pseudo'
+        plainPassword: 'Password'
+        email: 'Email'
 user:
     name: 'User'
     fields:

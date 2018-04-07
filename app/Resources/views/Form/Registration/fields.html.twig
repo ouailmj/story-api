@@ -1,0 +1,25 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+
+{% block form_widget_simple -%}
+    {% if type is not defined or type not in ['file', 'hidden'] %}
+        {%- set attr = attr|merge({class: (attr.class|default('') ~ '  z3aylika')|trim}) -%}
+    {% endif %}
+    {{- parent() -}}
+{%- endblock form_widget_simple %}
+
+{% block form_label -%}
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' control-label col-lg-3 text-semibold')|trim}) -%}
+    {{- parent() -}}
+{%- endblock form_label %}
+
+
+
+{% block form_row -%}
+       {{- form_label(form) -}}
+
+            {{- form_widget(form) -}}
+
+        {{- form_errors(form) -}}
+
+{%- endblock form_row %}
