@@ -1,14 +1,15 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianemit
- * Date: 04/04/18
- * Time: 16:56
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace AppBundle\Form\Type;
-
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -20,14 +21,13 @@ class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('phoneNumber', TelType::class, [
-                'label' =>  'registration.fields.phone_number',
+                'label' => 'registration.fields.phone_number',
             ])
 
             ->add('fullName', TextType::class, [
-                'label' =>  'registration.fields.full_name',
+                'label' => 'registration.fields.full_name',
             ])
 
             ->add('timezoneId', TimezoneType::class, [

@@ -1,29 +1,29 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianemit
- * Date: 06/04/18
- * Time: 15:36
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace AppBundle\Action;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Model\UserManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class SignUpAction extends Controller
 {
-
     /**
-     *
-     * @param User $data
+     * @param User        $data
      * @param UserManager $userManager
+     *
      * @return Response
      *
      * @Route(
@@ -37,7 +37,6 @@ class SignUpAction extends Controller
      *
      * )
      * @Method({"POST"})
-     *
      */
     public function __invoke(User $data, UserManager $userManager)
     {

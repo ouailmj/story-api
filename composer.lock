@@ -6037,16 +6037,16 @@
         },
         {
             "name": "nelmio/alice",
-            "version": "v3.2.2",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/alice.git",
-                "reference": "34ee0035297903dea0bee6dbb9d88daac302f31f"
+                "reference": "ddcc459081434ac3a7a2bef2c8a78db49ba11e79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/alice/zipball/34ee0035297903dea0bee6dbb9d88daac302f31f",
-                "reference": "34ee0035297903dea0bee6dbb9d88daac302f31f",
+                "url": "https://api.github.com/repos/nelmio/alice/zipball/ddcc459081434ac3a7a2bef2c8a78db49ba11e79",
+                "reference": "ddcc459081434ac3a7a2bef2c8a78db49ba11e79",
                 "shasum": ""
             },
             "require": {
@@ -6063,8 +6063,8 @@
                 "bamarni/composer-bin-plugin": "^1.1.0",
                 "php-mock/php-mock": "^2.0",
                 "phpspec/prophecy": "^1.6",
-                "phpunit/phpunit": "^6.0",
-                "symfony/phpunit-bridge": "^3.4 || ^4.0",
+                "phpunit/phpunit": "^7.0",
+                "symfony/phpunit-bridge": "^3.4.5 || ^4.0.5",
                 "symfony/var-dumper": "^3.4 || ^4.0"
             },
             "suggest": {
@@ -6112,7 +6112,7 @@
                 "faker",
                 "test"
             ],
-            "time": "2018-03-17T22:13:13+00:00"
+            "time": "2018-04-07T09:07:10+00:00"
         },
         {
             "name": "phar-io/manifest",

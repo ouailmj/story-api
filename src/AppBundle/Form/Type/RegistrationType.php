@@ -1,26 +1,23 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianeMIT
- * Date: 04/04/18
- * Time: 14:59
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace AppBundle\Form\Type;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -28,22 +25,20 @@ class RegistrationType extends AbstractType
             ->remove('plainPassword')
             ->remove('email')
 
-            ->add('plainPassword' , PasswordType::class,[
-                'label' =>  false,
-                'attr' => array('class' => 'input100','placeholder'=>'registration.placeholder.plainPassword'),
+            ->add('plainPassword', PasswordType::class, [
+                'label' => false,
+                'attr' => ['class' => 'input100', 'placeholder' => 'registration.placeholder.plainPassword'],
                 ])
 
-            ->add('username' , null,[
-                'label' =>  false,
-                'attr' => array('class' => 'input100','placeholder'=>'registration.placeholder.username'),
+            ->add('username', null, [
+                'label' => false,
+                'attr' => ['class' => 'input100', 'placeholder' => 'registration.placeholder.username'],
             ])
 
-            ->add('email' , EmailType::class,[
-                'label' =>  false,
-                'attr' => array('class' => 'input100','placeholder'=>'registration.placeholder.email'),
+            ->add('email', EmailType::class, [
+                'label' => false,
+                'attr' => ['class' => 'input100', 'placeholder' => 'registration.placeholder.email'],
             ])
-
-
 
         ;
     }

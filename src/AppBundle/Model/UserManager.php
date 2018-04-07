@@ -1,10 +1,12 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianemit
- * Date: 05/04/18
- * Time: 15:46
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace AppBundle\Model;
@@ -12,7 +14,6 @@ namespace AppBundle\Model;
 use AppBundle\Entity\User;
 use AppBundle\Mailer\Mailer;
 use Doctrine\ORM\EntityManager;
-
 
 class UserManager
 {
@@ -46,30 +47,37 @@ class UserManager
      * Create new user in the database.
      *
      * @param User $user
+     * @param bool $flush
+     * @param bool $sendMail
      */
-    public function createUser(User $user, $flush = true)
+    public function createUser(User $user, $flush = true, $sendMail = false)
     {
         $plainPassword = $user->getPlainPassword();
 
         $this->fosUserManager->updateUser($user, $flush);
 
         $user->setPlainPassword($plainPassword);
-        $this->mailer->sendAccountCreatedMessage($user);
+
+        if ($sendMail) {
+            $this->mailer->sendAccountCreatedMessage($user);
+        }
     }
 
     /**
-     * Update user's password.
-     *
      * @param User $user
+     * @param bool $sendMail
      */
-    public function updatePassword(User $user)
+    public function updatePassword(User $user, $sendMail = true)
     {
         $plainPassword = $user->getPlainPassword();
 
         $this->fosUserManager->updatePassword($user);
 
         $user->setPlainPassword($plainPassword);
-        $this->mailer->sendPasswordUpdatedMessage($user);
+
+        if ($sendMail) {
+            $this->mailer->sendPasswordUpdatedMessage($user);
+        }
     }
 
     /**
@@ -82,7 +90,6 @@ class UserManager
         $this->fosUserManager->deleteUser($user);
     }
 
-
     /**
      * @return array
      */
@@ -90,5 +97,4 @@ class UserManager
     {
         return $this->em->getRepository('AppBundle:User')->findAll();
     }
-
 }

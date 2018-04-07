@@ -1,42 +1,42 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianemit
- * Date: 06/04/18
- * Time: 10:58
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace AppBundle\EventListener;
 
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
-use Twig\Node\Expression\Binary\InBinary;
 
 class AuthenticationSuccessListener
 {
+    protected $jwtTokenTTL;
 
-    protected $jwt_token_ttl;
-
-    public function __construct($jwt_token_ttl)
+    public function __construct($jwtTokenTTL)
     {
-        $this->jwt_token_ttl=$jwt_token_ttl;
+        $this->jwtTokenTTL = $jwtTokenTTL;
     }
 
     /**
      * @param AuthenticationSuccessEvent $event
+     *
      * @throws \Exception
      */
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
     {
         $data = $event->getData();
-        $expires_at =  new \DateTime();
-        $interval ='PT'.$this->jwt_token_ttl.'S';
-        $expires_at->add( new \DateInterval($interval));
+        $expiresAt = new \DateTime();
+        $interval = 'PT'.$this->jwtTokenTTL.'S';
+        $expiresAt->add(new \DateInterval($interval));
 
-        $data['data'] = array(
-            'expiresAt' => $expires_at->format('Y-m-d\TH:i:s'),
-        );
+        $data['data'] = [
+            'expiresAt' => $expiresAt->format('Y-m-d\TH:i:s'),
+        ];
 
         $event->setData($data);
     }

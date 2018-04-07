@@ -1,11 +1,14 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianeMIT
- * Date: 05/04/18
- * Time: 15:39
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 namespace AppBundle\Mailer;
 
 use AppBundle\Entity\User;
@@ -14,8 +17,6 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class Mailer
 {
-
-
     /**
      * @var \Swift_Mailer
      */

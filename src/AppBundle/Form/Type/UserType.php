@@ -1,6 +1,15 @@
 <?php
 
-namespace AppBundle\Form;
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -27,15 +36,15 @@ class UserType extends AbstractType
 
         $builder
             ->add('fullName', TextType::class, [
-                'label' =>  'user.fields.full_name',
+                'label' => 'user.fields.full_name',
             ])
 
-            ->add('username',TextType::class, [
-                'label' =>  'user.fields.username',
+            ->add('username', TextType::class, [
+                'label' => 'user.fields.username',
             ])
 
-            ->add('email',EmailType::class, [
-                'label' =>  'user.fields.email',
+            ->add('email', EmailType::class, [
+                'label' => 'user.fields.email',
             ])
 
             ->add('new_password', RepeatedType::class, [
@@ -49,7 +58,7 @@ class UserType extends AbstractType
             ])
 
             ->add('phoneNumber', TelType::class, [
-                'label' =>  'user.fields.phone_number',
+                'label' => 'user.fields.phone_number',
             ])
 
             ->add('timezoneId', TimezoneType::class, [
@@ -64,14 +73,16 @@ class UserType extends AbstractType
                 'mapped' => false,
             ])
             ;
-    }/**
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\User',
+        ]);
     }
 
     /**
@@ -81,6 +92,4 @@ class UserType extends AbstractType
     {
         return 'appbundle_user';
     }
-
-
 }

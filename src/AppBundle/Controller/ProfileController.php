@@ -1,10 +1,12 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: soufianeMIT
- * Date: 04/04/18
- * Time: 18:06
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace AppBundle\Controller;
@@ -14,19 +16,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends BaseController
 {
-
     /**
      * @Route("/auth/profile/delete")
      */
     public function deleteAction(Request $request)
     {
         $form = $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $this->getUser()->getId())))
+            ->setAction($this->generateUrl('user_delete', ['id' => $this->getUser()->getId()]))
             ->setMethod('DELETE')
             ->getForm()
         ;
         $form->handleRequest($request);
 
+        // TODO: Delete user should be handled outside of the controller (in UserManager)
         $em = $this->getDoctrine()->getManager();
         $em->remove($this->getUser());
         $em->flush();

@@ -11,12 +11,10 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
-
-
 
 /**
  * User.
@@ -32,7 +30,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "delete",
  *     "api_sign_up"={"route_name"="signUpAPI"}
  * })
- *
  */
 class User extends BaseUser
 {
@@ -59,13 +56,11 @@ class User extends BaseUser
 
     private $googleAccessToken;
 
-
     /**
      * @var string
      * @ORM\Column( type="string", length=20, nullable=true)
      */
     protected $phoneNumber;
-
 
     /**
      * @var string
@@ -236,5 +231,4 @@ class User extends BaseUser
     {
         $this->timezoneId = $timezoneId;
     }
-
 }
