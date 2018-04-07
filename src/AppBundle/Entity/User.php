@@ -13,6 +13,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+
 
 /**
  * User.
@@ -20,6 +24,15 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="app_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
+ * @ApiResource(itemOperations={
+ *     "get",
+ *     "put",
+ *     "delete",
+ *     "api_sign_up"={"route_name"="signUpAPI"}
+ * })
+ *
  */
 class User extends BaseUser
 {
@@ -45,6 +58,26 @@ class User extends BaseUser
     protected $googleId = '';
 
     private $googleAccessToken;
+
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", length=20, nullable=true)
+     */
+    protected $phoneNumber;
+
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", length=250, nullable=true)
+     */
+    protected $fullName;
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", length=50, nullable=true)
+     */
+    protected $timezoneId;
 
     /**
      * Get id.
@@ -155,4 +188,53 @@ class User extends BaseUser
         parent::__construct();
         $this->enabled = true;
     }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber(string $phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    /**
+     * @param string $fullName
+     */
+    public function setFullName(string $fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezoneId()
+    {
+        return $this->timezoneId;
+    }
+
+    /**
+     * @param string $timezoneId
+     */
+    public function setTimezoneId(string $timezoneId)
+    {
+        $this->timezoneId = $timezoneId;
+    }
+
 }

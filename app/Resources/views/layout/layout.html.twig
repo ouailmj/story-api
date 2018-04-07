@@ -4,11 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SF3</title>
+    <title>Mystorytelling</title>
 
     <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
     <!-- /global stylesheets -->
     <style>
         body{
@@ -27,12 +34,6 @@
     {% endblock %}
     <!-- /main navbar -->
 
-
-    <!-- Second navbar -->
-    {% block second_navbar %}
-        {% include 'layout/second_navbar.html.twig' %}
-    {% endblock %}
-    <!-- /second navbar -->
     {% block home_jumbotron %}{% endblock %}
     <!-- Page header -->
     {% block header_page %}
@@ -88,16 +89,25 @@
 
 
     <!-- Footer -->
-    <div class="footer footer-boxed text-muted">
-        &copy; {{ 'now'|date('Y') }}. <a href="#">Trainingo</a> by <a href="#" target="_blank">Agence MIT</a>
+    <div class="footer footer-boxed">
+        &copy; {{ 'now'|date('Y') }}. <a href="#">Mystorytelling</a> by <a href="#" target="_blank">Agence MIT</a>
     </div>
     <!-- /footer -->
     <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script src="{{ asset('build/manifest.js') }}"></script>
     <script src="{{ asset('build/js/app.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
     {% block javascripts %}{% endblock %}
     </body>
 {% endblock %}
 
 </html>
+
+
+	
