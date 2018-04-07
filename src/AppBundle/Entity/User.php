@@ -5,7 +5,9 @@ namespace AppBundle\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * User
@@ -13,6 +15,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Table(name="app_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
+ * @ApiResource(itemOperations={
+ *     "get",
+ *     "put",
+ *     "delete",
+ *     "api_sign_up"={"route_name"="signUpAPI"}
+ * })
+ *
  */
 class User extends BaseUser
 {

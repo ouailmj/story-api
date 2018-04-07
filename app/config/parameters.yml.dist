@@ -12,7 +12,7 @@ parameters:
 
     mailer_transport: smtp
     mailer_host: 127.0.0.1
-    mailer_user: ~
+    mailer_user: contact@mystorytelling.com
     mailer_password: ~
     mailer_name: 'Instant T'
 
@@ -26,7 +26,7 @@ parameters:
     jwt_private_key_path: '%kernel.root_dir%/../var/jwt/private.pem'
     jwt_public_key_path: '%kernel.root_dir%/../var/jwt/public.pem'
     jwt_key_pass_phrase: 'EyeGoFast-2018'
-    jwt_token_ttl: 86400
+    jwt_token_ttl: 31536000
 
     # Facebook OAuth Access
     facebook_id: 'FacebookID'

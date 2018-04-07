@@ -11,6 +11,8 @@ namespace AppBundle\Form\Type;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
@@ -22,17 +24,26 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('phoneNumber', TelType::class, [
-                'label' =>  'registration.fields.phone_number',
+            ->remove('username')
+            ->remove('plainPassword')
+            ->remove('email')
+
+            ->add('plainPassword' , PasswordType::class,[
+                'label' =>  false,
+                'attr' => array('class' => 'input100','placeholder'=>'registration.placeholder.plainPassword'),
+                ])
+
+            ->add('username' , null,[
+                'label' =>  false,
+                'attr' => array('class' => 'input100','placeholder'=>'registration.placeholder.username'),
             ])
 
-            ->add('fullName', TextType::class, [
-                'label' =>  'registration.fields.full_name',
+            ->add('email' , EmailType::class,[
+                'label' =>  false,
+                'attr' => array('class' => 'input100','placeholder'=>'registration.placeholder.email'),
             ])
 
-            ->add('timezoneId', TimezoneType::class, [
-                'label' => 'registration.fields.time_zone',
-            ])
+
 
         ;
     }
