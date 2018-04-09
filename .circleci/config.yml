@@ -30,12 +30,20 @@ jobs:
           name: Install PHP Extensions
           command: sudo docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl
 
+      - restore_cache:
+          key: dependency-cache-{{ checksum "composer.lock" }}
+
       - run:
           name: Install php dependencies
           command: |
             php -r "file_put_contents('composer.phar', file_get_contents('https://getcomposer.org/composer.phar'));"
             php -d memory_limit=-1 composer.phar self-update --no-interaction
             php -d memory_limit=-1 composer.phar  install -n
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
 
       - run:
           name: Initialize Database
@@ -46,18 +54,10 @@ jobs:
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
 
-      - restore_cache:
-          key: dependency-cache-{{ checksum "composer.lock" }}
-
       - run:
           name: Install npm dependencies
           command: |
             yarn install
-
-      - save_cache:
-          key: dependency-cache-{{ checksum "composer.lock" }}
-          paths:
-            - vendor
 
       - save_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
