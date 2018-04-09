@@ -15,6 +15,9 @@
 					<span class="login100-form-title">
 						Espace de connexion
 					</span>
+					        {% if error %}
+            					<div class="form-group "><span class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</span></div>
+        					{% endif %}
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
 						<input id="username" name="_username" value="{{ last_username }}" required="required" class="input100" type="text" placeholder="Pseudo">

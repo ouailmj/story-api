@@ -1,25 +1,136 @@
 {% trans_default_domain 'FOSUserBundle' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
+    <script scr="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    
+{% endblock %}
 {% form_theme form 'Form/fields.html.twig' %}
 
 {% block content %}
-    <div class="panel panel-white">
-        <div class="panel-heading">
-            <h6 class="panel-title">Profil <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-        </div>
-
-        <div class="panel-body">
-            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-
-            {{ form_errors(form) }}
-            {{ form_row(form.fullName)}}
-            {{ form_rest(form) }}
-
-            <div class="text-right">
-                <div class="btn-group">
-                    <button name="update" type="submit" class="btn btn-primary legitRipple">Modifier <i class="icon-arrow-right14 position-right"></i></button>
+           <div class="container profil">
+        <div class="row">
+            <div class="menu-side col-md-4">
+              <div class="menu-items">
+              <div class="row">
+                  <input type="submit" class="input100 menu-item" value="Modifier mon profil">
                 </div>
+                <div class="row">
+                  <input type="submit" class="input100 menu-item" value="Change de mot de passe">
+                  </div>
+              </div>
             </div>
-            {{ form_end(form) }}
+            <div class="profil-info col-md-8">
+
+              <!-- Profil Modifier Start -->
+              <div  style="display:block" class="profil-mdf">
+                <form action="">
+                  <div class="row">
+                      <div class="col-md-10">
+                          <input value="Mohamed Ahamada" class="input100" type="text" placeholder="Nom">
+                          <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-smile-o" aria-hidden="true"></i>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-10">
+                          <input value="Ahamada" class="input100" type="text" placeholder="Pseudo">
+                          <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                          </span>
+                      </div>
+                      
+                  </div>
+                  <div class="row">
+                      <div class="col-md-10">
+                          <input value="abdenbi.ou@outlook.com" class="input100" type="email" placeholder="Email">
+                          <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-10">
+                          <input value="+33 6584566546" class="input100" type="tel" placeholder="+33 6584566546">
+                          <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                          </span>
+                      </div>
+                  </div>
+                  <div class="row">
+                        <div class="col-md-10">
+                            <input value="GMT+1" class="input100" type="text" placeholder="Time Zone">
+                            <span class="focus-input100"></span>
+                            <span class="symbol-input100">
+                              <i class="fa fa-globe" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                  <div class="row validate">
+                      <div class="col-md-5">
+                          <button type="button" class="login100-form-btn">Enregistrer</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Profil Modifier End -->
+
+              <!-- Change Password Start -->
+
+              <div  style="display:none" class="profil-mdf">
+                  <form id="mdp-form" action="">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input class="input100" type="password" placeholder="Mot de passe Actuel">
+                            <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
+                            <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
+                            <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row validate">
+                        <div class="offset-md-5 col-md-4">
+                            <button type="button" class="login100-form-btn">Enregistrer</button>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+                <script>
+                    $(document).ready(function(){
+                        $(".menu-item").click(function(){
+                            $(".profil-mdf").toggle();
+                        });
+                    });
+                    </script>
+                <!-- Change Password End -->
+            </div>
         </div>
-    </div>
+      </div>
 {% endblock %}

@@ -1,0 +1,15 @@
+AppBundle\Entity\User:
+    administrator:
+        username: admin
+        email: admin.email@gmail.com
+        password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
+        enabled: true
+        roles: ['ROLE_SUPER_ADMIN']
+        fullName: 'admin'
+    user:
+        username: user
+        email: user__email@hotmail.fr
+        password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
+        enabled: true
+        roles: ['ROLE_USER']
+        fullName: 'user'
