@@ -7,5 +7,5 @@ modules:
     enabled:
         - Asserts
         - Doctrine2:
-            depends: Symfony
+            depends: localhost
         - \Helper\Unit
