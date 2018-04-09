@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
+.cover-one{
+    background: url("/assets/images/login-pg.jpg");
+    background-size: cover;
+}
+
+.about-app{
+    background: #fff;
+    background: url("/assets/images/cover-two");
+    background-size: cover;
+}
+.section-one{
+    height: 100%;
+    margin: 0;
+}
+
+.welcome-msg{
+    color: #fff;
+    margin-top: 20%;
+}
+
+.welcome-msg h1{
+    font-size:54px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 150%;
+}
+
+.welcome-msg span{
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: lighter;
+}
+
+.getstarted-btn{
+    border-radius: 20px 20px;
+    background: #43c6ac;
+    color: #fff;
+}
+
+.about-app h1{
+    font-size: 34px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.about-app .d-block{
+    width: 100%;
+    max-width: 480px;
+}
+
+.about-app .screen{
+    margin-top:150px;
+}

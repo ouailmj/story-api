@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
-    <script scr="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     
 {% endblock %}
 {% form_theme form 'Form/fields.html.twig' %}
@@ -26,7 +26,7 @@
             <div class="profil-info col-md-8">
 
               <!-- Profil Modifier Start -->
-              <div  style="display:block" class="profil-mdf">
+              <div  style="display:none" class="profil-mdf">
                 <form action="">
                   <div class="row">
                       <div class="col-md-10">
@@ -86,7 +86,7 @@
 
               <!-- Change Password Start -->
 
-              <div  style="display:none" class="profil-mdf">
+              <div  style="display:block" class="profil-mdf">
                   <form id="mdp-form" action="">
                     <div class="row">
                         <div class="col-md-10">
@@ -134,3 +134,25 @@
         </div>
       </div>
 {% endblock %}
+
+
+{# <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title">Profil <a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+        </div>
+
+        <div class="panel-body">
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            {{ form_errors(form) }}
+            {{ form_row(form.fullName)}}
+            {{ form_rest(form) }}
+
+            <div class="text-right">
+                <div class="btn-group">
+                    <button name="update" type="submit" class="btn btn-primary legitRipple">Modifier <i class="icon-arrow-right14 position-right"></i></button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>#}
