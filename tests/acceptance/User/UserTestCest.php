@@ -1,7 +1,8 @@
 <?php
 
+namespace User;
 
-class HomeTestCest
+class UserTestCest
 {
     public function frontpageWorks(AcceptanceTester $I)
     {
@@ -55,15 +56,6 @@ class HomeTestCest
          $I->see("Mon profil");
      }
 
-
-         public function delete_account_user(AcceptanceTester $I)
-     {
-            $this->loginAsUser($I);
-            $I->wantTo("supprimer mon compte");
-            $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-            $I->seeCurrentUrlEquals('/auth/profile/');
-            $I->click('div.btn-group a:nth-child(3)');
-     }
 
      public function delete_account_user(AcceptanceTester $I)
      {

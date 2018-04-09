@@ -1,7 +1,7 @@
 <?php
 
 
-class HomeTestCest
+class AdminTestCest
 {
     public function frontpageWorks(AcceptanceTester $I)
     {

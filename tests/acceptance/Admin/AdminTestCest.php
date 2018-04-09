@@ -1,7 +1,8 @@
 <?php
 
+namespace Admin;
 
-class HomeTestCest
+class AdminTestCest
 {
     public function frontpageWorks(AcceptanceTester $I)
     {
