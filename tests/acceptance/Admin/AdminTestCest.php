@@ -4,14 +4,14 @@ namespace Admin;
 
 class AdminTestCest
 {
-    public function frontpageWorks(AcceptanceTester $I)
+    public function frontpageWorks(\AcceptanceTester $I)
     {
         $I->wantTo("Test frontpage");
         $I->amOnPage('/');
         $I->see('Welcome');
     }
 
-     public function loginAsAdmin(AcceptanceTester $I)
+     public function loginAsAdmin(\AcceptanceTester $I)
      {
          $I->wantTo("Verify the User login");
          $I->amOnPage("/auth/register/");
@@ -25,7 +25,7 @@ class AdminTestCest
      }
 
     
-     public function ModifierInfo(AcceptanceTester $I)
+     public function ModifierInfo(\AcceptanceTester $I)
      {
          $this->loginAsAdmin($I);
          $I->wantTo("Modifier les informations du profil");
@@ -41,7 +41,7 @@ class AdminTestCest
          $I->see("062455478");
      }
 
-     public function Modifier_password(AcceptanceTester $I)
+     public function Modifier_password(\AcceptanceTester $I)
      {
          $this->loginAsAdmin($I);
          $I->wantTo("Modifier le mot de passe");
@@ -56,7 +56,7 @@ class AdminTestCest
          $I->see("Mon profil");
      }
 
-     public function delete_account_user(AcceptanceTester $I)
+     public function delete_account_user(\AcceptanceTester $I)
      {
             $this->loginAsAdmin($I);
             $I->wantTo("supprimer mon compte");
@@ -67,12 +67,12 @@ class AdminTestCest
     
     
 
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
 
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
     }
 

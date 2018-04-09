@@ -4,14 +4,14 @@ namespace User;
 
 class UserTestCest
 {
-    public function frontpageWorks(AcceptanceTester $I)
+    public function frontpageWorks(\AcceptanceTester $I)
     {
         $I->wantTo("Test frontpage");
         $I->amOnPage('/');
         $I->see('Welcome');
     }
 
-     public function loginAsUser(AcceptanceTester $I)
+     public function loginAsUser(\AcceptanceTester $I)
      {
          $I->wantTo("Verify the User login");
          $I->amOnPage("/auth/register/");
@@ -24,7 +24,7 @@ class UserTestCest
          $I->seeCurrentUrlEquals('/');
      }
 
-     public function ModifierInfo(AcceptanceTester $I)
+     public function ModifierInfo(\AcceptanceTester $I)
      {
          $this->loginAsUser($I);
          $I->wantTo("Modifier les informations du profil");
@@ -41,7 +41,7 @@ class UserTestCest
      }
 
 
-     public function Modifier_password(AcceptanceTester $I)
+     public function Modifier_password(\AcceptanceTester $I)
      {
          $this->loginAsUser($I);
          $I->wantTo("Modifier le mot de passe");
@@ -57,7 +57,7 @@ class UserTestCest
      }
 
 
-     public function delete_account_user(AcceptanceTester $I)
+     public function delete_account_user(\AcceptanceTester $I)
      {
             $this->loginAsUser($I);
             $I->wantTo("supprimer mon compte");
@@ -66,7 +66,7 @@ class UserTestCest
             $I->click('div.btn-group a:nth-child(3)');
      }
     
-    public function signup(AcceptanceTester $I)
+    public function signup(\AcceptanceTester $I)
     {
         $I->wantTo("S'inscrire");
         $I->amOnPage("/auth/register/");
@@ -76,12 +76,12 @@ class UserTestCest
         $I->click("div.container-login100-form-btn button");
     }
 
-    public function _before(AcceptanceTester $I)
+    public function _before(\AcceptanceTester $I)
     {
 
     }
 
-    public function _after(AcceptanceTester $I)
+    public function _after(\AcceptanceTester $I)
     {
 
     }
