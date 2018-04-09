@@ -20,7 +20,6 @@ class UserTestCest
         $I->FillField('_username' , "user");
         $I->FillField('_password' , "f%/R4Uk#](wUvM'V");
         $I->click('_submit');
-        $I->see('Victoria');
         $I->seeCurrentUrlEquals('/');
     }
 
