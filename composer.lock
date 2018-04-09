@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f3a08df196c110085651e4f6b4f3dd2",
+    "content-hash": "cb3e6d600429f6f439ba05ef2c67e0ce",
     "packages": [
         {
             "name": "api-platform/core",
@@ -2396,6 +2396,96 @@
                 "psr-3"
             ],
             "time": "2017-06-19T01:22:40+00:00"
+        },
+        {
+            "name": "mtdowling/cron-expression",
+            "version": "v1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtdowling/cron-expression.git",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "reference": "9504fa9ea681b586028adaaa0877db4aecf32bad",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cron\\": "src/Cron/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2017-01-23T04:29:33+00:00"
+        },
+        {
+            "name": "multiinfo/scheduler-bundle",
+            "version": "0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/multiinfo/SchedulerBundle.git",
+                "reference": "6e6f74147cd1dff4655c1fd1a2170298dd39aac4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/multiinfo/SchedulerBundle/zipball/6e6f74147cd1dff4655c1fd1a2170298dd39aac4",
+                "reference": "6e6f74147cd1dff4655c1fd1a2170298dd39aac4",
+                "shasum": ""
+            },
+            "require": {
+                "mtdowling/cron-expression": "^1.0",
+                "php": "^5.6 || ^7.0",
+                "symfony/console": "^2.8 || ^3.0 || ^4.0",
+                "symfony/framework-bundle": "^2.8 || ^3.0 || ^4.0",
+                "symfony/process": "^2.8 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35|^5.7.11|^6.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MIT\\Bundle\\SchedulerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MIT",
+                    "email": "contact@mit-agency.com"
+                }
+            ],
+            "description": "MIT Scheduler Bundle",
+            "time": "2018-04-08T17:32:35+00:00"
         },
         {
             "name": "namshi/jose",
