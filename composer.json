@@ -28,7 +28,7 @@
         "egeloen/ckeditor-bundle": "^6.0",
         "friendsofsymfony/user-bundle": "~2.0",
         "guzzlehttp/guzzle": "^6.0",
-        "hwi/oauth-bundle": "^0.5.3",
+        "hwi/oauth-bundle": "^0.6.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "knplabs/knp-menu-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.4",

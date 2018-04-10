@@ -11,22 +11,23 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
 {% block content %}
-           <div class="container profil">
+
+    <div class="container profil">
         <div class="row">
             <div class="menu-side col-md-4">
               <div class="menu-items">
-              <div class="row">
-                  <input type="submit" class="input100 menu-item" value="Modifier mon profil">
-                </div>
-                <div class="row">
-                  <input type="submit" class="input100 menu-item" value="Change de mot de passe">
+                  <div class="row">
+                      <button type="button" onclick="window.location.href='{{ path('fos_user_profile_edit')}}'" class="input100 menu-item">Modifier mon profil</button>
+                  </div>
+                  <div class="row">
+                      <button type="button" onclick="window.location.href='{{ path('fos_user_change_password') }}'"  class="input100 menu-item" >Change de mot de passe</button>
                   </div>
               </div>
             </div>
             <div class="profil-info col-md-8">
 
               <!-- Profil Modifier Start -->
-              <div  style="display:none" class="profil-mdf">
+              <div   class="profil-mdf">
                   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                   {% form_theme form 'Form/Registration/fields.html.twig' %}
 
@@ -34,7 +35,7 @@
 
                   <div class="row">
                       <div class="col-md-10">
-                          {{ form_row(form.fullName)}} {# <input value="Mohamed Ahamada" class="input100" type="text" placeholder="Nom">#}
+                          {{ form_row(form.fullName)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
                             <i class="fa fa-smile-o" aria-hidden="true"></i>
@@ -100,53 +101,18 @@
 
               <!-- Change Password Start -->
 
-              <div  style="display:block" class="profil-mdf">
-                  <form id="mdp-form" action="">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input class="input100" type="password" placeholder="Mot de passe Actuel">
-                            <span class="focus-input100"></span>
-                          <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                          </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
-                            <span class="focus-input100"></span>
-                          <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                          </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
-                            <span class="focus-input100"></span>
-                          <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                          </span>
-                        </div>
-                    </div>
-                    <div class="row validate">
-                        <div class="offset-md-5 col-md-4">
-                            <button type="button" class="login100-form-btn">Enregistrer</button>
-                        </div>
-                    </div>
-                  </form>
-                </div>
-                <script>
-                    $(document).ready(function(){
-                        $(".menu-item").click(function(){
-                            $(".profil-mdf").toggle();
-                        });
-                    });
-                    </script>
-                <!-- Change Password End -->
+
+                <!--     <script>
+                         $(document).ready(function(){
+                             $(".menu-item").click(function(){
+                                 $(".profil-mdf").toggle();
+                             });
+                         });
+                         </script>
+                      Change Password End -->
             </div>
         </div>
-      </div>
+    </div>
 {% endblock %}
 
 
