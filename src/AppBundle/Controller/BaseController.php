@@ -36,7 +36,6 @@ class BaseController extends Controller
 
     protected function getEM($name = 'default')
     {
-        // TODO: Translate
         return $this->getDoctrine()->getManager($name);
     }
 }
