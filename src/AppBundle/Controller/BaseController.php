@@ -17,20 +17,21 @@ class BaseController extends Controller
 {
     public function addSuccessFlash()
     {
-        // TODO: Translate
-        $this->addFlash('success', 'Votre opération a été exécutée avec succès');
+        $msg = $this->get('translator')->trans('flash.success');
+        $this->addFlash('success', $msg);
+
     }
 
     public function addErrorFlash()
     {
-        // TODO: Translate
-        $this->addFlash('error', 'Votre opération n\' a pas pu être exécutée.');
+        $msg = $this->get('translator')->trans('flash.error');
+        $this->addFlash('error', $msg);
     }
 
     public function addWarningFlash()
     {
-        // TODO: Translate
-        $this->addFlash('warning', 'Votre opération n\' a pas pu être exécutée.');
+        $msg = $this->get('translator')->trans('flash.warning');
+        $this->addFlash('warning', $msg);
     }
 
     protected function getEM($name = 'default')

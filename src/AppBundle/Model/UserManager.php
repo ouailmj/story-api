@@ -85,9 +85,13 @@ class UserManager
      *
      * @param User $user
      */
-    public function deleteUser(User $user)
+    public function deleteUser(User $user, $sendMail = true)
     {
         $this->fosUserManager->deleteUser($user);
+
+        if ($sendMail) {
+            $this->mailer->sendAccountDeletedMessage($user);
+        }
     }
 
     /**
