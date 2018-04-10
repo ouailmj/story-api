@@ -34,12 +34,17 @@ class SignUpAction extends Controller
      *
      *          "_api_collection_operation_name"="api_sign_up"
      *     },
-     *
      * )
      * @Method({"POST"})
+     *
      */
     public function __invoke(User $data, UserManager $userManager)
     {
+
+        $encoder = $this->container->get('security.password_encoder');
+        $password = $encoder->encodePassword($data, $data->getPassword());
+        $data->setPassword($password);
+
         $userManager->createUser($data);
 
         $response = new Response(json_encode($data->getId()));

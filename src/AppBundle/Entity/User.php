@@ -15,6 +15,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * User.
@@ -24,12 +25,17 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("email")
  * @UniqueEntity("username")
- * @ApiResource(itemOperations={
+ * @ApiResource(
+ *     itemOperations={
  *     "get",
  *     "put",
  *     "delete",
- *     "api_sign_up"={"route_name"="signUpAPI"}
- * })
+ *     "api_sign_up"={"route_name"="updateProfileAPI"},
+ *     "api_update_profile"={"route_name"="signUpAPI"},
+ *     "api_current_user"={"route_name"="currentUserAPI"}
+ *     }
+ *)
+ *
  */
 class User extends BaseUser
 {

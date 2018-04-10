@@ -86,13 +86,13 @@ class Mailer
      *
      * @param User $user
      */
-    public function sendAccountDeletedMessage(User $user)
+    public function sendAccountDeletedMessage($email)
     {
         $subject = $this->translator->trans('mail.user_deleted_header');
         $bodyMessage = $this->templateEngine->render('mail/user/user_deleted.html.twig', [
             'subject' => $subject,
         ]);
-        $this->sendEmailMessage($bodyMessage, $user->getEmail(), $subject);
+        $this->sendEmailMessage($bodyMessage, $email, $subject);
     }
 
     /**
