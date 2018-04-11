@@ -4,7 +4,7 @@
 
 .btn-storytelling-login{
     background-color: #43c6ac;
-    color: #fff;
+    color: #000;
     border-color: #43c6ac;
 }
 
@@ -54,7 +54,6 @@
 body {
   font-family: Poppins-Regular, sans-serif;
   /*background: #eee;*/
-  background: linear-gradient(to bottom, rgba(67,198,172,1) 50%,rgba(25,22,84,0.8) 100%);
 }
 
 /*---------------------------------------------*/
@@ -155,14 +154,14 @@ iframe {
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
   line-height: 1.5;
-  color: #fff;
+  color: #000;
 }
 
 .txt2 {
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
   line-height: 1.5;
-  color: #fff;
+  color: #000;
 }
 
 
@@ -189,8 +188,8 @@ iframe {
 .wrap-login100 {
   /*background:url('/assets/images/login-pg.jpg');
   background-size: cover;*/
-  margin-top: 5px;
-  background: #3e4e6b;
+  margin-top: 50px;
+  background: #fff;
   width: 960px;
   border-radius: 10px;
   overflow: hidden;
@@ -228,7 +227,7 @@ iframe {
 .login100-form-title {
   font-family: 'Kaushan Script', cursive ;
   font-size: 32px;
-  color: #fff;
+  color: #000;
   line-height: 1.2;
   text-align: center;
 

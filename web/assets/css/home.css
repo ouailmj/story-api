@@ -24,6 +24,10 @@ button {
     margin-bottom: 0 !important;
 }
 
+.jumbotron .container{
+    margin-top: 10%;
+}
+
 .atlas-cta {
     border-radius: 22px !important;
     padding: 12px 30px !important;
@@ -72,7 +76,7 @@ button {
 
 #banner {
     background-size: cover;
-    height: 500px;
+    height: 700px;
 }
 
 /********** banner **********/

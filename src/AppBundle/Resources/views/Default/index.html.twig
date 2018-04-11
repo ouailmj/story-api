@@ -1,14 +1,16 @@
 {% extends "::base.html.twig" %}
 
 {% block title %}AppBundle:Default:index{% endblock %}
-{% block main_navbar %}
-        
-    {% endblock %}
 {% block stylesheet %}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/instant.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
 {% endblock %}
 {% block container %}
 <style>
@@ -18,16 +20,6 @@
 </style>
     <div class="jumbotron jumbotron-fluid" id="banner" style="background-image: url({{ asset('assets/images/home/banner-bk.jpg') }});">
         <div class="container text-center text-md-left">
-            <header>
-                <div class="row justify-content-between">
-                    <div class="col-2">
-                        <img src="{{ asset('assets/images/logo_light.png') }}" alt="logo">
-                    </div>
-                    <div class="col-6 align-self-center text-right">
-                        <a href="{{ path('fos_user_security_login') }}" class="text-white lead">Connexion</a>
-                    </div>
-                </div>
-            </header>
             <h2 data-aos="fade" data-aos-easing="linear" data-aos-duration="1000" data-aos-once="true" class="display-3 text-white font-weight-bold my-5">
                 RACONTEZ VOTRE HISTOIRE <br>
                 AVEC LES PHOTOS DE VOS INVITÉS !
