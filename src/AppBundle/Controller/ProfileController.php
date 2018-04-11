@@ -11,6 +11,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,7 +20,7 @@ class ProfileController extends BaseController
     /**
      * @Route("/auth/profile/delete")
      */
-    public function deleteAction(Request $request)
+    public function deleteAction(Request $request, UserManager $userManager)
     {
         $form = $this->createFormBuilder()
             ->setAction($this->generateUrl('user_delete', ['id' => $this->getUser()->getId()]))
@@ -28,10 +29,7 @@ class ProfileController extends BaseController
         ;
         $form->handleRequest($request);
 
-        // TODO: Delete user should be handled outside of the controller (in UserManager)
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($this->getUser());
-        $em->flush();
+        $userManager->deleteUser($this->getUser());
 
         return $this->redirectToRoute('app_default_index');
     }

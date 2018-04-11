@@ -9,40 +9,51 @@
  * file that was distributed with this source code.
  */
 
+
 namespace AppBundle\Action;
+
 
 use AppBundle\Entity\User;
 use AppBundle\Model\UserManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-class SignUpAction extends Controller
+class UpdateProfileAction extends Controller
 {
+
     /**
      * @param User        $data
      * @param UserManager $userManager
      *
-     * @return JsonResponse
+     * @return Response
      *
      * @Route(
-     *     name="signUpAPI",
-     *     path="/users/sign-up",
+     *     name="updateProfileAPI",
+     *     path="/update-profile",
      *     defaults={
      *          "_api_resource_class"=User::class,
      *
-     *          "_api_collection_operation_name"="api_sign_up"
+     *          "_api_collection_operation_name"="api_update_profile"
      *     },
-     * )
-     * @Method({"POST"})
      *
+     * )
+     * @Method({"PUT"})
+     * @Security("has_role('ROLE_USER')")
      */
-    public function __invoke(User $data, UserManager $userManager)
+    public function __invoke( $data, UserManager $userManager)
     {
 
-        $userManager->createUser($data);
+        $this->getUser()->setPhoneNumber($data->getPhoneNumber());
+        $this->getUser()->setFullName($data->getFullName());
+        $this->getUser()->setUsername($data->getUsername());
+        $this->getUser()->setEmail($data->getEmail());
+        $this->getUser()->setTimezoneId($data->getTimezoneId());
+
+        $userManager->updateUser($this->getUser());
 
         $jwtManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
 
