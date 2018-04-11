@@ -6,4 +6,6 @@ actor: UnitTester
 modules:
     enabled:
         - Asserts
+        - Doctrine2:
+            depends: localhost
         - \Helper\Unit
