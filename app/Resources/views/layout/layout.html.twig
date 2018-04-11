@@ -10,12 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
     <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/util.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
+    {% block stylesheet %}{% endblock %}
     <!-- /global stylesheets -->
     <style>
         body{
@@ -65,9 +62,10 @@
     <!-- /page header -->
 
 
-    <!-- Page container -->
-    <div class="page-container">
+    
         {% block container %}
+        <!-- Page container -->
+        <div class="page-container">
             <!-- Page content -->
             <div class="page-content">
                 {% block left_sidebar %}
@@ -83,16 +81,17 @@
                 {% endblock %}
             </div>
             <!-- /page content -->
-        {% endblock %}
-    </div>
+            </div>
     <!-- /page container -->
+        {% endblock %}
+    
 
 
     <!-- Footer -->
-    <div class="footer footer-boxed">
+    {#<div class="footer footer-boxed">
         &copy; {{ 'now'|date('Y') }}. <a href="#">Mystorytelling</a> by <a href="#" target="_blank">Agence MIT</a>
     </div>
-    <!-- /footer -->
+    <!-- /footer -->#}
     <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
     <script src="{{ asset('build/manifest.js') }}"></script>
@@ -110,4 +109,3 @@
 </html>
 
 
-	
