@@ -30,9 +30,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "get",
  *     "put",
  *     "delete",
- *     "api_sign_up"={"route_name"="updateProfileAPI"},
- *     "api_update_profile"={"route_name"="signUpAPI"},
- *     "api_current_user"={"route_name"="currentUserAPI"}
+ *     "api_sign_up"={"route_name"="signUpAPI"},
+ *     },
+ *     collectionOperations= {
+ *     "api_current_user"={
+ *          "route_name"="currentUserAPI",
+ *          "method"="GET"
+ *      },
+ *     "api_update_profile"={"route_name"="updateProfileAPI"},
+ *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
  *

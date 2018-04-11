@@ -19,21 +19,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\Serializer\Serializer;
 
 class CurrentUserAction extends Controller
 {
 
     /**
      *
-     * @return Response
-     *
      * @Route(
      *     name="currentUserAPI",
-     *     path="/users/current",
+     *     path="/current-user",
      *     defaults={
      *          "_api_resource_class"=User::class,
-     *
      *          "_api_collection_operation_name"="api_current_user"
      *     },
      *
@@ -42,14 +38,8 @@ class CurrentUserAction extends Controller
      * @Security("has_role('ROLE_USER')")
      *
      */
-    public function __invoke(Serializer $serializer)
+    public function __invoke(): User
     {
-        $user = $serializer->serialize($this->getUser(), 'json');
-
-        $response = new Response($user);
-
-        $response->headers->set('Content-Type', 'application/ld+json');
-
-        return $response;
+        return $this->getUser();
     }
 }
