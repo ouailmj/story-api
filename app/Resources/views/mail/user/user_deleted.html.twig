@@ -1,0 +1,12 @@
+{% extends "mail/layout.html.twig" %}
+
+{% block content %}
+
+ <p>{{ 'mail.password_updated_title'|trans }} <br>
+     {{ 'mail.user_created.mail'|trans }}: <strong>{{ email }}</strong><br>
+     {{ 'mail.user_created.password'|trans }}: <strong>{{ password }}</strong><br>
+     {{ 'mail.user_created.url'|trans }}: <strong><a href="{{ url('fos_user_security_login') }}">{{ url('fos_user_security_login') }}</a></strong><br></p>
+
+
+
+{% endblock %}

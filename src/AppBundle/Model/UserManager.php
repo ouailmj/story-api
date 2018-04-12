@@ -49,6 +49,7 @@ class UserManager
      * @param User $user
      * @param bool $flush
      * @param bool $sendMail
+     * @return User
      */
     public function createUser(User $user, $flush = true, $sendMail = false)
     {
@@ -61,6 +62,7 @@ class UserManager
         if ($sendMail) {
             $this->mailer->sendAccountCreatedMessage($user);
         }
+        return $user;
     }
 
     /**
@@ -85,9 +87,14 @@ class UserManager
      *
      * @param User $user
      */
-    public function deleteUser(User $user)
+    public function deleteUser(User $user, $sendMail = true)
     {
+        $email=$user->getEmail();
         $this->fosUserManager->deleteUser($user);
+
+        if ($sendMail) {
+            $this->mailer->sendAccountDeletedMessage($email);
+        }
     }
 
     /**
@@ -97,4 +104,13 @@ class UserManager
     {
         return $this->em->getRepository('AppBundle:User')->findAll();
     }
+
+    /**
+     * @param User $user
+     */
+   public function updateUser(User $user)
+   {
+       $this->fosUserManager->updateUser($user);
+
+   }
 }

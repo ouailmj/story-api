@@ -15,6 +15,7 @@ use AppBundle\Entity\User;
 use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,7 +25,7 @@ class SignUpAction extends Controller
      * @param User        $data
      * @param UserManager $userManager
      *
-     * @return Response
+     * @return JsonResponse
      *
      * @Route(
      *     name="signUpAPI",
@@ -34,17 +35,17 @@ class SignUpAction extends Controller
      *
      *          "_api_collection_operation_name"="api_sign_up"
      *     },
-     *
      * )
      * @Method({"POST"})
+     *
      */
     public function __invoke(User $data, UserManager $userManager)
     {
-        $userManager->createUser($data);
 
-        $response = new Response(json_encode($data->getId()));
-        $response->headers->set('Content-Type', 'application/ld+json');
+        $user = $userManager->createUser($data);
 
-        return $response;
+        $jwtManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
+
+        return new JsonResponse(['token' => $jwtManager->create($user)]);
     }
 }
