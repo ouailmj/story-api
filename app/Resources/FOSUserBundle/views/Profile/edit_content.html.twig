@@ -88,10 +88,17 @@
                       </div>
                   </div>
                   {{ form_rest(form) }}
-                  <div class="row validate">
-                      <div class="col-md-5">
-                          <button type="submit" class="login100-form-btn">Enregistrer</button>
-                      </div>
+                  <div class="row">
+                    <div class="validate">
+                        <div class="col-md-5">
+                            <button type="submit" class="login100-form-btn">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div class="validate">
+                        <div class="col-md-5">
+                            <a onclick="return confirm('Are you sure ? This action is irreversible.');" class="btn-danger login100-form-btn" href="/auth/profile/delete">Delete Account</a>
+                        </div>
+                    </div>
                   </div>
                   {{ form_end(form) }}
               </div>
@@ -135,15 +142,9 @@
                             <button type="button" class="login100-form-btn">Enregistrer</button>
                         </div>
                     </div>
+                    
                   </form>
                 </div>
-                <script>
-                    $(document).ready(function(){
-                        $(".menu-item").click(function(){
-                            $(".profil-mdf").toggle();
-                        });
-                    });
-                    </script>
                 <!-- Change Password End -->
 
  
