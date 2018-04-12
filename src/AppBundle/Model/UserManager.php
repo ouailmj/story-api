@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Model;
@@ -96,5 +99,23 @@ class UserManager
     public function allUsers()
     {
         return $this->em->getRepository('AppBundle:User')->findAll();
+    }
+
+    /**
+     * @param User $user
+     * @param $newTimezoneId
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @return User
+     */
+    public function updateTimezoneId(User $user, $newTimezoneId)
+    {
+        $user->setTimezoneId($newTimezoneId);
+
+        $this->em->flush();
+
+        return $user;
     }
 }

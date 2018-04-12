@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Entity;
@@ -15,6 +18,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * User.
@@ -24,12 +28,18 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity("email")
  * @UniqueEntity("username")
- * @ApiResource(itemOperations={
- *     "get",
- *     "put",
- *     "delete",
- *     "api_sign_up"={"route_name"="signUpAPI"}
- * })
+ * @ApiResource(
+ *     itemOperations={
+ *          "get",
+ *          "put",
+ *          "delete",
+ *          "api_sign_up"={"route_name"="signUpAPI"},
+ *          "change_user_timezone"={
+ *              "route_name"="api_change_user_timezone",
+ *              "denormalization_context"={"groups"={"change_user_timezone"}}
+ *          }
+ *     }
+ *     )
  */
 class User extends BaseUser
 {
@@ -71,6 +81,7 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column( type="string", length=50, nullable=true)
+     * @Groups({"change_user_timezone"})
      */
     protected $timezoneId;
 
