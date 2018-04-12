@@ -4,77 +4,45 @@ namespace User;
 
 class UserTestCest
 {
-    public function frontpageWorks(\AcceptanceTester $I)
-    {
-        $I->wantTo("Test frontpage");
-        $I->amOnPage('/');
-        $I->see('Welcome');
-    }
 
-    public function loginAsUser(\AcceptanceTester $I)
+    public function loginAsUser(\AcceptanceTester $I) //yes
     {
         $I->wantTo("Verify the User login");
-        $I->amOnPage("/auth/register/");
-        $I->click("div.text-center a");
-        $I->seeCurrentUrlEquals('/auth/login/');
+        $I->amOnPage("/auth/login");
         $I->FillField('_username' , "user");
         $I->FillField('_password' , "f%/R4Uk#](wUvM'V");
         $I->click('_submit');
-        $I->seeCurrentUrlEquals('/');
+        $I->seeCurrentUrlEquals('/auth/profile/edit');
     }
 
     public function ModifierInfo(\AcceptanceTester $I)
     {
-        $this->loginAsUser($I);
         $I->wantTo("Modifier les informations du profil");
-        $I->seeCurrentUrlEquals('');
-        $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-        $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->click("div.btn-group a:nth-child(1)");
-        $I->FillField('fos_user_profile_form[phoneNumber]','062457819');
+        $this->loginAsUser($I);
+        $I->FillField('fos_user_profile_form[phoneNumber]','062145359954');
         $I->FillField('fos_user_profile_form[current_password]' , "f%/R4Uk#](wUvM'V");
-        $I->click("update");
+        $I->click("div.col-md-5 button");
         $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->see("062457819");
+        $I->see("062145359954");
     }
 
 
-    public function Modifier_password(\AcceptanceTester $I)
+    public function Modifier_password(\AcceptanceTester $I) // working
     {
         $I->wantTo("Modifier le mot de passe");
-        $I->amOnPage("/auth/register/");
-        $I->click("div.text-center a");
-        $I->seeCurrentUrlEquals('/auth/login/');
+        $I->amOnPage("/auth/login");
         $I->FillField('_username' , "user_test");
         $I->FillField('_password' , "f%/R4Uk#](wUvM'V");
         $I->click('_submit');
-        $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-        $I->see('Mon profil');
-        $I->click("div.btn-group a:nth-child(2)");
-        $I->seeCurrentUrlEquals('/auth/profile/change-password');
+        $I->amOnPage('/auth/profile/change-password');
         $I->FillField('fos_user_change_password_form[current_password]',"f%/R4Uk#](wUvM'V");
-        $I->FillField('fos_user_change_password_form[plainPassword][first]',"f%/R4Uk#](wUvM");
-        $I->FillField('fos_user_change_password_form[plainPassword][second]',"f%/R4Uk#](wUvM");
-        $I->click("update");
-        $I->see("Mon profil");
+        $I->FillField('fos_user_change_password_form[plainPassword][first]',"f%/R4Uk#](wUvM'");
+        $I->FillField('fos_user_change_password_form[plainPassword][second]',"f%/R4Uk#](wUvM'");
+        $I->click("div.col-md-5 button");
     }
 
-    public function delete_account_user(\AcceptanceTester $I)
-    {
-        $I->wantTo("delete account");
-        $I->amOnPage("/auth/register/");
-        $I->click("div.text-center a");
-        $I->seeCurrentUrlEquals('/auth/login/');
-        $I->FillField('_username' , "user_test");
-        $I->FillField('_password' , "f%/R4Uk#](wUvM");
-        $I->click('_submit');
-        $I->seeCurrentUrlEquals('/');
-        $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-        $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->click('div.btn-group a:nth-child(3)');
-    }
 
-    public function signup(\AcceptanceTester $I)
+        public function signup(\AcceptanceTester $I) //worked
     {
         $I->wantTo("S'inscrire");
         $I->amOnPage("/auth/register/");
