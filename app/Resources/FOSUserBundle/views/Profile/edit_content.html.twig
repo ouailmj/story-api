@@ -71,7 +71,7 @@
                       </div>
                   </div>
                   <div class="row">
-                        <div class="col-md-10">
+                        <div id="timeZone" class="col-md-10">
                             {{ form_row(form.timezoneId)}}
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -82,8 +82,8 @@
                   <div class="row">
                       <div class="col-md-10">
                           {{ form_row(form.current_password)}}
-                          <span class="focus-input100"></span>
-                          <span class="symbol-input100">
+                          <span  class="focus-input100"></span>
+                          <span  class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
                           </span>
                       </div>
@@ -113,6 +113,24 @@
             </div>
         </div>
     </div>
+{% block javascripts %}
+    <script>
+        let oInput = document.getElementById('timeZone'),
+            oChild,spans=[];
+        setTimeout(
+            ()=>{
+                for(i = 0; i < oInput.childNodes.length; i++){
+                    oChild = oInput.childNodes[i];
+                    if(oChild.nodeName == 'SPAN'){
+                        spans.push(oChild);
+                    }
+                }
+                spans[0].className +=" input100";
+                console.log(spans);
+            }, 500);
+    </script>
+{% endblock %}
+
 {% endblock %}
 
 

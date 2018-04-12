@@ -57,7 +57,7 @@ class ProfileType extends AbstractType
 
             ->add('timezoneId', TimezoneType::class,  [
                 'label' => false,
-                'attr' => ['class' => 'input100','placeholder' => 'user.fields.time_zone'],
+                'attr' => ['class' => 'input100 select-search','placeholder' => 'user.fields.time_zone'],
             ])
 
             ->add('current_password', PasswordType::class,  [
