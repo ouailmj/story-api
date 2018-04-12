@@ -72,7 +72,7 @@ button {
 
 #banner {
     background-size: cover;
-    height: 500px;
+    height: 600px;
 }
 
 /********** banner **********/
@@ -166,4 +166,10 @@ button {
     #banner h1 {
         font-size: 3.6rem;
     }
+}
+
+/********** Info Sur App txt **********/
+
+.info-app p{
+    font-size:18px;
 }
