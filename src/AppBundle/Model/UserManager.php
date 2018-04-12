@@ -91,10 +91,8 @@ class UserManager
     {
         $email=$user->getEmail();
         $this->fosUserManager->deleteUser($user);
-
-        if ($sendMail) {
-            $this->mailer->sendAccountDeletedMessage($email);
-        }
+       
+       
     }
 
     /**
