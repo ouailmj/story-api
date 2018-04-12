@@ -4,7 +4,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt">
-					<img height="400" class="instant-logo" width="100" src="{{ asset('assets/images/logo.png') }}" alt="IMG">
+					<img height="400" class="instant-logo" width="100" src="{{ asset('assets/images/logo-login.png') }}" alt="IMG">
 					<div class="img1">
 						<a href=""><img height="40" width="136" id="app-store-img" src="{{ asset('assets/images/46d21e8e5b0d.png') }}" alt=""></a>
 						<a href=""><img height="40" width="136" id="play-store-img" src="{{ asset('assets/images/85c0830b7353.png') }}" alt=""></a>
@@ -34,7 +34,10 @@
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
-					
+					<div class="text-center p-t-12">
+						<input type="checkbox" id="remember_me" name="_remember_me" value="on" class="styled" checked="checked">
+                        {{ 'security.login.remember_me'|trans }}
+					</div>
 					<div class="container-login100-form-btn">
 						<button type="submit" id="_submit" name="_submit" class="login100-form-btn">
 							Connexion

@@ -42,10 +42,10 @@ class SignUpAction extends Controller
     public function __invoke(User $data, UserManager $userManager)
     {
 
-        $userManager->createUser($data);
+        $user = $userManager->createUser($data);
 
         $jwtManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
 
-        return new JsonResponse(['token' => $jwtManager->create($this->getUser())]);
+        return new JsonResponse(['token' => $jwtManager->create($user)]);
     }
 }

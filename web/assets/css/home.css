@@ -76,8 +76,17 @@ button {
 
 #banner {
     background-size: cover;
-    height: 700px;
+    height: 600px;
+
 }
+header{
+    margin-bottom: 100px;
+}
+#connxeion-header{
+    font-size: 22px;
+    font-weight: 600;
+}
+
 
 /********** banner **********/
 #banner header {
@@ -170,4 +179,10 @@ button {
     #banner h1 {
         font-size: 3.6rem;
     }
+}
+
+/********** Info Sur App txt **********/
+
+.info-app p{
+    font-size:18px;
 }

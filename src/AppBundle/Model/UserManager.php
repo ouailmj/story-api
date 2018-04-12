@@ -49,6 +49,7 @@ class UserManager
      * @param User $user
      * @param bool $flush
      * @param bool $sendMail
+     * @return User
      */
     public function createUser(User $user, $flush = true, $sendMail = false)
     {
@@ -61,6 +62,7 @@ class UserManager
         if ($sendMail) {
             $this->mailer->sendAccountCreatedMessage($user);
         }
+        return $user;
     }
 
     /**

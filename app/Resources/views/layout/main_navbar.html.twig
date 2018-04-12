@@ -1,8 +1,21 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
+    *{
+        font-family:'Poppins', sans-serif;
+    }
+    .dropdown-toggle{
+        font-family:'Poppins', sans-serif !important;
+    }
+</style>
 <div class="navbar navbar-inverse bg-storytelling">
     <div class="navbar-boxed">
         <div class="navbar-header">
-            {#<a class="navbar-brand" href="{{ path('app_default_index') }}"><img src="{{ asset('images/logo_light.png') }}" alt=""></a>#}
+
+            <a class="navbar-brand" href="{{ path('app_default_index') }}">Instan't</a>
+            <style>
+            </style>
+
             <ul class="nav navbar-nav pull-right visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
             </ul>
@@ -10,6 +23,9 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown language-switch">
                     <a class="dropdown-toggle" data-toggle="dropdown">
+
+                    <img src="{{ asset('images/flags/gb.png') }}" class="position-left" alt="">
+
                         English
                         <i class="caret"></i>
                     </a>
