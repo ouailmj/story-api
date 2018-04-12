@@ -16,27 +16,27 @@
 
 @font-face {
   font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
+  src: url('../fonts/poppins/Poppins-Regular.ttf');
 }
 
 @font-face {
   font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
+  src: url('../fonts/poppins/Poppins-Bold.ttf');
 }
 
 @font-face {
   font-family: Poppins-Medium;
-  src: url('../fonts/poppins/Poppins-Medium.ttf'); 
+  src: url('../fonts/poppins/Poppins-Medium.ttf');
 }
 
 @font-face {
   font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
+  src: url('../fonts/montserrat/Montserrat-Bold.ttf');
 }
 
 @font-face {
   font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf'); 
+  src: url('../fonts/montserrat/Montserrat-Bold.ttf');
 }
 
 
@@ -46,13 +46,12 @@
 [ RESTYLE TAG ]*/
 
 * {
-	margin: 0px; 
-	padding: 0px; 
+	margin: 0px;
+	padding: 0px;
 	box-sizing: border-box;
 }
 
 body {
-	height: 100%;
   font-family: Poppins-Regular, sans-serif;
   /*background: #eee;*/
   background: linear-gradient(to bottom, rgba(67,198,172,1) 50%,rgba(25,22,84,0.8) 100%);
@@ -190,7 +189,7 @@ iframe {
 .wrap-login100 {
   /*background:url('/assets/images/login-pg.jpg');
   background-size: cover;*/
-  margin-top: 80px;
+  margin-top: 5px;
   background: #3e4e6b;
   width: 960px;
   border-radius: 10px;
@@ -216,7 +215,7 @@ iframe {
 
 .login100-pic .instant-logo {
   max-width: 100%;
-  margin-left:80px; 
+  margin-left:80px;
 }
 
 
@@ -259,7 +258,7 @@ iframe {
     -o-transition: none !important;
     transition: none !important;
 }
-   
+
 
 .input100 {
   font-family: 'Poppins', sans-serif;
@@ -393,8 +392,32 @@ iframe {
 /*------------------------------------------------------------------
 [ Responsive ]*/
 
+.profil-info{
+  padding-left: 50px !important;
+}
 
+.profil-info .row{
+  padding-bottom: 30px;
+}
 
+.menu-items .row{
+  padding-bottom: 30px;
+}
+
+.menu-side{
+  border-right: 1px solid #0000 !important;
+  padding-left: 50px !important;
+}
+
+.profil{
+  box-shadow: 0px 0px 38px 2px rgba(0,0,0,0.75);
+  border-radius: 20px 20px;
+  background-color: #3e4e6b;
+  padding-left: 50px !important;
+  padding-top:50px !important;
+  padding: 50px;
+  min-height: 500px;
+}
 @media (max-width: 992px) {
   .wrap-login100 {
     padding: 20px 90px 33px 85px;
