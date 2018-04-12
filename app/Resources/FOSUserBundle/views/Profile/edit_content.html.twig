@@ -14,7 +14,7 @@
 
     <div class="container profil">
         <div class="row">
-            <div class="menu-side col-md-4" style="padding-right:50px;">
+            <div class="menu-side col-md-4">
               <div class="menu-items">
                   <div class="row">
                       <button type="button" onclick="window.location.href='{{ path('fos_user_profile_edit')}}'" class="input100 menu-item">Modifier mon profil</button>
@@ -24,9 +24,7 @@
                   </div>
               </div>
             </div>
-            <div class="profil-info col-md-8" style="border-left: 2px solid white;">
-
- 
+            <div class="profil-info col-md-8">
               <div   class="profil-mdf">
                   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                   {% form_theme form 'Form/Registration/fields.html.twig' %}
@@ -108,6 +106,7 @@
 
               <!-- Change Password Start -->
 
+<<<<<<< HEAD
               <div  style="display:none" class="profil-mdf">
                   <form id="mdp-form" action="">
                     <div class="row">
@@ -146,6 +145,8 @@
                   </form>
                 </div>
                 <!-- Change Password End -->
+=======
+>>>>>>> 0759b9fb393e4e5e02f2cffc1b4e3e68dba0ac7d
 
  
                 <!--     <script>
