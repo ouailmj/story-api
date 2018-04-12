@@ -94,17 +94,58 @@
         &copy; {{ 'now'|date('Y') }}. <a href="#">Mystorytelling</a> by <a href="#" target="_blank">Agence MIT</a>
     </div>
     <!-- /footer -->#}
-    <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
-    <script src="{{ asset('build/manifest.js') }}"></script>
-    <script src="{{ asset('build/js/app.js') }}"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-    {% block javascripts %}{% endblock %}
+
+
+    {% block javascripts_all %}
+        <!-- /footer -->
+        <script src="{{ asset('assets/js/core/libraries/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+
+        {% block javascripts2 %}{% endblock %}
+        <!-- Core JS files -->
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/loaders/pace.min.js') }}"></script>
+        <!-- /core JS files -->
+
+        <!-- Theme JS files -->
+
+        {#
+        <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_responsive.js') }}"></script>
+       <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+       <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+
+         <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('assets/js/pages/picker_date.js') }}"></script>#}
+        <script type="text/javascript" src="{{ asset('assets/js/pages/datatables_responsive.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/anytime.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/picker.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/picker.date.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/picker.time.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/pickadate/legacy.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/pages/picker_date.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/pickers/anytime.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/ui/ripple.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/plugins/uploaders/fileinput.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/pages/uploader_bootstrap.js') }}"></script>
+
+        <script type="text/javascript" src="{{ asset('assets/js/custom.js') }}"></script>
+
+        {% block javascripts %}{% endblock %}
+
+
+        <script src="{{ asset('build/manifest.js') }}"></script>
+        <script src="{{ asset('build/js/app.js') }}"></script>
+    {% endblock %}
     </body>
 {% endblock %}
 
