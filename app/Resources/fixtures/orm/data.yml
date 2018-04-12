@@ -13,3 +13,11 @@ AppBundle\Entity\User:
         enabled: true
         roles: ['ROLE_USER']
         fullName: 'user'
+    user_test:
+        username: user_test
+        email: usertest__email@hotmail.fr
+        password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
+        enabled: true
+        roles: ['ROLE_USER']
+        fullName: 'user_test'
+
