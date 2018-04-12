@@ -74,6 +74,14 @@ button {
     background-size: cover;
     height: 600px;
 }
+header{
+    margin-bottom: 100px;
+}
+#connxeion-header{
+    font-size: 22px;
+    font-weight: 600;
+}
+
 
 /********** banner **********/
 #banner header {

@@ -11,15 +11,16 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
 {% block content %}
-           <div class="container profil">
+
+    <div class="container profil">
         <div class="row">
             <div class="menu-side col-md-4" style="padding-right:50px;">
               <div class="menu-items">
-              <div class="row">
-                  <input type="submit" class="input100 menu-item" value="Modifier mon profil">
-                </div>
-                <div class="row">
-                  <input type="submit" class="input100 menu-item" value="Change de mot de passe">
+                  <div class="row">
+                      <button type="button" onclick="window.location.href='{{ path('fos_user_profile_edit')}}'" class="input100 menu-item">Modifier mon profil</button>
+                  </div>
+                  <div class="row">
+                      <button type="button" onclick="window.location.href='{{ path('fos_user_change_password') }}'"  class="input100 menu-item" >Change de mot de passe</button>
                   </div>
               </div>
             </div>
@@ -28,9 +29,14 @@
               <!-- Profil Modifier Start -->
               <div  style="display:block" class="profil-mdf">
                 <form action="">
+              <div   class="profil-mdf">
+                  {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                  {% form_theme form 'Form/Registration/fields.html.twig' %}
+
+                  {{ form_errors(form) }}
                   <div class="row">
                       <div class="col-md-10">
-                          <input value="Mohamed Ahamada" class="input100" type="text" placeholder="Nom">
+                          {{ form_row(form.fullName)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
                             <i class="fa fa-smile-o" aria-hidden="true"></i>
@@ -39,7 +45,7 @@
                   </div>
                   <div class="row">
                       <div class="col-md-10">
-                          <input value="Ahamada" class="input100" type="text" placeholder="Pseudo">
+                          {{ form_row(form.username)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
                             <i class="fa fa-user-o" aria-hidden="true"></i>
@@ -49,7 +55,7 @@
                   </div>
                   <div class="row">
                       <div class="col-md-10">
-                          <input value="abdenbi.ou@outlook.com" class="input100" type="email" placeholder="Email">
+                          {{ form_row(form.email)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -58,7 +64,7 @@
                   </div>
                   <div class="row">
                       <div class="col-md-10">
-                          <input value="+33 6584566546" class="input100" type="tel" placeholder="+33 6584566546">
+                          {{ form_row(form.phoneNumber)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
                             <i class="fa fa-phone" aria-hidden="true"></i>
@@ -67,19 +73,29 @@
                   </div>
                   <div class="row">
                         <div class="col-md-10">
-                            <input value="GMT+1" class="input100" type="text" placeholder="Time Zone">
+                            {{ form_row(form.timezoneId)}}
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                               <i class="fa fa-globe" aria-hidden="true"></i>
                             </span>
                         </div>
-                    </div>
-                  <div class="row validate">
-                      <div class="col-md-5">
-                          <button type="button" class="login100-form-btn">Enregistrer</button>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-10">
+                          {{ form_row(form.current_password)}}
+                          <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
                       </div>
                   </div>
-                </form>
+                  {{ form_rest(form) }}
+                  <div class="row validate">
+                      <div class="col-md-5">
+                          <button type="submit" class="login100-form-btn">Enregistrer</button>
+                      </div>
+                  </div>
+                  {{ form_end(form) }}
               </div>
 
               <!-- Profil Modifier End -->
@@ -130,9 +146,18 @@
                     });
                     </script>
                 <!-- Change Password End -->
+
+                <!--     <script>
+                         $(document).ready(function(){
+                             $(".menu-item").click(function(){
+                                 $(".profil-mdf").toggle();
+                             });
+                         });
+                         </script>
+                      Change Password End -->
             </div>
         </div>
-      </div>
+    </div>
 {% endblock %}
 
 

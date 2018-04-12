@@ -1,4 +1,13 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
+    *{
+        font-family:'Poppins', sans-serif;
+    }
+    .dropdown-toggle{
+        font-family:'Poppins', sans-serif !important;
+    }
+</style>
 <div class="navbar navbar-inverse bg-storytelling">
     <div class="navbar-boxed">
         <div class="navbar-header">
@@ -12,6 +21,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown language-switch">
                     <a class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ asset('images/flags/gb.png') }}" class="position-left" alt="">
                         English
                         <i class="caret"></i>
                     </a>
