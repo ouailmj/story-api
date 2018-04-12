@@ -1,0 +1,89 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.1-apache-node-browsers
+        environment:
+          APP_ENV: test
+          APP_DEBUG: true
+          APP_KEY: kjcndjjksddwdwdw
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: mystorytellingapi
+          DB_USERNAME: root
+          DB_PASSWORD: mystorytellingapi
+      - image: mariadb:5.5
+        environment:
+          MYSQL_DATABASE: mystorytellingapi
+          MYSQL_ROOT_PASSWORD: mystorytellingapi
+    working_directory: ~/mystorytellingapi
+    steps:
+      - checkout
+
+      - run:
+          name: Install System Packages
+          command: |
+            sudo apt install unzip zlib1g-dev libicu-dev libsqlite3-dev sqlite3
+
+      - run:
+          name: Install PHP Extensions
+          command: sudo docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl
+
+      - restore_cache:
+          key: dependency-cache-{{ checksum "composer.lock" }}
+
+      - run:
+          name: Install php dependencies
+          command: |
+            php -r "file_put_contents('composer.phar', file_get_contents('https://getcomposer.org/composer.phar'));"
+            php -d memory_limit=-1 composer.phar self-update --no-interaction
+            php -d memory_limit=-1 composer.phar  install -n
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+
+      - run:
+          name: Initialize Database
+          command: |
+            php bin/console doctrine:schema:update --force
+            php bin/console h:f:l -n
+
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+
+      - run:
+          name: Install npm dependencies
+          command: |
+            yarn install
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+      - run:
+          name: Warm up cache
+          command: |
+            php bin/console cache:warmup --env=test
+
+      - run:
+          name: Run Symfony Tests
+          command: |
+            sudo mkdir -p $CIRCLE_TEST_REPORTS/phpunit
+            ./vendor/bin/phpunit
+      - run:
+          name: Run Codecept Tests
+          command: |
+            php bin/console server:start
+            ./vendor/bin/codecept run --steps
+
+      - run:
+          name: Run Security Check
+          command: php bin/console security:check
+      - run:
+          name: Prepare deployment
+          command: |
+            sudo mkdir $CIRCLE_ARTIFACTS/json_output
