@@ -44,5 +44,11 @@ mail:
         mail: 'E-Mail'
     password_updated_title: 'Login credentials on Instan T have been updated. Below the new identifiers:'
     password_updated_header: 'MyStorytelling Account Update'
+    user_deleted_header: 'MyStorytelling Account Deleted'
+    user_deleted_body: 'You account is deleted, please contact the adminstration '
     header: 'Dear'
     footer: 'Sincerely'
+flash:
+    success: 'Your operation has been successfully executed''Votre opération a été exécutée avec succès'
+    error: 'Your operation could not be executed.'
+    warning: 'Your operation could not be executed'

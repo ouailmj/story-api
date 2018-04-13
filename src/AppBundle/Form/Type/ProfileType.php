@@ -15,26 +15,66 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $constraintsOptions = array(
+            'message' => 'fos_user.current_password.invalid',
+        );
+
         $builder
-            ->add('phoneNumber', TelType::class, [
-                'label' => 'registration.fields.phone_number',
+
+            ->remove('username')
+            ->remove('email')
+            ->remove('current_password')
+
+            ->add('username', TextType::class,  [
+                'label' => false,
+                'attr' => ['class' => 'input100', 'placeholder' => 'registration.placeholder.username'],
             ])
 
-            ->add('fullName', TextType::class, [
-                'label' => 'registration.fields.full_name',
+            ->add('email', EmailType::class,  [
+                'label' => false,
+                'attr' => ['class' => 'input100','placeholder' => 'registration.placeholder.email'],
             ])
 
-            ->add('timezoneId', TimezoneType::class, [
-                'label' => 'registration.fields.time_zone',
+            ->add('phoneNumber', TelType::class,  [
+                'label' => false,
+                'attr' => ['class' => 'input100','placeholder' => 'user.fields.phone_number'],
+            ])
+
+            ->add('fullName', TextType::class,  [
+                'label' => false,
+                'attr' => ['class' => 'input100','placeholder' => 'user.fields.full_name'],
+            ])
+
+            ->add('timezoneId', TimezoneType::class,  [
+                'label' => false,
+                'attr' => ['class' => 'input100 select-search','placeholder' => 'user.fields.time_zone'],
+            ])
+
+            ->add('current_password', PasswordType::class,  [
+                'label' => false,
+                'attr' => [
+                    'class' => 'input100',
+                    'placeholder' => 'user.fields.password',
+                ],
+                'constraints' => array(
+                    new NotBlank(),
+                    new UserPassword($constraintsOptions),
+                ),
+                'mapped' => false,
+
             ])
 
         ;

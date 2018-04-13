@@ -1,5 +1,12 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
-
+{% block stylesheet %}
+    <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/util.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
+    
+{% endblock %}
 {% block fos_user_content %}
 {% include "FOSUserBundle:Resetting:request_content.html.twig" %}
 {% endblock fos_user_content %}

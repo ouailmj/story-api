@@ -23,6 +23,10 @@ class DefaultController extends BaseController
      */
     public function indexAction()
     {
+        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->redirectToRoute('app_profile_edit');
+            }
+
         return $this->render('AppBundle:Default:index.html.twig', [
             // ...
         ]);

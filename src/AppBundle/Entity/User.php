@@ -30,16 +30,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @UniqueEntity("username")
  * @ApiResource(
  *     itemOperations={
- *          "get",
- *          "put",
- *          "delete",
- *          "api_sign_up"={"route_name"="signUpAPI"},
- *          "change_user_timezone"={
- *              "route_name"="api_change_user_timezone",
- *              "denormalization_context"={"groups"={"change_user_timezone"}}
- *          }
+ *     "get",
+ *     "put",
+ *     "delete",
+ *     "api_sign_up"={"route_name"="signUpAPI"},
+ *     },
+ *     collectionOperations= {
+ *     "api_current_user"={
+ *          "route_name"="currentUserAPI",
+ *          "method"="GET"
+ *      },
+ *     "api_update_profile"={"route_name"="updateProfileAPI"},
+ *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
- *     )
+ *)
+ *
  */
 class User extends BaseUser
 {
@@ -81,7 +86,6 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column( type="string", length=50, nullable=true)
-     * @Groups({"change_user_timezone"})
      */
     protected $timezoneId;
 

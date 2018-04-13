@@ -44,5 +44,11 @@ mail:
         mail: 'E-Mail'
     password_updated_title: 'Les identifiants de connexion sur InstanT ont été mis à jour. Ci-dessous les nouveaux identifiants:'
     password_updated_header: 'Mise à jour Compte MyStorytelling'
+    password_deleted_header: 'Supprimer Compte MyStorytelling'
+    password_deleted_body: 'Votre compte est supprimé, contactez l''administrateur'
     header: 'Bonjour'
     footer: 'Cordialement'
+flash:
+    success: 'Votre opération a été exécutée avec succès'
+    error: 'Votre opération n'' a pas pu être exécutée.'
+    warning: 'Votre opération n''a pas pu être exécutée.'

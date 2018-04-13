@@ -104,12 +104,13 @@ class UserController extends BaseController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
             if (!empty($plainPassword = $editForm->get('new_password')->getData())) {
                 $user->setPlainPassword($plainPassword);
                 $userManager->updatePassword($user);
                 $this->addSuccessFlash();
             }
-            $this->getDoctrine()->getManager()->flush();
+
 
             return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }

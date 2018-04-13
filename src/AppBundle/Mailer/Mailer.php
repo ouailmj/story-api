@@ -89,6 +89,20 @@ class Mailer
      *
      * @param User $user
      */
+    public function sendAccountDeletedMessage($email)
+    {
+        $subject = $this->translator->trans('mail.user_deleted_header');
+        $bodyMessage = $this->templateEngine->render('mail/user/user_deleted.html.twig', [
+            'subject' => $subject,
+        ]);
+        $this->sendEmailMessage($bodyMessage, $email, $subject);
+    }
+
+    /**
+     * Notifies a user that his account has been created.
+     *
+     * @param User $user
+     */
     public function sendPasswordUpdatedMessage(User $user)
     {
         $subject = $this->translator->trans('mail.password_updated_header');

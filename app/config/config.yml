@@ -85,6 +85,7 @@ nelmio_cors:
 api_platform:
     mapping:
         paths: ['%kernel.project_dir%/src/AppBundle/DTO']
+    enable_fos_user: true
     http_cache:
         invalidation:
             enabled: true
@@ -114,6 +115,9 @@ fos_user:
     profile:
         form:
             type: AppBundle\Form\Type\ProfileType
+    change_password:
+        form:
+            type: AppBundle\Form\Type\ChangePasswordType
 
 
 lexik_jwt_authentication:
