@@ -20,6 +20,7 @@ use FOS\UserBundle\Model\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BaseUser implements UserInterface, GroupableInterface
 {
@@ -35,7 +36,7 @@ class BaseUser implements UserInterface, GroupableInterface
     /**
      * @var string
      * @ORM\Column( name="username", type="string", length=180, unique=true)
-     *
+     * @Assert\NotBlank()
      */
     protected $username;
 
@@ -48,6 +49,8 @@ class BaseUser implements UserInterface, GroupableInterface
     /**
      * @var string
      * @ORM\Column( name="email", type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected $email;
 

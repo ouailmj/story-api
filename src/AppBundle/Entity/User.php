@@ -18,7 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -28,6 +27,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="app_user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
  * @ApiResource(
  *     itemOperations={
  *     "get",
@@ -44,8 +45,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
- * @UniqueEntity("email")
- * @UniqueEntity("username")
  */
 class User  extends BaseUser
 {
@@ -60,13 +59,13 @@ class User  extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column( type="string")
+     * @ORM\Column( type="string", nullable=true)
      */
     protected $firstName;
 
     /**
      * @var string
-     * @ORM\Column( type="string")
+     * @ORM\Column( type="string", nullable=true)
      */
     protected $lastName;
 
