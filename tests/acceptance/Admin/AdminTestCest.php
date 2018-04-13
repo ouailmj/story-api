@@ -25,7 +25,7 @@ class AdminTestCest
     {
         $I->wantTo("Afficher les infos de User_test d'un utilisateur");
         $this->loginAsAdmin($I);
-        $I->amOnPage("/admin/user/2");
+        $I->amOnPage("/admin/user/3");
         $I->see('user');
     }
 
@@ -33,7 +33,7 @@ class AdminTestCest
     {
         $I->wantTo("Modifier les infos d'un utilisateur");
         $this->loginAsAdmin($I);
-        $I->amOnPage("/admin/user/1/edit");
+        $I->amOnPage("/admin/user/0/edit");
         $I->fillField('appbundle_user[phoneNumber]', '0645879633');
         $I->fillField('appbundle_user[new_password][first]', "f%/R4Uk#](wUvM'V");
         $I->fillField('appbundle_user[new_password][second]', "f%/R4Uk#](wUvM'V");
@@ -69,7 +69,7 @@ class AdminTestCest
     {
         $I->wantTo("delete account");
         $this->loginAsAdmin($I);
-        $I->amOnPage('/admin/user/2/edit');
+        $I->amOnPage('/admin/user/3/edit');
         $I->click('.legitRipple');
         $I->click('.legitRipple');
     }
