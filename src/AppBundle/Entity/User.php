@@ -19,6 +19,8 @@ use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User.
@@ -42,9 +44,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
- *
+ * @UniqueEntity("email")
+ * @UniqueEntity("username")
  */
-class User  implements UserInterface, GroupableInterface
+class User  extends BaseUser
 {
     /**
      * @var int
@@ -54,6 +57,18 @@ class User  implements UserInterface, GroupableInterface
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column( type="string")
+     */
+    protected $firstName;
+
+    /**
+     * @var string
+     * @ORM\Column( type="string")
+     */
+    protected $lastName;
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
@@ -67,10 +82,11 @@ class User  implements UserInterface, GroupableInterface
      */
     protected $googleId = '';
 
-    private $googleAccessToken;
+    protected $googleAccessToken;
 
     /**
      * @var string
+     * @Assert\Length(max = 20)
      * @ORM\Column( type="string", length=20, nullable=true)
      */
     protected $phoneNumber;
@@ -79,99 +95,42 @@ class User  implements UserInterface, GroupableInterface
      * @var string
      * @ORM\Column( type="string", length=250, nullable=true)
      */
-    protected $fullName;
+    protected $fullName ;
 
     /**
      * @var string
      * @ORM\Column( type="string", length=50, nullable=true)
      */
-    protected $timezoneId="Europe/Paris";
-
+    protected $timezoneId = "Europe/Paris";
 
     /**
-     * @var string
-     * @ORM\Column( name="username", type="string", length=180, unique=true)
+     * @var MemberShip [] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberShip", mappedBy="member")
+     */
+    protected $eventMemberShips;
+
+    /**
+     * @var Event[] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy")
      *
      */
-    protected $username;
+    protected $createdEvents;
 
     /**
-     * @var string
-     * @ORM\Column( name="username_canonical", type="string", length=180, unique=true)
+     * @var InvitationRequest [] | ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\InvitationRequest")
+     * @ORM\JoinTable(name="users_invitation_request",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="invitation_request_id", referencedColumnName="id", unique=true)}
+     *      )
      */
-    protected $usernameCanonical;
+    protected $invitationRequests;
 
     /**
-     * @var string
-     * @ORM\Column( name="email", type="string", length=180, unique=true)
+     * @var Media [] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Media", mappedBy="createdBy")
      */
-    protected $email;
-
-    /**
-     * @var string
-     * @ORM\Column( name="email_canonical", type="string", length=180, unique=true)
-     */
-    protected $emailCanonical;
-
-    /**
-     * @var bool
-     * @ORM\Column( name="enabled", type="boolean" )
-     */
-    protected $enabled;
-
-    /**
-     * The salt to use for hashing.
-     *
-     * @var string
-     * @ORM\Column( name="salt", type="string", nullable=true)
-     */
-    protected $salt;
-
-    /**
-     * Encrypted password. Must be persisted.
-     *
-     * @var string
-     * @ORM\Column( name="password", type="string")
-     */
-    protected $password;
-
-    /**
-     * Plain password. Used for model validation. Must not be persisted.
-     *
-     * @var string
-     */
-    protected $plainPassword;
-
-    /**
-     * @var \DateTime|null
-     * @ORM\Column( name="last_login", type="datetime", nullable=true)
-     */
-    protected $lastLogin;
-
-    /**
-     * Random string sent to the user email address in order to verify it.
-     *
-     * @var string|null
-     * @ORM\Column( name="confirmation_token", type="string", length=180, nullable=true, unique=true)
-     */
-    protected $confirmationToken;
-
-    /**
-     * @var \DateTime|null
-     * @ORM\Column( name="password_requested_at", type="datetime", nullable=true)
-     */
-    protected $passwordRequestedAt;
-
-    /**
-     * @var GroupInterface[]|Collection
-     */
-    protected $groups;
-
-    /**
-     * @var array
-     * @ORM\Column( name="roles", type="array")
-     */
-    protected $roles;
+    protected $medias;
 
     /**
      * User constructor.
@@ -180,6 +139,9 @@ class User  implements UserInterface, GroupableInterface
     {
         $this->enabled = true;
         $this->roles = array();
+        $this->createdEvents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -191,6 +153,39 @@ class User  implements UserInterface, GroupableInterface
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
 
     /**
      * @return mixed
@@ -273,21 +268,6 @@ class User  implements UserInterface, GroupableInterface
     }
 
     /**
-     * @ORM\PrePersist()
-     *
-     * @return User
-     */
-    public function setUsernameValue()
-    {
-        if (empty($this->username)) {
-            $this->username = $this->email;
-        }
-
-        return $this;
-    }
-
-
-    /**
      * @return string
      */
     public function getPhoneNumber()
@@ -335,441 +315,146 @@ class User  implements UserInterface, GroupableInterface
         $this->timezoneId = $timezoneId;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string) $this->getUsername();
-    }
+
 
     /**
-     * {@inheritdoc}
-     */
-    public function addRole($role)
-    {
-        $role = strtoupper($role);
-        if ($role === static::ROLE_DEFAULT) {
-            return $this;
-        }
-
-        if (!in_array($role, $this->roles, true)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->password,
-            $this->salt,
-            $this->usernameCanonical,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
-            $this->emailCanonical,
-        ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        if (13 === count($data)) {
-            // Unserializing a User object from 1.3.x
-            unset($data[4], $data[5], $data[6], $data[9], $data[10]);
-            $data = array_values($data);
-        } elseif (11 === count($data)) {
-            // Unserializing a User from a dev version somewhere between 2.0-alpha3 and 2.0-beta1
-            unset($data[4], $data[7], $data[8]);
-            $data = array_values($data);
-        }
-
-        list(
-            $this->password,
-            $this->salt,
-            $this->usernameCanonical,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
-            $this->emailCanonical
-            ) = $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function eraseCredentials()
-    {
-        $this->plainPassword = null;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUsernameCanonical()
-    {
-        return $this->usernameCanonical;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSalt()
-    {
-        return $this->salt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getEmailCanonical()
-    {
-        return $this->emailCanonical;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
-
-    /**
-     * Gets the last login time.
+     * Add CreatedEvents.
      *
-     * @return \DateTime|null
-     */
-    public function getLastLogin()
-    {
-        return $this->lastLogin;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfirmationToken()
-    {
-        return $this->confirmationToken;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-
-        foreach ($this->getGroups() as $group) {
-            $roles = array_merge($roles, $group->getRoles());
-        }
-
-        // we need to make sure to have at least one role
-        $roles[] = static::ROLE_DEFAULT;
-
-        return array_unique($roles);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function hasRole($role)
-    {
-        return in_array(strtoupper($role), $this->getRoles(), true);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isAccountNonExpired()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isAccountNonLocked()
-    {
-        return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isCredentialsNonExpired()
-    {
-        return true;
-    }
-
-    public function isEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isSuperAdmin()
-    {
-        return $this->hasRole(static::ROLE_SUPER_ADMIN);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeRole($role)
-    {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-            unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setUsernameCanonical($usernameCanonical)
-    {
-        $this->usernameCanonical = $usernameCanonical;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEmailCanonical($emailCanonical)
-    {
-        $this->emailCanonical = $emailCanonical;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setEnabled($boolean)
-    {
-        $this->enabled = (bool) $boolean;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSuperAdmin($boolean)
-    {
-        if (true === $boolean) {
-            $this->addRole(static::ROLE_SUPER_ADMIN);
-        } else {
-            $this->removeRole(static::ROLE_SUPER_ADMIN);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setPlainPassword($password)
-    {
-        $this->plainPassword = $password;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setLastLogin(\DateTime $time = null)
-    {
-        $this->lastLogin = $time;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setConfirmationToken($confirmationToken)
-    {
-        $this->confirmationToken = $confirmationToken;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setPasswordRequestedAt(\DateTime $date = null)
-    {
-        $this->passwordRequestedAt = $date;
-
-        return $this;
-    }
-
-    /**
-     * Gets the timestamp that the user requested a password reset.
+     * @param \AppBundle\Entity\Event $event
      *
-     * @return null|\DateTime
+     * @return User
      */
-    public function getPasswordRequestedAt()
+    public function addCreatedEvents(Event $event)
     {
-        return $this->passwordRequestedAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isPasswordRequestNonExpired($ttl)
-    {
-        return $this->getPasswordRequestedAt() instanceof \DateTime &&
-            $this->getPasswordRequestedAt()->getTimestamp() + $ttl > time();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setRoles(array $roles)
-    {
-        $this->roles = array();
-
-        foreach ($roles as $role) {
-            $this->addRole($role);
-        }
+        $this->createdEvents[] = $event;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * Remove CreatedEvents.
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
-    public function getGroups()
+    public function removeCreatedEvents(Event $event)
     {
-        return $this->groups ?: $this->groups = new ArrayCollection();
+        return $this->createdEvents->removeElement($event);
     }
 
     /**
-     * {@inheritdoc}
+     * Get createdEvents.
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getGroupNames()
+    public function getCreatedEvents()
     {
-        $names = array();
-        foreach ($this->getGroups() as $group) {
-            $names[] = $group->getName();
-        }
-
-        return $names;
+        return $this->createdEvents;
     }
 
     /**
-     * {@inheritdoc}
+     * Add eventMemberShips
+     *
+     * @param MemberShip $memberShip
+     * @return $this
      */
-    public function hasGroup($name)
+    public function addEventMemberShips( MemberShip $memberShip)
     {
-        return in_array($name, $this->getGroupNames());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addGroup(GroupInterface $group)
-    {
-        if (!$this->getGroups()->contains($group)) {
-            $this->getGroups()->add($group);
-        }
+        $this->eventMemberShips[] = $memberShip;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * Remove eventMemberShips.
+     *
+     * @param \AppBundle\Entity\MemberShip $memberShip
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
-    public function removeGroup(GroupInterface $group)
+    public function removeEventMemberShips(MemberShip $memberShip)
     {
-        if ($this->getGroups()->contains($group)) {
-            $this->getGroups()->removeElement($group);
-        }
+        return $this->eventMemberShips->removeElement($memberShip);
+    }
+
+    /**
+     * Get eventMemberShips.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventMemberShips()
+    {
+        return $this->eventMemberShips;
+    }
+
+    /**
+     * Add invitationRequests
+     *
+     * @param InvitationRequest $invitationRequest
+     * @return $this
+     */
+    public function addInvitationRequests( InvitationRequest $invitationRequest)
+    {
+        $this->invitationRequests[] = $invitationRequest;
 
         return $this;
+    }
+
+    /**
+     * Remove invitationRequests.
+     *
+     * @param \AppBundle\Entity\InvitationRequest $invitationRequest
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeInvitationRequests(InvitationRequest $invitationRequest)
+    {
+        return $this->invitationRequests->removeElement($invitationRequest);
+    }
+
+    /**
+     * Get invitationRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInvitationRequests()
+    {
+        return $this->invitationRequests;
+    }
+
+    /**
+     * Add medias
+     *
+     * @param Media $media
+     * @return $this
+     */
+    public function addMedias( Media $media)
+    {
+        $this->medias[] = $media;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitationRequests.
+     *
+     * @param \AppBundle\Entity\Media $media
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeMedias(Media $media)
+    {
+        return $this->medias->removeElement($media);
+    }
+
+    /**
+     * Get invitationRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMedias()
+    {
+        return $this->medias;
     }
 }
