@@ -12,14 +12,14 @@
  *
  */
 
-namespace AppBundle;
+namespace AppBundle\Utils;
 
-final class AppEvents
+use Symfony\Component\HttpFoundation\Request;
+
+final class RequestUtils
 {
-    /**
-     * Event fired when user registered via web.
-     *
-     * @var string
-     */
-    const USER_REGISTERED_WEB = 'user.registered.web';
+    public static function parseRequestContent(Request $request)
+    {
+        return json_decode($request->getContent(), true);
+    }
 }

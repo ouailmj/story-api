@@ -12,14 +12,10 @@
  *
  */
 
-namespace AppBundle;
+namespace AppBundle\Action;
 
-final class AppEvents
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class BaseAction extends Controller
 {
-    /**
-     * Event fired when user registered via web.
-     *
-     * @var string
-     */
-    const USER_REGISTERED_WEB = 'user.registered.web';
 }

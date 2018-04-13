@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Model;
@@ -14,6 +17,7 @@ namespace AppBundle\Model;
 use AppBundle\Entity\User;
 use AppBundle\Mailer\Mailer;
 use Doctrine\ORM\EntityManager;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 
 class UserManager
 {
@@ -31,17 +35,25 @@ class UserManager
     private $em;
 
     /**
-     * UserManager constructor.
-     *
-     * @param \FOS\UserBundle\Doctrine\UserManager $fosUserManager
-     * @param EntityManager                        $em
+     * @var JWTManager
      */
-    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, EntityManager $em)
+    private $jwtTokenManager;
+
+    /**
+     * UserManager constructor.
+     * @param \FOS\UserBundle\Doctrine\UserManager $fosUserManager
+     * @param Mailer $mailer
+     * @param EntityManager $em
+     * @param JWTManager $jwtTokenManager
+     */
+    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, EntityManager $em, JWTManager $jwtTokenManager)
     {
         $this->fosUserManager = $fosUserManager;
         $this->mailer = $mailer;
         $this->em = $em;
+        $this->jwtTokenManager = $jwtTokenManager;
     }
+
 
     /**
      * Create new user in the database.
@@ -68,18 +80,19 @@ class UserManager
     /**
      * @param User $user
      * @param bool $sendMail
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function updatePassword(User $user, $sendMail = true)
     {
         $plainPassword = $user->getPlainPassword();
-
         $this->fosUserManager->updatePassword($user);
-
+        $this->em->flush();
         $user->setPlainPassword($plainPassword);
-
         if ($sendMail) {
             $this->mailer->sendPasswordUpdatedMessage($user);
         }
+        $user->eraseCredentials();
     }
 
     /**
@@ -91,8 +104,8 @@ class UserManager
     {
         $email=$user->getEmail();
         $this->fosUserManager->deleteUser($user);
-       
-       
+
+
     }
 
     /**
@@ -101,6 +114,27 @@ class UserManager
     public function allUsers()
     {
         return $this->em->getRepository('AppBundle:User')->findAll();
+    }
+
+    /**
+     * @param User $user
+     * @param $newTimezoneId
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @return User
+     */
+    public function updateTimezoneId(User $user, $newTimezoneId)
+    {
+        $user->setTimezoneId($newTimezoneId);
+        $this->em->flush();
+        return $user;
+    }
+
+    public function generateToken(User $user)
+    {
+        return $this->jwtTokenManager->create($user);
     }
 
     /**
