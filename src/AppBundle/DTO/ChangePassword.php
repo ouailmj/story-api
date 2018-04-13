@@ -9,10 +9,12 @@
 namespace AppBundle\DTO;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ChangePassword
+ *
  * @package AppBundle\DTO
  * @ApiResource(
  *      collectionOperations={
@@ -23,8 +25,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      itemOperations={},
  * )
  */
-class ChangePassword
+final class ChangePassword
 {
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     * @UserPassword
+     */
+    public $oldPassword;
+
     /**
      * @var string
      *
@@ -36,13 +46,7 @@ class ChangePassword
      * @var string
      *
      * @Assert\NotBlank
-     */
-    public $oldPassword;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank
+     * @Assert\EqualTo(propertyPath="newPassword")
      */
     public $repeatedPassword;
 }

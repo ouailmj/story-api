@@ -42,7 +42,7 @@ mail:
         password: 'Mot de Passe'
         url: 'Lien'
         mail: 'E-Mail'
-    password_updated_title: 'Les identifiants de connexion sur EyeGoFast ont été mis à jour. Ci-dessous les nouveaux identifiants:'
+    password_updated_title: 'Les identifiants de connexion sur InstanT ont été mis à jour. Ci-dessous les nouveaux identifiants:'
     password_updated_header: 'Mise à jour Compte MyStorytelling'
     header: 'Bonjour'
     footer: 'Cordialement'
