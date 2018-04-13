@@ -25,14 +25,11 @@
               </div>
             </div>
             <div class="profil-info col-md-8">
-
-              <!-- Profil Modifier Start -->
               <div   class="profil-mdf">
                   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                   {% form_theme form 'Form/Registration/fields.html.twig' %}
 
                   {{ form_errors(form) }}
-
                   <div class="row">
                       <div class="col-md-10">
                           {{ form_row(form.fullName)}}
@@ -71,7 +68,7 @@
                       </div>
                   </div>
                   <div class="row">
-                        <div class="col-md-10">
+                        <div id="timeZone" class="col-md-10">
                             {{ form_row(form.timezoneId)}}
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -82,26 +79,76 @@
                   <div class="row">
                       <div class="col-md-10">
                           {{ form_row(form.current_password)}}
-                          <span class="focus-input100"></span>
-                          <span class="symbol-input100">
+                          <span  class="focus-input100"></span>
+                          <span  class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
                           </span>
                       </div>
                   </div>
                   {{ form_rest(form) }}
-                  <div class="row validate">
-                      <div class="col-md-5">
-                          <button type="submit" class="login100-form-btn">Enregistrer</button>
-                      </div>
+                  <div class="row">
+                    <div class="validate">
+                        <div class="col-md-5">
+                            <button type="submit" class="login100-form-btn">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div class="validate">
+                        <div class="col-md-5">
+                            <a onclick="return confirm('Are you sure ? This action is irreversible.');" class="btn-danger login100-form-btn" href="{{path('app_profile_delete')}}">Delete Account</a>
+                        </div>
+                    </div>
                   </div>
                   {{ form_end(form) }}
               </div>
+ 
 
               <!-- Profil Modifier End -->
 
               <!-- Change Password Start -->
 
+<<<<<<< HEAD
+              <div  style="display:none" class="profil-mdf">
+                  <form id="mdp-form" action="">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input class="input100" type="password" placeholder="Mot de passe Actuel">
+                            <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
+                            <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
+                            <span class="focus-input100"></span>
+                          <span class="symbol-input100">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row validate">
+                        <div class="offset-md-5 col-md-4">
+                            <button type="button" class="login100-form-btn">Enregistrer</button>
+                        </div>
+                    </div>
+                    
+                  </form>
+                </div>
+                <!-- Change Password End -->
+=======
+>>>>>>> 0759b9fb393e4e5e02f2cffc1b4e3e68dba0ac7d
 
+ 
                 <!--     <script>
                          $(document).ready(function(){
                              $(".menu-item").click(function(){
@@ -113,6 +160,24 @@
             </div>
         </div>
     </div>
+{% block javascripts %}
+    <script>
+        let oInput = document.getElementById('timeZone'),
+            oChild,spans=[];
+        setTimeout(
+            ()=>{
+                for(i = 0; i < oInput.childNodes.length; i++){
+                    oChild = oInput.childNodes[i];
+                    if(oChild.nodeName == 'SPAN'){
+                        spans.push(oChild);
+                    }
+                }
+                spans[0].className +=" input100";
+                console.log(spans);
+            }, 500);
+    </script>
+{% endblock %}
+
 {% endblock %}
 
 

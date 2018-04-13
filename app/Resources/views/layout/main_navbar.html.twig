@@ -1,15 +1,36 @@
+<style>
+@import url('https://fonts.googleapis.com/css?family=Poppins');
 
+    *{
+        font-family:'Poppins', sans-serif;
+    }
+    .dropdown-toggle{
+        font-family:'Poppins', sans-serif !important;
+        color:#000 !important
+    }
+    .dropdown-menu li a{
+        font-family:'Poppins', sans-serif !important;
+        color:#000 !important;
+        font-size:16px;
+    }
+    .navbar-inverse {
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+    
+    }
+    .navbar-brand {
+        color:#000 !important;
+        font-size:18px !important;
+    }
+</style>
 <div class="navbar navbar-inverse bg-storytelling">
     <div class="navbar-boxed">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{{ path('app_default_index') }}"><img src="{{ asset('images/logo_light.png') }}" alt=""></a>
-            <style>
-            .navbar-brand a
-            {
-                font-family: 'Kaushan Script', cursive;
-            }
 
+            <a class="navbar-brand" href="{{ path('app_default_index') }}">Instan't Logo</a>
+            <style>
             </style>
+
             <ul class="nav navbar-nav pull-right visible-xs-block">
                 <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
             </ul>
@@ -17,7 +38,9 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown language-switch">
                     <a class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('images/flags/gb.png') }}" class="position-left" alt="">
+
+                    <img src="{{ asset('images/flags/gb.png') }}" class="position-left" alt="">
+
                         English
                         <i class="caret"></i>
                     </a>
@@ -35,13 +58,13 @@
                         </a>
                         <style>
                             .caret:after {
-                                    content: '';
+                                    content: '' !important;
                             }
                         </style>
                         <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="{{ path('fos_user_profile_edit') }}"><i class="icon-user-plus"></i> My profile</a></li>
+                            <li><a href="{{ path('fos_user_profile_edit') }}"><i class="icon-user-plus"></i>My profile</a></li>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <li><a href="{{ path('user_index') }}"><i class="icon-cog3"></i> Administration</a></li>
+                                <li><a href="{{ path('user_index') }}"><i class="icon-cog3"></i>Settings</a></li>
                             {% endif %}
 
                             <li class="divider"></li>
