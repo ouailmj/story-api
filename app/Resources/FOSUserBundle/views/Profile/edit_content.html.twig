@@ -25,14 +25,11 @@
               </div>
             </div>
             <div class="profil-info col-md-8">
-
-              <!-- Profil Modifier Start -->
               <div   class="profil-mdf">
                   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
                   {% form_theme form 'Form/Registration/fields.html.twig' %}
 
                   {{ form_errors(form) }}
-
                   <div class="row">
                       <div class="col-md-10">
                           {{ form_row(form.fullName)}}
@@ -89,19 +86,27 @@
                       </div>
                   </div>
                   {{ form_rest(form) }}
-                  <div class="row validate">
-                      <div class="col-md-5">
-                          <button type="submit" class="login100-form-btn">Enregistrer</button>
-                      </div>
+                  <div class="row">
+                    <div class="validate">
+                        <div class="col-md-5">
+                            <button type="submit" class="login100-form-btn">Enregistrer</button>
+                        </div>
+                    </div>
+                    <div class="validate">
+                        <div class="col-md-5">
+                            <a onclick="return confirm('Are you sure ? This action is irreversible.');" class="btn-danger login100-form-btn" href="{{path('app_profile_delete')}}">Delete Account</a>
+                        </div>
+                    </div>
                   </div>
                   {{ form_end(form) }}
               </div>
+ 
 
               <!-- Profil Modifier End -->
 
               <!-- Change Password Start -->
 
-
+ 
                 <!--     <script>
                          $(document).ready(function(){
                              $(".menu-item").click(function(){

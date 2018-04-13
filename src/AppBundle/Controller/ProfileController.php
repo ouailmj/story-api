@@ -112,7 +112,7 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         $userManager->deleteUser($this->getUser());
-
+$this->addSuccessFlash();
         return $this->redirectToRoute('app_default_index');
     }
 }

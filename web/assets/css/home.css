@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
-
+@-ms-viewport{
+    width: device-width;
+  }
 /********** common setting **********/
 body{
     background: #fff;
@@ -22,6 +24,10 @@ button {
 
 .jumbotron {
     margin-bottom: 0 !important;
+}
+
+.jumbotron .container{
+    margin-top: 10%;
 }
 
 .atlas-cta {
@@ -72,8 +78,17 @@ button {
 
 #banner {
     background-size: cover;
-    height: 500px;
+    height: 600px;
+
 }
+header{
+    margin-bottom: 100px;
+}
+#connxeion-header{
+    font-size: 22px;
+    font-weight: 600;
+}
+
 
 /********** banner **********/
 #banner header {
@@ -166,4 +181,10 @@ button {
     #banner h1 {
         font-size: 3.6rem;
     }
+}
+
+/********** Info Sur App txt **********/
+
+.info-app p{
+    font-size:18px;
 }
