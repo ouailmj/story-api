@@ -22,8 +22,7 @@ class UserTestCest
         $I->FillField('fos_user_profile_form[phoneNumber]','062145359954');
         $I->FillField('fos_user_profile_form[current_password]' , "f%/R4Uk#](wUvM'V");
         $I->click("div.col-md-5 button");
-        $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->see("062145359954");
+        $I->seeCurrentUrlEquals('/auth/profile/edit');
     }
 
 
