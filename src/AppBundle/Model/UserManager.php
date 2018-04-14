@@ -185,11 +185,13 @@ class UserManager
     }
 
     /**
-     * @param User $user
+     * @param string $email
      * @param Request $request
      * @return null|\Symfony\Component\HttpFoundation\Response
      */
-   public function forgotPasswordMobile(User $user, Request $request){
+   public function forgotPasswordMobile($email, Request $request){
+
+       $user= $this->em->getRepository('AppBundle:User')->findOneBy(['email'=> $email]);
 
        $event = new GetResponseNullableUserEvent($user, $request);
        $this->eventDispatcher->dispatch(FOSUserEvents::RESETTING_SEND_EMAIL_INITIALIZE, $event);

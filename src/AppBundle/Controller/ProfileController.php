@@ -51,9 +51,7 @@ class ProfileController extends BaseController
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->render('@FOSUser/Profile/show.html.twig', [
-            'user' => $user,
-        ]);
+        return $this->redirectToRoute('app_profile_edit');
     }
 
     /**

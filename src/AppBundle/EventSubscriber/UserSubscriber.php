@@ -101,20 +101,11 @@ class UserSubscriber implements EventSubscriberInterface
         if ('api_forgot_password_requests_post_collection' !== $request->attributes->get('_route')) {
             return;
         }
-        $token = $this->tokenStorage->getToken();
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User){
-
-            /** @var ForgotPasswordRequest $changePassword */
-            $changePassword = $event->getControllerResult();
-
-            $this->userManager->forgotPasswordMobile($user, $request);
+        /** @var ForgotPasswordRequest $forgotPasswordRequest */
+        $forgotPasswordRequest = $event->getControllerResult();
+        $this->userManager->forgotPasswordMobile($forgotPasswordRequest->email, $request);
             // TODO: Translate
-            $responseData['message'] = "lllllllllllllll";
-
-
-
-        }
-
+        $responseData['message'] = 'An email has been sent. It contains a link that you will need to click to reset your password.';
 
         $event->setResponse(new JsonResponse($responseData, 200));
     }
