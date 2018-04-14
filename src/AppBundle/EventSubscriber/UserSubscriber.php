@@ -1,13 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mac
- * Date: 12/04/2018
- * Time: 12:20
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\EventSubscriber;
-
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use AppBundle\DTO\ChangePassword;
@@ -35,7 +40,7 @@ class UserSubscriber implements EventSubscriberInterface
      * UserSubscriber constructor.
      *
      * @param TokenStorage $tokenStorage
-     * @param UserManager $userManager
+     * @param UserManager  $userManager
      */
     public function __construct(TokenStorage $tokenStorage, UserManager $userManager)
     {
@@ -43,12 +48,11 @@ class UserSubscriber implements EventSubscriberInterface
         $this->userManager = $userManager;
     }
 
-
     public static function getSubscribedEvents()
     {
-        return array(
-            KernelEvents::VIEW      => array('handleChangePasswordRequest', EventPriorities::POST_VALIDATE)
-        );
+        return [
+            KernelEvents::VIEW => ['handleChangePasswordRequest', EventPriorities::POST_VALIDATE],
+        ];
     }
 
     public function handleChangePasswordRequest(GetResponseForControllerResultEvent $event)
@@ -61,8 +65,7 @@ class UserSubscriber implements EventSubscriberInterface
         $responseData = [];
 
         $token = $this->tokenStorage->getToken();
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User){
-
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User) {
             /** @var ChangePassword $userPassword */
             $changePassword = $event->getControllerResult();
             $user->setPlainPassword($changePassword->newPassword);

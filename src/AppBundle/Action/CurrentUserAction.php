@@ -7,24 +7,22 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
-
 
 namespace AppBundle\Action;
 
 use AppBundle\Entity\User;
-use AppBundle\Model\UserManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CurrentUserAction extends Controller
 {
-
     /**
-     *
      * @Route(
      *     name="currentUserAPI",
      *     path="/current-user",
@@ -36,7 +34,6 @@ class CurrentUserAction extends Controller
      * )
      * @Method({"GET"})
      * @Security("has_role('ROLE_USER')")
-     *
      */
     public function __invoke(): User
     {

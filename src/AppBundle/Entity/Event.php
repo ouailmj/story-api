@@ -1,14 +1,27 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
 namespace AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Event
+ * Event.
  *
  * @ApiResource
  * @ORM\Table(name="event")
@@ -16,6 +29,8 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  */
 class Event
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -54,18 +69,11 @@ class Event
     private $description;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $privacy="private";
+    private $privacy = 'private';
 
     /**
      * @var \DateTime
@@ -274,30 +282,6 @@ class Event
     }
 
     /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return Event
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
      * Set privacy.
      *
      * @param string $privacy
@@ -393,7 +377,6 @@ class Event
         return $this->createdBy;
     }
 
-
     /**
      * Get challenges.
      *
@@ -405,18 +388,18 @@ class Event
     }
 
     /**
-     * Add challenges
+     * Add challenges.
      *
      * @param Challenge $challenge
+     *
      * @return $this
      */
-    public function addChallenges( Challenge $challenge)
+    public function addChallenges(Challenge $challenge)
     {
         $this->challenges[] = $challenge;
 
         return $this;
     }
-
 
     /**
      * Remove challenges.
@@ -430,7 +413,6 @@ class Event
         return $this->challenges->removeElement($challenge);
     }
 
-
     /**
      * Get eventMemberShips.
      *
@@ -442,12 +424,13 @@ class Event
     }
 
     /**
-     * Add eventMemberShips
+     * Add eventMemberShips.
      *
      * @param MemberShip $eventMemberShip
+     *
      * @return $this
      */
-    public function addEventMemberShips( MemberShip $eventMemberShip)
+    public function addEventMemberShips(MemberShip $eventMemberShip)
     {
         $this->eventMemberShips[] = $eventMemberShip;
 
@@ -467,12 +450,13 @@ class Event
     }
 
     /**
-     * Add invitationRequests
+     * Add invitationRequests.
      *
      * @param InvitationRequest $invitationRequest
+     *
      * @return $this
      */
-    public function addInvitationRequests( InvitationRequest $invitationRequest)
+    public function addInvitationRequests(InvitationRequest $invitationRequest)
     {
         $this->invitationRequests[] = $invitationRequest;
 
@@ -501,11 +485,11 @@ class Event
         return $this->invitationRequests;
     }
 
-
     /**
-     * Add uploadedMedias
+     * Add uploadedMedias.
      *
      * @param Media $media
+     *
      * @return $this
      */
     public function addUploadedMedias(Media $media)
@@ -514,7 +498,6 @@ class Event
 
         return $this;
     }
-
 
     /**
      * Remove uploadedMedias.
@@ -587,9 +570,10 @@ class Event
     }
 
     /**
-     * Add imagesGallery
+     * Add imagesGallery.
      *
      * @param Image $image
+     *
      * @return $this
      */
     public function addImagesGallery(Image $image)
@@ -598,7 +582,6 @@ class Event
 
         return $this;
     }
-
 
     /**
      * Remove imagesGallery.
@@ -611,7 +594,6 @@ class Event
     {
         return $this->imagesGallery->removeElement($image);
     }
-
 
     /**
      * Get eventPurchase.
@@ -662,5 +644,4 @@ class Event
     {
         $this->link = $link;
     }
-
 }

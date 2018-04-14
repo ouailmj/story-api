@@ -25,7 +25,7 @@ class DefaultController extends BaseController
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('app_profile_edit');
-            }
+        }
 
         return $this->render('AppBundle:Default:index.html.twig', [
             // ...

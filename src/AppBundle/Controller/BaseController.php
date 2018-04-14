@@ -22,7 +22,6 @@ class BaseController extends Controller
     {
         $msg = $this->get('translator')->trans('flash.success');
         $this->addFlash('success', $msg);
-
     }
 
     public function addErrorFlash()

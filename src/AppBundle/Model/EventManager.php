@@ -21,4 +21,8 @@ class EventManager
     public function deleteUserEvents(User $user)
     {
     }
+
+    public function createEvent($data)
+    {
+    }
 }
