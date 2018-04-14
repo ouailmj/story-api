@@ -9,47 +9,74 @@
  * file that was distributed with this source code.
  */
 
+
 namespace AppBundle\DTO;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
+
 /**
- * Class ChangePassword
+ * Class ChangeProfile
  *
  * @package AppBundle\DTO
  * @ApiResource(
  *      collectionOperations={
  *          "post"={
- *              "path"="/me/change-password",
+ *              "path"="/me/change-profile",
  *          },
  *      },
  *      itemOperations={},
  * )
  */
-final class ChangePassword
+final class ChangeProfile
 {
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     */
+    public $username;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     */
+    public $fullName;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     * @Assert\Email
+     */
+    public $email;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     *
+     */
+    public $phoneNumber;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank
+     *
+     */
+    public $timeZone;
+
     /**
      * @var string
      *
      * @Assert\NotBlank
      * @UserPassword
      */
-    public $oldPassword;
+    public $password;
 
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank
-     */
-    public $newPassword;
-
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank
-     * @Assert\EqualTo(propertyPath="newPassword")
-     */
-    public $repeatedPassword;
 }
