@@ -15,10 +15,14 @@
 namespace AppBundle\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Model\GroupableInterface;
+use FOS\UserBundle\Model\GroupInterface;
+use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User.
@@ -44,9 +48,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
- *
  */
-class User extends BaseUser
+class User  extends BaseUser
 {
     /**
      * @var int
@@ -56,6 +59,18 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", nullable=true)
+     */
+    protected $firstName;
+
+    /**
+     * @var string
+     * @ORM\Column( type="string", nullable=true)
+     */
+    protected $lastName;
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
@@ -69,10 +84,11 @@ class User extends BaseUser
      */
     protected $googleId = '';
 
-    private $googleAccessToken;
+    protected $googleAccessToken;
 
     /**
      * @var string
+     * @Assert\Length(max = 20)
      * @ORM\Column( type="string", length=20, nullable=true)
      */
     protected $phoneNumber;
@@ -81,13 +97,54 @@ class User extends BaseUser
      * @var string
      * @ORM\Column( type="string", length=250, nullable=true)
      */
-    protected $fullName;
+    protected $fullName ;
 
     /**
      * @var string
      * @ORM\Column( type="string", length=50, nullable=true)
      */
-    protected $timezoneId;
+    protected $timezoneId = "Europe/Paris";
+
+    /**
+     * @var MemberShip [] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberShip", mappedBy="member")
+     */
+    protected $eventMemberShips;
+
+    /**
+     * @var Event[] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy")
+     *
+     */
+    protected $createdEvents;
+
+    /**
+     * @var InvitationRequest [] | ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\InvitationRequest")
+     * @ORM\JoinTable(name="users_invitation_request",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="invitation_request_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    protected $invitationRequests;
+
+    /**
+     * @var Media [] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Media", mappedBy="createdBy")
+     */
+    protected $medias;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->enabled = true;
+        $this->roles = array();
+        $this->createdEvents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -98,6 +155,39 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
 
     /**
      * @return mixed
@@ -180,26 +270,6 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\PrePersist()
-     *
-     * @return User
-     */
-    public function setUsernameValue()
-    {
-        if (empty($this->username)) {
-            $this->username = $this->email;
-        }
-
-        return $this;
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->enabled = true;
-    }
-
-    /**
      * @return string
      */
     public function getPhoneNumber()
@@ -245,5 +315,148 @@ class User extends BaseUser
     public function setTimezoneId(string $timezoneId)
     {
         $this->timezoneId = $timezoneId;
+    }
+
+
+
+    /**
+     * Add CreatedEvents.
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return User
+     */
+    public function addCreatedEvents(Event $event)
+    {
+        $this->createdEvents[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove CreatedEvents.
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeCreatedEvents(Event $event)
+    {
+        return $this->createdEvents->removeElement($event);
+    }
+
+    /**
+     * Get createdEvents.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreatedEvents()
+    {
+        return $this->createdEvents;
+    }
+
+    /**
+     * Add eventMemberShips
+     *
+     * @param MemberShip $memberShip
+     * @return $this
+     */
+    public function addEventMemberShips( MemberShip $memberShip)
+    {
+        $this->eventMemberShips[] = $memberShip;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventMemberShips.
+     *
+     * @param \AppBundle\Entity\MemberShip $memberShip
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeEventMemberShips(MemberShip $memberShip)
+    {
+        return $this->eventMemberShips->removeElement($memberShip);
+    }
+
+    /**
+     * Get eventMemberShips.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEventMemberShips()
+    {
+        return $this->eventMemberShips;
+    }
+
+    /**
+     * Add invitationRequests
+     *
+     * @param InvitationRequest $invitationRequest
+     * @return $this
+     */
+    public function addInvitationRequests( InvitationRequest $invitationRequest)
+    {
+        $this->invitationRequests[] = $invitationRequest;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitationRequests.
+     *
+     * @param \AppBundle\Entity\InvitationRequest $invitationRequest
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeInvitationRequests(InvitationRequest $invitationRequest)
+    {
+        return $this->invitationRequests->removeElement($invitationRequest);
+    }
+
+    /**
+     * Get invitationRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInvitationRequests()
+    {
+        return $this->invitationRequests;
+    }
+
+    /**
+     * Add medias
+     *
+     * @param Media $media
+     * @return $this
+     */
+    public function addMedias( Media $media)
+    {
+        $this->medias[] = $media;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitationRequests.
+     *
+     * @param \AppBundle\Entity\Media $media
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeMedias(Media $media)
+    {
+        return $this->medias->removeElement($media);
+    }
+
+    /**
+     * Get invitationRequests.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMedias()
+    {
+        return $this->medias;
     }
 }
