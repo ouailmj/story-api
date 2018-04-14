@@ -137,8 +137,7 @@ class User  extends BaseUser
      */
     public function __construct()
     {
-        $this->enabled = true;
-        $this->roles = array();
+        parent::__construct();
         $this->createdEvents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();

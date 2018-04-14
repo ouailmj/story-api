@@ -37,10 +37,6 @@ class UserSubscriber implements EventSubscriberInterface
      */
     private $userManager;
 
-    /**
-     * @var JWTTokenManagerInterface
-     */
-    private $JWTTokenManager;
 
 
     /**
@@ -48,13 +44,11 @@ class UserSubscriber implements EventSubscriberInterface
      *
      * @param TokenStorage $tokenStorage
      * @param UserManager $userManager
-     * @param JWTTokenManagerInterface $JWTTokenManager
      */
-    public function __construct(TokenStorage $tokenStorage, UserManager $userManager, JWTTokenManagerInterface $JWTTokenManager)
+    public function __construct(TokenStorage $tokenStorage, UserManager $userManager)
     {
         $this->tokenStorage = $tokenStorage;
         $this->userManager = $userManager;
-        $this->JWTTokenManager = $JWTTokenManager;
     }
 
 
@@ -115,8 +109,9 @@ class UserSubscriber implements EventSubscriberInterface
             /** @var ForgotPasswordRequest $changePassword */
             $changePassword = $event->getControllerResult();
 
+            $this->userManager->forgotPasswordMobile($user, $request);
             // TODO: Translate
-            $responseData['message'] = $changePassword->email;
+            $responseData['message'] = "lllllllllllllll";
 
 
 
@@ -153,7 +148,7 @@ class UserSubscriber implements EventSubscriberInterface
 
             // TODO: Translate
             $responseData['message'] = 'Your profile has been updated successfully';
-            $responseData['token'] = $this->JWTTokenManager->create($user);
+            $responseData['token'] =  $this->userManager->generateToken($user);
 
         }
 

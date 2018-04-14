@@ -17,7 +17,13 @@ namespace AppBundle\Model;
 use AppBundle\Entity\User;
 use AppBundle\Mailer\Mailer;
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Event\GetResponseNullableUserEvent;
+use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserManager
 {
@@ -28,6 +34,9 @@ class UserManager
 
     /** @var Mailer */
     private $mailer;
+
+    /** @var \FOS\UserBundle\Mailer\Mailer */
+    private $fos_mailer;
 
     /**
      * @var EntityManager
@@ -40,18 +49,43 @@ class UserManager
     private $jwtTokenManager;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
+     * @var TokenGeneratorInterface
+     */
+    private $tokenGenerator;
+
+    /**
+     * @var int
+     */
+    private $retryTtl;
+
+
+    /**
      * UserManager constructor.
+     *
      * @param \FOS\UserBundle\Doctrine\UserManager $fosUserManager
      * @param Mailer $mailer
      * @param EntityManager $em
      * @param JWTManager $jwtTokenManager
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param int $retryTtl
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param \FOS\UserBundle\Mailer\Mailer $fos_mailer
      */
-    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, EntityManager $em, JWTManager $jwtTokenManager)
+    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, EntityManager $em, JWTManager $jwtTokenManager, EventDispatcherInterface $eventDispatcher, $retryTtl=7200, TokenGeneratorInterface $tokenGenerator, \FOS\UserBundle\Mailer\Mailer $fos_mailer)
     {
         $this->fosUserManager = $fosUserManager;
         $this->mailer = $mailer;
         $this->em = $em;
         $this->jwtTokenManager = $jwtTokenManager;
+        $this->eventDispatcher = $eventDispatcher;
+        $this->retryTtl = $retryTtl;
+        $this->tokenGenerator = $tokenGenerator;
+        $this->fos_mailer = $fos_mailer;
     }
 
 
@@ -144,5 +178,46 @@ class UserManager
    {
        $this->fosUserManager->updateUser($user);
 
+   }
+
+   public function forgotPasswordMobile(User $user, Request $request){
+
+       $event = new GetResponseNullableUserEvent($user, $request);
+       $this->eventDispatcher->dispatch(FOSUserEvents::RESETTING_SEND_EMAIL_INITIALIZE, $event);
+
+       if (null !== $event->getResponse()) {
+           return $event->getResponse();
+       }
+
+       if (null !== $user && !$user->isPasswordRequestNonExpired($this->retryTtl)) {
+           $event = new GetResponseUserEvent($user, $request);
+           $this->eventDispatcher->dispatch(FOSUserEvents::RESETTING_RESET_REQUEST, $event);
+
+           if (null !== $event->getResponse()) {
+               return $event->getResponse();
+           }
+
+           if (null === $user->getConfirmationToken()) {
+               $user->setConfirmationToken($this->tokenGenerator->generateToken());
+           }
+
+           $event = new GetResponseUserEvent($user, $request);
+           $this->eventDispatcher->dispatch(FOSUserEvents::RESETTING_SEND_EMAIL_CONFIRM, $event);
+
+           if (null !== $event->getResponse()) {
+               return $event->getResponse();
+           }
+
+           $this->fos_mailer->sendResettingEmailMessage($user);
+           $user->setPasswordRequestedAt(new \DateTime());
+           $this->updateUser($user);
+
+           $event = new GetResponseUserEvent($user, $request);
+           $this->eventDispatcher->dispatch(FOSUserEvents::RESETTING_SEND_EMAIL_COMPLETED, $event);
+
+           if (null !== $event->getResponse()) {
+               return $event->getResponse();
+           }
+       }
    }
 }
