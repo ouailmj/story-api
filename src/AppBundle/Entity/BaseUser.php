@@ -93,7 +93,7 @@ class BaseUser implements UserInterface, GroupableInterface
      * @var \DateTime|null
      * @ORM\Column( name="last_login", type="datetime", nullable=true)
      */
-    protected $lastLogin;
+    protected $lastLogin = null;
 
     /**
      * Random string sent to the BaseUser email address in order to verify it.

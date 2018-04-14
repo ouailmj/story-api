@@ -14,14 +14,12 @@
 
 namespace AppBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Payment.
  *
- * @ApiResource
+ *
  * @ORM\Table(name="payment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PaymentRepository")
  */
@@ -61,7 +59,7 @@ class Payment
      * @var EventPurchase
      *
      * @ORM\ManyToOne(targetEntity="EventPurchase", inversedBy="payments")
-     * @ApiSubresource()
+     *
      */
     private $eventPurchase;
 

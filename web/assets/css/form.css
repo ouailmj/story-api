@@ -457,6 +457,28 @@ select::-ms-expand {
 .validate-input {
   position: relative;
 }
+.select2-selection, .select2-selection--single{
+  border-bottom: none !important;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+  display: block;
+  width: 100%;
+}
+.select2{
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #666666;
+  border-bottom: none;
+  display: block;
+  width: 100%;
+  background: #e6e6e6;
+  height: 50px;
+  border-radius: 25px;
+  padding: 5px 30px 0 68px;
+}
 
 .alert-validate::before {
   content: attr(data-validate);
@@ -537,4 +559,39 @@ position: static;
 }
 .footer a{
   color: #fff;
+}
+
+.remember-me{
+  width: 100%;
+  text-align: center;
+  color: #C4BCB0;
+}
+
+input[type="checkbox"]{
+  -webkit-appearance:none;
+  width:15px;
+  height:15px;
+  position:relative;
+  outline:medium none;
+  margin-right:10px;
+}
+input[type="checkbox"]::before{
+  width:15px;
+  height:15px;
+  content:"";
+  display:block;
+  border:3px solid #C4BCB0;
+  border-radius: 9px;
+  position:absolute;
+}
+input[type="checkbox"]:checked::after{
+  width:5px;
+  height:5px;
+  content:"";
+  display:block;
+  background: #C4BCB0;
+  border-radius: 5px;
+  position:absolute;
+  left:5px;
+  top:5px;
 }
