@@ -63,13 +63,13 @@ class User  extends BaseUser
      * @var string
      * @ORM\Column( type="string", nullable=true)
      */
-    protected $firstName;
+    protected $firstName = "";
 
     /**
      * @var string
      * @ORM\Column( type="string", nullable=true)
      */
-    protected $lastName;
+    protected $lastName = "";
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
