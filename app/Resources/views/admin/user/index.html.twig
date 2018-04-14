@@ -64,7 +64,11 @@
                             <span class="label bg-danger heading-text">{{ 'user.index.disable'|trans }}</span>
                         {% endif %}
                     </td>
-                    <td>{{ user.lastLogin|date }}</td>
+                    <td>
+                        {% if user.lastLogin is not null %}
+                            {{ user.lastLogin|date }}
+                        {% endif %}
+                    </td>
                     <td class="text-center">
                         <div class="">
                             {% set  confirm =  'user.delete_account'|trans %}
