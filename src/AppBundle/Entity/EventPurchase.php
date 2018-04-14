@@ -14,8 +14,7 @@
 
 namespace AppBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -23,7 +22,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 /**
  * EventPurchase.
  *
- * @ApiResource
+ *
  * @ORM\Table(name="event_purchase")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventPurchaseRepository")
  */
@@ -58,7 +57,7 @@ class EventPurchase
      * @var Plan
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Plan", inversedBy="eventPurchases" )
-     * @ApiSubresource()
+     *
      */
     private $plan;
 
@@ -66,7 +65,7 @@ class EventPurchase
      * @var Event
      *
      * @ORM\OneToOne(targetEntity="Event")
-     * @ApiSubresource()
+     *
      */
     private $event;
 

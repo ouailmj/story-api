@@ -14,14 +14,11 @@
 
 namespace AppBundle\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * MemberShip.
  *
- * @ApiResource
  * @ORM\Table(name="member_ship")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MemberShipRepository")
  */
@@ -40,7 +37,7 @@ class MemberShip
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventMemberShips")
-     * @ApiSubresource()
+     *
      */
     private $event;
 
@@ -48,7 +45,7 @@ class MemberShip
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMemberShips"  )
-     * @ApiSubresource()
+     *
      */
     private $member;
 

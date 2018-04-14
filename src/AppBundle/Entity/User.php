@@ -41,8 +41,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "route_name"="currentUserAPI",
  *          "method"="GET"
  *      },
- *     "api_update_profile"={"route_name"="updateProfileAPI"},
- *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
  */
@@ -135,8 +133,7 @@ class User extends BaseUser
      */
     public function __construct()
     {
-        $this->enabled = true;
-        $this->roles = [];
+        parent::__construct();
         $this->createdEvents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();
