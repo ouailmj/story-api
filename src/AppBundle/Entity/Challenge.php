@@ -17,6 +17,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use Gedmo\Timestampable\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * Challenge.
