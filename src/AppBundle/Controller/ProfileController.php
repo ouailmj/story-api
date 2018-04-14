@@ -15,16 +15,16 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Model\UserManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -33,7 +33,7 @@ class ProfileController extends BaseController
     private $eventDispatcher;
     private $userManager;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher,  UserManagerInterface $userManager)
+    public function __construct(EventDispatcherInterface $eventDispatcher, UserManagerInterface $userManager)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->userManager = $userManager;
@@ -41,6 +41,7 @@ class ProfileController extends BaseController
 
     /**
      * Show the user.
+     *
      * @Route("/auth/profile/")
      */
     public function showAction()
@@ -50,14 +51,16 @@ class ProfileController extends BaseController
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        return $this->render('@FOSUser/Profile/show.html.twig', array(
+        return $this->render('@FOSUser/Profile/show.html.twig', [
             'user' => $user,
-        ));
+        ]);
     }
 
     /**
      * Edit the user.
+     *
      * @Route("/auth/profile/edit")
+     *
      * @param Request $request
      *
      * @return Response
@@ -97,9 +100,9 @@ class ProfileController extends BaseController
             return $response;
         }
 
-        return $this->render('@FOSUser/Profile/edit.html.twig', array(
+        return $this->render('@FOSUser/Profile/edit.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -115,7 +118,8 @@ class ProfileController extends BaseController
         $form->handleRequest($request);
 
         $userManager->deleteUser($this->getUser());
-$this->addSuccessFlash();
+        $this->addSuccessFlash();
+
         return $this->redirectToRoute('app_default_index');
     }
 }

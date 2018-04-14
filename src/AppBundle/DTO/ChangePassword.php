@@ -16,9 +16,8 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class ChangePassword
+ * Class ChangePassword.
  *
- * @package AppBundle\DTO
  * @ApiResource(
  *      collectionOperations={
  *          "post"={

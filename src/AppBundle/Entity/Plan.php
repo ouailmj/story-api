@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -90,7 +102,7 @@ class Plan
      *
      * @ORM\Column(name="description", type="string", length=255)
      */
-    private $description = "";
+    private $description = '';
 
     /**
      * @var EventPurchase [] | ArrayCollection
@@ -98,7 +110,6 @@ class Plan
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventPurchase", mappedBy="plan")
      */
     private $eventPurchases;
-
 
     /**
      * Get id.
@@ -351,9 +362,10 @@ class Plan
     }
 
     /**
-     * Add eventPurchases
+     * Add eventPurchases.
      *
      * @param EventPurchase $eventPurchase
+     *
      * @return $this
      */
     public function addEventPurchases(EventPurchase $eventPurchase)
@@ -362,7 +374,6 @@ class Plan
 
         return $this;
     }
-
 
     /**
      * Remove eventPurchases.
@@ -375,7 +386,6 @@ class Plan
     {
         return $this->eventPurchases->removeElement($eventPurchase);
     }
-
 
     /**
      * Get eventPurchases.

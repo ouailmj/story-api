@@ -1,12 +1,26 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
 namespace AppBundle\Entity;
+
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * EventPurchase
+ * EventPurchase.
  *
  *
  * @ORM\Table(name="event_purchase")
@@ -14,6 +28,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EventPurchase
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -59,14 +75,6 @@ class EventPurchase
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Payment", mappedBy="eventPurchase")
      */
     private $payments;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="createdAt", type="datetime")
-     */
-    private $createdAt;
-
 
     /**
      * Get id.
@@ -175,18 +183,18 @@ class EventPurchase
     }
 
     /**
-     * Add payments
+     * Add payments.
      *
      * @param Payment $payment
+     *
      * @return $this
      */
-    public function addChallenges( Payment $payment)
+    public function addChallenges(Payment $payment)
     {
         $this->payments[] = $payment;
 
         return $this;
     }
-
 
     /**
      * Remove payments.
@@ -208,29 +216,5 @@ class EventPurchase
     public function getPayments()
     {
         return $this->payments;
-    }
-
-    /**
-     * Set createdAt.
-     *
-     * @param \DateTime $createdAt
-     *
-     * @return EventPurchase
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get createdAt.
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
     }
 }

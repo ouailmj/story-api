@@ -7,10 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\EventSubscriber;
-
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use AppBundle\DTO\ChangePassword;
@@ -37,20 +39,17 @@ class UserSubscriber implements EventSubscriberInterface
      */
     private $userManager;
 
-
-
     /**
      * UserSubscriber constructor.
      *
      * @param TokenStorage $tokenStorage
-     * @param UserManager $userManager
+     * @param UserManager  $userManager
      */
     public function __construct(TokenStorage $tokenStorage, UserManager $userManager)
     {
         $this->tokenStorage = $tokenStorage;
         $this->userManager = $userManager;
     }
-
 
     public static function getSubscribedEvents()
     {
@@ -78,8 +77,7 @@ class UserSubscriber implements EventSubscriberInterface
         $responseData = [];
 
         $token = $this->tokenStorage->getToken();
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User){
-
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User) {
             /** @var ChangePassword $userPassword */
             $changePassword = $event->getControllerResult();
             $user->setPlainPassword($changePassword->newPassword);
