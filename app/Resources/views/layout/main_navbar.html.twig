@@ -49,6 +49,11 @@
                         <li><a class="english"><img src="{{ asset('images/flags/gb.png') }}" alt=""> English</a></li>
                         <li><a class="french"><img src="{{ asset('images/flags/fr.png') }}" alt=""> Français</a></li>
                     </ul>
+                    <style>
+                            .dropdown-menu .caret:after {
+                                    content: none !important;
+                            }
+                        </style>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -58,7 +63,7 @@
                         </a>
                         <style>
                             .caret:after {
-                                    content: '' !important;
+                                    content: none;
                             }
                         </style>
                         <ul class="dropdown-menu dropdown-menu-right">

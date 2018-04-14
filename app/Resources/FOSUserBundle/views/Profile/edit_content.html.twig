@@ -6,6 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    
     
 {% endblock %}
 {% form_theme form 'Form/fields.html.twig' %}
@@ -44,7 +46,7 @@
                           {{ form_row(form.username)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
-                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <i class="fa fa-user" aria-hidden="true"></i>
                           </span>
                       </div>
                       
@@ -118,6 +120,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        let oInput = document.getElementById('timeZone'),
+            oChild,spans=[];
+        setTimeout(
+            ()=>{
+                for(i = 0; i < oInput.childNodes.length; i++){
+                    oChild = oInput.childNodes[i];
+                    if(oChild.nodeName == 'SPAN'){
+                        spans.push(oChild);
+                    }
+                }
+                spans[0].className +=" input100";
+            }, 900000);
+    </script>
+
+
 {% endblock %}
 
 
