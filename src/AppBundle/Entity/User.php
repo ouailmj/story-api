@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Entity;
@@ -41,7 +44,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "route_name"="currentUserAPI",
  *          "method"="GET"
  *      },
- *     "api_update_profile"={"route_name"="updateProfileAPI"},
  *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
