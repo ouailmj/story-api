@@ -4,8 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * Media
@@ -21,7 +19,7 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *     })
  *
  * @ORM\HasLifecycleCallbacks()
- * @ApiResource()
+ *
  */
 class Media
 {
@@ -73,7 +71,7 @@ class Media
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias" )
-     * @ApiSubresource()
+     *
      */
     private $createdBy;
 

@@ -3,13 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * Challenge
  *
- * @ApiResource
+ *
  * @ORM\Table(name="challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ChallengeRepository")
  */
@@ -49,7 +47,7 @@ class Challenge
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="challenges" )
-     * @ApiSubresource()
+     *
      */
     private $event;
 

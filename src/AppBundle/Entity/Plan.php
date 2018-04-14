@@ -4,12 +4,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * Plan
- * @ApiResource
+ *
  * @ORM\Table(name="plan")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PlanRepository")
  */

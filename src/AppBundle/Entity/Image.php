@@ -3,13 +3,11 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * Image
  *
- * @ApiResource
+ *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
  */
@@ -29,7 +27,7 @@ class Image extends Media
      *
      * @ORM\OneToOne(targetEntity="MemberShip")
      * @ORM\JoinColumn(name="member_ship_id", referencedColumnName="id")
-     * @ApiSubresource()
+     *
      */
     private $uploadedBy = null;
 
