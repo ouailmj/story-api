@@ -70,7 +70,6 @@
                             {% set  confirm =  'user.delete_account'|trans %}
                             <a title="Afficher les détails" href="{{ path('user_show', { 'id': user.id }) }}" class="text-primary legitRipple"><i class="icon-eye position-left"></i></a>
                             <a title="Modifier" href="{{ path('user_edit', { 'id': user.id }) }}" class="text-primary legitRipple"><i class="icon-pen position-left"></i></a>
-                            <a title="Supprimer" onclick="return confirm('{{ confirm }}');" href="{{ path('user_delete', { 'id': user.id }) }}" class="text-danger legitRipple"><i class="icon-trash position-left"></i></a>
                         </div>
                     </td>
                 </tr>
