@@ -44,7 +44,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "route_name"="currentUserAPI",
  *          "method"="GET"
  *      },
- *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
  */
