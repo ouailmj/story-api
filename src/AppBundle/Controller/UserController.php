@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Controller;
@@ -107,7 +110,6 @@ class UserController extends BaseController
                 $userManager->updatePassword($user);
                 $this->addSuccessFlash();
             }
-
 
             return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }

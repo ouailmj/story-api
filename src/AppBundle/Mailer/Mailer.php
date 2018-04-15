@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Mailer;
@@ -48,7 +51,7 @@ class Mailer
 
     protected function sendEmailMessage(
         $body, $toEmail, $subject,
-        $fromEmail = 'contact@mystorytelling.com', $fromName = 'MyStorytelling')
+        $fromEmail = 'contact@instant.fr', $fromName = 'MyStorytelling')
     {
         $message = (new \Swift_Message())
             ->setSubject($subject)

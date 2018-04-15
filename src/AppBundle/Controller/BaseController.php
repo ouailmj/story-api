@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Controller;
@@ -19,7 +22,6 @@ class BaseController extends Controller
     {
         $msg = $this->get('translator')->trans('flash.success');
         $this->addFlash('success', $msg);
-
     }
 
     public function addErrorFlash()

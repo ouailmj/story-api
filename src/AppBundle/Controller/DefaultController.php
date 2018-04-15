@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Controller;
@@ -22,7 +25,7 @@ class DefaultController extends BaseController
     {
         if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirectToRoute('app_profile_edit');
-            }
+        }
 
         return $this->render('AppBundle:Default:index.html.twig', [
             // ...

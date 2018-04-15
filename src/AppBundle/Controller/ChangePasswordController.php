@@ -7,25 +7,25 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
-
 
 namespace AppBundle\Controller;
 
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
 
 class ChangePasswordController extends BaseController
 {
@@ -39,10 +39,10 @@ class ChangePasswordController extends BaseController
     }
 
     /**
-     *
      * @Route("auth/profile/change-password")
      *
      * @param Request $request
+     *
      * @return null|RedirectResponse|Response
      */
     public function changePasswordAction(Request $request)
@@ -80,8 +80,8 @@ class ChangePasswordController extends BaseController
             return $response;
         }
 
-        return $this->render('@FOSUser/ChangePassword/change_password.html.twig', array(
+        return $this->render('@FOSUser/ChangePassword/change_password.html.twig', [
             'form' => $form->createView(),
-        ));
+        ]);
     }
 }
