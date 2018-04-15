@@ -34,10 +34,10 @@ class UserTestCest
         $I->FillField('_password' , "f%/R4Uk#](wUvM'V");
         $I->click('_submit');
         $I->amOnPage('/auth/profile/change-password');
-        $I->FillField('fos_user_change_password_form[current_password]',"f%/R4Uk#](wUvM'V");
-        $I->FillField('fos_user_change_password_form[plainPassword][first]',"f%/R4Uk#](wUvM'");
-        $I->FillField('fos_user_change_password_form[plainPassword][second]',"f%/R4Uk#](wUvM'");
-        $I->click("div.col-md-5 button");
+        $I->FillField('input#fos_user_change_password_form_current_password',"f%/R4Uk#](wUvM'V");
+        $I->FillField('input#fos_user_change_password_form_plainPassword_first',"f%/R4Uk#](wUvM'");
+        $I->FillField('input#fos_user_change_password_form_plainPassword_second',"f%/R4Uk#](wUvM'");
+        $I->click("form[name=\"fos_user_change_password_form\"] button[type=\"submit\"]");
     }
 
 
@@ -50,6 +50,27 @@ class UserTestCest
         $I->FillField('fos_user_registration_form[plainPassword]',"f%/R4Uk#](wUvM'V");
         $I->click('create');
     }
+
+    public function logout_test_user(\AcceptanceTester $I)
+    {
+        $I->wantTo('test logout user');
+        $this->loginAsUser($I);
+        $I->click('li:nth-child(3) > a');
+        $I->seeCurrentUrlEquals('/auth/login');
+    }
+
+    public function Reset_password(\AcceptanceTester $I)
+    {
+        $I->wantTo('test reset password');
+        $this->loginAsUser($I);
+        $I->amOnPage('/auth/login');
+        $I->click('form > div:nth-child(7) > a');
+        $I->seeCurrentUrlEquals('/auth/resetting/request');
+        $I->fillField('input#username','user');
+        $I->click('div:nth-child(3) > input');
+        $I->seeCurrentUrlEquals('/auth/resetting/check-email?username=user');
+    }
+
 
     public function _before(\AcceptanceTester $I)
     {

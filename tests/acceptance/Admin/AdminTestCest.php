@@ -4,11 +4,11 @@ namespace Admin;
 
 class AdminTestCest
 {
-    public function frontpageWorks(\AcceptanceTester $I) //yes
-    {
-        $I->wantTo("Test frontpage");
-        $I->amOnPage('');
-    }
+//    public function frontpageWorks(\AcceptanceTester $I) //yes
+//    {
+//        $I->wantTo("Test frontpage");
+//        $I->amOnPage('');
+//    }
 
     public function loginAsAdmin(\AcceptanceTester $I) //yes
     {
@@ -33,7 +33,7 @@ class AdminTestCest
     {
         $I->wantTo("Modifier les infos d'un utilisateur");
         $this->loginAsAdmin($I);
-        $I->amOnPage("/admin/user/0/edit");
+        $I->amOnPage("/admin/user/1/edit");
         $I->fillField('appbundle_user[phoneNumber]', '0645879633');
         $I->fillField('appbundle_user[new_password][first]', "f%/R4Uk#](wUvM'V");
         $I->fillField('appbundle_user[new_password][second]', "f%/R4Uk#](wUvM'V");
@@ -64,13 +64,20 @@ class AdminTestCest
         $I->seeCurrentUrlEquals('/auth/profile/edit');
     }
 
-    public function delete_user(\AcceptanceTester $I) //not working
+    public function delete_user(\AcceptanceTester $I) //worked
     {
         $I->wantTo("delete account");
         $this->loginAsAdmin($I);
-        $I->amOnPage('/admin/user/3/edit');
-        $I->click('.legitRipple');
-        $I->click('.legitRipple');
+        $I->amOnPage('/admin/user/34');
+        $I->click('form[name="form"] > button[type="submit"]');
+    }
+
+    public function logout_test(\AcceptanceTester $I)
+    {
+        $I->wantTo('test logout');
+        $this->loginAsAdmin($I);
+        $I->click('li:nth-child(4) > a');
+        $I->seeCurrentUrlEquals('/auth/login');
     }
 
     public function _before(\AcceptanceTester $I)
