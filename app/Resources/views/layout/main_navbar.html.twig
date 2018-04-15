@@ -16,7 +16,7 @@
     .navbar-inverse {
     background-color: #ffffff !important;
     border-color: #ffffff !important;
-    
+
     }
     .navbar-brand {
         color:#000 !important;
@@ -37,17 +37,21 @@
         </div>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown language-switch">
-                    <a class="dropdown-toggle" data-toggle="dropdown">
-
-                    <img src="{{ asset('images/flags/gb.png') }}" class="position-left" alt="">
-
-                        English
-                        <i class="caret"></i>
-                    </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown">
+                            {% if  app.request.locale  == 'en' %}
+                                <img src="{{ asset('images/flags/gb.png') }}" class="position-left" alt="">
+                                English
+                                <span class="caret"></span>
+                            {% else %}
+                                <img src="{{ asset('images/flags/fr.png') }}" class="position-left" alt="">
+                                Français
+                                <span class="caret"></span>
+                            {% endif %}
+                        </a>
 
                     <ul class="dropdown-menu">
-                        <li><a class="english"><img src="{{ asset('images/flags/gb.png') }}" alt=""> English</a></li>
-                        <li><a class="french"><img src="{{ asset('images/flags/fr.png') }}" alt=""> Français</a></li>
+                        <li><a class="english" href="{{ path('app_locale_index', {'lang': 'en'}) }}"><img src="{{ asset('images/flags/gb.png') }}" alt=""> English</a></li>
+                        <li><a class="french" href="{{ path('app_locale_index', {'lang': 'fr'}) }}"> <img src="{{ asset('images/flags/fr.png') }}" alt=""> Français</a></li>
                     </ul>
                     <style>
                             .dropdown-menu .caret:after {
