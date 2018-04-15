@@ -4,12 +4,6 @@ namespace Admin;
 
 class AdminTestCest
 {
-    public function frontpageWorks(\AcceptanceTester $I) //yes
-    {
-        $I->wantTo("Test frontpage");
-        $I->amOnPage('');
-    }
-
     public function loginAsAdmin(\AcceptanceTester $I) //yes
     {
         $I->wantTo("Verify the Admin login");
@@ -69,7 +63,7 @@ class AdminTestCest
 
         $I->wantTo("delete account");
         $this->loginAsAdmin($I);
-        $I->amOnPage('/admin/user/35');
+        $I->amOnPage('/admin/user/40');
         $I->click('form[name="form"] > button[type="submit"]');
         }
 
