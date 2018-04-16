@@ -7,19 +7,19 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
-
 
 namespace AppBundle\Entity;
 
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\GroupableInterface;
 use FOS\UserBundle\Model\GroupInterface;
 use FOS\UserBundle\Model\UserInterface;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class BaseUser implements UserInterface, GroupableInterface
@@ -93,7 +93,7 @@ class BaseUser implements UserInterface, GroupableInterface
      * @var \DateTime|null
      * @ORM\Column( name="last_login", type="datetime", nullable=true)
      */
-    protected $lastLogin;
+    protected $lastLogin = null;
 
     /**
      * Random string sent to the BaseUser email address in order to verify it.
@@ -126,9 +126,8 @@ class BaseUser implements UserInterface, GroupableInterface
     public function __construct()
     {
         $this->enabled = true;
-        $this->roles = array();
+        $this->roles = [];
     }
-
 
     /**
      * Get id.
@@ -139,7 +138,6 @@ class BaseUser implements UserInterface, GroupableInterface
     {
         return $this->id;
     }
-
 
     /**
      * @ORM\PrePersist()
@@ -185,7 +183,7 @@ class BaseUser implements UserInterface, GroupableInterface
      */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->password,
             $this->salt,
             $this->usernameCanonical,
@@ -194,7 +192,7 @@ class BaseUser implements UserInterface, GroupableInterface
             $this->id,
             $this->email,
             $this->emailCanonical,
-        ));
+        ]);
     }
 
     /**
@@ -531,7 +529,7 @@ class BaseUser implements UserInterface, GroupableInterface
      */
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
 
         foreach ($roles as $role) {
             $this->addRole($role);
@@ -553,7 +551,7 @@ class BaseUser implements UserInterface, GroupableInterface
      */
     public function getGroupNames()
     {
-        $names = array();
+        $names = [];
         foreach ($this->getGroups() as $group) {
             $names[] = $group->getName();
         }
@@ -566,7 +564,7 @@ class BaseUser implements UserInterface, GroupableInterface
      */
     public function hasGroup($name)
     {
-        return in_array($name, $this->getGroupNames());
+        return in_array($name, $this->getGroupNames(), true);
     }
 
     /**

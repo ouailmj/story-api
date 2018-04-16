@@ -1,16 +1,24 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
-
 
 /**
- * MemberShip
+ * MemberShip.
  *
- * @ApiResource
  * @ORM\Table(name="member_ship")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MemberShipRepository")
  */
@@ -29,7 +37,7 @@ class MemberShip
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventMemberShips")
-     * @ApiSubresource()
+     *
      */
     private $event;
 
@@ -37,7 +45,7 @@ class MemberShip
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMemberShips"  )
-     * @ApiSubresource()
+     *
      */
     private $member;
 
@@ -47,7 +55,6 @@ class MemberShip
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
-
 
     /**
      * Get id.

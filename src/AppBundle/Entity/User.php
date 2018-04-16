@@ -18,9 +18,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\GroupableInterface;
-use FOS\UserBundle\Model\GroupInterface;
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -44,11 +41,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "route_name"="currentUserAPI",
  *          "method"="GET"
  *      },
- *     "api_change_password"={"route_name"="ChangePasswordAPI"},
  *     }
  *)
  */
-class User  extends BaseUser
+class User extends BaseUser
 {
     /**
      * @var int
@@ -96,13 +92,13 @@ class User  extends BaseUser
      * @var string
      * @ORM\Column( type="string", length=250, nullable=true)
      */
-    protected $fullName ;
+    protected $fullName;
 
     /**
      * @var string
      * @ORM\Column( type="string", length=50, nullable=true)
      */
-    protected $timezoneId = "Europe/Paris";
+    protected $timezoneId = 'Europe/Paris';
 
     /**
      * @var MemberShip [] | ArrayCollection
@@ -113,7 +109,6 @@ class User  extends BaseUser
     /**
      * @var Event[] | ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy")
-     *
      */
     protected $createdEvents;
 
@@ -138,8 +133,7 @@ class User  extends BaseUser
      */
     public function __construct()
     {
-        $this->enabled = true;
-        $this->roles = array();
+        parent::__construct();
         $this->createdEvents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();
@@ -186,7 +180,6 @@ class User  extends BaseUser
     {
         $this->lastName = $lastName;
     }
-
 
     /**
      * @return mixed
@@ -316,8 +309,6 @@ class User  extends BaseUser
         $this->timezoneId = $timezoneId;
     }
 
-
-
     /**
      * Add CreatedEvents.
      *
@@ -355,12 +346,13 @@ class User  extends BaseUser
     }
 
     /**
-     * Add eventMemberShips
+     * Add eventMemberShips.
      *
      * @param MemberShip $memberShip
+     *
      * @return $this
      */
-    public function addEventMemberShips( MemberShip $memberShip)
+    public function addEventMemberShips(MemberShip $memberShip)
     {
         $this->eventMemberShips[] = $memberShip;
 
@@ -390,12 +382,13 @@ class User  extends BaseUser
     }
 
     /**
-     * Add invitationRequests
+     * Add invitationRequests.
      *
      * @param InvitationRequest $invitationRequest
+     *
      * @return $this
      */
-    public function addInvitationRequests( InvitationRequest $invitationRequest)
+    public function addInvitationRequests(InvitationRequest $invitationRequest)
     {
         $this->invitationRequests[] = $invitationRequest;
 
@@ -425,12 +418,13 @@ class User  extends BaseUser
     }
 
     /**
-     * Add medias
+     * Add medias.
      *
      * @param Media $media
+     *
      * @return $this
      */
-    public function addMedias( Media $media)
+    public function addMedias(Media $media)
     {
         $this->medias[] = $media;
 

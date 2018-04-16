@@ -28,9 +28,9 @@ class ProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $constraintsOptions = array(
+        $constraintsOptions = [
             'message' => 'fos_user.current_password.invalid',
-        );
+        ];
 
         $builder
 
@@ -38,43 +38,42 @@ class ProfileType extends AbstractType
             ->remove('email')
             ->remove('current_password')
 
-            ->add('username', TextType::class,  [
+            ->add('username', TextType::class, [
                 'label' => false,
                 'attr' => ['class' => 'input100', 'placeholder' => 'registration.placeholder.username'],
             ])
 
-            ->add('email', EmailType::class,  [
+            ->add('email', EmailType::class, [
                 'label' => false,
-                'attr' => ['class' => 'input100','placeholder' => 'registration.placeholder.email'],
+                'attr' => ['class' => 'input100', 'placeholder' => 'registration.placeholder.email'],
             ])
 
-            ->add('phoneNumber', TelType::class,  [
+            ->add('phoneNumber', TelType::class, [
                 'label' => false,
-                'attr' => ['class' => 'input100','placeholder' => 'user.fields.phone_number'],
+                'attr' => ['class' => 'input100', 'placeholder' => 'user.fields.phone_number'],
             ])
 
-            ->add('fullName', TextType::class,  [
+            ->add('fullName', TextType::class, [
                 'label' => false,
-                'attr' => ['class' => 'input100','placeholder' => 'user.fields.full_name'],
+                'attr' => ['class' => 'input100', 'placeholder' => 'user.fields.full_name'],
             ])
 
-            ->add('timezoneId', TimezoneType::class,  [
+            ->add('timezoneId', TimezoneType::class, [
                 'label' => false,
-                'attr' => ['class' => 'input100 select-search','placeholder' => 'user.fields.time_zone'],
+                'attr' => ['class' => 'input100 select-search', 'placeholder' => 'user.fields.time_zone'],
             ])
 
-            ->add('current_password', PasswordType::class,  [
+            ->add('current_password', PasswordType::class, [
                 'label' => false,
                 'attr' => [
                     'class' => 'input100',
                     'placeholder' => 'user.fields.password',
                 ],
-                'constraints' => array(
+                'constraints' => [
                     new NotBlank(),
                     new UserPassword($constraintsOptions),
-                ),
+                ],
                 'mapped' => false,
-
             ])
 
         ;

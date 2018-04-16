@@ -1,20 +1,37 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use Gedmo\Timestampable\Timestampable;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Challenge
+ * Challenge.
  *
- * @ApiResource
+ *
  * @ORM\Table(name="challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ChallengeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
-class Challenge
+class Challenge implements Timestampable
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *
@@ -49,10 +66,9 @@ class Challenge
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="challenges" )
-     * @ApiSubresource()
+     *
      */
     private $event;
-
 
     /**
      * Get id.

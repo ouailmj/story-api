@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\DTO;
@@ -16,9 +19,8 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class ChangePassword
+ * Class ChangePassword.
  *
- * @package AppBundle\DTO
  * @ApiResource(
  *      collectionOperations={
  *          "post"={

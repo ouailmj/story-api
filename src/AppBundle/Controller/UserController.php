@@ -111,7 +111,6 @@ class UserController extends BaseController
                 $this->addSuccessFlash();
             }
 
-
             return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
 

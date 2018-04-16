@@ -51,7 +51,7 @@ class Mailer
 
     protected function sendEmailMessage(
         $body, $toEmail, $subject,
-        $fromEmail = 'contact@mystorytelling.com', $fromName = 'MyStorytelling')
+        $fromEmail = 'contact@instant.fr', $fromName = 'MyStorytelling')
     {
         $message = (new \Swift_Message())
             ->setSubject($subject)

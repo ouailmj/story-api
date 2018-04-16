@@ -7,7 +7,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
@@ -165,7 +165,7 @@ knp_menu:
     default_renderer: twig
 
 stof_doctrine_extensions:
-    default_locale: fr_FR
+    default_locale: '%locale%'
     uploadable:
         # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
         default_file_path:       "%kernel.root_dir%/../web/uploads"

@@ -7,10 +7,12 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\EventSubscriber;
-
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use AppBundle\DTO\ChangePassword;
@@ -38,25 +40,16 @@ class UserSubscriber implements EventSubscriberInterface
     private $userManager;
 
     /**
-     * @var JWTTokenManagerInterface
-     */
-    private $JWTTokenManager;
-
-
-    /**
      * UserSubscriber constructor.
      *
      * @param TokenStorage $tokenStorage
-     * @param UserManager $userManager
-     * @param JWTTokenManagerInterface $JWTTokenManager
+     * @param UserManager  $userManager
      */
-    public function __construct(TokenStorage $tokenStorage, UserManager $userManager, JWTTokenManagerInterface $JWTTokenManager)
+    public function __construct(TokenStorage $tokenStorage, UserManager $userManager)
     {
         $this->tokenStorage = $tokenStorage;
         $this->userManager = $userManager;
-        $this->JWTTokenManager = $JWTTokenManager;
     }
-
 
     public static function getSubscribedEvents()
     {
@@ -84,8 +77,7 @@ class UserSubscriber implements EventSubscriberInterface
         $responseData = [];
 
         $token = $this->tokenStorage->getToken();
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User){
-
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User) {
             /** @var ChangePassword $userPassword */
             $changePassword = $event->getControllerResult();
             $user->setPlainPassword($changePassword->newPassword);
@@ -109,19 +101,11 @@ class UserSubscriber implements EventSubscriberInterface
         if ('api_forgot_password_requests_post_collection' !== $request->attributes->get('_route')) {
             return;
         }
-        $token = $this->tokenStorage->getToken();
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User){
-
-            /** @var ForgotPasswordRequest $changePassword */
-            $changePassword = $event->getControllerResult();
-
+        /** @var ForgotPasswordRequest $forgotPasswordRequest */
+        $forgotPasswordRequest = $event->getControllerResult();
+        $this->userManager->forgotPasswordMobile($forgotPasswordRequest->email, $request);
             // TODO: Translate
-            $responseData['message'] = $changePassword->email;
-
-
-
-        }
-
+        $responseData['message'] = 'An email has been sent. It contains a link that you will need to click to reset your password.';
 
         $event->setResponse(new JsonResponse($responseData, 200));
     }
@@ -153,7 +137,7 @@ class UserSubscriber implements EventSubscriberInterface
 
             // TODO: Translate
             $responseData['message'] = 'Your profile has been updated successfully';
-            $responseData['token'] = $this->JWTTokenManager->create($user);
+            $responseData['token'] =  $this->userManager->generateToken($user);
 
         }
 

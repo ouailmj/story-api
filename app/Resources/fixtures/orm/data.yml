@@ -5,6 +5,17 @@ AppBundle\Entity\User:
         password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
         enabled: true
         roles: ['ROLE_SUPER_ADMIN']
+<<<<<<< HEAD
+=======
+        fullName: 'admin'
+    developer:
+        username: instantuser
+        email: instantuser@instantapp.com
+        password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
+        enabled: true
+        roles: ['ROLE_SUPER_ADMIN']
+        fullName: 'Instant User'
+>>>>>>> e0e76026dbc9e216ce8022268cfc25668efcf165
     user:
         username: user
         email: user__email@hotmail.fr

@@ -7,17 +7,16 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -26,18 +25,16 @@ class ChangePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-        $constraintsOptions = array(
+        $constraintsOptions = [
             'message' => 'fos_user.current_password.invalid',
-        );
+        ];
 
         $builder
 
             ->remove('current_password')
             ->remove('plainPassword')
 
-
-            ->add('current_password', PasswordType::class, array(
+            ->add('current_password', PasswordType::class, [
                   'label' => false,
                   'translation_domain' => 'FOSUserBundle',
                   'mapped' => false,
@@ -50,36 +47,31 @@ class ChangePasswordType extends AbstractType
                       'class' => 'input100',
                       'placeholder' => 'form.current_password',
                   ],
-              ))
+              ])
 
-
-        ->add('plainPassword', RepeatedType::class, array(
+        ->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
-            'options' =>  [
+            'options' => [
                 'translation_domain' => 'FOSUserBundle',
-                'attr' =>  [
+                'attr' => [
                     'autocomplete' => 'new-password',
                     'class' => 'input100',
                 ],
             ],
-            'first_options' =>  [
+            'first_options' => [
                 'label' => false,
-                'attr'=>[
-                    'placeholder' => 'form.new_password'
-                ]
+                'attr' => [
+                    'placeholder' => 'form.new_password',
+                ],
             ],
             'second_options' => [
-                'label' => false ,
-                'attr'=>[
-                    'placeholder' => 'form.new_password_confirmation'
-                ]
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'form.new_password_confirmation',
+                ],
                 ],
             'invalid_message' => 'fos_user.password.mismatch',
-        ));
-
-
-
-        ;
+        ]);
     }
 
     public function getParent()
