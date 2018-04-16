@@ -62,7 +62,9 @@ class AdminTestCest
 
         $I->wantTo("delete account");
         $this->loginAsAdmin($I);
-        $I->amOnPage('/admin/user/10');
+        $I->amOnPage('/admin/user/');
+        $I->seeInCurrentUrl('/admin/user/');
+        $I->click('table.table tr:nth-last-child(1) td:nth-last-child(1) a.text-danger');
         $I->click('form[name="form"] > button[type="submit"]');
     }
 
