@@ -19,7 +19,7 @@
                 <div class="btn-group">
                     {% set  confirm =  'user.delete_account'|trans %}
                     <button class="btn btn-primary legitRipple" type="submit">{{ 'user.index.update'|trans }}<i class="icon-rotate-cw2 position-right"></i></button>
-                    <a onclick="return confirm('{{ confirm }}');"  class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">{{ 'user.index.delete'|trans }} <i class="icon-trash-alt position-right"></i></a>
+                    <a onclick="return confirm('{{ confirm }}');" class="btn btn-danger legitRipple" href="{{ path('user_delete', { 'id': user.id }) }}">{{ 'user.index.delete'|trans }} <i class="icon-trash-alt position-right"></i></a>
                 </div>
             </div>
             {{ form_end(edit_form) }}
