@@ -21,7 +21,6 @@
     "require": {
         "php": ">=7.0",
         "ext-zip": "*",
-        "ext-intl": "*",
         "api-platform/core": "^2.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",

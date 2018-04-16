@@ -7,6 +7,9 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Form\Type;
@@ -63,12 +66,12 @@ class UserType extends AbstractType
 
             ->add('timezoneId', TimezoneType::class, [
                 'label' => 'user.fields.time_zone',
-                'attr' => ['class'=> 'select-search'],
+                'attr' => ['class' => 'select-search'],
             ])
 
             ->add('role', ChoiceType::class, [
                 'label' => 'user.fields.role',
-                'attr' => ['class'=> 'select-search'],
+                'attr' => ['class' => 'select-search'],
                 'choices' => $permissions,
                 'multiple' => false,
                 'expanded' => false,

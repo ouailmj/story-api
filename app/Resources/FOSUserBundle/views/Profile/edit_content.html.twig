@@ -6,6 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
+    
     
 {% endblock %}
 {% form_theme form 'Form/fields.html.twig' %}
@@ -44,7 +46,7 @@
                           {{ form_row(form.username)}}
                           <span class="focus-input100"></span>
                           <span class="symbol-input100">
-                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            <i class="fa fa-user" aria-hidden="true"></i>
                           </span>
                       </div>
                       
@@ -68,7 +70,7 @@
                       </div>
                   </div>
                   <div class="row">
-                        <div id="timeZone" class="col-md-10">
+                        <div class="col-md-10">
                             {{ form_row(form.timezoneId)}}
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
@@ -79,8 +81,8 @@
                   <div class="row">
                       <div class="col-md-10">
                           {{ form_row(form.current_password)}}
-                          <span  class="focus-input100"></span>
-                          <span  class="symbol-input100">
+                          <span class="focus-input100"></span>
+                          <span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
                           </span>
                       </div>
@@ -106,48 +108,6 @@
 
               <!-- Change Password Start -->
 
-<<<<<<< HEAD
-              <div  style="display:none" class="profil-mdf">
-                  <form id="mdp-form" action="">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input class="input100" type="password" placeholder="Mot de passe Actuel">
-                            <span class="focus-input100"></span>
-                          <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                          </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
-                            <span class="focus-input100"></span>
-                          <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                          </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <input  class="input100" type="password" placeholder="Nouveau mot de passe">
-                            <span class="focus-input100"></span>
-                          <span class="symbol-input100">
-                            <i class="fa fa-lock" aria-hidden="true"></i>
-                          </span>
-                        </div>
-                    </div>
-                    <div class="row validate">
-                        <div class="offset-md-5 col-md-4">
-                            <button type="button" class="login100-form-btn">Enregistrer</button>
-                        </div>
-                    </div>
-                    
-                  </form>
-                </div>
-                <!-- Change Password End -->
-=======
->>>>>>> 0759b9fb393e4e5e02f2cffc1b4e3e68dba0ac7d
-
  
                 <!--     <script>
                          $(document).ready(function(){
@@ -160,7 +120,7 @@
             </div>
         </div>
     </div>
-{% block javascripts %}
+
     <script>
         let oInput = document.getElementById('timeZone'),
             oChild,spans=[];
@@ -173,10 +133,9 @@
                     }
                 }
                 spans[0].className +=" input100";
-                console.log(spans);
-            }, 500);
+            }, 900000);
     </script>
-{% endblock %}
+
 
 {% endblock %}
 

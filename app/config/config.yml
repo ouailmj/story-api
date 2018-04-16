@@ -7,7 +7,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
@@ -77,13 +77,14 @@ nelmio_cors:
     defaults:
         allow_origin: ['%cors_allow_origin%']
         allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
-        allow_headers: ['content-type', 'authorization']
-        expose_headers: ['link']
+        allow_headers: ['*']
         max_age: 3600
     paths:
         '^/': ~
 
 api_platform:
+    mapping:
+        paths: ['%kernel.project_dir%/src/AppBundle/DTO']
     enable_fos_user: true
     http_cache:
         invalidation:
@@ -164,7 +165,7 @@ knp_menu:
     default_renderer: twig
 
 stof_doctrine_extensions:
-    default_locale: fr_FR
+    default_locale: '%locale%'
     uploadable:
         # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
         default_file_path:       "%kernel.root_dir%/../web/uploads"

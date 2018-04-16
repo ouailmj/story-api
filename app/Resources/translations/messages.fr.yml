@@ -42,7 +42,7 @@ mail:
         password: 'Mot de Passe'
         url: 'Lien'
         mail: 'E-Mail'
-    password_updated_title: 'Les identifiants de connexion sur EyeGoFast ont été mis à jour. Ci-dessous les nouveaux identifiants:'
+    password_updated_title: 'Les identifiants de connexion sur InstanT ont été mis à jour. Ci-dessous les nouveaux identifiants:'
     password_updated_header: 'Mise à jour Compte MyStorytelling'
     password_deleted_header: 'Supprimer Compte MyStorytelling'
     password_deleted_body: 'Votre compte est supprimé, contactez l''administrateur'
