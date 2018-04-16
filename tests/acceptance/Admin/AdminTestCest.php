@@ -14,7 +14,6 @@ class AdminTestCest
         $I->seeCurrentUrlEquals('/auth/profile/edit');
     }
 
-
     public function AfficherDetailsUser(\AcceptanceTester $I)
     {
         $I->wantTo("Afficher les infos de User_test d'un utilisateur");
@@ -63,7 +62,7 @@ class AdminTestCest
 
         $I->wantTo("delete account");
         $this->loginAsAdmin($I);
-        $I->amOnPage('/admin/user/40');
+        $I->amOnPage('/admin/user/9');
         $I->click('form[name="form"] > button[type="submit"]');
     }
 
