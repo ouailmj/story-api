@@ -1,9 +1,13 @@
+/*------------------------------------------------------------------
+[ Fonts ]*/
+
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @-ms-viewport{
     width: device-width;
   }
-/********** common setting **********/
+/*------------------------------------------------------------------
+[ Settings ]*/
 body{
     background: #fff;
 }
@@ -90,7 +94,8 @@ header{
 }
 
 
-/********** banner **********/
+/*------------------------------------------------------------------
+[ Banner ]*/
 #banner header {
     overflow: hidden;
 }
@@ -99,7 +104,8 @@ header{
     max-width: 80px;
 }
 
-/********** feature (skew background) **********/
+/*------------------------------------------------------------------
+[ Feature ]*/
 .feature img {
     width: 100%;
     max-width: 480px;
@@ -113,7 +119,8 @@ header{
     background: #00FFAD;
 }
 
-/********** price table **********/
+/*------------------------------------------------------------------
+[ Price Tablle ]
 #price-table {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
@@ -127,8 +134,9 @@ header{
 #price-table ul li {
     padding: 5px 0;
 }
-
-/********** contact **********/
+*/
+/*------------------------------------------------------------------
+[ Contact ]*/
 #contact {
     background-size: cover;
 }
@@ -148,7 +156,8 @@ header{
     color: #ffffff;
 }
 
-/********** copyright **********/
+/*------------------------------------------------------------------
+[ Copyright ]*/
 #copyright {
     background: #192440;
     padding: 2rem 3rem;
@@ -183,7 +192,8 @@ header{
     }
 }
 
-/********** Info Sur App txt **********/
+/*------------------------------------------------------------------
+[ Infor sur App ]*/
 
 .info-app p{
     font-size:18px;

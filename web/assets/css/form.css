@@ -554,11 +554,10 @@ position: static;
 [ Footer ]*/
 
 .footer{
-  color: #fff;
   letter-spacing: 1px;
 }
 .footer a{
-  color: #fff;
+  color: rgb(124, 48, 48);
 }
 
 .remember-me{
@@ -566,6 +565,9 @@ position: static;
   text-align: center;
   color: #C4BCB0;
 }
+
+/*------------------------------------------------------------------
+[ Remember me checkbox ]*/
 
 input[type="checkbox"]{
   -webkit-appearance:none;
