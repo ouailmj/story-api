@@ -43,6 +43,7 @@ class BaseUser implements UserInterface, GroupableInterface
     /**
      * @var string
      * @ORM\Column( name="username_canonical", type="string", length=180, unique=true)
+     * @Assert\NotBlank()
      */
     protected $usernameCanonical;
 
@@ -57,6 +58,8 @@ class BaseUser implements UserInterface, GroupableInterface
     /**
      * @var string
      * @ORM\Column( name="email_canonical", type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected $emailCanonical;
 
