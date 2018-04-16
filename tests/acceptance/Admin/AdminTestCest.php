@@ -64,7 +64,7 @@ class AdminTestCest
         $I->wantTo("delete account");
         $this->loginAsAdmin($I);
         $I->amOnPage('/admin/user/40');
-        $I->click('form[name="form"] > button[type="submit"]')
+        $I->click('form[name="form"] > button[type="submit"]');
     }
 
     public function logout_test(\AcceptanceTester $I)
