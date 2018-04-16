@@ -34,6 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "get",
  *     "put",
  *     "delete",
+ *
  *     "api_sign_up"={"route_name"="signUpAPI"},
  *     },
  *     collectionOperations= {
@@ -41,6 +42,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "route_name"="currentUserAPI",
  *          "method"="GET"
  *      },
+ *     "post",
  *     }
  *)
  */
