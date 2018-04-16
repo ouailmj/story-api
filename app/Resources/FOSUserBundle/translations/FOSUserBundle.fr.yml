@@ -27,6 +27,9 @@ profile:
         submit: 'Mettre à jour'
     flash:
         updated: 'Le profil a été mis à jour.'
+    update_profile: 'Modifier mon profil'
+    change_password: 'Changer de mot de passe'
+    avatar_avatar: 'Image du profil'
 change_password:
     submit: 'Modifier le mot de passe'
     flash:

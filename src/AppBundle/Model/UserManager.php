@@ -23,6 +23,7 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserManager
@@ -31,6 +32,11 @@ class UserManager
      * @var \FOS\UserBundle\Doctrine\UserManager
      */
     private $fosUserManager;
+
+    /**
+     * @var FileManager
+     */
+    private $fileManager;
 
     /** @var Mailer */
     private $mailer;
@@ -76,7 +82,7 @@ class UserManager
      * @param TokenGeneratorInterface              $tokenGenerator
      * @param \FOS\UserBundle\Mailer\Mailer        $fos_mailer
      */
-    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, EntityManager $em, JWTManager $jwtTokenManager, EventDispatcherInterface $eventDispatcher, $retryTtl=7200, TokenGeneratorInterface $tokenGenerator, \FOS\UserBundle\Mailer\Mailer $fos_mailer)
+    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, EntityManager $em, JWTManager $jwtTokenManager, EventDispatcherInterface $eventDispatcher, $retryTtl=7200, TokenGeneratorInterface $tokenGenerator, \FOS\UserBundle\Mailer\Mailer $fos_mailer, FileManager $fileManager)
     {
         $this->fosUserManager = $fosUserManager;
         $this->mailer = $mailer;
@@ -86,6 +92,7 @@ class UserManager
         $this->retryTtl = $retryTtl;
         $this->tokenGenerator = $tokenGenerator;
         $this->fos_mailer = $fos_mailer;
+        $this->fileManager = $fileManager;
     }
 
     /**
@@ -230,5 +237,27 @@ class UserManager
                return $event->getResponse();
            }
        }
+   }
+
+
+    /**
+     * @param User $user
+     * @param UploadedFile $mediaUpload
+     * @param bool $flush
+     * @return User
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+   public function updateAvatar(User $user, UploadedFile $mediaUpload, $flush = true){
+
+       if (null !== $mediaUpload) {
+           $image = $this->fileManager->upload($mediaUpload);
+           $user->setAvatar($image);
+       }
+       $this->em->persist($user);
+       if ($flush) {
+           $this->em->flush();
+       }
+       return $user;
    }
 }

@@ -22,6 +22,7 @@ user:
         username: 'Nom d''utilisateur'
         password: 'Mot de Passe'
         password_confirmation: 'Confirmer le mot de passe'
+        avatar: 'Image de profil'
     index:
         list_title: 'Liste des utilisateurs'
         edit_title: 'Modification de l''utilisateur'
@@ -52,3 +53,8 @@ flash:
     success: 'Votre opération a été exécutée avec succès'
     error: 'Votre opération n'' a pas pu être exécutée.'
     warning: 'Votre opération n''a pas pu être exécutée.'
+    file_error: 'Votre opération n''a pas été exécutée car Le fichier envoyé est illisible.'
+profile:
+    update_profile: 'Modifier mon profil'
+    change_password: 'Changer de mot de passe'
+    avatar_avatar: 'Image du profil'

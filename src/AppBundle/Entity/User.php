@@ -130,6 +130,11 @@ class User extends BaseUser
     protected $medias;
 
     /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"persist", "remove"})
+     */
+    protected $avatar = null;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -453,4 +458,22 @@ class User extends BaseUser
     {
         return $this->medias;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+
 }
