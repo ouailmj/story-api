@@ -4,6 +4,9 @@
     *{
         font-family:'Poppins', sans-serif;
     }
+    .btn-success{
+        font-family:'Poppins', sans-serif;
+    }
     .dropdown-toggle{
         font-family:'Poppins', sans-serif !important;
         color:#000 !important
@@ -53,6 +56,11 @@
                         <li><a class="english" href="{{ path('app_locale_index', {'lang': 'en'}) }}"><img src="{{ asset('images/flags/gb.png') }}" alt=""> English</a></li>
                         <li><a class="french" href="{{ path('app_locale_index', {'lang': 'fr'}) }}"> <img src="{{ asset('images/flags/fr.png') }}" alt=""> Français</a></li>
                     </ul>
+                    <style>
+                            .caret:after {
+                                    content: none !important;
+                            }
+                        </style>
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
@@ -63,7 +71,7 @@
                         </a>
                         <style>
                             .caret:after {
-                                    content: '' !important;
+                                    content: none;
                             }
                         </style>
                         <ul class="dropdown-menu dropdown-menu-right">
