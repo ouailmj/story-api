@@ -31,4 +31,15 @@ class DefaultController extends BaseController
             // ...
         ]);
     }
+
+    /**
+     * @Route("/mockup")
+     */
+    public function mockupAction()
+    {
+
+        return $this->render('AppBundle:Events:index.html.twig', [
+            // ...
+        ]);
+    }
 }

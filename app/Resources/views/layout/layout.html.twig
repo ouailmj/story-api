@@ -61,6 +61,7 @@
         </div>
 
         #}
+        {%  if app.flashes is not empty %}
         <div class="page-header">
             <div class="page-header-content">
                 {% block header_content %}
@@ -77,11 +78,12 @@
                 {% endblock %}
             </div>
         </div>
+        {% endif %}
     {% endblock %}
     <!-- /page header -->
 
 
-    
+
         {% block container %}
         <!-- Page container -->
         <div class="page-container">
@@ -103,13 +105,13 @@
             </div>
     <!-- /page container -->
         {% endblock %}
-    
+
 
 
     <!-- Footer -->
-    <div class="footer footer-boxed">
+    {#<div class="footer footer-boxed">
         &copy; {{ 'now'|date('Y') }}. <a href="#">Mystorytelling</a> by <a href="#" target="_blank">Agence MIT</a>
-    </div>
+    </div>#}
     <!-- /footer -->
 
 
