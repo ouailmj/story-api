@@ -1,9 +1,13 @@
+/*------------------------------------------------------------------
+[ Fonts ]*/
+
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @-ms-viewport{
     width: device-width;
   }
-/********** common setting **********/
+/*------------------------------------------------------------------
+[ Settings ]*/
 body{
     background: #fff;
 }
@@ -90,7 +94,8 @@ header{
 }
 
 
-/********** banner **********/
+/*------------------------------------------------------------------
+[ Banner ]*/
 #banner header {
     overflow: hidden;
 }
@@ -99,7 +104,8 @@ header{
     max-width: 80px;
 }
 
-/********** feature (skew background) **********/
+/*------------------------------------------------------------------
+[ Feature ]*/
 .feature img {
     width: 100%;
     max-width: 480px;
@@ -113,7 +119,8 @@ header{
     background: #00FFAD;
 }
 
-/********** price table **********/
+/*------------------------------------------------------------------
+[ Price Tablle ]
 #price-table {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
@@ -127,8 +134,9 @@ header{
 #price-table ul li {
     padding: 5px 0;
 }
-
-/********** contact **********/
+*/
+/*------------------------------------------------------------------
+[ Contact ]*/
 #contact {
     background-size: cover;
 }
@@ -148,7 +156,8 @@ header{
     color: #ffffff;
 }
 
-/********** copyright **********/
+/*------------------------------------------------------------------
+[ Copyright ]*/
 #copyright {
     background: #192440;
     padding: 2rem 3rem;
@@ -183,8 +192,78 @@ header{
     }
 }
 
-/********** Info Sur App txt **********/
+/*------------------------------------------------------------------
+[ Infor sur App ]*/
 
 .info-app p{
     font-size:18px;
 }
+
+/*------------------------------------------------------------------
+[ Footer ]*/
+
+.footer{
+    letter-spacing: 1px;
+  }
+  .footer a{
+    color: rgb(124, 48, 48);
+  }
+  
+  .remember-me{
+    width: 100%;
+    text-align: center;
+    color: #C4BCB0;
+  }
+  
+
+  /*------------------------------------------------------------------
+[ Button ]*/
+.container-login100-form-btn {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+  }
+  
+  .login100-form-btn {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fff;
+    text-transform: uppercase;
+  
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    background: #57b846;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+  
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+  
+  .login100-form-btn:hover {
+    background: #333333;
+    -webkit-box-shadow: 0px 0px 21px 2px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 21px 2px rgba(255,255,255,1);
+    box-shadow: 0px 0px 21px 2px rgba(255,255,255,1);
+  }
+  select::-ms-expand {
+      display: none;
+  }
+  
