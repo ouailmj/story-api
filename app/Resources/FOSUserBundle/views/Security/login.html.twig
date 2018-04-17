@@ -10,5 +10,8 @@
  {% block main_navbar %}
     {% endblock %}
 {% block fos_user_content %}
-    {{ include('FOSUserBundle:Security:login_content.html.twig') }}
+{% block container %}
+{{ include('FOSUserBundle:Security:login_content.html.twig') }}
+{% endblock %}
+    
 {% endblock fos_user_content %}
