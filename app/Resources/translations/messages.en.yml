@@ -22,6 +22,7 @@ user:
         username: 'Username'
         password: 'Password'
         password_confirmation: 'Repeat password'
+        avatar: 'Profile Image'
     index:
         list_title: 'Users list'
         edit_title: 'User edit'
@@ -52,3 +53,8 @@ flash:
     success: 'Your operation has been successfully executed''Votre opération a été exécutée avec succès'
     error: 'Your operation could not be executed.'
     warning: 'Your operation could not be executed'
+    file_error: 'Your operation was not executed because the sent file is unreadable.'
+profile:
+    update_profile: 'Edit my profile'
+    change_password: 'Change password'
+    avatar_avatar: 'Profile Image'

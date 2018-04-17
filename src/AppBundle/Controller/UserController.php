@@ -20,11 +20,13 @@ use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * User controller.
  *
  * @Route("admin/user")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends BaseController
 {

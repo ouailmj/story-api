@@ -1,88 +1,80 @@
 <?php
 
 namespace User;
+use Tests\_support\Pages\Change_Password;
+use Tests\_support\Pages\Login;
+use Tests\_support\Pages\Profile;
+use Tests\_support\Pages\signup;
+
 
 class UserTestCest
 {
-    public function frontpageWorks(\AcceptanceTester $I)
-    {
-        $I->wantTo("Test frontpage");
-        $I->amOnPage('/');
-        $I->see('Welcome');
-    }
 
-    public function loginAsUser(\AcceptanceTester $I)
+    public function loginAsUser(\AcceptanceTester $I) //yes
     {
         $I->wantTo("Verify the User login");
-        $I->amOnPage("/auth/register/");
-        $I->click("div.text-center a");
-        $I->seeCurrentUrlEquals('/auth/login/');
-        $I->FillField('_username' , "user");
-        $I->FillField('_password' , "f%/R4Uk#](wUvM'V");
-        $I->click('_submit');
-        $I->seeCurrentUrlEquals('/');
+        $I->amOnPage(Login::$URL);
+        $I->FillField(Login::$usernameField , "user");
+        $I->FillField(Login::$passwordField, "f%/R4Uk#](wUvM'V");
+        $I->click(Login::$submitButton);
+        $I->seeCurrentUrlEquals('/auth/profile/edit');
     }
 
     public function ModifierInfo(\AcceptanceTester $I)
     {
+        $I->wantTo("Modifier les infos d'un utilisateur");
         $this->loginAsUser($I);
-        $I->wantTo("Modifier les informations du profil");
-        $I->seeCurrentUrlEquals('');
-        $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-        $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->click("div.btn-group a:nth-child(1)");
-        $I->FillField('fos_user_profile_form[phoneNumber]','062457819');
-        $I->FillField('fos_user_profile_form[current_password]' , "f%/R4Uk#](wUvM'V");
-        $I->click("update");
-        $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->see("062457819");
+        $I->fillField('input#fos_user_profile_form_phoneNumber', '0645879633');
+        $I->fillField('input#fos_user_profile_form_current_password', "f%/R4Uk#](wUvM'V");
+        $I->click(Profile::$btn_submit);
     }
 
 
-    public function Modifier_password(\AcceptanceTester $I)
+    public function Modifier_password(\AcceptanceTester $I) // working
     {
         $I->wantTo("Modifier le mot de passe");
-        $I->amOnPage("/auth/register/");
-        $I->click("div.text-center a");
-        $I->seeCurrentUrlEquals('/auth/login/');
-        $I->FillField('_username' , "user_test");
-        $I->FillField('_password' , "f%/R4Uk#](wUvM'V");
-        $I->click('_submit');
-        $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-        $I->see('Mon profil');
-        $I->click("div.btn-group a:nth-child(2)");
-        $I->seeCurrentUrlEquals('/auth/profile/change-password');
-        $I->FillField('fos_user_change_password_form[current_password]',"f%/R4Uk#](wUvM'V");
-        $I->FillField('fos_user_change_password_form[plainPassword][first]',"f%/R4Uk#](wUvM");
-        $I->FillField('fos_user_change_password_form[plainPassword][second]',"f%/R4Uk#](wUvM");
-        $I->click("update");
-        $I->see("Mon profil");
+        $I->amOnPage(Profile::$URL);
+        $I->FillField(Login::$usernameField  , "user_test");
+        $I->FillField(Login::$passwordField , "f%/R4Uk#](wUvM'V");
+        $I->click(Login::$submitButton);
+        $I->amOnPage(Change_Password::$URL);
+        $I->FillField(Change_Password::$CurrentPassField,"f%/R4Uk#](wUvM'V");
+        $I->FillField(Change_Password::$NewPassField,"f%/R4Uk#](wUvM'");
+        $I->FillField(Change_Password::$RepeatPassField,"f%/R4Uk#](wUvM'");
+        $I->click("form[name=\"fos_user_change_password_form\"] button[type=\"submit\"]");
     }
 
-    public function delete_account_user(\AcceptanceTester $I)
-    {
-        $I->wantTo("delete account");
-        $I->amOnPage("/auth/register/");
-        $I->click("div.text-center a");
-        $I->seeCurrentUrlEquals('/auth/login/');
-        $I->FillField('_username' , "user_test");
-        $I->FillField('_password' , "f%/R4Uk#](wUvM");
-        $I->click('_submit');
-        $I->seeCurrentUrlEquals('/');
-        $I->click("ul.dropdown-menu.dropdown-menu-right li:nth-child(1) a");
-        $I->seeCurrentUrlEquals('/auth/profile/');
-        $I->click('div.btn-group a:nth-child(3)');
-    }
 
-    public function signup(\AcceptanceTester $I)
+        public function signup(\AcceptanceTester $I) //worked
     {
         $I->wantTo("S'inscrire");
-        $I->amOnPage("/auth/register/");
-        $I->FillField('fos_user_registration_form[username]',"user3");
-        $I->FillField('fos_user_registration_form[email]',"user3.test@gmail.com");
-        $I->FillField('fos_user_registration_form[plainPassword]',"f%/R4Uk#](wUvM'V");
-        $I->click('create');
+        $I->amOnPage(signup::$URL);
+        $I->FillField(signup::$usernameField,"user3");
+        $I->FillField(signup::$EmailField,"user3.test@gmail.com");
+        $I->FillField(signup::$PassField,"f%/R4Uk#](wUvM'V");
+        $I->click(signup::$submitButton);
     }
+
+    public function logout_test_user(\AcceptanceTester $I)
+    {
+        $I->wantTo('test logout user');
+        $this->loginAsUser($I);
+        $I->click('li:nth-child(3) > a');
+        $I->seeCurrentUrlEquals('/auth/login');
+    }
+
+    public function Reset_password(\AcceptanceTester $I)
+    {
+        $I->wantTo('test reset password');
+        $this->loginAsUser($I);
+        $I->amOnPage('/auth/login');
+        $I->click('form > div:nth-child(7) > a');
+        $I->seeCurrentUrlEquals('/auth/resetting/request');
+        $I->fillField('input#username','user');
+        $I->click('div:nth-child(3) > input');
+        $I->seeCurrentUrlEquals('/auth/resetting/check-email?username=user');
+    }
+
 
     public function _before(\AcceptanceTester $I)
     {

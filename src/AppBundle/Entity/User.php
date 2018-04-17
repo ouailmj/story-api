@@ -34,13 +34,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "get",
  *     "put",
  *     "delete",
- *     "api_sign_up"={"route_name"="signUpAPI"},
  *     },
  *     collectionOperations= {
+ *     "post",
  *     "api_current_user"={
  *          "route_name"="currentUserAPI",
  *          "method"="GET"
  *      },
+ *     "api_sign_up"={"route_name"="signUpAPI"},
  *     }
  *)
  */
@@ -127,6 +128,11 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Media", mappedBy="createdBy")
      */
     protected $medias;
+
+    /**
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"persist", "remove"})
+     */
+    protected $avatar = null;
 
     /**
      * User constructor.
@@ -452,4 +458,22 @@ class User extends BaseUser
     {
         return $this->medias;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+
 }
