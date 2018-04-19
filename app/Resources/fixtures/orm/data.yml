@@ -27,4 +27,90 @@ AppBundle\Entity\User:
         enabled: true
         roles: ['ROLE_USER']
         fullName: 'user_test'
+AppBundle\Entity\Event:
+    event1:
+        title: event
+        starts_at: <dateTime('+18 years')>
+        ends_at: <dateTime('+19 years')>
+        description: 'Donec rutrum enim vitae placerat bibendum. Morbi justo ipsum, ultricies eget nulla a, interdum aliquet risus. Donec at'
+        expiresAt: <dateTime('+20 years')>
+        privacy: 'Donec rutrum enim vitae placerat bibendum. Morbi justo ipsum, ultricies eget nulla a, interdum aliquet risus. Donec at'
+        place: 'Donec rutrum enim vitae placerat bibendum. Morbi justo ipsum, ultricies eget nulla a, interdum aliquet risus. Donec at'
+        createdBy: '@user*'
+        canceled_at: <dateTime('+21 years')>
+    event{2..10}:
+        title: 'event<current()>'
+        starts_at: <dateTime('+18 years')>
+        ends_at: <dateTime('+19 years')>
+        description: 'Donec rutrum enim vitae placerat bibendum. Morbi justo ipsum, ultricies eget nulla a, interdum aliquet risus. Donec at'
+        expiresAt: <dateTime('+20 years')>
+        privacy: 'Donec rutrum enim vitae placerat bibendum. Morbi justo ipsum, ultricies eget nulla a, interdum aliquet risus. Donec at'
+        place: 'Donec rutrum enim vitae placerat bibendum. Morbi justo ipsum, ultricies eget nulla a, interdum aliquet risus. Donec at'
+        createdBy: '@user*'
+        canceled_at: <dateTime('+21 years')>
+AppBundle\Entity\Challenge:
+    challenge:
+        description: 'this is a random description'
+        plannedAt: <dateTime('+8 years')>
+        isLaunched: 'false'
+    challenge{2..5}:
+        description: 'this is a random description'
+        plannedAt: <dateTime('+8 years')>
+        isLaunched: 'false'
+AppBundle\Entity\InvitationRequest:
+    invitationRequest:
+        response: "Thank you I will come for sure"
+        sentAt: <dateTime('+2 years')>
+        isCanceled: false
+        channels: 'channel1'
+AppBundle\Entity\Media:
+    media:
+        downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
+        file: ''
+        createdBy: '@user*'
+        type: fileExtension
+        expiresAt: <dateTime('+4 years')>
+        hasBeenDownloaded: true
+        uploadedAt: <dateTime('+2 years')>
+        src: ''
+AppBundle\Entity\EventPurchase:
+    eventPurchase:
+        quota: ''
+        currencyCode: 124563
+        plan: null
+        event: '@event1'
+AppBundle\Entity\Plan:
+    plan:
+         price: 100
+         maxEventDuration: 3
+         maxUploads: 3
+         maxGuests: 100
+         maxAlbumLifetime: ''
+         enableChallenges: true
+         enableGamification: true
+         isFree: true
+         name: 'Name'
+         description: "this is a random description"
+AppBundle\Entity\MemberShip:
+    membership:
+         event: '@event2'
+         createdAt: <dateTime('+2 years')>
+         member: '@user*'
+    membership{2..10}:
+         event: '@event2'
+         member: '@user*'
+         createdAt: <dateTime('+2 years')>
+AppBundle\Entity\Link:
+    link:
+         path: ''
+         password: '123456'
+         expiresAt: <dateTime('+3 years')>
+         enabledAt: <dateTime('+1 years')>
+AppBundle\Entity\Payment:
+    payment:
+         amount: 100
+         paymentType: 'MasterCard'
+         description: 'this is a random description'
+         eventPurchase: '@eventPurchase'
+
 
