@@ -1,0 +1,13 @@
+parameters:
+    app_upload_directory: '%kernel.project_dir%/web/uploads'
+
+knp_gaufrette:
+    adapters:
+        default:
+            local:
+                directory: '%app_upload_directory%'
+                create: true
+    filesystems:
+        default:
+            adapter:  default
+            alias:  default_filesystem

@@ -14,7 +14,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Filesystem\FileManager;
+use AppBundle\Filesystem\UploadManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class DefaultController extends BaseController
 {
@@ -29,6 +36,31 @@ class DefaultController extends BaseController
 
         return $this->render('AppBundle:Default:index.html.twig', [
             // ...
+        ]);
+    }
+
+    /**
+     * @Route("/dummy")
+     */
+    public function dummyAction(Request $request, UploadManager $uploadManager)
+    {
+        $form = $this->createFormBuilder()
+            ->add('file', FileType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm()
+        ;
+
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form->get('file')->getData();
+            $uploadManager->upload($uploadedFile);
+        }
+
+        return $this->render('@App/Default/dummy.html.twig', [
+            'form'  => $form->createView()
         ]);
     }
 }
