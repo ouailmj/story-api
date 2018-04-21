@@ -39,7 +39,6 @@ class Image extends Media
      *
      * @ORM\OneToOne(targetEntity="MemberShip")
      * @ORM\JoinColumn(name="member_ship_id", referencedColumnName="id")
-     *
      */
     private $uploadedBy = null;
 

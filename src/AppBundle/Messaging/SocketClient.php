@@ -12,8 +12,21 @@
  *
  */
 
-namespace AppBundle\Event;
+namespace AppBundle\Messaging;
 
-class UserRegisteredWebEvent extends AppBaseEvent
+class SocketClient
 {
+    protected $port;
+
+    protected $host;
+
+    public function send(string $data)
+    {
+        // TODO: Implement the socket client.
+    }
+
+    private function buildDNS(): string
+    {
+    }
+
 }

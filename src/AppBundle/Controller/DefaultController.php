@@ -14,12 +14,11 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Filesystem\FileManager;
-use AppBundle\Filesystem\UploadManager;
+use AppBundle\Model\EventManager;
+use AppBundle\Model\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -42,25 +41,21 @@ class DefaultController extends BaseController
     /**
      * @Route("/dummy")
      */
-    public function dummyAction(Request $request, UploadManager $uploadManager)
+    public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
+        $event = $eventManager->createEventWithFreePlan();
+        $media = $mediaManager->createMediaFromLocalFile(__FILE__);
+        $eventManager->addMedia($event->getId(), $media);
+
+        VarDumper::dump($event->getUploadedMedias()->toArray());
         $form = $this->createFormBuilder()
             ->add('file', FileType::class)
             ->add('submit', SubmitType::class)
             ->getForm()
         ;
 
-        $form->handleRequest($request);
-
-        if($form->isValid()) {
-
-            /** @var UploadedFile $uploadedFile */
-            $uploadedFile = $form->get('file')->getData();
-            $uploadManager->upload($uploadedFile);
-        }
-
         return $this->render('@App/Default/dummy.html.twig', [
-            'form'  => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

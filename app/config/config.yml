@@ -41,6 +41,10 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'Form/fields.html.twig'
+    globals:
+        google_analytics: "%google_analytics%"
+        play_store_download_link: '#'
+        app_store_download_link: '#'
 
 # Doctrine Configuration
 doctrine:

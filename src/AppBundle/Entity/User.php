@@ -86,13 +86,13 @@ class User extends BaseUser
      * @Assert\Length(max = 20)
      * @ORM\Column( type="string", length=20, nullable=true)
      */
-    protected $phoneNumber;
+    protected $phoneNumber = '';
 
     /**
      * @var string
      * @ORM\Column( type="string", length=250, nullable=true)
      */
-    protected $fullName;
+    protected $fullName = '';
 
     /**
      * @var string
@@ -451,5 +451,21 @@ class User extends BaseUser
     public function getMedias()
     {
         return $this->medias;
+    }
+
+    /**
+     * Get the user's timezone instance.
+     *
+     * @return \DateTimeZone
+     */
+    public function getTimeZoneInstance()
+    {
+        try {
+            $tz = new \DateTimeZone($this->getTimezoneId());
+        } catch (\Exception $exception) {
+            return new \DateTimeZone(date_default_timezone_get());
+        }
+
+        return $tz;
     }
 }

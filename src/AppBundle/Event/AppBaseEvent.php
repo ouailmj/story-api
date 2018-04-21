@@ -14,6 +14,8 @@
 
 namespace AppBundle\Event;
 
-class UserRegisteredWebEvent extends AppBaseEvent
+use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
+
+class AppBaseEvent extends SymfonyEvent
 {
 }

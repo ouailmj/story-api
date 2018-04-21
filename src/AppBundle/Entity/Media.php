@@ -30,7 +30,6 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  *
  * @ORM\HasLifecycleCallbacks()
- *
  */
 class Media
 {
@@ -46,59 +45,58 @@ class Media
     /**
      * @var string
      *
-     * @ORM\Column(name="downloadLink", type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
-    private $downloadLink;
+    private $downloadLink = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="file", type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
-    private $file;
+    private $file = '';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expiresAt", type="datetime")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $expiresAt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="hasBeenDownloaded", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    private $hasBeenDownloaded;
+    private $hasBeenDownloaded = false;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="uploadedAt", type="datetime")
+     * @ORM\Column(type="datetimetz")
      */
     private $uploadedAt;
 
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias" )
-     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias")
      */
     private $createdBy;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="src", type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
     private $src;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(type="string", length=10)
      */
-    private $type;
+    private $type = '';
 
     /**
      * Get id.
@@ -300,5 +298,15 @@ class Media
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setUploadedAtValue()
+    {
+        if (empty($this->uploadedAt)){
+            $this->uploadedAt = new \DateTime($this->getCreatedBy()->getTimeZoneInstance());
+        }
     }
 }

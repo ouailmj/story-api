@@ -35,3 +35,4 @@ parameters:
     # Google OAuth Access
     google_id: 'GoogleID'
     google_secret: 'GoogleSecret'
+    google_analytics: 'UA-UNKNOWN-1'

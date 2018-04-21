@@ -12,8 +12,9 @@
  *
  */
 
-namespace AppBundle\Event;
+namespace AppBundle\Utils;
 
-class UserRegisteredWebEvent extends AppBaseEvent
+class CurrencyUtils
 {
+    const DEFAULT_SYMBOL_CURRENCY = '€';
 }
