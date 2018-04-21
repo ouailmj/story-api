@@ -1,5 +1,7 @@
 .login-form{
     width: 420px !important;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .navbar-search{

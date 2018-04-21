@@ -1,79 +1,220 @@
-{% extends "::base.html.twig" %}
-
+{% extends "::base_user.html.twig" %}
 {% block title %}AppBundle:Default:index{% endblock %}
-{% block stylesheet %}
 
-    <!-- Making page Responsive -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Home page Style css files -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
-    <!-- Font used -->
-    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-
-
-{% endblock %}
 {% block container %}
-    <!-- Main sidebar -->
-    <div class="sidebar sidebar-main">
-        <div class="sidebar-content">
+    <div class="main">
 
-            <!-- User menu -->
-            <div class="sidebar-user">
-                <div class="category-content">
-                    <div class="media">
-                        <a href="" class="media-left"><img src="{{ asset('images/image.png')|imagine_filter('media_thumb') }}" class="img-circle img-sm" alt=""></a>
-                        <div class="media-body">
-                            <span class="media-heading text-semibold">{{ app.user }}</span>
+        <!-- Upcoming Event Start -->
+        <section>
+            <h4 class="upcoming-title">Upcoming Events</h4>
+            <div class="upcoming-events">
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
                         </div>
-
-                        <div class="media-right media-middle">
-                            <ul class="icons-list">
-                                <li>
-                                    <a href=""><i class="icon-cog3"></i></a>
-                                </li>
-                            </ul>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                    <div class="event-settings">
+                        <div class="edit-event">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                        </div>
+                        <div class="pay-status">
+                            <i class="fa fa-usd unpaid" aria-hidden="true"></i>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- /user menu -->
-            <!-- Main navigation -->
-            <div class="sidebar-category sidebar-category-visible">
-                <div class="category-content no-padding">
-                    <ul class="navigation navigation-main navigation-accordion">
 
-                        <!-- Main -->
-                        <li class="navigation-header"><span>Events</span> <i class="icon-menu" title="Main pages"></i></li>
-                        <li>
-                            <a href=""><i class="icon-add"></i> <span>Add Event</span></a>
-                        </li>
-                        <li>
-                            <a href=""><i class="icon-calendar"></i> <span>My Events</span></a>
-                        </li>
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                    <div class="event-settings">
+                        <div class="edit-event">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                        </div>
+                        <div class="pay-status">
+                            <i class="fa fa-usd paid" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
 
-                        <li class="navigation-header"><span>Upgrade</span> <i class="icon-menu" title="Main pages"></i></li>
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                    <div class="event-settings">
+                        <div class="edit-event">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                        </div>
+                        <div class="pay-status">
+                            <i class="fa fa-usd paid" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
 
-                        <li>
-                            <a href=""><i class="icon-server"></i> <span>Upgrade</span></a>
-                        </li>
-                        <!-- /main -->
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                    <div class="event-settings">
+                        <div class="edit-event">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                        </div>
+                        <div class="pay-status">
+                            <i class="fa fa-usd paid" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
 
-                    </ul>
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                    <div class="event-settings">
+                        <div class="edit-event">
+                            <i class="fa fa-wrench" aria-hidden="true"></i>
+                        </div>
+                        <div class="pay-status">
+                            <i class="fa fa-usd paid" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-event add-event">
+                    <a href=""><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </div>
-            <!-- /main navigation -->
+        </section>
+        <!-- Upcoming Event End -->
+        <!-- Passed Event --->
+        <section>
+            <h4 class="passed-title">passed Events</h4>
+            <div class="passed-events">
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                </div>
 
-        </div>
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>Thursday, may 5, 8:00 PM</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>Instan't Lorem Description for event</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>Paris, France</p>
+                        </div>
+                    </div>
+                </div>
+
+
+             </div>
+        </section>
     </div>
-    <!-- /main sidebar -->
 
-    <!-- Main content -->
-    <div class="content-wrapper">
 
-    </div>
 {% endblock %}
