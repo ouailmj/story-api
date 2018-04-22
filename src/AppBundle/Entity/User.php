@@ -114,11 +114,7 @@ class User extends BaseUser
 
     /**
      * @var InvitationRequest [] | ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\InvitationRequest")
-     * @ORM\JoinTable(name="users_invitation_request",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="invitation_request_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user")
      */
     protected $invitationRequests;
 

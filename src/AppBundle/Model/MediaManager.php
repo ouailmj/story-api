@@ -48,11 +48,11 @@ class MediaManager
     /**
      * MediaManager constructor.
      *
-     * @param UploadManager $uploadManager
-     * @param FileManager $fileManager
-     * @param TokenStorageInterface $tokenStorage
+     * @param UploadManager          $uploadManager
+     * @param FileManager            $fileManager
+     * @param TokenStorageInterface  $tokenStorage
      * @param EntityManagerInterface $entityManager
-     * @param UserManager $userManager
+     * @param UserManager            $userManager
      */
     public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, UserManager $userManager)
     {
@@ -63,13 +63,13 @@ class MediaManager
         $this->userManager = $userManager;
     }
 
-
     /**
      * Creates a media from a Gaufrette file.
      *
-     * @param File $file
+     * @param File      $file
      * @param User|null $by
-     * @param bool $andSave
+     * @param bool      $andSave
+     *
      * @return Media
      */
     public function createMediaFromFile(File $file, User $by = null, $andSave = true)
@@ -94,7 +94,8 @@ class MediaManager
      *
      * @param $filePath
      * @param User|null $by
-     * @param bool $andSave
+     * @param bool      $andSave
+     *
      * @return Media
      */
     public function createMediaFromLocalFile($filePath, User $by = null, $andSave = true)
@@ -118,10 +119,19 @@ class MediaManager
         return $media;
     }
 
-    public function deleteMedia($media)
+    public function deleteMedia(int $mediaId)
     {
         // Remove the file from the filesystem.
 
         // Remove Entity.
+    }
+
+    public function trashMedia(int $mediaId)
+    {
+        // Put $media to trash
+    }
+
+    public function unTrashMedia(int $mediaId)
+    {
     }
 }

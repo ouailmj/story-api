@@ -20,13 +20,17 @@ class SocketClient
 
     protected $host;
 
+    protected $dns;
+
+
     public function send(string $data)
     {
         // TODO: Implement the socket client.
+        $dns = $this->dns();
     }
 
-    private function buildDNS(): string
+    private function dns(): string
     {
+        return $this->dns = "tcp://" . $this->host . ':' . $this->port;
     }
-
 }

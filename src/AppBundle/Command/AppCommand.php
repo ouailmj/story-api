@@ -1,13 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mac
- * Date: 21/04/2018
- * Time: 09:13
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Command;
-
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 

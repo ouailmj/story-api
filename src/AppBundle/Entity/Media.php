@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Model\Trashable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,7 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\HasLifecycleCallbacks()
  */
-class Media
+class Media implements Trashable
 {
     /**
      * @var int
@@ -76,6 +77,13 @@ class Media
      * @ORM\Column(type="datetimetz")
      */
     private $uploadedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private $trashedAt = null;
 
     /**
      * @var User
@@ -301,12 +309,34 @@ class Media
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getTrashedAt(): \DateTime
+    {
+        return $this->trashedAt;
+    }
+
+    /**
+     * @param \DateTime $trashedAt
+     * @return Media
+     */
+    public function setTrashedAt(\DateTime $trashedAt): Media
+    {
+        $this->trashedAt = $trashedAt;
+
+        return $this;
+    }
+
+    /**
      * @ORM\PrePersist()
      */
     public function setUploadedAtValue()
     {
-        if (empty($this->uploadedAt)){
-            $this->uploadedAt = new \DateTime($this->getCreatedBy()->getTimeZoneInstance());
+        if (empty($this->uploadedAt)) {
+            $tz = ($this->getCreatedBy() instanceof User)
+                ? $this->getCreatedBy()->getTimeZoneInstance()
+                : new \DateTimeZone(date_default_timezone_get());
+            $this->uploadedAt = new \DateTime($tz);
         }
     }
 }

@@ -208,7 +208,7 @@ class EventPurchase
     /**
      * Get payments.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Payment[] | \Doctrine\Common\Collections\ArrayCollection
      */
     public function getPayments()
     {

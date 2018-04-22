@@ -1,9 +1,20 @@
 <?php
 
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
 namespace AppBundle\Command;
 
 use MIT\Bundle\SchedulerBundle\Scheduler\SchedulerInterface;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,12 +35,12 @@ class AppSchedulerRunCommand extends AppCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln((new \DateTime())->format(DATE_RFC850).' : Running scheduled tasks');
-        $counter=0;
-        foreach ($this->scheduler()->dueTasks() as $task){
+        $counter = 0;
+        foreach ($this->scheduler()->dueTasks() as $task) {
             // Application is injected in the task so the task can have access to other Symfony commands, services...
 
             $output->writeln($task->run($this->getApplication()));
-            $counter++;
+            ++$counter;
         }
         $output->writeln((new \DateTime())->format(DATE_RFC850).' : Running scheduled tasks finished. '.$counter.' tasks have been executed.');
     }
@@ -43,5 +54,4 @@ class AppSchedulerRunCommand extends AppCommand
     {
         return $this->getApplication()->getScheduler();
     }
-
 }

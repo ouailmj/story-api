@@ -207,6 +207,14 @@ class UserManager
     }
 
     /**
+     * @return \FOS\UserBundle\Model\UserManager
+     */
+    public function getFOSUserManager(): \FOS\UserBundle\Model\UserManager
+    {
+        return $this->fosUserManager;
+    }
+
+    /**
      * @param string  $email
      * @param Request $request
      *
