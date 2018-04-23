@@ -40,7 +40,7 @@ AppBundle\Entity\Media:
         downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
         file: ''
         createdBy: '@user*'
-        type: fileExtension
+        type: '---'
         expiresAt: <dateTime('+4 years')>
         hasBeenDownloaded: true
         uploadedAt: <dateTime('+2 years')>
