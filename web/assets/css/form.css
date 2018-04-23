@@ -16,30 +16,7 @@
 /*//////////////////////////////////////////////////////////////////
 [ FONT ]*/
 
-@font-face {
-  font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf');
-}
 
-@font-face {
-  font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf');
-}
-
-@font-face {
-  font-family: Poppins-Medium;
-  src: url('../fonts/poppins/Poppins-Medium.ttf');
-}
-
-@font-face {
-  font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf');
-}
-
-@font-face {
-  font-family: Montserrat-Bold;
-  src: url('../fonts/montserrat/Montserrat-Bold.ttf');
-}
 
 
 
@@ -519,7 +496,11 @@ select::-ms-expand {
  padding-top: auto;
 position: static;
 }
-
+.login-container .page-container .login-form {
+  width: 320px;
+      margin-left: auto;
+    margin-right: auto;
+}
 /*------------------------------------------------------------------
 [ Footer ]*/
 
@@ -532,7 +513,6 @@ position: static;
 
 .remember-me{
   width: 100%;
-  text-align: center;
   color: #fff;
 }
 
@@ -571,14 +551,13 @@ input[type="checkbox"]:checked::after{
 
 .log-container{
     position: absolute;
-    background: red;
+    background: #43c6ac;
     height: 100%;
     width: 100%;
     box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.75);
 }
 
 .log-container .left-content{
-    float: left;
     width: 60%;
     display: inline-block;
     background: url("../images/login_cover.jpg");

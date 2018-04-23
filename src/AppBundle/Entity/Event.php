@@ -521,6 +521,19 @@ class Event
     }
 
     /**
+     * Set UploadedMedias.
+     *
+     * @param array $medias
+     *
+     * @return Event
+     */
+    public function setUploadedMedias($medias)
+    {
+        $this->uploadedMedias =$medias;
+        return $this;
+    }
+
+    /**
      * Set videoGallery.
      *
      * @param array $videoGallery
