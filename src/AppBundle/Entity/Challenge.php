@@ -56,7 +56,7 @@ class Challenge implements Timestampable
     /**
      * @var bool
      *
-     * @ORM\Column(name="isLaunched", type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isLaunched = false;
 

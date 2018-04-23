@@ -80,7 +80,7 @@ AppBundle\Entity\Challenge:
     challenge_luxury_{1..100}:
         description: <sentence()>
         plannedAt: <dateTime('+8 days')>
-        isLaunched: 'false'
+        isLaunched: <randomElement([false, true])>
         event: "@event_luxury_*"
     challenge_premium_{1..100}:
         description: <sentence()>
