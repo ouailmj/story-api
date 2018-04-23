@@ -529,7 +529,8 @@ class Event
      */
     public function setUploadedMedias($medias)
     {
-        $this->uploadedMedias =$medias;
+        $this->uploadedMedias = $medias;
+
         return $this;
     }
 

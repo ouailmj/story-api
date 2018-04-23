@@ -36,7 +36,7 @@ class InvitationRequest
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sentAt", type="datetime")
+     * @ORM\Column(name="sentAt", type="datetime", nullable=true)
      */
     protected $sentAt;
 
@@ -45,14 +45,14 @@ class InvitationRequest
      *
      * @ORM\Column(name="isCanceled", type="boolean")
      */
-    protected $isCanceled;
+    protected $isCanceled = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="response", type="string", length=255)
+     * @ORM\Column(name="response", type="string", length=255, nullable=true)
      */
-    protected $response = null;
+    protected $response;
 
     /**
      * @var array
@@ -204,7 +204,7 @@ class InvitationRequest
     /**
      * @return User
      */
-    public function getUser(): User
+    public function getUser()
     {
         return $this->user;
     }
