@@ -34,6 +34,7 @@ AppBundle\Entity\User:
         enabled: true
         roles: ['ROLE_USER']
         fullName: Super <firstName()>
+
 AppBundle\Entity\Media:
     media{1..20}:
         downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
@@ -44,6 +45,7 @@ AppBundle\Entity\Media:
         hasBeenDownloaded: true
         uploadedAt: <dateTime('+2 years')>
         src: ''
+
 AppBundle\Entity\Event:
     event{1..20}:
         title: 'event_<current()>'
@@ -106,6 +108,7 @@ AppBundle\Entity\Event:
         place: <sentence()>
         createdBy: '@user*'
         canceled_at: <dateTime('+3 years')>
+
 AppBundle\Entity\Challenge:
     challenge:
         description: <sentence()>
@@ -116,7 +119,8 @@ AppBundle\Entity\Challenge:
         description: <sentence()>
         plannedAt: <dateTime('+8 years')>
         isLaunched: 'false'
-        event: "@event*"   #association of challenges to an event 
+        event: "@event*"   #association of challenges to an event
+
 AppBundle\Entity\InvitationRequest:
     invitationRequest:
         response: "Thank you I will come for sure"
@@ -133,12 +137,14 @@ AppBundle\Entity\InvitationRequest:
         sentAt: <dateTime('+2 years')>
         isCanceled: false
         channels: 'push'
+
 AppBundle\Entity\EventPurchase:
     event_purchase_payed:
         quota: 1.4
         currencyCode: 124563
         plan: '@plan_premium'
         event: '@event_Payed*'
+
 AppBundle\Entity\Plan:
     plan_gratuit:
          price: 0
@@ -184,6 +190,7 @@ AppBundle\Entity\Plan:
          isFree: false
          name: 'premium'
          description: <sentence()>
+
 AppBundle\Entity\MemberShip:
     membership:
          event: '@event2'
@@ -193,12 +200,14 @@ AppBundle\Entity\MemberShip:
          event: '@event2'
          member: '@user*'
          createdAt: <dateTime('+2 years')>
+
 AppBundle\Entity\Link:
     link:
          path: ''
          password: '123456'
          expiresAt: <dateTime('+3 years')>
          enabledAt: <dateTime('+1 years')>
+
 AppBundle\Entity\Payment:
     payment{1..30}:
          amount: 14.99

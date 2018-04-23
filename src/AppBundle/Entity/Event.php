@@ -522,14 +522,16 @@ class Event
     /**
      * Set UploadedMedias.
      *
-     * @param array $media
+     * @param array $medias
      *
-     * @return $media
+     * @return Event
      */
-    public function setUploadedMedias($media)
+    public function setUploadedMedias($medias)
     {
-        $this->uploadedMedias =$media;
+        $this->uploadedMedias =$medias;
+        return $this;
     }
+
     /**
      * Set videoGallery.
      *
@@ -613,16 +615,17 @@ class Event
     {
         return $this->eventPurchase;
     }
+
     /**
      * Set EventPurchase.
      *
-     * @param  $event_purchase
+     * @param  EventPurchase $eventPurchase
      *
      * 
      */
-    public function setEventPurchase($event_purchase)
+    public function setEventPurchase(EventPurchase $eventPurchase)
     {
-        $this->eventPurchase = $event_purchase;
+        $this->eventPurchase = $eventPurchase;
     }
 
     /**
