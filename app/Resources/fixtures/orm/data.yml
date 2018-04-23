@@ -151,7 +151,7 @@ AppBundle\Entity\Plan:
          price: 2.99
          maxEventDuration: 86400
          maxUploads: 500
-         maxGuests: 'illimité'
+         maxGuests: -1
          maxAlbumLifetime: 259200
          enableChallenges: true
          enableGamification: true
@@ -163,7 +163,7 @@ AppBundle\Entity\Plan:
          price: 5.99
          maxEventDuration: 172800
          maxUploads: 1000
-         maxGuests: 'illimité'
+         maxGuests: -1
          maxAlbumLifetime: 432000
          enableChallenges: true
          enableGamification: true
@@ -175,7 +175,7 @@ AppBundle\Entity\Plan:
          price: 14.99
          maxEventDuration: 604800
          maxUploads: 2000
-         maxGuests: 'illimité'
+         maxGuests: -1
          maxAlbumLifetime: 604800
          enableChallenges: true
          enableGamification: true
