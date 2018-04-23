@@ -40,7 +40,7 @@ AppBundle\Entity\Media:
         downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
         file: ''
         createdBy: '@user*'
-        type: fileExtension
+        type: html
         expiresAt: <dateTime('+4 years')>
         hasBeenDownloaded: true
         uploadedAt: <dateTime('+2 years')>
@@ -167,6 +167,7 @@ AppBundle\Entity\Plan:
          enableGamification: true
          isFree: false
          name: 'starter'
+         planKey: 'starter'
          description: <sentence()>
     plan_luxe:
          price: 5.99
@@ -178,6 +179,7 @@ AppBundle\Entity\Plan:
          enableGamification: true
          isFree: false
          name: 'luxe'
+         planKey: 'luxury'
          description: <sentence()>
     plan_premium:
          price: 14.99
@@ -189,6 +191,7 @@ AppBundle\Entity\Plan:
          enableGamification: true
          isFree: false
          name: 'premium'
+         planKey: 'premium'
          description: <sentence()>
 
 AppBundle\Entity\MemberShip:

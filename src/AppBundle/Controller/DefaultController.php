@@ -14,7 +14,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Model\EventManager;
+use AppBundle\Model\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class DefaultController extends BaseController
 {
@@ -33,13 +39,24 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @Route("/mockup")
+     * @Route("/dummy")
      */
-    public function mockupAction()
+    public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
+        $event = $eventManager->createEventWithFreePlan($this->getUser());
+        $media = $mediaManager->createMediaFromLocalFile(__FILE__,$this->getUser());
 
-        return $this->render('AppBundle:Events:index.html.twig', [
-            // ...
+        $eventManager->addMedia($event->getId(), $media, $this->getUser());
+
+        VarDumper::dump($event->getUploadedMedias()->toArray());
+        $form = $this->createFormBuilder()
+            ->add('file', FileType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm()
+        ;
+
+        return $this->render('@App/Default/dummy.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: api_filters.yml }
+    - { resource: 'vendor/knp_gaufrette.yml' }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -40,6 +41,10 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'Form/fields.html.twig'
+    globals:
+        google_analytics: "%google_analytics%"
+        play_store_download_link: '#'
+        app_store_download_link: '#'
 
 # Doctrine Configuration
 doctrine:

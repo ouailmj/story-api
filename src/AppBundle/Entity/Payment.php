@@ -59,7 +59,6 @@ class Payment
      * @var EventPurchase
      *
      * @ORM\ManyToOne(targetEntity="EventPurchase", inversedBy="payments")
-     *
      */
     private $eventPurchase;
 

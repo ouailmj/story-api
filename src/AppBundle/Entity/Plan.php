@@ -18,13 +18,25 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Plan
+ * Plan.
  *
  * @ORM\Table(name="plan")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PlanRepository")
  */
 class Plan
 {
+    const FREE_PLAN_KEY = 'free';
+    const STARTER_PLAN_KEY = 'starter';
+    const LUXURY_PLAN_KEY = 'luxury';
+    const PREMIUM_PLAN_KEY = 'premium';
+
+    public static $supportedPlanKeys = [
+        self::FREE_PLAN_KEY => self::FREE_PLAN_KEY,
+        self::STARTER_PLAN_KEY => self::STARTER_PLAN_KEY,
+        self::LUXURY_PLAN_KEY => self::LUXURY_PLAN_KEY,
+        self::PREMIUM_PLAN_KEY => self::PREMIUM_PLAN_KEY,
+    ];
+
     /**
      * @var int
      *
@@ -42,32 +54,36 @@ class Plan
     private $price = 0.0;
 
     /**
+     * Max event duration in seconds.
+     *
      * @var int
      *
      * @ORM\Column(name="maxEventDuration", type="integer")
      */
-    private $maxEventDuration;
+    private $maxEventDuration = 6 * 3600;
 
     /**
+     * Maximum media uploads.
+     *
      * @var int
      *
      * @ORM\Column(name="maxUploads", type="integer")
      */
-    private $maxUploads;
+    private $maxUploads = 200;
 
     /**
      * @var int
      *
      * @ORM\Column(name="maxGuests", type="integer")
      */
-    private $maxGuests;
+    private $maxGuests = 20;
 
     /**
      * @var int
      *
      * @ORM\Column(name="maxAlbumLifeTime", type="integer")
      */
-    private $maxAlbumLifeTime;
+    private $maxAlbumLifeTime = 24 * 3600;
 
     /**
      * @var bool
@@ -88,14 +104,21 @@ class Plan
      *
      * @ORM\Column(name="isFree", type="boolean")
      */
-    private $isFree = false;
+    private $isFree = true;
 
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name;
+    private $name = 'Free Plan';
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(unique=true, type="string", length=20)
+     */
+    private $planKey = self::FREE_PLAN_KEY;
 
     /**
      * @var string
@@ -395,5 +418,25 @@ class Plan
     public function getEventPurchases()
     {
         return $this->eventPurchases;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlanKey(): string
+    {
+        return $this->planKey;
+    }
+
+    /**
+     * @param string $planKey
+     *
+     * @return Plan
+     */
+    public function setPlanKey(string $planKey): self
+    {
+        $this->planKey = $planKey;
+
+        return $this;
     }
 }

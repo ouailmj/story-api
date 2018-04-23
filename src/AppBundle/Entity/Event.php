@@ -43,19 +43,19 @@ class Event
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $title = 'Untitled';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetimetz")
      */
     private $startsAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetimetz")
      */
     private $endsAt;
 
@@ -64,7 +64,7 @@ class Event
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $description;
+    private $description = '';
 
     /**
      * @var string
@@ -76,22 +76,28 @@ class Event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetimetz")
      */
     private $expiresAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private $publishedAt;
+
+    /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
-    private $place;
+    private $place = '';
 
     /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents" )
-     *
      */
     private $createdBy;
 
@@ -110,13 +116,9 @@ class Event
     private $eventMemberShips;
 
     /**
-     * @var InvitationRequest [] | ArrayCollection
+     * @var InvitationRequest[] | ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\InvitationRequest")
-     * @ORM\JoinTable(name="event_invitation_request",
-     *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event")
      */
     private $invitationRequests;
 
@@ -153,15 +155,14 @@ class Event
     /**
      * @var EventPurchase
      *
-     * @ORM\OneToOne(targetEntity="EventPurchase")
-     *
+     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist", "remove"})
      */
     private $eventPurchase;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column( type="datetime")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $canceledAt = null;
 
@@ -414,7 +415,7 @@ class Event
     /**
      * Get eventMemberShips.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\ArrayCollection | MemberShip[]
      */
     public function getEventMemberShips()
     {
@@ -573,7 +574,7 @@ class Event
     /**
      * Get imagesGallery.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Image[] | \Doctrine\Common\Collections\ArrayCollection
      */
     public function getImagesGallery()
     {
@@ -609,7 +610,7 @@ class Event
     /**
      * Get eventPurchase.
      *
-     * @return string
+     * @return EventPurchase
      */
     public function getEventPurchase()
     {
@@ -617,15 +618,17 @@ class Event
     }
 
     /**
-     * Set EventPurchase.
+     * Set eventPurchase.
      *
-     * @param  EventPurchase $eventPurchase
+     * @param EventPurchase $eventPurchase
      *
-     * 
+     * @return Event
      */
-    public function setEventPurchase($eventPurchase)
+    public function setEventPurchase(EventPurchase $eventPurchase)
     {
         $this->eventPurchase = $eventPurchase;
+
+        return $this;
     }
 
     /**
@@ -666,5 +669,30 @@ class Event
     public function setLink(Link $link)
     {
         $this->link = $link;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getPublishedAt(): \DateTime
+    {
+        return $this->publishedAt;
+    }
+
+    /**
+     * @param \DateTime $publishedAt
+     *
+     * @return $this
+     */
+    public function setPublishedAt(\DateTime $publishedAt)
+    {
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle().'';
     }
 }

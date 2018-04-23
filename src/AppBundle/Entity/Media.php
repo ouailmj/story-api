@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Model\Trashable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,9 +31,8 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  *
  * @ORM\HasLifecycleCallbacks()
- *
  */
-class Media
+class Media implements Trashable
 {
     /**
      * @var int
@@ -46,59 +46,65 @@ class Media
     /**
      * @var string
      *
-     * @ORM\Column(name="downloadLink", type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
-    private $downloadLink;
+    private $downloadLink = '';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="file", type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
-    private $file;
+    private $file = '';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expiresAt", type="datetime")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $expiresAt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="hasBeenDownloaded", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    private $hasBeenDownloaded;
+    private $hasBeenDownloaded = false;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="uploadedAt", type="datetime")
+     * @ORM\Column(type="datetimetz")
      */
     private $uploadedAt;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetimetz", nullable=true)
+     */
+    private $trashedAt = null;
+
+    /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias" )
-     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias")
      */
     private $createdBy;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="src", type="string", length=255)
+     * @ORM\Column(type="string", length=500)
      */
     private $src;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=255)
+     * @ORM\Column(type="string", length=10)
      */
-    private $type;
+    private $type = '';
 
     /**
      * Get id.
@@ -300,5 +306,37 @@ class Media
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTrashedAt(): \DateTime
+    {
+        return $this->trashedAt;
+    }
+
+    /**
+     * @param \DateTime $trashedAt
+     * @return Media
+     */
+    public function setTrashedAt(\DateTime $trashedAt): Media
+    {
+        $this->trashedAt = $trashedAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setUploadedAtValue()
+    {
+        if (empty($this->uploadedAt)) {
+            $tz = ($this->getCreatedBy() instanceof User)
+                ? $this->getCreatedBy()->getTimeZoneInstance()
+                : new \DateTimeZone(date_default_timezone_get());
+            $this->uploadedAt = new \DateTime($tz);
+        }
     }
 }

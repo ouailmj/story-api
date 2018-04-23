@@ -14,7 +14,6 @@
 
 namespace AppBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -42,7 +41,7 @@ class EventPurchase
     /**
      * @var float
      *
-     * @ORM\Column(name="quota", type="float", length=255)
+     * @ORM\Column(name="quota", type="float")
      */
     private $quota;
 
@@ -57,15 +56,13 @@ class EventPurchase
      * @var Plan
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Plan", inversedBy="eventPurchases" )
-     *
      */
     private $plan;
 
     /**
      * @var Event
      *
-     * @ORM\OneToOne(targetEntity="Event")
-     *
+     * @ORM\OneToOne(targetEntity="Event", mappedBy="eventPurchase")
      */
     private $event;
 
@@ -211,7 +208,7 @@ class EventPurchase
     /**
      * Get payments.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Payment[] | \Doctrine\Common\Collections\ArrayCollection
      */
     public function getPayments()
     {
