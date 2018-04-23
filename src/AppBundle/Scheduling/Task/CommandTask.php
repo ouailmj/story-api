@@ -23,8 +23,6 @@ use Symfony\Component\Process\Process;
 
 class CommandTask extends Task
 {
-    // TODO: Configure the lock.
-
     protected $command;
 
     protected $expression;
