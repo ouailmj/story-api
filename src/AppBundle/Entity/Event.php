@@ -623,7 +623,7 @@ class Event
      *
      * 
      */
-    public function setEventPurchase(EventPurchase $eventPurchase)
+    public function setEventPurchase($eventPurchase)
     {
         $this->eventPurchase = $eventPurchase;
     }
