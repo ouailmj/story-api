@@ -24,6 +24,17 @@ let vendorCSS = [
     './web/assets/css/custom.css'
 ];
 
+let frontCSS = [
+    './web/assets/css/icons/icomoon/styles.css',
+    './web/assets/css/bootstrap.css',
+    './web/assets/css/core.css',
+    './web/assets/css/components.css',
+    './web/assets/css/colors.css',
+    './web/assets/css/custom.css',
+    './web/assets/css/dashboard.css',
+    './web/assets/css/home.css'
+];
+
 let loginJs = vendorJs.concat([
     './web/assets/js/pages/login_validation.js'
 ]);
@@ -47,6 +58,7 @@ Encore
     .createSharedEntry('js/app', vendorJs)
     // .addEntry('js/training', trainingJs)
     .addStyleEntry('css/style', vendorCSS)
+    .addStyleEntry('css/front/style', frontCSS)
     .enableVersioning(false)
     // .enableSassLoader()
     .enableReactPreset()

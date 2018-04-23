@@ -5,13 +5,13 @@
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
-    
+
 {% endblock %}
- {% block main_navbar %}
+{% block main_navbar %}
     {% endblock %}
 {% block fos_user_content %}
 {% block container %}
 {{ include('FOSUserBundle:Security:login_content.html.twig') }}
 {% endblock %}
-    
+
 {% endblock fos_user_content %}

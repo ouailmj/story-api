@@ -1,0 +1,69 @@
+{% extends "::base_user.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+    <!--<style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial;
+        }
+        .header {
+            text-align: center;
+            padding: 32px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 4px;
+        }
+
+        /* Create four equal columns that sits next to each other */
+        .column {
+            flex: 25%;
+            max-width: 25%;
+            padding: 0 4px;
+        }
+
+        .column img {
+            margin-top: 8px;
+            vertical-align: middle;
+        }
+
+        /* Responsive layout - makes a two column-layout instead of four columns */
+        @media (max-width: 800px) {
+            .column {
+                flex: 50%;
+                max-width: 50%;
+            }
+        }
+
+        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            .column {
+                flex: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+<div class="main">
+    <div class="header">
+        <h1>Gallery Event</h1>
+    </div>
+    <div class="column">
+        <select multiple="multiple" class="image-picker show-html">
+            <option data-img-src="http://placekitten.com/220/200" value="1">Cute Kitten 1</option>
+            <option data-img-src="http://placekitten.com/180/200" value="2">Cute Kitten 2</option>
+            <option data-img-src="http://placekitten.com/130/200" value="3">Cute Kitten 3</option>
+            <option data-img-src="http://placekitten.com/270/200" value="4">Cute Kitten 4</option>
+        </select>
+    </div>
+</div>
+    <script src="{{ asset('assets/js/plugins/image-picker/image-picker.min.js') }}"></script>
+    <script>
+        $("select").imagepicker()
+    </script>
+{% endblock %}

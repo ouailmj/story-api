@@ -42,4 +42,26 @@ class DefaultController extends BaseController
             // ...
         ]);
     }
+
+    /**
+     * @Route("/add_event")
+     */
+    public function eventAction()
+    {
+
+        return $this->render('AppBundle:Events:add_event.html.twig', [
+            // ...
+        ]);
+    }
+
+    /**
+     * @Route("/gallery")
+     */
+    public function galleryAction()
+    {
+
+        return $this->render('AppBundle:Events:gallery.html.twig', [
+            // ...
+        ]);
+    }
 }
