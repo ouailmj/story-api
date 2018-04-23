@@ -53,7 +53,9 @@
 	box-sizing: border-box;
 }
 
-body {
+body, html {
+    color: #fff;
+    height: 100%;
   font-family: Poppins-Regular, sans-serif;
   background: #eee;
 }
@@ -124,15 +126,15 @@ textarea:focus:-moz-placeholder { color:transparent; }
 textarea:focus::-moz-placeholder { color:transparent; }
 textarea:focus:-ms-input-placeholder { color:transparent; }
 
-input::-webkit-input-placeholder { color: #999999; }
-input:-moz-placeholder { color: #999999; }
-input::-moz-placeholder { color: #999999; }
-input:-ms-input-placeholder { color: #999999; }
+input::-webkit-input-placeholder { color: #191654; }
+input:-moz-placeholder { color: #191654; }
+input::-moz-placeholder { color: #191654; }
+input:-ms-input-placeholder { color: #191654; }
 
-textarea::-webkit-input-placeholder { color: #999999; }
-textarea:-moz-placeholder { color: #999999; }
-textarea::-moz-placeholder { color: #999999; }
-textarea:-ms-input-placeholder { color: #999999; }
+textarea::-webkit-input-placeholder { color: #191654; }
+textarea:-moz-placeholder { color: #191654; }
+textarea::-moz-placeholder { color: #191654; }
+textarea:-ms-input-placeholder { color: #191654; }
 
 /*---------------------------------------------*/
 button {
@@ -156,54 +158,24 @@ iframe {
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
   line-height: 1.5;
-  color: #000;
+  color: #161954;
 }
 
 .txt2 {
   font-family: 'Poppins', sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
-  color: #000;
+  color: #fff;
 }
 
-
-/*//////////////////////////////////////////////////////////////////
-[ login ]*/
-
-.limiter {
-  width: 100%;
+.p-t-136{
+    padding-top: 22px !important;
 }
 
-.container-login100 {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-}
-
-.wrap-login100 {
-  /*background:url('/assets/images/login-pg.jpg');
-  background-size: cover;*/
-  margin-top: 1%;
-  background: #fff;
-  width: 960px;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.75);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 33px 130px 33px 95px;
+.sign-up-link{
+ position: absolute;
+    left: 1%;
+    top: 2%;
 }
 
 /*------------------------------------------------------------------
@@ -220,17 +192,16 @@ iframe {
 /*------------------------------------------------------------------
 [  ]*/
 .login100-form {
-  width: 290px;
+  width: 55%;
   padding: 20px auto 20px auto;
 }
 
 .login100-form-title {
   font-family: 'Kaushan Script', cursive ;
   font-size: 32px;
-  color: #000;
+  color: #191654;
   line-height: 1.2;
   text-align: center;
-
   width: 100%;
   display: block;
   padding-bottom: 54px;
@@ -271,6 +242,7 @@ iframe {
   height: 50px;
   border-radius: 25px;
   padding: 0 30px 0 68px;
+
 }
 
 
@@ -286,7 +258,7 @@ iframe {
   width: 100%;
   height: 100%;
   box-shadow: 0px 0px 0px 0px;
-  color: rgba(87,184,70, 0.8);
+  color: #161954;
 }
 
 .input100:focus + .focus-input100 {
@@ -325,7 +297,7 @@ iframe {
   height: 100%;
   padding-left: 35px;
   pointer-events: none;
-  color: #666666;
+  color: #161954;
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
@@ -334,7 +306,7 @@ iframe {
 }
 
 .input100:focus + .focus-input100 + .symbol-input100 {
-  color: #57b846;
+  color: #161954;
   padding-left: 28px;
 }
 
@@ -419,6 +391,7 @@ select::-ms-expand {
   padding: 50px;
   min-height: 500px;
 }
+/*
 @media (max-width: 992px) {
 
   .login100-pic {
@@ -450,7 +423,7 @@ select::-ms-expand {
   }
 }
 
-
+*/
 /*------------------------------------------------------------------
 [ Alert validate ]*/
 
@@ -483,7 +456,7 @@ select::-ms-expand {
 .alert-validate::before {
   content: attr(data-validate);
   position: absolute;
-  max-width: 70%;
+  max-width: 100%;
   background-color: white;
   border: 1px solid #c80000;
   border-radius: 13px;
@@ -541,9 +514,6 @@ select::-ms-expand {
 }
 /*------------------------------------------------------------------
 [ Dowload ios/android image ]*/
-.img1{
-  margin : 30px auto;
-}
 
 .login-container .page-container {
  padding-top: auto;
@@ -554,18 +524,20 @@ position: static;
 [ Footer ]*/
 
 .footer{
-  color: #fff;
   letter-spacing: 1px;
 }
 .footer a{
-  color: #fff;
+  color: rgb(255, 255, 255);
 }
 
 .remember-me{
   width: 100%;
   text-align: center;
-  color: #C4BCB0;
+  color: #fff;
 }
+
+/*------------------------------------------------------------------
+[ Remember me checkbox ]*/
 
 input[type="checkbox"]{
   -webkit-appearance:none;
@@ -580,7 +552,7 @@ input[type="checkbox"]::before{
   height:15px;
   content:"";
   display:block;
-  border:3px solid #C4BCB0;
+  border:3px solid #fff;
   border-radius: 9px;
   position:absolute;
 }
@@ -589,9 +561,52 @@ input[type="checkbox"]:checked::after{
   height:5px;
   content:"";
   display:block;
-  background: #C4BCB0;
+  background: #fff;
   border-radius: 5px;
   position:absolute;
   left:5px;
   top:5px;
 }
+
+
+.log-container{
+    position: absolute;
+    background: red;
+    height: 100%;
+    width: 100%;
+    box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.75);
+}
+
+.log-container .left-content{
+    float: left;
+    width: 60%;
+    display: inline-block;
+    background: url("../images/login_cover.jpg");
+    background-size: cover;
+    height: 100%;
+
+}
+
+.log-container .right-content{
+    float: right;
+    width: 40%;
+    display: inline-block;
+    background: #f7f7f7;
+    height: 100%;
+    background: #43c6ac;
+    box-shadow: inset 0px 0px 30px 0px rgba(0,0,0,0.75);
+}
+.log-container .right-content .login100-form{
+    margin-top: 30%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.log-container .left-content .instant-logo{
+    vertical-align: middle;
+    text-align: center;
+    margin-top: 15%;
+}
+.log-container .left-content .instant-logo img{
+        width: 380px;
+    }

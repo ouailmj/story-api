@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+    {% block stylesheet %}
+        <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/util.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('assets/css/extras/animate.css')}}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+    {% endblock %}
+    {% form_theme form 'Form/fields.html.twig' %}
+
+    {% block content %}
+
+        <div class="container profil">
+            <div class="row">
+                <div class="menu-side col-md-4">
+                    <div class="menu-items">
+                        <div class="row">
+                            <button type="button" onclick="window.location.href='{{ path('app_profile_edit')}}'" class="input100 menu-item">{{ 'profile.update_profile'|trans }}</button>
+                        </div>
+                        <div class="row">
+                            <button type="button" onclick="window.location.href='{{ path('fos_user_change_password') }}'"  class="input100 menu-item" >{{ 'profile.change_password'|trans }}</button>
+                        </div>
+                        <div class="row">
+                            <button type="button" onclick="window.location.href='{{ path('app_profile_avatar') }}'"  class="input100 menu-item" >{{ 'profile.avatar_avatar'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="profil-info col-md-8">
+                    <div   class="profil-mdf">
+                        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                        {% form_theme form 'Form/Registration/fields.html.twig' %}
+
+                        {{ form_errors(form) }}
+
+                        {{ form_rest(form) }}
+                        <div class="row">
+                            <div class="validate">
+                                <div class="col-md-5">
+                                    <button type="submit" class="login100-form-btn">Enregistrer</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}

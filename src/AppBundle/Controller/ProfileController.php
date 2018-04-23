@@ -14,7 +14,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
 use AppBundle\Model\UserManager;
+use Doctrine\ORM\ORMException;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
@@ -23,11 +25,21 @@ use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+
+/**
+ * Class ProfileController
+ * @package AppBundle\Controller
+ * @Security("has_role('ROLE_USER')")
+ * @Route("/auth/profile/")
+ */
 class ProfileController extends BaseController
 {
     private $eventDispatcher;
@@ -42,7 +54,7 @@ class ProfileController extends BaseController
     /**
      * Show the user.
      *
-     * @Route("/auth/profile/")
+     * @Route("/")
      */
     public function showAction()
     {
@@ -57,7 +69,7 @@ class ProfileController extends BaseController
     /**
      * Edit the user.
      *
-     * @Route("/auth/profile/edit")
+     * @Route("edit")
      *
      * @param Request $request
      *
@@ -104,7 +116,10 @@ class ProfileController extends BaseController
     }
 
     /**
-     * @Route("/auth/profile/delete")
+     * @Route("delete")
+     * @param Request $request
+     * @param UserManager $userManager
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request, UserManager $userManager)
     {
@@ -119,5 +134,36 @@ class ProfileController extends BaseController
         $this->addSuccessFlash();
 
         return $this->redirectToRoute('app_default_index');
+    }
+
+    /**
+     * @Route("avatar")
+     *
+     * @param Request $request
+     * @param UserManager $userManager
+     * @return RedirectResponse|Response
+     */
+    public function avatarAction(Request $request, UserManager $userManager){
+        $user = $this->getUser();
+        $form = $this->createForm('AppBundle\Form\Type\AvatarType', $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                /** @var UploadedFile $uploadedImage */
+                $uploadedImage = $form->get('avatarIMG')->getData();
+                $userManager->updateAvatar($user, $uploadedImage);
+                $this->addSuccessFlash();
+                return $this->redirectToRoute('app_profile_edit');
+            } catch (FileNotFoundException $exception) {
+                $this->get('logger')->addError($exception->getTraceAsString());
+                $msg = $this->get('translator')->trans('flash.file_error');
+                $this->addFlash('error', $msg);
+            } catch (ORMException $exception) {
+            }
+        }
+        return $this->render('@FOSUser/Profile/avatar.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
 }
