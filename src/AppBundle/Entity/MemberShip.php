@@ -37,7 +37,6 @@ class MemberShip
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventMemberShips")
-     *
      */
     private $event;
 
@@ -45,7 +44,6 @@ class MemberShip
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMemberShips"  )
-     *
      */
     private $member;
 

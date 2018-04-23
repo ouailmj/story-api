@@ -20,7 +20,6 @@ use AppBundle\DTO\ChangeProfile;
 use AppBundle\DTO\ForgotPasswordRequest;
 use AppBundle\Entity\User;
 use AppBundle\Model\UserManager;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -53,17 +52,18 @@ class UserSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return array(
-            KernelEvents::VIEW      => array(
-                array('handleChangePasswordRequest', EventPriorities::POST_VALIDATE),
-                array('handlePasswordReset', EventPriorities::POST_VALIDATE),
-                array('handleChangeProfile', EventPriorities::POST_VALIDATE)
-            )
-        );
+        return [
+            KernelEvents::VIEW => [
+                ['handleChangePasswordRequest', EventPriorities::POST_VALIDATE],
+                ['handlePasswordReset', EventPriorities::POST_VALIDATE],
+                ['handleChangeProfile', EventPriorities::POST_VALIDATE],
+            ],
+        ];
     }
 
     /**
      * @param GetResponseForControllerResultEvent $event
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
@@ -95,7 +95,6 @@ class UserSubscriber implements EventSubscriberInterface
      */
     public function handlePasswordReset(GetResponseForControllerResultEvent $event)
     {
-
         $request = $event->getRequest();
         $responseData = [];
         if ('api_forgot_password_requests_post_collection' !== $request->attributes->get('_route')) {
@@ -104,7 +103,7 @@ class UserSubscriber implements EventSubscriberInterface
         /** @var ForgotPasswordRequest $forgotPasswordRequest */
         $forgotPasswordRequest = $event->getControllerResult();
         $this->userManager->forgotPasswordMobile($forgotPasswordRequest->email, $request);
-            // TODO: Translate
+        // TODO: Translate
         $responseData['message'] = 'An email has been sent. It contains a link that you will need to click to reset your password.';
 
         $event->setResponse(new JsonResponse($responseData, 200));
@@ -115,15 +114,13 @@ class UserSubscriber implements EventSubscriberInterface
      */
     public function handleChangeProfile(GetResponseForControllerResultEvent $event)
     {
-
         $request = $event->getRequest();
         $responseData = [];
         if ('api_change_profiles_post_collection' !== $request->attributes->get('_route')) {
             return;
         }
         $token = $this->tokenStorage->getToken();
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User){
-
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User) {
             /** @var ChangeProfile $profile */
             $profile = $event->getControllerResult();
 
@@ -137,10 +134,8 @@ class UserSubscriber implements EventSubscriberInterface
 
             // TODO: Translate
             $responseData['message'] = 'Your profile has been updated successfully';
-            $responseData['token'] =  $this->userManager->generateToken($user);
-
+            $responseData['token'] = $this->userManager->generateToken($user);
         }
-
 
         $event->setResponse(new JsonResponse($responseData, 200));
     }

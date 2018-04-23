@@ -15,8 +15,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use Gedmo\Timestampable\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
@@ -66,7 +64,6 @@ class Challenge implements Timestampable
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="challenges" )
-     *
      */
     private $event;
 

@@ -7,20 +7,19 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
-
 
 namespace AppBundle\DTO;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-
 /**
- * Class ForgotPasswordRequest
+ * Class ForgotPasswordRequest.
  *
- * @package AppBundle\DTO
  * @ApiResource(
  *      collectionOperations={
  *          "post"={

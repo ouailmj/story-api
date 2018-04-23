@@ -87,13 +87,13 @@ class User extends BaseUser
      * @Assert\Length(max = 20)
      * @ORM\Column( type="string", length=20, nullable=true)
      */
-    protected $phoneNumber;
+    protected $phoneNumber = '';
 
     /**
      * @var string
      * @ORM\Column( type="string", length=250, nullable=true)
      */
-    protected $fullName;
+    protected $fullName = '';
 
     /**
      * @var string
@@ -115,11 +115,7 @@ class User extends BaseUser
 
     /**
      * @var InvitationRequest [] | ArrayCollection
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\InvitationRequest")
-     * @ORM\JoinTable(name="users_invitation_request",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="invitation_request_id", referencedColumnName="id", unique=true)}
-     *      )
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user")
      */
     protected $invitationRequests;
 
@@ -460,6 +456,22 @@ class User extends BaseUser
     }
 
     /**
+     * Get the user's timezone instance.
+     *
+     * @return \DateTimeZone
+     */
+    public function getTimeZoneInstance()
+    {
+        try {
+            $tz = new \DateTimeZone($this->getTimezoneId());
+        } catch (\Exception $exception) {
+            return new \DateTimeZone(date_default_timezone_get());
+        }
+
+        return $tz;
+    }
+
+    /**
      * @return mixed
      */
     public function getAvatar()
@@ -474,6 +486,4 @@ class User extends BaseUser
     {
         $this->avatar = $avatar;
     }
-
-
 }

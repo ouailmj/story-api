@@ -31,35 +31,49 @@ class InvitationRequest
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="sentAt", type="datetime")
+     * @ORM\Column(name="sentAt", type="datetime", nullable=true)
      */
-    private $sentAt;
+    protected $sentAt;
 
     /**
      * @var bool
      *
      * @ORM\Column(name="isCanceled", type="boolean")
      */
-    private $isCanceled;
+    protected $isCanceled = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="response", type="string", length=255)
+     * @ORM\Column(name="response", type="string", length=255, nullable=true)
      */
-    private $response = null;
+    protected $response;
 
     /**
      * @var array
      *
      * @ORM\Column(name="channels", type="array")
      */
-    private $channels = ['email'];
+    protected $channels = ['email'];
+
+    /**
+     * @var Event
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="invitationRequests")
+     */
+    protected $event;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="invitationRequests")
+     */
+    protected $user;
 
     /**
      * Get id.
@@ -165,5 +179,45 @@ class InvitationRequest
     public function getChannels()
     {
         return $this->channels;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getEvent(): Event
+    {
+        return $this->event;
+    }
+
+    /**
+     * @param Event $event
+     *
+     * @return InvitationRequest
+     */
+    public function setEvent(Event $event): self
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return InvitationRequest
+     */
+    public function setUser(User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

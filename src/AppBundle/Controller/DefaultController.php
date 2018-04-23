@@ -14,7 +14,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Model\EventManager;
+use AppBundle\Model\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class DefaultController extends BaseController
 {
@@ -33,13 +39,23 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @Route("/mockup")
+     * @Route("/dummy")
      */
-    public function mockupAction()
+    public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
+        $event = $eventManager->createEventWithFreePlan();
+        $media = $mediaManager->createMediaFromLocalFile(__FILE__);
+        $eventManager->addMedia($event->getId(), $media);
 
-        return $this->render('AppBundle:Events:index.html.twig', [
-            // ...
+        VarDumper::dump($event->getUploadedMedias()->toArray());
+        $form = $this->createFormBuilder()
+            ->add('file', FileType::class)
+            ->add('submit', SubmitType::class)
+            ->getForm()
+        ;
+
+        return $this->render('@App/Default/dummy.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -48,7 +64,6 @@ class DefaultController extends BaseController
      */
     public function eventAction()
     {
-
         return $this->render('AppBundle:Events:add_event.html.twig', [
             // ...
         ]);
@@ -59,7 +74,6 @@ class DefaultController extends BaseController
      */
     public function galleryAction()
     {
-
         return $this->render('AppBundle:Events:gallery.html.twig', [
             // ...
         ]);

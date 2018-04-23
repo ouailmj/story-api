@@ -22,4 +22,11 @@ final class AppEvents
      * @var string
      */
     const USER_REGISTERED_WEB = 'user.registered.web';
+
+    /**
+     * Event fired after a new has been uploaded to an event.
+     *
+     * @var string
+     */
+    const EVENT_NEW_MEDIA_UPLOADED = 'event.new.media.uploaded';
 }
