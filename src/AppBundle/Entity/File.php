@@ -14,8 +14,8 @@
 
 namespace AppBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\Timestampable;
 
 /**
@@ -104,22 +104,6 @@ class File
     /**
      * @return string
      */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
     public function getDisplayName()
     {
         return $this->displayName;
@@ -133,6 +117,7 @@ class File
     public function setDisplayName(string $displayName)
     {
         $this->displayName = $displayName;
+
         return $this;
     }
 
@@ -160,4 +145,19 @@ class File
         return $this->getName();
     }
 
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
 }

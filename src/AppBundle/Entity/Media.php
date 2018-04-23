@@ -318,9 +318,10 @@ class Media implements Trashable
 
     /**
      * @param \DateTime $trashedAt
+     *
      * @return Media
      */
-    public function setTrashedAt(\DateTime $trashedAt): Media
+    public function setTrashedAt(\DateTime $trashedAt): self
     {
         $this->trashedAt = $trashedAt;
 

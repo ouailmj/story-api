@@ -191,11 +191,13 @@ class InvitationRequest
 
     /**
      * @param Event $event
+     *
      * @return InvitationRequest
      */
-    public function setEvent(Event $event): InvitationRequest
+    public function setEvent(Event $event): self
     {
         $this->event = $event;
+
         return $this;
     }
 
@@ -209,11 +211,13 @@ class InvitationRequest
 
     /**
      * @param User $user
+     *
      * @return InvitationRequest
      */
-    public function setUser(User $user): InvitationRequest
+    public function setUser(User $user): self
     {
         $this->user = $user;
+
         return $this;
     }
 }

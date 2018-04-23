@@ -36,7 +36,7 @@ class AppEventCloseCommand extends AppCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->lock()){
+        if ($this->lock()) {
             $argument = $input->getArgument('argument');
 
             if ($input->getOption('option')) {

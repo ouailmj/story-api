@@ -95,7 +95,6 @@ class EventManager
     }
 
     /**
-     *
      * @param int       $eventId
      * @param Media     $media
      * @param User|null $by
@@ -123,6 +122,7 @@ class EventManager
 
     /**
      * @param int $eventId
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function trashEvent(int $eventId)
@@ -141,6 +141,7 @@ class EventManager
 
     /**
      * @param int $trashedEventId
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function unTrashEvent(int $trashedEventId)
@@ -158,8 +159,9 @@ class EventManager
     }
 
     /**
-     * @param int $eventId
+     * @param int     $eventId
      * @param Payment $payment
+     *
      * @return Event
      */
     public function addPayment(int $eventId, Payment $payment): Event
@@ -177,6 +179,7 @@ class EventManager
      * Events are enabled only when they are fully payed.
      *
      * @param int $eventId
+     *
      * @return Event
      */
     public function enableEvent(int $eventId): Event
@@ -198,13 +201,13 @@ class EventManager
     /**
      * @param $eventId
      * @param bool $inTrash
-     * @return Event
+     *
      * @throws \Doctrine\ORM\EntityNotFoundException
+     *
+     * @return Event
      */
     private function findEventById($eventId, $inTrash = false): Event
     {
         return $this->entityManager->getRepository(Event::class)->findOneOrFail($eventId);
     }
-
-
 }

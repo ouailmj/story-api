@@ -24,6 +24,7 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,12 +32,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-
 
 /**
- * Class ProfileController
- * @package AppBundle\Controller
+ * Class ProfileController.
+ *
  * @Security("has_role('ROLE_USER')")
  * @Route("/auth/profile/")
  */
@@ -117,8 +116,10 @@ class ProfileController extends BaseController
 
     /**
      * @Route("delete")
-     * @param Request $request
+     *
+     * @param Request     $request
      * @param UserManager $userManager
+     *
      * @return RedirectResponse
      */
     public function deleteAction(Request $request, UserManager $userManager)
@@ -139,11 +140,13 @@ class ProfileController extends BaseController
     /**
      * @Route("avatar")
      *
-     * @param Request $request
+     * @param Request     $request
      * @param UserManager $userManager
+     *
      * @return RedirectResponse|Response
      */
-    public function avatarAction(Request $request, UserManager $userManager){
+    public function avatarAction(Request $request, UserManager $userManager)
+    {
         $user = $this->getUser();
         $form = $this->createForm('AppBundle\Form\Type\AvatarType', $user);
         $form->handleRequest($request);
@@ -153,6 +156,7 @@ class ProfileController extends BaseController
                 $uploadedImage = $form->get('avatarIMG')->getData();
                 $userManager->updateAvatar($user, $uploadedImage);
                 $this->addSuccessFlash();
+
                 return $this->redirectToRoute('app_profile_edit');
             } catch (FileNotFoundException $exception) {
                 $this->get('logger')->addError($exception->getTraceAsString());
@@ -161,6 +165,7 @@ class ProfileController extends BaseController
             } catch (ORMException $exception) {
             }
         }
+
         return $this->render('@FOSUser/Profile/avatar.html.twig', [
             'user' => $user,
             'form' => $form->createView(),

@@ -14,7 +14,6 @@
 
 namespace AppBundle\Model;
 
-
 use AppBundle\Entity\File;
 use Doctrine\ORM\EntityManagerInterface;
 use Stof\DoctrineExtensionsBundle\Uploadable\UploadableManager;
@@ -23,17 +22,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileManager
 {
     /**
-     * @var UploadableManager
-     */
-    private $uploadableManager;
-    /**
      * @var EntityManagerInterface
      */
     protected $em;
+    /**
+     * @var UploadableManager
+     */
+    private $uploadableManager;
 
     /**
      * FileManager constructor.
-     * @param UploadableManager $uploadableManager
+     *
+     * @param UploadableManager      $uploadableManager
      * @param EntityManagerInterface $em
      */
     public function __construct(UploadableManager $uploadableManager, EntityManagerInterface $em)
@@ -44,16 +44,17 @@ class FileManager
 
     /**
      * @param UploadedFile $mediaUpload
+     *
      * @return File
      */
     public function upload(UploadedFile $mediaUpload)
     {
         $file = new File();
+
         $mediaUpload->getClientOriginalName();
         $this->uploadableManager->markEntityToUpload($file, $mediaUpload);
         $file->setDisplayName($mediaUpload->getClientOriginalName());
+
         return $file;
     }
-
-
 }

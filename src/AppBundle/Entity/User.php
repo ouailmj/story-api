@@ -486,6 +486,4 @@ class User extends BaseUser
     {
         $this->avatar = $avatar;
     }
-
-
 }

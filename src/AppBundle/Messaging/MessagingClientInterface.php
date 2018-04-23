@@ -12,35 +12,37 @@
  *
  */
 
-namespace AppBundle\Messaging\Driver;
+namespace AppBundle\Messaging;
 
-interface DriverInterface
+interface MessagingClientInterface
 {
     /**
-     * @param string $data
-     * @param int    $mode
+     * @param string $message
+     * @param array  $options
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function send(string $data, int $mode);
+    public function push(string $message, array $options = []);
 
     /**
-     * @param string $data
+     * @param string $message
+     * @param array  $options
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function push(string $data);
+    public function pull(string $message, array $options = []);
 
     /**
-     * @param string $data
+     * @param string $message
+     * @param array  $options
      *
      * @throws \Exception
      *
      * @return mixed
      */
-    public function pull(string $data);
+    public function send(string $message, array $options = []);
 }

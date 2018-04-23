@@ -17,9 +17,11 @@ namespace AppBundle\Model;
 use AppBundle\Entity\User;
 use AppBundle\Mailer\Mailer;
 use Doctrine\ORM\EntityManager;
+use FOS\UserBundle\Doctrine\UserManager as FOSUserManager;
 use FOS\UserBundle\Event\GetResponseNullableUserEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Mailer\Mailer as FOSMailer;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -79,8 +81,15 @@ class UserManager
      * @param TokenGeneratorInterface              $tokenGenerator
      * @param TokenStorageInterface                $tokenStorage
      */
-    public function __construct(\FOS\UserBundle\Doctrine\UserManager $fosUserManager, Mailer $mailer, \FOS\UserBundle\Mailer\Mailer $fos_mailer, EntityManager $em, JWTManager $jwtTokenManager, TokenGeneratorInterface $tokenGenerator, TokenStorageInterface $tokenStorage)
-    {
+    public function __construct(
+        FOSUserManager $fosUserManager,
+        Mailer $mailer,
+        FOSMailer $fos_mailer,
+        EntityManager $em,
+        JWTManager $jwtTokenManager,
+        TokenGeneratorInterface $tokenGenerator,
+        TokenStorageInterface $tokenStorage
+    ) {
         $this->fosUserManager = $fosUserManager;
         $this->mailer = $mailer;
         $this->fos_mailer = $fos_mailer;
@@ -112,6 +121,35 @@ class UserManager
 
         if ($sendMail) {
             $this->mailer->sendAccountCreatedMessage($user);
+        }
+
+        return $user;
+    }
+
+    /**
+     * @param string $email
+     * @param string $username
+     * @param string $plainPassword
+     *
+     * @return User|\FOS\UserBundle\Model\UserInterface|null
+     */
+    public function createUserFromEmail(string $email, string $username = '', string $plainPassword = '')
+    {
+        if (empty($username)) {
+            $username = $email;
+        }
+
+        $user = $this->fosUserManager->findUserByUsernameOrEmail($email);
+        if (empty($user)) {
+            $user = $this->fosUserManager->findUserByUsername($username);
+        }
+
+        if (empty($user)) {
+            $user = new User();
+            $user->setEmail($email);
+            $user->setPlainPassword($plainPassword);
+            $user->setUsername($username);
+            $user = $this->createUser($user);
         }
 
         return $user;
