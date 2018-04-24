@@ -16,7 +16,6 @@ namespace AppBundle\Model;
 
 use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
-use AppBundle\EventListener\FileNotAuthorizedListener;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Filesystem\FileManager;
 use AppBundle\Filesystem\UploadManager;
