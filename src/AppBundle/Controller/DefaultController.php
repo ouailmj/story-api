@@ -65,7 +65,6 @@ class DefaultController extends BaseController
      */
     public function eventAction()
     {
-
         return $this->render('AppBundle:Events:add_event.html.twig', [
             // ...
         ]);
@@ -76,7 +75,6 @@ class DefaultController extends BaseController
      */
     public function galleryAction()
     {
-
         return $this->render('AppBundle:Events:gallery.html.twig', [
             // ...
         ]);

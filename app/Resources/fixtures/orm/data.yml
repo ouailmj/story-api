@@ -36,117 +36,103 @@ AppBundle\Entity\User:
         fullName: Super <firstName()>
 
 AppBundle\Entity\Media:
-    media{1..20}:
+    media{1..120}:
         downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
         file: ''
         createdBy: '@user*'
-        type: html
+        type: '---'
         expiresAt: <dateTime('+4 years')>
         hasBeenDownloaded: true
         uploadedAt: <dateTime('+2 years')>
-        src: ''
+        src: 'image.png'
 
-AppBundle\Entity\Event:
-    event{1..20}:
-        title: 'event_<current()>'
-        starts_at: <dateTime('+4 years')>
-        ends_at: <dateTime('+5 years')>
-        description: <sentence()>
-        expiresAt: <dateTime('+20 years')>
-        privacy: <sentence()>
-        place: <sentence()>
-        createdBy: '@user*'
-        canceled_at: <dateTime('+21 years')>
-        uploadedMedias: ['@media<current()>'] 
-    event{51..60}:
-        title: 'event_admin<current()>'
-        starts_at: <dateTime('+18 years')>
-        ends_at: <dateTime('+19 years')>
-        description: <sentence()>
-        expiresAt: <dateTime('+20 years')>
-        privacy: <sentence()>
-        place: <sentence()>
-        createdBy: '@administrator'
-        canceled_at: <dateTime('+21 years')>
-    event_Payed{1..30}:
-        title: 'event_P<current()>'
-        starts_at: <dateTime('+18 years')>
-        ends_at: <dateTime('+19 years')>
-        description: <sentence()>
-        expiresAt: <dateTime('+20 years')>
-        privacy: <sentence()>
-        place: <sentence()>
-        createdBy: '@user*'
-        canceled_at: <dateTime('+21 years')>
-    event_NP{1..30}:
-        title: 'event_NP<current()>'
-        starts_at: <dateTime('+18 years')>
-        ends_at: <dateTime('+19 years')>
-        description: <sentence()>
-        expiresAt: <dateTime('+20 years')>
-        privacy: <sentence()>
-        place: <sentence()>
-        createdBy: '@user*'
-        canceled_at: <dateTime('+21 years')>
-    event_Passe{1..30}:
-        title: 'event_Passe<current()>'
-        starts_at: <dateTime('-2 years')>
-        ends_at: <dateTime('-3 years')>
-        description: <sentence()>
-        expiresAt: <dateTime('+20 years')>
-        privacy: <sentence()>
-        place: <sentence()>
-        createdBy: '@user*'
-        canceled_at: <dateTime('-1 years')>
-    event_future{1..30}:
-        title: 'event_NP<current()>'
-        starts_at: <dateTime('+18 years')>
-        ends_at: <dateTime('+19 years')>
-        description: <sentence()>
-        expiresAt: <dateTime('+20 years')>
-        privacy: <sentence()>
-        place: <sentence()>
-        createdBy: '@user*'
-        canceled_at: <dateTime('+3 years')>
-
-AppBundle\Entity\Challenge:
-    challenge:
-        description: <sentence()>
-        plannedAt: <dateTime('+8 years')>
-        isLaunched: 'false'
-        event: "@event*"
-    challenge{2..5}:
-        description: <sentence()>
-        plannedAt: <dateTime('+8 years')>
-        isLaunched: 'false'
-        event: "@event*"   #association of challenges to an event
-
-AppBundle\Entity\InvitationRequest:
-    invitationRequest:
-        response: "Thank you I will come for sure"
-        sentAt: <dateTime('+2 years')>
-        isCanceled: false
-        channels: 'sms'
-    invitationRequest_1:
-        response: "Thank you I will come for sure"
-        sentAt: <dateTime('+2 years')>
-        isCanceled: false
-        channels: 'email'
-    invitationRequest_2:
-        response: "Thank you I will come for sure"
-        sentAt: <dateTime('+2 years')>
-        isCanceled: false
-        channels: 'push'
+AppBundle\Entity\Payment:
+    payment_{1..120}:
+         amount: <randomFloat(2, 0, 15)>
+         paymentType: 'MasterCard'
+         description: <sentence()>
+         eventPurchase: '@eventpurchase_*'
 
 AppBundle\Entity\EventPurchase:
-    event_purchase_payed:
-        quota: 1.4
-        currencyCode: 124563
+    eventpurchase_free_{1..30}:
+        quota: '@plan_free->maxUploads'
+        currencyCode: 'EUR'
+        plan: '@plan_free'
+    eventpurchase_starter_{31..60}:
+        quota: '@plan_starter->maxUploads'
+        currencyCode: 'EUR'
+        plan: '@plan_starter'
+    eventpurchase_luxury_{61..90}:
+        quota: '@plan_luxury->maxUploads'
+        currencyCode: 'EUR'
+        plan: '@plan_luxury'
+    eventpurchase_premium_{91..120}:
+        quota: '@plan_premium->maxUploads'
+        currencyCode: 'EUR'
         plan: '@plan_premium'
-        event: '@event_Payed*'
+
+AppBundle\Entity\Challenge:
+    challenge_starter_{1..100}:
+        description: <sentence()>
+        plannedAt: <dateTime('+8 days')>
+        event: "@event_starter_*"
+    challenge_luxury_{1..100}:
+        description: <sentence()>
+        plannedAt: <dateTime('+8 days')>
+        event: "@event_luxury_*"
+    challenge_premium_{1..100}:
+        description: <sentence()>
+        plannedAt: <dateTime('+8 days')>
+        event: "@event_premium_*"
+
+AppBundle\Entity\Event:
+    event_free_{1..30}:
+        title: 'Event_<current()>'
+        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+        description: <sentence()>
+        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+        privacy: <randomElement(['private', 'public'])>
+        place: <sentence()>
+        createdBy: '@user*'
+        uploadedMedias: ['@media<current()>']
+        eventPurchase: '@eventpurchase_free_<current()>'
+    event_starter_{31..60}:
+        title: 'Event_<current()>'
+        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+        description: <sentence()>
+        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+        privacy: <randomElement(['private', 'public'])>
+        place: <sentence()>
+        createdBy: '@user*'
+        uploadedMedias: ['@media<current()>']
+        eventPurchase: '@eventpurchase_starter_<current()>'
+    event_luxury_{61..90}:
+        title: 'Event_<current()>'
+        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+        description: <sentence()>
+        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+        privacy: <randomElement(['private', 'public'])>
+        place: <sentence()>
+        createdBy: '@user*'
+        uploadedMedias: ['@media<current()>']
+        eventPurchase: '@eventpurchase_luxury_<current()>'
+    event_premium_{91..120}:
+        title: 'Event_<current()>'
+        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+        description: <sentence()>
+        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+        privacy: <randomElement(['private', 'public'])>
+        place: <sentence()>
+        createdBy: '@user*'
+        uploadedMedias: ['@media<current()>']
+        eventPurchase: '@eventpurchase_premium_<current()>'
 
 AppBundle\Entity\Plan:
-    plan_gratuit:
+    plan_free:
          price: 0
          maxEventDuration:  21600
          maxUploads: 150
@@ -157,11 +143,12 @@ AppBundle\Entity\Plan:
          isFree: true
          name: 'Gratuit'
          description: <sentence()>
+         planKey: 'free'
     plan_starter:
          price: 2.99
          maxEventDuration: 86400
          maxUploads: 500
-         maxGuests: 'illimité'
+         maxGuests: -1
          maxAlbumLifetime: 259200
          enableChallenges: true
          enableGamification: true
@@ -169,11 +156,11 @@ AppBundle\Entity\Plan:
          name: 'starter'
          planKey: 'starter'
          description: <sentence()>
-    plan_luxe:
+    plan_luxury:
          price: 5.99
          maxEventDuration: 172800
          maxUploads: 1000
-         maxGuests: 'illimité'
+         maxGuests: -1
          maxAlbumLifetime: 432000
          enableChallenges: true
          enableGamification: true
@@ -185,7 +172,7 @@ AppBundle\Entity\Plan:
          price: 14.99
          maxEventDuration: 604800
          maxUploads: 2000
-         maxGuests: 'illimité'
+         maxGuests: -1
          maxAlbumLifetime: 604800
          enableChallenges: true
          enableGamification: true
@@ -194,16 +181,6 @@ AppBundle\Entity\Plan:
          planKey: 'premium'
          description: <sentence()>
 
-AppBundle\Entity\MemberShip:
-    membership:
-         event: '@event2'
-         createdAt: <dateTime('+2 years')>
-         member: '@user*'
-    membership{2..10}:
-         event: '@event2'
-         member: '@user*'
-         createdAt: <dateTime('+2 years')>
-
 AppBundle\Entity\Link:
     link:
          path: ''
@@ -211,10 +188,16 @@ AppBundle\Entity\Link:
          expiresAt: <dateTime('+3 years')>
          enabledAt: <dateTime('+1 years')>
 
-AppBundle\Entity\Payment:
-    payment{1..30}:
-         amount: 14.99
-         paymentType: 'MasterCard'
-         description: <sentence()>
-         eventPurchase: '@event_purchase_payed'
+AppBundle\Entity\MemberShip:
+    membership_{@event_free_*}:
+       event: '<current()>'
+       createdAt: <dateTime('+2 years')>
+       member: '@user*'
 
+AppBundle\Entity\InvitationRequest:
+    invitationrequest_{1..50}:
+        channels['email']: <email()>
+        event: '@event_*'
+    invitationrequest_{51..500}:
+        event: '@event_*'
+        user: '@user_*'

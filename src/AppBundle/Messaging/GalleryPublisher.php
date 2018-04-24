@@ -16,17 +16,17 @@ namespace AppBundle\Messaging;
 
 class GalleryPublisher
 {
-    /** @var SocketClient */
-    private $socketClient;
+    /** @var Client */
+    private $client;
 
     /**
      * GalleryPublisher constructor.
      *
-     * @param SocketClient $socketClient
+     * @param Client $client
      */
-    public function __construct(SocketClient $socketClient)
+    public function __construct(Client $client)
     {
-        $this->socketClient = $socketClient;
+        $this->client = $client;
     }
 
     /**
@@ -37,12 +37,8 @@ class GalleryPublisher
      */
     public function publishMedia($event, $media)
     {
-        try {
-            $data = $this->prepareData($event, $media);
-            $this->socketClient->send($data);
-        } catch (\Exception $exception) {
-            throw $exception;
-        }
+        $data = $this->prepareData($event, $media);
+        $this->client->push($data);
     }
 
     /**

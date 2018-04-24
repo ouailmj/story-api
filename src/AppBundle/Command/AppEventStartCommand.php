@@ -36,7 +36,7 @@ class AppEventStartCommand extends AppCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($this->lock(null, true)){
+        if ($this->lock(null, true)) {
             $argument = $input->getArgument('argument');
 
             if ($input->getOption('option')) {

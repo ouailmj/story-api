@@ -44,21 +44,21 @@ class Challenge implements Timestampable
      *
      * @ORM\Column(name="description", type="string", length=255)
      */
-    private $description;
+    private $description = '';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="plannedAt", type="datetime")
+     * @ORM\Column(name="plannedAt", type="datetime", nullable=true)
      */
     private $plannedAt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="isLaunched", type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
-    private $isLaunched;
+    private $isLaunched = false;
 
     /**
      * @var Event

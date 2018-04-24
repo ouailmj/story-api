@@ -12,9 +12,8 @@
  *
  */
 
-namespace AppBundle\Model;
+namespace AppBundle\Exception;
 
-interface Trashable
+class PaymentException extends BaseException
 {
-    public function getTrashedAt();
 }
