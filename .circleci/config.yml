@@ -24,11 +24,14 @@ jobs:
       - run:
           name: Install System Packages
           command: |
-            sudo apt install unzip zlib1g-dev libicu-dev libsqlite3-dev sqlite3
+            sudo apt install unzip zlib1g-dev libicu-dev libsqlite3-dev sqlite3  g++  libzmq-dev
 
       - run:
           name: Install PHP Extensions
-          command: sudo docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl
+          command: |
+            sudo pecl install zmq-beta
+            sudo docker-php-ext-enable zmq
+            sudo docker-php-ext-install pdo_sqlite pdo_mysql zip pcntl intl
 
       - restore_cache:
           key: dependency-cache-{{ checksum "composer.lock" }}
