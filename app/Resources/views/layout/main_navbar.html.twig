@@ -69,7 +69,7 @@
                             {% if app.user.avatar == null %}
                                 <img src="{{ asset('images/image.png')|imagine_filter('media_thumb') }}" alt="">
                             {% else %}
-                                <img src="{{ asset('uploads/'~ app.user.avatar.name)|imagine_filter('media_thumb') }}" alt="">
+                                <img src="{{ asset('uploads/'~ app.user.avatar.src)|imagine_filter('media_thumb') }}" alt="">
                             {% endif %}
                             <span>{{ app.user }}</span>
                             <i class="caret"></i>

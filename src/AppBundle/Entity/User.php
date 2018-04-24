@@ -126,7 +126,7 @@ class User extends BaseUser
     protected $medias;
 
     /**
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\File", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
      */
     protected $avatar = null;
 
