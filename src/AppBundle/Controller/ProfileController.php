@@ -15,6 +15,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
+use AppBundle\Exception\FileNotAuthorizedException;
+use AppBundle\Model\MediaManager;
 use AppBundle\Model\UserManager;
 use Doctrine\ORM\ORMException;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
@@ -145,7 +147,7 @@ class ProfileController extends BaseController
      *
      * @return RedirectResponse|Response
      */
-    public function avatarAction(Request $request, UserManager $userManager)
+    public function avatarAction(Request $request, UserManager $userManager, MediaManager $mediaManager)
     {
         $user = $this->getUser();
         $form = $this->createForm('AppBundle\Form\Type\AvatarType', $user);
@@ -154,14 +156,18 @@ class ProfileController extends BaseController
             try {
                 /** @var UploadedFile $uploadedImage */
                 $uploadedImage = $form->get('avatarIMG')->getData();
-                $userManager->updateAvatar($user, $uploadedImage);
+                $media = $mediaManager->uploadImage($uploadedImage, $user);
+                $user->setAvatar($media);
+                $userManager->updateUser($user);
                 $this->addSuccessFlash();
 
                 return $this->redirectToRoute('app_profile_edit');
             } catch (FileNotFoundException $exception) {
                 $this->get('logger')->addError($exception->getTraceAsString());
-                $msg = $this->get('translator')->trans('flash.file_error');
-                $this->addFlash('error', $msg);
+                $this->addFlash('error', $this->get('translator')->trans('flash.file_error'));
+            } catch (FileNotAuthorizedException $exception) {
+                $this->get('logger')->addError($exception->getTraceAsString());
+                $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
             } catch (ORMException $exception) {
             }
         }

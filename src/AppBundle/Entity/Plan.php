@@ -111,7 +111,7 @@ class Plan
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $name = 'Fee Plan';
+    private $name = 'Free Plan';
 
     /**
      * @var string

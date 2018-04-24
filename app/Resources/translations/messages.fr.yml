@@ -54,6 +54,7 @@ flash:
     error: 'Votre opération n'' a pas pu être exécutée.'
     warning: 'Votre opération n''a pas pu être exécutée.'
     file_error: 'Votre opération n''a pas été exécutée car Le fichier envoyé est illisible.'
+    file_not_authorized: 'le fichier doit être une image'
 profile:
     update_profile: 'Modifier mon profil'
     change_password: 'Changer de mot de passe'

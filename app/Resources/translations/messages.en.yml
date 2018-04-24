@@ -54,6 +54,7 @@ flash:
     error: 'Your operation could not be executed.'
     warning: 'Your operation could not be executed'
     file_error: 'Your operation was not executed because the sent file is unreadable.'
+    file_not_authorized: 'the file must be an image'
 profile:
     update_profile: 'Edit my profile'
     change_password: 'Change password'

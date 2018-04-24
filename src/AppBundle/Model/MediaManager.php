@@ -16,12 +16,14 @@ namespace AppBundle\Model;
 
 use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
+use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Filesystem\FileManager;
 use AppBundle\Filesystem\UploadManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Gaufrette\File;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MediaManager
@@ -133,5 +135,21 @@ class MediaManager
 
     public function unTrashMedia(int $mediaId)
     {
+    }
+
+
+    /**
+     * @param UploadedFile $file
+     * @param User|null $by
+     * @param bool $andSave
+     * @return Media|void
+     * @throws FileNotAuthorizedException
+     */
+    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true){
+        $imageTypes=array("jpg", "JPG", "png" ,"PNG" ,"jpeg" ,"JPEG");
+       if( in_array($file->getClientOriginalExtension(),$imageTypes)){
+        $file=$this->uploadManager->upload($file);
+        return $this->createMediaFromFile($file, $by, $andSave);
+       }else throw new FileNotAuthorizedException();
     }
 }

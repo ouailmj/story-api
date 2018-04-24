@@ -613,7 +613,7 @@ class Event
      *
      * @return EventPurchase
      */
-    public function getEventPurchase(): EventPurchase
+    public function getEventPurchase()
     {
         return $this->eventPurchase;
     }

@@ -43,9 +43,10 @@ class DefaultController extends BaseController
      */
     public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
-        $event = $eventManager->createEventWithFreePlan();
-        $media = $mediaManager->createMediaFromLocalFile(__FILE__);
-        $eventManager->addMedia($event->getId(), $media);
+        $event = $eventManager->createEventWithFreePlan($this->getUser());
+        $media = $mediaManager->createMediaFromLocalFile(__FILE__,$this->getUser());
+
+        $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
         VarDumper::dump($event->getUploadedMedias()->toArray());
         $form = $this->createFormBuilder()

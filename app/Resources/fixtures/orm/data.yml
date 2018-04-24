@@ -154,8 +154,8 @@ AppBundle\Entity\Plan:
          enableGamification: true
          isFree: false
          name: 'starter'
-         description: <sentence()>
          planKey: 'starter'
+         description: <sentence()>
     plan_luxury:
          price: 5.99
          maxEventDuration: 172800
@@ -166,8 +166,8 @@ AppBundle\Entity\Plan:
          enableGamification: true
          isFree: false
          name: 'luxe'
-         description: <sentence()>
          planKey: 'luxury'
+         description: <sentence()>
     plan_premium:
          price: 14.99
          maxEventDuration: 604800
@@ -178,8 +178,8 @@ AppBundle\Entity\Plan:
          enableGamification: true
          isFree: false
          name: 'premium'
-         description: <sentence()>
          planKey: 'premium'
+         description: <sentence()>
 
 AppBundle\Entity\Link:
     link:

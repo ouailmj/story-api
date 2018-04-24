@@ -184,7 +184,7 @@ class InvitationRequest
     /**
      * @return Event
      */
-    public function getEvent(): Event
+    public function getEvent()
     {
         return $this->event;
     }
@@ -194,7 +194,7 @@ class InvitationRequest
      *
      * @return InvitationRequest
      */
-    public function setEvent(Event $event): self
+    public function setEvent(Event $event)
     {
         $this->event = $event;
 
@@ -214,7 +214,7 @@ class InvitationRequest
      *
      * @return InvitationRequest
      */
-    public function setUser(User $user): self
+    public function setUser(User $user)
     {
         $this->user = $user;
 
