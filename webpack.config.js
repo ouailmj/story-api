@@ -30,7 +30,6 @@ let frontCSS = [
     './web/assets/css/core.css',
     './web/assets/css/components.css',
     './web/assets/css/colors.css',
-    './web/assets/css/custom.css',
     './web/assets/css/dashboard.css',
     './web/assets/css/home.css'
 ];

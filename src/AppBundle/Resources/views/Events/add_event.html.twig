@@ -35,7 +35,7 @@
                                         <!--PRICE START-->
                                         <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
+                                    <span class="sign">€</span>
                                     <span class="currency">0</span>
                                     <span class="cent">.00</span>
                                 </span>
@@ -60,7 +60,7 @@
 
                                     <!--BUTTON START-->
                                     <div class="generic_price_btn clearfix">
-                                        <input type="radio">
+                                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
                                     </div>
                                     <!--//BUTTON END-->
 
@@ -93,7 +93,7 @@
                                         <!--PRICE START-->
                                         <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
+                                    <span class="sign">€</span>
                                     <span class="currency">2</span>
                                     <span class="cent">.99</span>
                                 </span>
@@ -118,7 +118,7 @@
 
                                     <!--BUTTON START-->
                                     <div class="generic_price_btn clearfix">
-                                        <input type="radio">
+                                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
                                     </div>
                                     <!--//BUTTON END-->
 
@@ -150,7 +150,7 @@
                                         <!--PRICE START-->
                                         <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
+                                    <span class="sign">€</span>
                                     <span class="currency">5</span>
                                     <span class="cent">.99</span>
                                 </span>
@@ -175,7 +175,7 @@
 
                                     <!--BUTTON START-->
                                     <div class="generic_price_btn clearfix">
-                                        <input type="radio">
+                                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
                                     </div>
                                     <!--//BUTTON END-->
 
@@ -208,7 +208,7 @@
                                         <!--PRICE START-->
                                         <div class="generic_price_tag clearfix">
                                 <span class="price">
-                                    <span class="sign">$</span>
+                                    <span class="sign">€</span>
                                     <span class="currency">14</span>
                                     <span class="cent">.99</span>
                                 </span>
@@ -246,23 +246,49 @@
             </div>
         </div>
         </section>
-            <h3>Event Informations</h3>
+            <h3>Event Information</h3>
         <section>
-        <div class="tab">
-            <p><input class="input101" placeholder="Event name" type="text" name=""></p>
-            <p><input class="input101" placeholder="Start At" class="textbox-n" type="text" onfocus="(this.type='date')"  id="date"></p>
-            <p><input class="input101" placeholder="End At" class="textbox-n" type="text" onfocus="(this.type='date')"  id="date"></p>
-            <p><input class="input101" placeholder="Place" type="text" name=""></p>
-            <p><textarea placeholder="Description" ></textarea></p>
+        <div class="tab-event-info">
+            <div class="first-section">
+                <div class="input-icon-wrap">
+                    <span class="input-icon"><i class="icon-calendar"></i></span>
+                    <input type="text" placeholder="Event name.." class="input-with-icon" id="form-name">
+                </div>
+                <div class="input-icon-wrap">
+                    <span class="input-icon"><i class="icon-location3"></i></span>
+                    <input type="text" placeholder="Place.." class="input-with-icon" id="form-name">
+                </div>
+            </div>
+            <div class="input-icon-wrap">
+                <span class="input-icon"><i class="icon-calendar"></i></span>
+                <input type="text" class="input-with-icon" id="form-name">
+            </div>
+            <div class="input-icon-wrap">
+                <span class="input-icon"><i class="icon-calendar"></i></span>
+                <input type="text" class="input-with-icon" id="form-name">
+            </div>
         </div>
         </section>
             <h3>Event Cover</h3>
         <section>
-        <div class="tab">
-            <p><input placeholder="dd" ></p>
-            <p><input placeholder="yyyy"></p>
+        <div class="tab-event-cover">
+            <h1>not yet</h1>
         </div>
         </section>
+
+            <h3>Payment</h3>
+            <section>
+                <div class="tab-event-payment">
+                    <h1>Not yet</h1>
+                </div>
+            </section>
+
+            <h3>Invite friends</h3>
+            <section>
+                <div class="tab-event-invit">
+                    <h1>not yet</h1>
+                </div>
+            </section>
         </div>
     </form>
 </div>
@@ -273,7 +299,24 @@
             headerTag: "h3",
             bodyTag: "section",
             transitionEffect: "slideLeft",
-            autoFocus: true
+            autoFocus: false,
+            labels: {
+                finish: "<i class=\"finish icon-checkmark3\"></i>",
+                next: "<i class=\"next icon-arrow-right13\"></i>",
+                previous: "<i class=\"previous icon-arrow-left12\"></i>",
+            },
+            transitionEffectSpeed:0,
+            enableAllSteps: true,
+            enableKeyNavigation: true,
+            enablePagination: true,
+            suppressPaginationOnFocus: true,
+            enableContentCache: true,
+            enableFinishButton: true,
+            preloadContent: false,
+            showFinishButtonAlways: false,
+            forceMoveForward: false,
+            saveState: true,
+            startIndex: 1,
         });
     </script>
 {% endblock %}
