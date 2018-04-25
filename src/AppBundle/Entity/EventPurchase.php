@@ -214,4 +214,38 @@ class EventPurchase
     {
         return $this->payments;
     }
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->payments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add payment.
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return EventPurchase
+     */
+    public function addPayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payments[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment.
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removePayment(\AppBundle\Entity\Payment $payment)
+    {
+        return $this->payments->removeElement($payment);
+    }
 }

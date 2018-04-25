@@ -31,6 +31,8 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserManager
 {
+    protected static $defaultAvatar = __DIR__.'/../../../web/assets/images/avatar.png';
+
     /**
      * @var \FOS\UserBundle\Doctrine\UserManager
      */
@@ -62,6 +64,9 @@ class UserManager
      */
     private $tokenGenerator;
 
+    /** @var MediaManager */
+    private $mediaManager;
+
     /**
      * @var int
      */
@@ -73,13 +78,14 @@ class UserManager
     /**
      * UserManager constructor.
      *
-     * @param \FOS\UserBundle\Doctrine\UserManager $fosUserManager
-     * @param Mailer                               $mailer
-     * @param \FOS\UserBundle\Mailer\Mailer        $fos_mailer
-     * @param EntityManager                        $em
-     * @param JWTManager                           $jwtTokenManager
-     * @param TokenGeneratorInterface              $tokenGenerator
-     * @param TokenStorageInterface                $tokenStorage
+     * @param FOSUserManager          $fosUserManager
+     * @param Mailer                  $mailer
+     * @param FOSMailer               $fos_mailer
+     * @param EntityManager           $em
+     * @param JWTManager              $jwtTokenManager
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param TokenStorageInterface   $tokenStorage
+     * @param MediaManager            $mediaManager
      */
     public function __construct(
         FOSUserManager $fosUserManager,
@@ -88,7 +94,8 @@ class UserManager
         EntityManager $em,
         JWTManager $jwtTokenManager,
         TokenGeneratorInterface $tokenGenerator,
-        TokenStorageInterface $tokenStorage
+        TokenStorageInterface $tokenStorage,
+        MediaManager $mediaManager
     ) {
         $this->fosUserManager = $fosUserManager;
         $this->mailer = $mailer;
@@ -97,6 +104,7 @@ class UserManager
         $this->jwtTokenManager = $jwtTokenManager;
         $this->tokenGenerator = $tokenGenerator;
         $this->tokenStorage = $tokenStorage;
+        $this->mediaManager = $mediaManager;
 
         $this->eventDispatcher = new EventDispatcher();
         $this->retryTtl = 7200;
@@ -114,6 +122,11 @@ class UserManager
     public function createUser(User $user, $flush = true, $sendMail = false)
     {
         $plainPassword = $user->getPlainPassword();
+
+        if (!$user->getAvatar()) {
+            $avatar = $this->mediaManager->createMediaFromLocalFile(static::$defaultAvatar);
+            $user->setAvatar($avatar);
+        }
 
         $this->fosUserManager->updateUser($user, $flush);
 

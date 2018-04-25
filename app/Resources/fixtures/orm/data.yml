@@ -48,8 +48,7 @@ AppBundle\Entity\Media:
 
 AppBundle\Entity\Payment:
     payment_{1..120}:
-         amount: <randomFloat(2, 0, 15)>
-         paymentType: 'MasterCard'
+         totalAmount: <randomFloat(2, 0, 15)>
          description: <sentence()>
          eventPurchase: '@eventpurchase_*'
 

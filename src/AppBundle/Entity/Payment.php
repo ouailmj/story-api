@@ -15,6 +15,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Payum\Core\Model\Payment as BasePayment;
 
 /**
  * Payment.
@@ -23,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="payment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PaymentRepository")
  */
-class Payment
+class Payment extends BasePayment
 {
     /**
      * @var int
@@ -35,32 +36,18 @@ class Payment
     private $id;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="amount", type="float")
-     */
-    private $amount;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="paymentType", type="string", length=255)
-     */
-    private $paymentType;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255)
-     */
-    private $description;
-
-    /**
      * @var EventPurchase
      *
      * @ORM\ManyToOne(targetEntity="EventPurchase", inversedBy="payments")
      */
     private $eventPurchase;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="payments")
+     */
+    private $user;
 
     /**
      * Get id.
@@ -73,81 +60,9 @@ class Payment
     }
 
     /**
-     * Set amount.
-     *
-     * @param float $amount
-     *
-     * @return Payment
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    /**
-     * Get amount.
-     *
-     * @return float
-     */
-    public function getAmount()
-    {
-        return $this->amount;
-    }
-
-    /**
-     * Set paymentType.
-     *
-     * @param string $paymentType
-     *
-     * @return Payment
-     */
-    public function setPaymentType($paymentType)
-    {
-        $this->paymentType = $paymentType;
-
-        return $this;
-    }
-
-    /**
-     * Get paymentType.
-     *
-     * @return string
-     */
-    public function getPaymentType()
-    {
-        return $this->paymentType;
-    }
-
-    /**
-     * Set description.
-     *
-     * @param string $description
-     *
-     * @return Payment
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * @return EventPurchase
      */
-    public function getEventPurchase(): EventPurchase
+    public function getEventPurchase()
     {
         return $this->eventPurchase;
     }
@@ -158,5 +73,29 @@ class Payment
     public function setEventPurchase(EventPurchase $eventPurchase)
     {
         $this->eventPurchase = $eventPurchase;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param \AppBundle\Entity\User|null $user
+     *
+     * @return Payment
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return \AppBundle\Entity\User|null
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

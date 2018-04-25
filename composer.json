@@ -36,6 +36,8 @@
         "multiinfo/scheduler-bundle": "^0.1",
         "nelmio/cors-bundle": "^1.4",
         "nesbot/carbon": "^1.26",
+        "payum/offline": "^1.5",
+        "payum/payum-bundle": "^2.3",
         "php-http/guzzle6-adapter": "^1.1",
         "php-http/httplug-bundle": "^1.7",
         "phpdocumentor/reflection-docblock": "^3.0",
@@ -58,6 +60,9 @@
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "theofidry/alice-data-fixtures": "^1.0@beta"
+    },
+    "suggest": {
+        "ext-zmq": "To send data via ZeroMQ"
     },
     "scripts": {
         "symfony-scripts": [

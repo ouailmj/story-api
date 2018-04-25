@@ -12,9 +12,11 @@
  *
  */
 
-namespace AppBundle\Utils;
+namespace AppBundle\Model\Payment;
 
-class CurrencyUtils
+use AppBundle\Entity\Payment;
+
+interface PaymentProcessorInterface
 {
-    const DEFAULT_SYMBOL_CURRENCY = '€';
+    public function process(Payment $payment);
 }

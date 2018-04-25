@@ -137,19 +137,23 @@ class MediaManager
     {
     }
 
-
     /**
      * @param UploadedFile $file
-     * @param User|null $by
-     * @param bool $andSave
-     * @return Media|void
+     * @param User|null    $by
+     * @param bool         $andSave
+     *
      * @throws FileNotAuthorizedException
+     *
+     * @return Media|void
      */
-    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true){
-        $imageTypes=array("jpg", "JPG", "png" ,"PNG" ,"jpeg" ,"JPEG");
-       if( in_array($file->getClientOriginalExtension(),$imageTypes)){
-        $file=$this->uploadManager->upload($file);
-        return $this->createMediaFromFile($file, $by, $andSave);
-       }else throw new FileNotAuthorizedException();
+    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
+    {
+        $imageTypes = ['jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG'];
+        if (in_array($file->getClientOriginalExtension(), $imageTypes, true)) {
+            $file = $this->uploadManager->upload($file);
+
+            return $this->createMediaFromFile($file, $by, $andSave);
+        }
+        throw new FileNotAuthorizedException();
     }
 }

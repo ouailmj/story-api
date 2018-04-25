@@ -12,7 +12,7 @@
  *
  */
 
-namespace AppBundle\Payment;
+namespace AppBundle\Model\Payment;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPurchase;
@@ -21,15 +21,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PaymentManager
 {
-    /** @var PaymentProcessor */
+    /** @var PaymentProcessorInterface */
     protected $paymentProcessor;
 
     /**
      * PaymentManager constructor.
      *
-     * @param PaymentProcessor $paymentProcessor
+     * @param PaymentProcessorInterface $paymentProcessor
      */
-    public function __construct(PaymentProcessor $paymentProcessor)
+    public function __construct(PaymentProcessorInterface $paymentProcessor)
     {
         $this->paymentProcessor = $paymentProcessor;
     }
@@ -44,12 +44,12 @@ class PaymentManager
         throw new \LogicException('Not yet implemented.');
     }
 
-    public function payForEvent(Event $event, Payment $payment, array $coupons = [])
+    public function createPaymentForEvent(Event $event, Payment $payment, array $coupons = [])
     {
         throw new \LogicException('Not yet implemented.');
     }
 
-    protected function payForEventPurchase(EventPurchase $eventPurchase, Payment $payment, array $coupons = [])
+    protected function createPaymentForEventPurchase(EventPurchase $eventPurchase, Payment $payment, array $coupons = [])
     {
         throw new \LogicException('Not yet implemented.');
     }

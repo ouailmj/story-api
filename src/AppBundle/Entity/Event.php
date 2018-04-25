@@ -57,7 +57,21 @@ class Event
      *
      * @ORM\Column(type="datetimetz")
      */
+    private $startedAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetimetz")
+     */
     private $endsAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetimetz")
+     */
+    private $closedAt;
 
     /**
      * @var string
@@ -85,7 +99,7 @@ class Event
      *
      * @ORM\Column(type="datetimetz", nullable=true)
      */
-    private $publishedAt;
+    private $enabledAt;
 
     /**
      * @var string
@@ -182,6 +196,54 @@ class Event
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getStartedAt(): \DateTime
+    {
+        return $this->startedAt;
+    }
+
+    /**
+     * @param \DateTime $startedAt
+     */
+    public function setStartedAt(\DateTime $startedAt)
+    {
+        $this->startedAt = $startedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getClosedAt(): \DateTime
+    {
+        return $this->closedAt;
+    }
+
+    /**
+     * @param \DateTime $closedAt
+     */
+    public function setClosedAt(\DateTime $closedAt)
+    {
+        $this->closedAt = $closedAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getEnabledAt(): \DateTime
+    {
+        return $this->enabledAt;
+    }
+
+    /**
+     * @param \DateTime $enabledAt
+     */
+    public function setEnabledAt(\DateTime $enabledAt)
+    {
+        $this->enabledAt = $enabledAt;
     }
 
     /**
@@ -672,28 +734,125 @@ class Event
         $this->link = $link;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getPublishedAt(): \DateTime
-    {
-        return $this->publishedAt;
-    }
-
-    /**
-     * @param \DateTime $publishedAt
-     *
-     * @return $this
-     */
-    public function setPublishedAt(\DateTime $publishedAt)
-    {
-        $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
 
     public function __toString()
     {
         return $this->getTitle().'';
+    }
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->challenges = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->uploadedMedias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->imagesGallery = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add challenge.
+     *
+     * @param \AppBundle\Entity\Challenge $challenge
+     *
+     * @return Event
+     */
+    public function addChallenge(\AppBundle\Entity\Challenge $challenge)
+    {
+        $this->challenges[] = $challenge;
+
+        return $this;
+    }
+
+    /**
+     * Remove challenge.
+     *
+     * @param \AppBundle\Entity\Challenge $challenge
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeChallenge(\AppBundle\Entity\Challenge $challenge)
+    {
+        return $this->challenges->removeElement($challenge);
+    }
+
+    /**
+     * Add eventMemberShip.
+     *
+     * @param \AppBundle\Entity\MemberShip $eventMemberShip
+     *
+     * @return Event
+     */
+    public function addEventMemberShip(\AppBundle\Entity\MemberShip $eventMemberShip)
+    {
+        $this->eventMemberShips[] = $eventMemberShip;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventMemberShip.
+     *
+     * @param \AppBundle\Entity\MemberShip $eventMemberShip
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeEventMemberShip(\AppBundle\Entity\MemberShip $eventMemberShip)
+    {
+        return $this->eventMemberShips->removeElement($eventMemberShip);
+    }
+
+    /**
+     * Add invitationRequest.
+     *
+     * @param \AppBundle\Entity\InvitationRequest $invitationRequest
+     *
+     * @return Event
+     */
+    public function addInvitationRequest(\AppBundle\Entity\InvitationRequest $invitationRequest)
+    {
+        $this->invitationRequests[] = $invitationRequest;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitationRequest.
+     *
+     * @param \AppBundle\Entity\InvitationRequest $invitationRequest
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeInvitationRequest(\AppBundle\Entity\InvitationRequest $invitationRequest)
+    {
+        return $this->invitationRequests->removeElement($invitationRequest);
+    }
+
+    /**
+     * Add uploadedMedia.
+     *
+     * @param \AppBundle\Entity\Media $uploadedMedia
+     *
+     * @return Event
+     */
+    public function addUploadedMedia(\AppBundle\Entity\Media $uploadedMedia)
+    {
+        $this->uploadedMedias[] = $uploadedMedia;
+
+        return $this;
+    }
+
+    /**
+     * Remove uploadedMedia.
+     *
+     * @param \AppBundle\Entity\Media $uploadedMedia
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeUploadedMedia(\AppBundle\Entity\Media $uploadedMedia)
+    {
+        return $this->uploadedMedias->removeElement($uploadedMedia);
     }
 }

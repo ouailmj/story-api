@@ -30,6 +30,9 @@ app_logout:
 api_login_check:
     path: /api/login_check
 
+payum_all:
+    resource: "@PayumBundle/Resources/config/routing/all.xml"
+
 fos_user:
   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
   prefix: /auth

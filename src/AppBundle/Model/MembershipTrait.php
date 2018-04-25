@@ -12,8 +12,14 @@
  *
  */
 
-namespace AppBundle\Exception;
+namespace AppBundle\Model;
 
-class FileNotAuthorizedException extends BaseException
+use AppBundle\Entity\MemberShip;
+
+trait MembershipTrait
 {
+    public function acceptInvitationRequest(int $invitationRequestId): MemberShip
+    {
+        // TODO: Implement acceptInvitationRequest() method.
+    }
 }

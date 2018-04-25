@@ -114,6 +114,12 @@ class User extends BaseUser
     protected $createdEvents;
 
     /**
+     * @var Payment[] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Payment", mappedBy="user")
+     */
+    protected $payments;
+
+    /**
      * @var InvitationRequest [] | ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user")
      */
@@ -136,9 +142,11 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->createdEvents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->invitationRequests = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->eventMemberShips = new \Doctrine\Common\Collections\ArrayCollection();
+
+        $this->createdEvents = new ArrayCollection();
+        $this->invitationRequests = new ArrayCollection();
+        $this->eventMemberShips = new ArrayCollection();
+        $this->payments = new ArrayCollection();
     }
 
     /**
@@ -485,5 +493,155 @@ class User extends BaseUser
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+    }
+
+    /**
+     * Get enabled.
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Add eventMemberShip.
+     *
+     * @param \AppBundle\Entity\MemberShip $eventMemberShip
+     *
+     * @return User
+     */
+    public function addEventMemberShip(\AppBundle\Entity\MemberShip $eventMemberShip)
+    {
+        $this->eventMemberShips[] = $eventMemberShip;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventMemberShip.
+     *
+     * @param \AppBundle\Entity\MemberShip $eventMemberShip
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeEventMemberShip(\AppBundle\Entity\MemberShip $eventMemberShip)
+    {
+        return $this->eventMemberShips->removeElement($eventMemberShip);
+    }
+
+    /**
+     * Add createdEvent.
+     *
+     * @param \AppBundle\Entity\Event $createdEvent
+     *
+     * @return User
+     */
+    public function addCreatedEvent(\AppBundle\Entity\Event $createdEvent)
+    {
+        $this->createdEvents[] = $createdEvent;
+
+        return $this;
+    }
+
+    /**
+     * Remove createdEvent.
+     *
+     * @param \AppBundle\Entity\Event $createdEvent
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeCreatedEvent(\AppBundle\Entity\Event $createdEvent)
+    {
+        return $this->createdEvents->removeElement($createdEvent);
+    }
+
+    /**
+     * Add payment.
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return User
+     */
+    public function addPayment(\AppBundle\Entity\Payment $payment)
+    {
+        $this->payments[] = $payment;
+
+        return $this;
+    }
+
+    /**
+     * Remove payment.
+     *
+     * @param \AppBundle\Entity\Payment $payment
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removePayment(\AppBundle\Entity\Payment $payment)
+    {
+        return $this->payments->removeElement($payment);
+    }
+
+    /**
+     * Get payments.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPayments()
+    {
+        return $this->payments;
+    }
+
+    /**
+     * Add invitationRequest.
+     *
+     * @param \AppBundle\Entity\InvitationRequest $invitationRequest
+     *
+     * @return User
+     */
+    public function addInvitationRequest(\AppBundle\Entity\InvitationRequest $invitationRequest)
+    {
+        $this->invitationRequests[] = $invitationRequest;
+
+        return $this;
+    }
+
+    /**
+     * Remove invitationRequest.
+     *
+     * @param \AppBundle\Entity\InvitationRequest $invitationRequest
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeInvitationRequest(\AppBundle\Entity\InvitationRequest $invitationRequest)
+    {
+        return $this->invitationRequests->removeElement($invitationRequest);
+    }
+
+    /**
+     * Add media.
+     *
+     * @param \AppBundle\Entity\Media $media
+     *
+     * @return User
+     */
+    public function addMedia(\AppBundle\Entity\Media $media)
+    {
+        $this->medias[] = $media;
+
+        return $this;
+    }
+
+    /**
+     * Remove media.
+     *
+     * @param \AppBundle\Entity\Media $media
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeMedia(\AppBundle\Entity\Media $media)
+    {
+        return $this->medias->removeElement($media);
     }
 }

@@ -439,4 +439,38 @@ class Plan
 
         return $this;
     }
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->eventPurchases = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add eventPurchase.
+     *
+     * @param \AppBundle\Entity\EventPurchase $eventPurchase
+     *
+     * @return Plan
+     */
+    public function addEventPurchase(\AppBundle\Entity\EventPurchase $eventPurchase)
+    {
+        $this->eventPurchases[] = $eventPurchase;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventPurchase.
+     *
+     * @param \AppBundle\Entity\EventPurchase $eventPurchase
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeEventPurchase(\AppBundle\Entity\EventPurchase $eventPurchase)
+    {
+        return $this->eventPurchases->removeElement($eventPurchase);
+    }
 }

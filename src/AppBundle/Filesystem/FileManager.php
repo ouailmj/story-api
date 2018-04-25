@@ -51,7 +51,7 @@ class FileManager
      *
      * @return \Gaufrette\File|mixed
      */
-    private function buildFile($file, $dir = '', $fileSystem = 'default')
+    private function write($file, $dir = '', $fileSystem = 'default')
     {
         $filePath = $this->buildFileKey($file, $dir);
         $this
@@ -73,7 +73,7 @@ class FileManager
      */
     public function createFile($file, $dir = '', $fileSystem = 'default')
     {
-        return $this->buildFile($file, $dir, $fileSystem);
+        return $this->write($file, $dir, $fileSystem);
     }
 
     /**

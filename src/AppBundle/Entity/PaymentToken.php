@@ -12,8 +12,17 @@
  *
  */
 
-namespace AppBundle\Exception;
+namespace AppBundle\Entity;
 
-class FileNotAuthorizedException extends BaseException
+use Doctrine\ORM\Mapping as ORM;
+use Payum\Core\Model\Token;
+
+/**
+ * PaymentToken.
+ *
+ * @ORM\Table(name="payment_token")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PaymentTokenRepository")
+ */
+class PaymentToken extends Token
 {
 }
