@@ -215,6 +215,13 @@ class Event
     }
 
     /**
+     * @return bool
+     */
+    public function isStarted(){
+        if($this->startedAt === null) return false;
+        return true;
+    }
+    /**
      * @return \DateTime
      */
     public function getClosedAt(): \DateTime
@@ -231,6 +238,14 @@ class Event
     }
 
     /**
+     * @return bool
+     */
+    public function isClosed(){
+        if($this->closedAt === null) return false;
+        return true;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getEnabledAt(): \DateTime
@@ -244,6 +259,14 @@ class Event
     public function setEnabledAt(\DateTime $enabledAt)
     {
         $this->enabledAt = $enabledAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(){
+        if($this->enabledAt === null) return false;
+        return false;
     }
 
     /**
@@ -716,6 +739,14 @@ class Event
     public function getCanceledAt()
     {
         return $this->canceledAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCanceled(){
+        if($this->canceledAt === null) return false;
+        return true;
     }
 
     /**
