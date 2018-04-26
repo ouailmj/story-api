@@ -55,7 +55,7 @@ class Event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $startedAt;
 
@@ -69,7 +69,7 @@ class Event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $closedAt;
 

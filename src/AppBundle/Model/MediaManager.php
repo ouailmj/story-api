@@ -44,8 +44,6 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /** @var UserManager */
-    protected $userManager;
 
     /**
      * MediaManager constructor.
@@ -54,15 +52,13 @@ class MediaManager
      * @param FileManager            $fileManager
      * @param TokenStorageInterface  $tokenStorage
      * @param EntityManagerInterface $entityManager
-     * @param UserManager            $userManager
      */
-    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, UserManager $userManager)
+    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
     {
         $this->uploadManager = $uploadManager;
         $this->fileManager = $fileManager;
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->userManager = $userManager;
     }
 
     /**
@@ -74,13 +70,11 @@ class MediaManager
      *
      * @return Media
      */
-    public function createMediaFromFile(File $file, User $by = null, $andSave = true)
+    public function createMediaFromFile(File $file, User $by, $andSave = true)
     {
         $media = new Media();
         $media->setSrc($file->getKey());
         $media->setUploadedAt(new \DateTime());
-
-        $by = ($by instanceof User) ? $by : $this->userManager->getLoggedInUser();
 
         $media->setCreatedBy($by);
 
