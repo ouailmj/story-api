@@ -109,6 +109,13 @@ class Event
     private $place = '';
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
+    private $currentStep = 'choose-plan';
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents" )
@@ -435,6 +442,22 @@ class Event
     public function getPlace()
     {
         return $this->place;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentStep(): string
+    {
+        return $this->currentStep;
+    }
+
+    /**
+     * @param string $currentStep
+     */
+    public function setCurrentStep(string $currentStep)
+    {
+        $this->currentStep = $currentStep;
     }
 
     /**

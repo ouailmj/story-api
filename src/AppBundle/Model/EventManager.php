@@ -59,19 +59,17 @@ class EventManager
     {
     }
 
-    public function createEvent(Plan $plan, User $createdBy = null)
+    public function createEvent(Plan $plan, Event $event, User $createdBy = null)
     {
-        $event = new Event();
         $eventPurchase = new EventPurchase();
         $eventPurchase->setPlan($plan);
         $eventPurchase->setQuota($plan->getMaxUploads());
         $event->setEventPurchase($eventPurchase);
         $createdBy = ($createdBy instanceof User) ? $createdBy : $this->getCreatedBy();
+        $event->setCreatedBy($createdBy);
 
         $startsAt = Carbon::tomorrow($createdBy->getTimeZoneInstance());
         $endsAt = $startsAt->addRealSeconds($plan->getMaxEventDuration());
-
-        $event->setCreatedBy($createdBy);
         $event->setStartsAt($startsAt);
         $event->setEndsAt($endsAt);
         $event->setExpiresAt($endsAt->addRealSeconds($plan->getMaxAlbumLifeTime()));
@@ -82,14 +80,14 @@ class EventManager
         return $event;
     }
 
-    public function createEventWithFreePlan(User $createdBy = null)
+    public function createEventWithFreePlan(User $createdBy = null, Event $event)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $event, $createdBy);
     }
 
-    public function createEventWithStarterPlan(User $createdBy = null)
+    public function createEventWithStarterPlan(User $createdBy = null, Event $event)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $event, $createdBy);
     }
 
     /**
@@ -130,5 +128,15 @@ class EventManager
     private function findEventById($eventId, $inTrash = false): Event
     {
         return $this->entityManager->getRepository(Event::class)->findOneOrFail($eventId);
+    }
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    public function lastIncompleteEvent(User $user)
+    {
+        $res=$this->entityManager->getRepository(Event::class)->findBy(array('createdBy'=>$user->getId()), array('createdAt' => 'desc'),1,0 );
+        return empty($res) ? null : $res[0];
     }
 }

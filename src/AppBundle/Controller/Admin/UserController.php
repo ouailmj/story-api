@@ -12,8 +12,9 @@
  *
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\UserType;
 use AppBundle\Model\UserManager;
