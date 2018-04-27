@@ -1,0 +1,32 @@
+{% extends "::base_user.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+        <div class="progressbar-container">
+            <ul class="progressbar">
+                <li>Choose plan</li>
+                <li>Event information</li>
+                <li>Event Cover</li>
+                <li class="active">Payement</li>
+                <li>Invite friends</li>
+            </ul>
+        </div>
+    <form action="">
+        <div class="event-pay-form">
+            <div class="row">
+                <div class="price-label">
+                    <span class="plan-name">Starter plan :</span>
+                    <span class="plan-price">5.99</span>
+                </div>
+            </div>
+            <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button href=""><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
