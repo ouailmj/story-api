@@ -5,7 +5,9 @@
 /*********************************
     [Side Bar]
  */
-
+*{
+    box-sizing: border-box;
+}
 body,html{
     background: #fff !important;
 }
@@ -17,10 +19,10 @@ body,html{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #154061;
+    background: linear-gradient(180deg, rgba(25,22,84,1) 0%, rgb(67, 198, 172) 60%);
     overflow-x: hidden;
     padding-top: 20px;
-    box-shadow: 6px 0px 8px -4px rgba(0,0,0,0.75);
+    box-shadow: 6px 0px 3px -5px rgba(0,0,0,0.75);
 }
 
 .sidenav a {
@@ -38,8 +40,7 @@ body,html{
 }
 
 .main {
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
+    margin-left: 160px;
     padding: 50px 50px;
     color: #000;
 }
@@ -73,14 +74,14 @@ body,html{
 .sidenav .menu a{
     color: #fff;
     display: inline-block;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: lighter;
     letter-spacing: 1px;
 }
 
 .sidenav .menu i{
     display: inline-block;
-    font-size: 22px;
+    font-size: 18px;
     color: #fff;
 }
 
@@ -101,14 +102,21 @@ body,html{
 }
 
 .user .avatar{
-    height: 60px;
-    width: 60px;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
     margin-left: auto;
     margin-right: auto;
+    background: #fff;
+    padding-top: 5px;
 }
 
 .user .avatar img{
     border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .user .avatar h4{
@@ -116,7 +124,7 @@ body,html{
 }
 
 /*********************************
-    [ Profil Setting ]
+    [ Profile Setting ]
  */
 
 .user .setting {
@@ -124,12 +132,11 @@ body,html{
     text-align: center;
     width: 100%;
     margin-top: 10px;
-    background: rgba(255, 255, 255, 0.15);
 }
 
 .user .setting .item{
     display: inline-block;
-    padding: 5px 15px;
+    padding: 5px 20px;
 }
 
 
@@ -187,20 +194,22 @@ body,html{
 }
 
 /*********************************
-    [Event upcoming card]
+    [Event upcoming cards]
  */
 
 .main  .upcoming-events .card-event {
+    height: 150px;
     width: 500px;
     margin: 10px;
     text-align: center;
-    line-height: 75px;
     font-size: 30px;
     display: flex;
     align-items: stretch;
     border: 1px solid #c0c0c0;
     box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.20);
     border-radius: 5px 5px;
+    overflow: hidden;
+    margin: 10px;
 }
 
 /*********************************
@@ -222,14 +231,12 @@ body,html{
  */
 
 .main .upcoming-events .card-event .event-image{
-    flex-grow: 4;
+    flex-grow: 6;
 }
 
 .main .upcoming-events .card-event .event-image img{
     width: 100%;
     height:100%;
-    border-radius-bottomleft: 5px;
-    border-radius-topleft: 5px;
 }
 
 /*********************************
@@ -237,7 +244,7 @@ body,html{
  */
 
 .main .upcoming-events .card-event .event-info{
-    flex-grow: 8;
+    flex-grow: 6;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -258,7 +265,7 @@ body,html{
 }
 
 .main .upcoming-events .card-event .event-info .event-desc{
-    flex-grow: 2;
+    flex-grow: 1;
 }
 
 .main .upcoming-events .card-event .event-info .event-desc p{
@@ -278,7 +285,8 @@ body,html{
 }
 
 .main .upcoming-events .card-event .event-info .event-place p{
-    padding-left: 5px;
+    font-size: 16px;
+    padding-left: 10px;
 }
 
 /*********************************
@@ -294,6 +302,7 @@ body,html{
 
 
 .main .upcoming-events .card-event .event-settings .edit-event{
+    height: 125px;
     flex-grow: 1;
 }
 
@@ -303,6 +312,7 @@ body,html{
 }
 
 .main .upcoming-events .card-event .event-settings .pay-status{
+    height: 125px;
     border-top: 1px solid #c0c0c0;
     flex: 1;
 }
@@ -344,10 +354,10 @@ body,html{
  */
 
 .main  .passed-events .card-event {
+    height: 150px;
     width: 500px;
     margin: 10px;
     text-align: center;
-    line-height: 75px;
     font-size: 30px;
     display: flex;
     align-items: stretch;
@@ -431,44 +441,114 @@ body,html{
 }
 
 .main .passed-events .card-event .event-info .event-place p{
-    padding-left: 5px;
+    font-size: 16px;
+    padding-left: 10px;
 }
 
 
-/******************************** add Event ***********/
+/*********************************
+    [Steps Create Event]
+ */
 
-#regForm {
-    margin-left: auto;
-    margin-right: auto;
-    font-family: Raleway;
-    width: 90%;
-    min-width: 300px;
+
+.progressbar-container {
+    width: 900px;
+    margin: 20px auto;
 }
-
-h1 {
+.progressbar {
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+}
+.progressbar li {
+    list-style-type: none;
+    width: 20%;
+    float: left;
+    font-size: 12px;
+    position: relative;
     text-align: center;
+    text-transform: uppercase;
+    color: #7d7d7d;
 }
-
-input {
-    padding: 10px;
-    width: 100%;
-    font-size: 17px;
-    font-family: Raleway;
-    border: 1px solid #aaaaaa;
-}
-
-input.invalid {
-    background-color: #ffdddd;
-}
-
-input[type="checkbox"]{
-    height: 40px;
-    width: 40px;
+.progressbar li:before {
+    width: 30px;
+    height: 30px;
+    content: counter(step);
+    counter-increment: step;
+    line-height: 30px;
+    border: 2px solid #7d7d7d;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
     border-radius: 50%;
+    background-color: white;
+}
+.progressbar li:after {
+    width: 100%;
+    height: 2px;
+    content: '';
+    position: absolute;
+    background-color: #7d7d7d;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+.progressbar li:first-child:after {
+    content: none;
+}
+.progressbar li.active {
+    color: green;
+}
+.progressbar li.active:before {
+    border-color: #55b776;
+}
+.progressbar li.active + li:after {
+    background-color: #55b776;
 }
 
 /*********************************
-    [Hide all steps by default]
+    [Steps arrows]
+ */
+
+.arrows{
+    float: right;
+    margin-right: 80px;
+}
+
+.arrows ul{
+    list-style: none;
+}
+
+.arrows ul li{
+    float: left;
+    padding: 10px 5px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    background: red;
+    border-radius: 50%;
+}
+
+.arrows ul button{
+    background: none;
+    padding: 0;
+}
+
+.arrows ul .next{
+    background: #44c6ac;
+}
+
+.arrows ul .previous{
+    background: #989898;
+}
+
+.arrows ul li i{
+    color: #fff;
+    font-size: 22px;
+}
+
+/*********************************
+    [Choose plan step]
  */
 
 button {
@@ -477,37 +557,11 @@ button {
     border: none;
     padding: 10px 20px;
     font-size: 17px;
-    font-family: Raleway;
     cursor: pointer;
 }
 
 button:hover {
     opacity: 0.8;
-}
-
-#prevBtn {
-    background-color: #bbbbbb;
-}
-
-
-.step {
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbbbbb;
-    border: none;
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 0.5;
-}
-
-.step.active {
-    opacity: 1;
-}
-
-
-.step.finish {
-    background-color: #4CAF50;
 }
 
 
@@ -579,7 +633,7 @@ button:hover {
     color: #fff;
 }
 #generic_price_table{
-    margin: 50px 0 50px 0;
+    margin: 50px 50px;
     font-family: 'Raleway', sans-serif;
 }
 .row .table{
@@ -609,7 +663,7 @@ button:hover {
 }
 
 #generic_price_table .generic_content .generic_head_price .generic_head_content .head{
-    padding-top: 40px;
+    padding-top: 5px;
     position: relative;
     z-index: 1;
 }
@@ -876,30 +930,102 @@ button:hover {
     margin: 0;
     padding: 0 0 50px 0;
 }
-.demo-button {
-    background-color: #333333;
-    color: #ffffff;
-    display: table;
-    font-size: 20px;
+
+
+/*********************************
+    [Event description]
+ */
+
+.event-info-form{
+    min-height: 500px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 30px;
+    margin-top: 100px;
+}
+
+.input-container .section-one{
+    display: flex;
+}
+
+
+.input-container{
+    display: flex;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.icon{
+    padding: 25px;
+    background: #ddd;
+    color: #fff;
+    min-width: 50px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+}
+
+.input-container i{
+    font-size: 24px;
+}
+
+.input-field{
+    border-top-right-radius: 5px;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 0;
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: 2px solid #ddd;
+
+}
+
+.input-field:focus{
+    border: 2px solid #44c6ac;
+}
+
+.input-field:focus + .icon{
+    background: #44c6ac;
+}
+
+
+/*********************************
+    [Event pay]
+ */
+
+.event-pay-form{
+    min-height: 500px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 30px;
+    margin-top: 100px;
+    width: 996px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    outline-color: -moz-use-text-color;
-    outline-style: none;
-    outline-width: medium ;
-    padding: 10px;
-    text-align: center;
-    text-transform: uppercase;
+
 }
 
-.input101{
-    margin-bottom: 30px;
+.event-pay-form .price-label{
+    border: 3px solid #44c6ac;
+    overflow: auto;
+    border-radius: 5px 5px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px 5px;
 }
 
-textarea{
-    min-height: 250px;
-    width: 100%;
-    max-width: 100%;
+.event-pay-form .price-label .plan-name{
+    font-size: 26px;
+    float: left;
+    margin-left: 15px;
+    font-weight: lighter;
 }
 
+.event-pay-form .price-label .plan-price{
+    font-size: 26px;
+    float: right;
+    margin-right: 15px;
+}
