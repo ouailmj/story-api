@@ -19,12 +19,14 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPurchase;
 use AppBundle\Form\Event\ChoosePlanType;
+use AppBundle\Form\Event\EventInformationType;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\PlanManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * User controller.
@@ -37,30 +39,33 @@ class EventController extends BaseController
 
     /**
      *
-     * @Route("/", name="add-event_index")
+     * @Route("/", name="add_event_index")
      * @Method("GET")
      *
      * @param EventManager $eventManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(EventManager $eventManager)
+    public function indexAction(Request $request, EventManager $eventManager)
     {
         /**
          * @var Event $event
          */
         $event = $eventManager->lastIncompleteEvent($this->getUser());
 
-        if($event === null) return $this->redirectToRoute('add-event_choose_plan');
+        if($event === null) return $this->redirectToRoute('add_event_choose_plan');
 
         switch($event->getCurrentStep()){
             case 'choose-plan':
-               return $this->redirectToRoute('add-event_event_information');
+               return $this->redirectToRoute('add_event_choose_plan');
                 break;
             case 'event-information':
-                return $this->redirectToRoute('add-event_event_information');
+                return $this->redirectToRoute('add_event_event_information', ['id'=> $event->getId()]);
+                break;
+            case 'event-cover':
+                return $this->redirectToRoute('add_event_event_cover', ['id'=> $event->getId()]);
                 break;
             default:
-                return $this->redirectToRoute('add-event_choose_plan');
+                return $this->redirectToRoute('add_event_choose_plan');
                 break;
         }
        // return null;
@@ -68,7 +73,7 @@ class EventController extends BaseController
 
     /**
      *
-     * @Route("/choose-plan", name="add-event_choose_plan")
+     * @Route("/choose-plan", name="add_event_choose_plan")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -78,30 +83,67 @@ class EventController extends BaseController
      */
     public function choosePlanAction(Request $request, EventManager  $eventManager, PlanManager $planManager)
     {
-        $event = new Event();
-        $event->setCurrentStep('choose-plan');
+        $lastEvent = $eventManager->lastIncompleteEvent($this->getUser());
+
+        if($lastEvent != null) {
+            if($request->query->get('event') === null) return $this->redirectToRoute('add_event_index');
+            $event = $eventManager->findEventById($request->query->get('event'));
+            if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
+        }else {
+            $event = new Event();
+        }
         $form = $this->createForm(ChoosePlanType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $event->setCurrentStep('event-information');
             $plan = $form->getData()['plan'];
             $eventManager->createEvent($plan, $event, $this->getUser());
             $this->addSuccessFlash();
-            return $this->redirectToRoute('add-event_index');
+            return $this->redirectToRoute('add_event_index',['id'=> $event->getId()]);
         }
 
-        return $this->render('AppBundle:Default:draft.html.twig', [
-            'form' => $form->createView(),
-            'plans' => $planManager->allPlans(),
-        ]);
+        return $this->render('client/event/choose-plan.html.twig', [
+                'form' => $form->createView(),
+                'plans' => $planManager->allPlans(),
+            ]);
 
     }
 
     /**
      *
-     * @Route("/event-information", name="add-event_event_information")
-     * @Method({"GET", "PUT"})
+     * @Route("/event-information/{id}", name="add_event_event_information")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function EventInformationAction(){
-        return $this->render('AppBundle:Events:add_event.html.twig');
+    public function EventInformationAction(Request $request, Event $event){
+
+        $form = $this->createForm(EventInformationType::class, $event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $event->setCurrentStep('event-cover');
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+        }
+        return $this->render('client/event/event-information.html.twig', [
+            'form' => $form->createView(),
+            ]);
+    }
+
+    /**
+     *
+     * @Route("/event-cover/{id}", name="add_event_event_cover")
+     * @Method({"GET", "PUT"})
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function EventCoverAction(Request $request, Event $event){
+
+       dump($event);die;
+        return $this->render('client/event/event-information.html.twig');
     }
 }

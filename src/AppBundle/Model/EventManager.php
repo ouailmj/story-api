@@ -61,7 +61,7 @@ class EventManager
 
     public function createEvent(Plan $plan, Event $event, User $createdBy = null)
     {
-        $eventPurchase = new EventPurchase();
+        $eventPurchase = ($event->getEventPurchase() === null) ? new EventPurchase() : $event->getEventPurchase();
         $eventPurchase->setPlan($plan);
         $eventPurchase->setQuota($plan->getMaxUploads());
         $event->setEventPurchase($eventPurchase);
@@ -125,7 +125,7 @@ class EventManager
      *
      * @return Event
      */
-    private function findEventById($eventId, $inTrash = false): Event
+    public function findEventById($eventId, $inTrash = false): Event
     {
         return $this->entityManager->getRepository(Event::class)->findOneOrFail($eventId);
     }

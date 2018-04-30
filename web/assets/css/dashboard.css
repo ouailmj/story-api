@@ -640,7 +640,9 @@ button:hover {
     padding: 28px 0;
 }
 
-
+.generic_price_btn{
+    text-align: center;
+}
 
 #generic_price_table .generic_content{
     overflow: hidden;
@@ -873,6 +875,12 @@ button:hover {
 #generic_price_table_home .turquoise{
     background: #1ABC9C;
     transition: all 0.3s ease-in-out 0s;
+}
+
+#generic_price_table .radio{
+    width: 60px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
 }
 
 #generic_price_table_home .blue:hover,

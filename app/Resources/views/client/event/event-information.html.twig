@@ -1,0 +1,89 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+        <div class="progressbar-container">
+            <ul class="progressbar">
+                <li>Choose plan</li>
+                <li class="active">Event information</li>
+                <li>Event Cover</li>
+                <li>Payement</li>
+                <li>Invite friends</li>
+            </ul>
+        </div>
+    <form action="">
+        <div class="event-info-form">
+            <div class="section-one">
+                <div class="input-container">
+                    <i class="icon icon-calendar2"></i>
+                    <input class="input-field" placeholder="event name.." type="text">
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-location3"></i>
+                    <input id="location" name="location" class="input-field" type="text" id="address-input" placeholder="place">
+                </div>
+            </div>
+            <div class="section-two">
+
+            </div>
+            <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button href=""><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+            </div>
+        </div>
+    </form>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_widget(form) }}
+    <div class="text-right">
+        <div class="btn-group">
+            <button class="btn btn-primary legitRipple" type="submit">SEND<i class="icon-rotate-cw2 position-right"></i></button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTRusNhOQxYeGHi4U8cNOmHk4tAWzDjCs&libraries=places"></script>
+    <script src=""></script>
+    <script>
+        $(function(){
+
+            var autocomplete;
+            var geocoder;
+            var input = document.getElementById('location');
+            var options = {
+                componentRestrictions: {'country':'us'},
+                types: ['(regions)'] // (cities)
+            };
+
+            autocomplete = new google.maps.places.Autocomplete(input,options);
+
+            $('#go').click(function(){
+                var location = autocomplete.getPlace();
+                geocoder = new google.maps.Geocoder();
+                console.log(location['geometry'])
+                lat = location['geometry']['location'].lat();
+                lng = location['geometry']['location'].lng();
+                var latlng = new google.maps.LatLng(lat,lng);
+
+                // http://stackoverflow.com/a/5341468
+                geocoder.geocode({'latLng': latlng}, function(results) {
+                    for(i=0; i < results.length; i++){
+                        for(var j=0;j < results[i].address_components.length; j++){
+                            for(var k=0; k < results[i].address_components[j].types.length; k++){
+                                if(results[i].address_components[j].types[k] == "postal_code"){
+                                    zipcode = results[i].address_components[j].short_name;
+                                    $('span.zip').html(zipcode);
+                                }
+                            }
+                        }
+                    }
+                });
+
+            });
+
+
+        });
+    </script>
+{% endblock %}

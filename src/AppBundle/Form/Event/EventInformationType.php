@@ -1,0 +1,80 @@
+<?php
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
+namespace AppBundle\Form\Event;
+
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class EventInformationType extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+        ->add('title', TextType::class, [
+            'label' => 'event.fields.title',
+        ])
+        ->add('place', TextType::class, [
+            'label' => 'event.fields.place',
+        ])
+        ->add('startsAt', DateTimeType::class, [
+            'label' => 'event.fields.startsAt',
+        ])
+        ->add('endsAt',  DateTimeType::class, [
+            'label' => 'event.fields.endsAt',
+        ])
+        ->add('privacy', ChoiceType::class, [
+            'label' => 'event.fields.privacy',
+            'attr' => ['class' => 'select-search'],
+            'choices' => [
+                'event.fields.private' => 'private',
+                'event.fields.public' => 'public',],
+            'multiple' => false,
+            'expanded' => false,
+            'mapped' => false,
+        ])
+        ->add('description', TextareaType::class, [
+            'label' => 'event.fields.description',
+        ])
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\Event',
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'appbundle_event';
+    }
+
+}

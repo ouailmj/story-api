@@ -1,0 +1,125 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <div class="progressbar-container">
+            <ul class="progressbar">
+                <li class="active">Choose plan</li>
+                <li>Event information</li>
+                <li>Event Cover</li>
+                <li>Payement</li>
+                <li>Invite friends</li>
+            </ul>
+        </div>
+    </div>
+    {{ form_start(form) }}
+        <div id="generic_price_table">
+            <!--BLOCK ROW START-->
+            <div class="row">
+                {% for plan in form.plan.children  %}
+                    <div class="col-md-3">
+
+                        <!--PRICE CONTENT START-->
+                        <div class="generic_content clearfix">
+
+                            <!--HEAD PRICE DETAIL START-->
+                            <div class="generic_head_price clearfix">
+
+                                <!--HEAD CONTENT START-->
+                                <div class="generic_head_content clearfix">
+
+                                    <!--HEAD START-->
+                                    <div class="head_bg"></div>
+                                    <div class="head">
+                                        <span>{{ plans[loop.index-1].name }}</span>
+                                    </div>
+                                    <!--//HEAD END-->
+
+                                </div>
+                                <!--//HEAD CONTENT END-->
+
+                                <!--PRICE START-->
+                                <div class="generic_price_tag clearfix">
+                                <span class="price">
+                                    <span class="sign">$</span>
+                                    {% set price = plans[loop.index-1].price|split('.') %}
+                                    <span class="currency">
+                                        {% if price[0] is defined %}
+                                            {{ price[0] }}
+                                        {% else %}0{% endif %}
+                                    </span>
+                                    <span class="cent">.
+                                        {% if price[1] is defined %}
+                                            {{ price[1] }}
+                                        {% else %}00{% endif %}
+                                    </span>
+                                </span>
+                                </div>
+                                <!--//PRICE END-->
+
+                            </div>
+                            <!--//HEAD PRICE DETAIL END-->
+
+                            <!--FEATURE LIST START-->
+                            <div class="generic_feature_list">
+                                <ul>
+                                    <li><span>{{ plans[loop.index-1].maxUploads }}</span> Nb Photo</li>
+                                    <li><span>{{ plans[loop.index-1].maxEventDuration/3600 }}h</span> Durée Event</li>
+                                    <li><span>{{ plans[loop.index-1].maxAlbumLifeTime/86400 }} jour</span> Album Dispo</li>
+                                    <li>
+                                                <span>
+                                                    {% if plans[loop.index-1].maxGuests == -1 %}
+                                                        illimité
+                                                    {% else %}
+                                                        {{ plans[loop.index-1].maxGuests }}
+                                                    {% endif %}
+                                                </span> Nb Invité
+                                    </li>
+                                    <li>
+                                                <span>
+                                                    {% if plans[loop.index-1].enableGamification == 1 %}
+                                                        <i class="icon-checkmark3 text-success"></i>
+                                                    {% else %}
+                                                        <i class="icon-cross2 text-danger-400"></i>
+                                                    {% endif %}
+                                                </span> Gamification
+                                    </li>
+                                    <li>
+                                                <span>
+                                                    {% if plans[loop.index-1].enableChallenges == 1 %}
+                                                        <i class="icon-checkmark3 text-success"></i>
+                                                    {% else %}
+                                                        <i class="icon-cross2 text-danger-400"></i>
+                                                    {% endif %}
+                                                </span> Défi
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--//FEATURE LIST END-->
+
+                            <!--BUTTON START-->
+                            <div class="generic_price_btn clearfix">
+                                {{ form_widget(plan) }}
+                            </div>
+                            <!--//BUTTON END-->
+
+                        </div>
+                        <!--//PRICE CONTENT END-->
+
+                    </div>
+
+                {% endfor %}
+            </div>
+            <!--//BLOCK ROW END-->
+        </div>
+        <div class="arrows">
+            <ul>
+                <button disabled><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                <button  type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+            </ul>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
