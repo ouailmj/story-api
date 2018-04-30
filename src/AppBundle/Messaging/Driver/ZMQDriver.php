@@ -31,7 +31,7 @@ class ZMQDriver implements DriverInterface
      * @param $host
      * @param $schema
      */
-    public function __construct($port = 8888, $host = '127.0.0.1', $schema = 'tcp')
+    public function __construct($port = 5555, $host = '127.0.0.1', $schema = 'tcp')
     {
         $this->port = $port;
         $this->host = $host;

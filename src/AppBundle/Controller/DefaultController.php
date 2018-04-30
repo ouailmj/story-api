@@ -14,6 +14,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Event\NewMediaUploadedEvent;
+use AppBundle\Messaging\Driver\ZMQDriver;
+use AppBundle\Messaging\GalleryPublisher;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,7 +47,7 @@ class DefaultController extends BaseController
     public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
         $event = $eventManager->createEventWithFreePlan($this->getUser());
-        $media = $mediaManager->createMediaFromLocalFile(__FILE__, $this->getUser());
+        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/avatar.png', $this->getUser());
 
         $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
@@ -65,6 +68,7 @@ class DefaultController extends BaseController
      */
     public function eventAction()
     {
+
         return $this->render('AppBundle:Events:add_event.html.twig', [
             // ...
         ]);
@@ -77,6 +81,25 @@ class DefaultController extends BaseController
     {
         return $this->render('AppBundle:Events:gallery.html.twig', [
             // ...
+        ]);
+    }
+
+    /**
+     * @Route("/gallerytest")
+     */
+    public function gallerytestAction(ZMQDriver $driver)
+    {
+        try {
+            $data = array(
+               '_name' => 'Farah',
+                '_eventId' => 'event-123456',
+               '_image' => 'https://www.argospetinsurance.co.uk/assets/uploads/2017/12/cat-pet-animal-domestic-104827.jpeg'
+            );
+            $driver->push(json_encode($data));
+        }catch (\ZMQSocketException $e){
+            echo $e;
+       }
+        return $this->render('gallery.html.twig', [
         ]);
     }
 }

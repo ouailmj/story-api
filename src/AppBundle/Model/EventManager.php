@@ -45,6 +45,7 @@ class EventManager
      * @param EntityManagerInterface $entityManager
      * @param MediaManager           $mediaManager
      * @param UserManager            $userManager
+     * @param EventDispatcher        $eventDispatcher
      */
     public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager)
     {
@@ -52,7 +53,7 @@ class EventManager
         $this->mediaManager = $mediaManager;
         $this->userManager = $userManager;
 
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher =  new EventDispatcher();
     }
 
     public function deleteUserEvents(User $user)

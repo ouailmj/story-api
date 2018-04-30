@@ -14,19 +14,25 @@
 
 namespace AppBundle\Messaging;
 
+use Symfony\Component\Serializer\Serializer;
+
 class GalleryPublisher
 {
     /** @var Client */
     private $client;
+    /** @var Serializer */
+    private $serializer;
 
     /**
      * GalleryPublisher constructor.
      *
      * @param Client $client
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client,Serializer $serializer)
     {
         $this->client = $client;
+        $this->serializer=$serializer;
+
     }
 
     /**
@@ -62,8 +68,10 @@ class GalleryPublisher
 
     private function prepareData($event, $media)
     {
-        // TODO: implement this.
-
-        return json_encode([]);
+        $arr = array(
+          'event'=>$this->serializer->serialize($event,'json'),
+            'media'=>$this->serializer->serialize($media,'json')
+        );
+        return $this->serializer->serialize($arr,'json');
     }
 }
