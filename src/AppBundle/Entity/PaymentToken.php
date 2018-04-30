@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\Token;
 
@@ -22,6 +23,7 @@ use Payum\Core\Model\Token;
  *
  * @ORM\Table(name="payment_token")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PaymentTokenRepository")
+ * @ApiResource()
  */
 class PaymentToken extends Token
 {

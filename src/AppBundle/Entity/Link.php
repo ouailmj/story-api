@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="link")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LinkRepository")
+ * @ApiResource()
  */
 class Link
 {

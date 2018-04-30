@@ -44,44 +44,36 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /** @var UserManager */
-    protected $userManager;
-
     /**
      * MediaManager constructor.
      *
-     * @param UploadManager          $uploadManager
-     * @param FileManager            $fileManager
-     * @param TokenStorageInterface  $tokenStorage
+     * @param UploadManager $uploadManager
+     * @param FileManager $fileManager
+     * @param TokenStorageInterface $tokenStorage
      * @param EntityManagerInterface $entityManager
-     * @param UserManager            $userManager
      */
-    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, UserManager $userManager)
+    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
     {
         $this->uploadManager = $uploadManager;
         $this->fileManager = $fileManager;
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->userManager = $userManager;
     }
 
     /**
      * Creates a media from a Gaufrette file.
      *
      * @param File      $file
-     * @param User|null $by
+     * @param User $by
      * @param bool      $andSave
      *
      * @return Media
      */
-    public function createMediaFromFile(File $file, User $by = null, $andSave = true)
+    public function createMediaFromFile(File $file, User $by, $andSave = true)
     {
         $media = new Media();
         $media->setSrc($file->getKey());
         $media->setUploadedAt(new \DateTime());
-
-        $by = ($by instanceof User) ? $by : $this->userManager->getLoggedInUser();
-
         $media->setCreatedBy($by);
 
         if ($andSave) {

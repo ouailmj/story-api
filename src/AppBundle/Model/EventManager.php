@@ -24,6 +24,7 @@ use AppBundle\Event\NewMediaUploadedEvent;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\VarDumper\VarDumper;
 
 class EventManager
 {
@@ -43,17 +44,18 @@ class EventManager
      * EventManager constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param MediaManager           $mediaManager
-     * @param UserManager            $userManager
+     * @param MediaManager $mediaManager
+     * @param UserManager $userManager
+     * @param EventDispatcher $eventDispatcher
      */
-    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager)
+    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, EventDispatcher $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->userManager = $userManager;
-
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher = $eventDispatcher;
     }
+
 
     public function deleteUserEvents(User $user)
     {

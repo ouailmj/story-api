@@ -14,19 +14,29 @@
 
 namespace AppBundle\Messaging;
 
+use ApiPlatform\Core\JsonLd\Serializer\ItemNormalizer;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Media;
+use Symfony\Component\Serializer\Serializer;
+
 class GalleryPublisher
 {
     /** @var Client */
     private $client;
 
+    /** @var ItemNormalizer */
+    private $serializer;
+
     /**
      * GalleryPublisher constructor.
      *
      * @param Client $client
+     * @param ItemNormalizer $serializer
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, ItemNormalizer $serializer)
     {
         $this->client = $client;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -60,10 +70,16 @@ class GalleryPublisher
         return true;
     }
 
-    private function prepareData($event, $media)
+    private function prepareData(Event $event, Media $media)
     {
-        // TODO: implement this.
+        $data = array(
+            '_image'    => 'https://pbs.twimg.com/media/Cb6-pZiWIAIutOl.jpg:large',
+            '_eventId'  => $event->getId(),
+            '_name'     => 'Ahamada',
+            'media'     => $this->serializer->normalize($media),
+            'event'     => $this->serializer->normalize($event)
+        );
 
-        return json_encode([]);
+        return json_encode($data);
     }
 }

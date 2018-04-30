@@ -15,13 +15,15 @@
   },
   "author": "",
   "dependencies": {
+    "autobahn": "^18.3.2",
     "fullcalendar": "2.9.1",
     "jquery": "1",
     "moment": "2.17.1",
     "pace-js": "^1.0.2",
     "symfony-collection": "ninsuo/symfony-collection",
     "tilt.js": "^1.2.1",
-    "typeahead.js": "^0.11.1"
+    "typeahead.js": "^0.11.1",
+    "when": "^3.7.8"
   },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.15.1",

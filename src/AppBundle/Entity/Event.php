@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -22,8 +23,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Event.
  *
  *
- * @ORM\Table(name="event")
+ * @ORM\Table(name="app_event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ * @ApiResource()
  */
 class Event
 {
@@ -55,7 +57,7 @@ class Event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $startedAt;
 
@@ -69,7 +71,7 @@ class Event
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetimetz")
+     * @ORM\Column(type="datetimetz", nullable=true)
      */
     private $closedAt;
 
@@ -201,7 +203,7 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getStartedAt(): \DateTime
+    public function getStartedAt()
     {
         return $this->startedAt;
     }
@@ -217,7 +219,7 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getClosedAt(): \DateTime
+    public function getClosedAt()
     {
         return $this->closedAt;
     }
@@ -233,7 +235,7 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getEnabledAt(): \DateTime
+    public function getEnabledAt()
     {
         return $this->enabledAt;
     }

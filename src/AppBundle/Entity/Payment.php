@@ -14,8 +14,13 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Payum\Core\Model\BankAccountInterface;
+use Payum\Core\Model\CreditCardInterface;
+use Payum\Core\Model\DirectDebitPaymentInterface;
 use Payum\Core\Model\Payment as BasePayment;
+use Payum\Core\Model\PaymentInterface;
 
 /**
  * Payment.
@@ -23,9 +28,12 @@ use Payum\Core\Model\Payment as BasePayment;
  *
  * @ORM\Table(name="payment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PaymentRepository")
+ * @ApiResource()
  */
-class Payment extends BasePayment
+class Payment  implements PaymentInterface, DirectDebitPaymentInterface
 {
+    use PaymentTrait;
+
     /**
      * @var int
      *
@@ -48,6 +56,64 @@ class Payment extends BasePayment
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="payments")
      */
     private $user;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $number;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $clientEmail;
+
+    /**
+     * @var string
+     */
+    protected $clientId;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $totalAmount;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $currencyCode;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $details;
+
+    /**
+     * @var CreditCardInterface|null
+     */
+    protected $creditCard;
+
+    /**
+     * @var BankAccountInterface|null
+     */
+    protected $bankAccount;
 
     /**
      * Get id.
@@ -97,5 +163,10 @@ class Payment extends BasePayment
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function __construct()
+    {
+        $this->details = [];
     }
 }

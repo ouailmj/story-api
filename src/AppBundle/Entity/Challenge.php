@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -25,6 +26,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Table(name="challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ChallengeRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ApiResource()
  */
 class Challenge implements Timestampable
 {
