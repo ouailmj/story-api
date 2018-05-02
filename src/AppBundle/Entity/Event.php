@@ -645,7 +645,7 @@ class Event
     /**
      * Set videoGallery.
      *
-     * @param array $videoGallery
+     * @param Video $videoGallery
      *
      * @return Event
      */

@@ -19,15 +19,23 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPurchase;
+use AppBundle\Entity\Image;
+use AppBundle\Entity\Video;
+use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\ChallengeType;
 use AppBundle\Form\Event\ChoosePlanType;
+use AppBundle\Form\Event\EventCoverType;
 use AppBundle\Form\Event\EventInformationType;
 use AppBundle\Model\EventManager;
+use AppBundle\Model\MediaManager;
 use AppBundle\Model\PlanManager;
 use Carbon\Carbon;
+use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -66,6 +74,9 @@ class EventController extends BaseController
                 break;
             case 'event-cover':
                 return $this->redirectToRoute('add_event_event_cover', ['id'=> $event->getId()]);
+                break;
+            case 'payment':
+                return $this->redirectToRoute('add_event_payment', ['id'=> $event->getId()]);
                 break;
             default:
                 return $this->redirectToRoute('add_event_choose_plan');
@@ -148,15 +159,78 @@ class EventController extends BaseController
     /**
      *
      * @Route("/event-cover/{id}", name="add_event_event_cover")
-     * @Method({"GET", "PUT"})
+     * @Method({"GET", "POST"})
      *
      * @param Request $request
      * @param Event $event
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function EventCoverAction(Request $request, Event $event){
+    public function EventCoverAction(Request $request, Event $event, MediaManager $mediaManager){
+        $form = $this->createForm(EventCoverType::class, $event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $coverType=$form->get('coverType')->getData();
+                if($coverType === 'video'){
+                    /** @var UploadedFile $uploadedVideo */
+                    $uploadedVideo = $form->get('videoCover')->getData();
+                    /** @var Video $media */
+                    $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
+                    $event->setVideoGallery($media);
+                    $this->addSuccessFlash();
+                }elseif($coverType === 'image'){
+                    $gallery= array($form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData());
+                    foreach($gallery as $img){
+                        /** @var Image $media */
+                        $media = $mediaManager->uploadImage($img, $this->getUser());
 
-       dump($event);die;
-        return $this->render('client/event/event-information.html.twig');
+                       // $this->getDoctrine()->getManager()->persist($media);
+                        $event->addImagesGallery($media);
+
+                    }
+                }
+            } catch (FileNotFoundException $exception) {
+                    $this->get('logger')->addError($exception->getTraceAsString());
+                    $this->addFlash('error', $this->get('translator')->trans('flash.file_error'));
+            } catch (FileNotAuthorizedException $exception) {
+                    $this->get('logger')->addError($exception->getTraceAsString());
+                    $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
+            } catch (ORMException $exception) {}
+
+            $event->setCurrentStep('payment');
+
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+        }
+        return $this->render('client/event/event-cover.html.twig', [
+            'form' => $form->createView(),
+            'event' => $event
+        ]);
+    }
+
+    /**
+     *
+     * @Route("/payment/{id}", name="add_event_payment")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function PaymentAction(Request $request, Event $event){
+        dump($event->getImagesGallery());
+        die;
+        $form = $this->createForm(EventCoverType::class, $event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+            $event->setCurrentStep('payment');
+            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+        }
+        return $this->render('client/event/payment.html.twig', [
+            'form' => $form->createView(),
+            'event' => $event
+        ]);
     }
 }
