@@ -15,8 +15,10 @@
 namespace AppBundle\Form\Event;
 
 
+use AppBundle\Form\ChallengeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -56,6 +58,17 @@ class EventInformationType extends AbstractType
         ->add('description', TextareaType::class, [
             'label' => 'event.fields.description',
         ])
+        ->add('challenges', CollectionType::class, array(
+            'entry_type'   => ChallengeType::class,
+            'label'        => 'challenge',
+            'allow_add'    => true,
+            'allow_delete' => true,
+            'required'     => false,
+            'attr'         => [
+                'class' => 'my-challenge',
+            ],
+
+        ))
         ;
     }
 

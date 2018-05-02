@@ -15,7 +15,9 @@
 namespace AppBundle\Form;
 
 
+
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,9 +28,13 @@ class ChallengeType extends AbstractType
     {
         $builder
             ->add('description')
-            ->add('plannedAt')
-            ;
+            ->add('plannedAtHour' , TimeType::class , [
+                'input'  => 'array',
+                'mapped'=> false
+            ])
+        ;
     }
+
     /**
      * {@inheritdoc}
      */

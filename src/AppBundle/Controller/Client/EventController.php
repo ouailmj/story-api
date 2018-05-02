@@ -16,12 +16,15 @@ namespace AppBundle\Controller\Client;
 
 
 use AppBundle\Controller\BaseController;
+use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPurchase;
+use AppBundle\Form\ChallengeType;
 use AppBundle\Form\Event\ChoosePlanType;
 use AppBundle\Form\Event\EventInformationType;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\PlanManager;
+use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -103,8 +106,9 @@ class EventController extends BaseController
         }
 
         return $this->render('client/event/choose-plan.html.twig', [
-                'form' => $form->createView(),
-                'plans' => $planManager->allPlans(),
+            'form' => $form->createView(),
+            'plans' => $planManager->allPlans(),
+            'event' => $event
             ]);
 
     }
@@ -123,12 +127,21 @@ class EventController extends BaseController
         $form = $this->createForm(EventInformationType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+            foreach ($form->get('challenges') as $challenge){
+                $plannedAtHour = $challenge->get('plannedAtHour')->getData();
+                $plannedAtHourToS = (($plannedAtHour['hour']*3600) + ($plannedAtHour['minute']*60)) ;
+                $challenge->getData()->setPlannedAt(Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS));
+                $challenge->getData()->setEvent($event);
+            }
+
             $event->setCurrentStep('event-cover');
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
         return $this->render('client/event/event-information.html.twig', [
             'form' => $form->createView(),
+            'event' => $event
             ]);
     }
 
