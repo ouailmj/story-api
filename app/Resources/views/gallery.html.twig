@@ -6,19 +6,16 @@
 <body>
 
 <h1>Open the console to see the magic !</h1>
-<div id="gallery" data-event-id="{{ event.id }}">
+<div id="gallery">
 
 </div>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="{{ asset('assets/js/autobahn.js') }}"></script>
+<script type="text/javascript" src=""></script>
 
 <script>
-    const eventId = ""+ $("#gallery").data('event-id');
-
     var conn = new ab.Session('ws://127.0.0.1:8888',
         function() {
-            conn.subscribe(eventId, function(topic, data) {
+            conn.subscribe('event-123456', function(topic, data) {
                 // This is where you would add the new images to the DOM
                 console.log('Topic: ' + topic );
                 console.log(data);

@@ -80,11 +80,7 @@ class AppEventSubscriber implements EventSubscriberInterface
      */
     public function notifyWSServerForNewMedia(NewMediaUploadedEvent $event)
     {
-        try {
-            $this->gal->publishMedia($event->getEvent(), $event->getMedia());
-        }catch (\Exception $e){
-            echo $e;
-        }
+        $this->gal->publishMedia($event->getEvent(), $event->getMedia());
         // TODO: This is where we should notify the socket server that a new media has been uploaded.
     }
 }

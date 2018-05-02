@@ -311,7 +311,7 @@ class Media implements Trashable
     /**
      * @return \DateTime
      */
-    public function getTrashedAt(): \DateTime
+    public function getTrashedAt()
     {
         return $this->trashedAt;
     }

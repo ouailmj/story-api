@@ -14,6 +14,10 @@
 
 namespace AppBundle\Messaging;
 
+use ApiPlatform\Core\JsonLd\Serializer\ItemNormalizer;
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Media;
+use AppBundle\Entity\User;
 use Symfony\Component\Serializer\Serializer;
 
 class GalleryPublisher
@@ -66,12 +70,15 @@ class GalleryPublisher
         return true;
     }
 
-    private function prepareData($event, $media)
+    private function prepareData(Event $event, Media $media)
     {
-        $arr = array(
-          'event'=>$this->serializer->serialize($event,'json'),
-            'media'=>$this->serializer->serialize($media,'json')
+        $data = array(
+            '_image'    => 'https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/dv413039-feline-intestinal-lymphoma-outlook-632x475.jpg',
+            '_eventId'  => $event->getId(),
+            '_name'     => "Farah",
+//            'media'     => $this->serializer->normalize($media),
+           // 'event'     => $this->serializer->normalize($event)
         );
-        return $this->serializer->serialize($arr,'json');
+        return json_encode($data);
     }
 }

@@ -201,7 +201,7 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getStartedAt(): \DateTime
+    public function getStartedAt()
     {
         return $this->startedAt;
     }
@@ -224,7 +224,7 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getClosedAt(): \DateTime
+    public function getClosedAt()
     {
         return $this->closedAt;
     }
@@ -248,7 +248,7 @@ class Event
     /**
      * @return \DateTime
      */
-    public function getEnabledAt(): \DateTime
+    public function getEnabledAt()
     {
         return $this->enabledAt;
     }
