@@ -60,29 +60,6 @@ class DefaultController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/add_event/{id}")
-     */
-    public function eventAction($id)
-    {
-        if($id == 1){
-            return $this->render('AppBundle:Events:step_one.html.twig', [
-                // ...
-            ]);
-        }
-
-        if($id == 2){
-            return $this->render('AppBundle:Events:step_two.html.twig', [
-                // ...
-            ]);
-        }
-
-        if($id == 4){
-            return $this->render('AppBundle:Events:step_four.html.twig', [
-                // ...
-            ]);
-        }
-    }
 
     /**
      * @Route("/gallery")
