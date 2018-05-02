@@ -17,6 +17,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Challenge.
@@ -43,6 +44,7 @@ class Challenge implements Timestampable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $description = '';
 

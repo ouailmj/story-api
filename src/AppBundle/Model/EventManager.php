@@ -69,8 +69,8 @@ class EventManager
         $event->setCreatedBy($createdBy);
 
         $startsAt = Carbon::tomorrow($createdBy->getTimeZoneInstance());
+        $event->setStartsAt(Carbon::tomorrow($createdBy->getTimeZoneInstance()));
         $endsAt = $startsAt->addRealSeconds($plan->getMaxEventDuration());
-        $event->setStartsAt($startsAt);
         $event->setEndsAt($endsAt);
         $event->setExpiresAt($endsAt->addRealSeconds($plan->getMaxAlbumLifeTime()));
 

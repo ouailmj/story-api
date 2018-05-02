@@ -53,46 +53,65 @@
    
  
 </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTRusNhOQxYeGHi4U8cNOmHk4tAWzDjCs&libraries=places"></script>
-    <script src=""></script>
-    <script>
-        $(function(){
 
-            var autocomplete;
-            var geocoder;
-            var input = document.getElementById('location');
-            var options = {
-                componentRestrictions: {'country':'us'},
-                types: ['(regions)'] // (cities)
-            };
+    {% block javascripts %}
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTRusNhOQxYeGHi4U8cNOmHk4tAWzDjCs&libraries=places"></script>
+        <script src=""></script>
+        <script>
+            $(function(){
 
-            autocomplete = new google.maps.places.Autocomplete(input,options);
+                var autocomplete;
+                var geocoder;
+                var input = document.getElementById('location');
+                var options = {
+                    componentRestrictions: {'country':'us'},
+                    types: ['(regions)'] // (cities)
+                };
 
-            $('#go').click(function(){
-                var location = autocomplete.getPlace();
-                geocoder = new google.maps.Geocoder();
-                console.log(location['geometry'])
-                lat = location['geometry']['location'].lat();
-                lng = location['geometry']['location'].lng();
-                var latlng = new google.maps.LatLng(lat,lng);
+                autocomplete = new google.maps.places.Autocomplete(input,options);
 
-                // http://stackoverflow.com/a/5341468
-                geocoder.geocode({'latLng': latlng}, function(results) {
-                    for(i=0; i < results.length; i++){
-                        for(var j=0;j < results[i].address_components.length; j++){
-                            for(var k=0; k < results[i].address_components[j].types.length; k++){
-                                if(results[i].address_components[j].types[k] == "postal_code"){
-                                    zipcode = results[i].address_components[j].short_name;
-                                    $('span.zip').html(zipcode);
+                $('#go').click(function(){
+                    var location = autocomplete.getPlace();
+                    geocoder = new google.maps.Geocoder();
+                    console.log(location['geometry'])
+                    lat = location['geometry']['location'].lat();
+                    lng = location['geometry']['location'].lng();
+                    var latlng = new google.maps.LatLng(lat,lng);
+
+                    // http://stackoverflow.com/a/5341468
+                    geocoder.geocode({'latLng': latlng}, function(results) {
+                        for(i=0; i < results.length; i++){
+                            for(var j=0;j < results[i].address_components.length; j++){
+                                for(var k=0; k < results[i].address_components[j].types.length; k++){
+                                    if(results[i].address_components[j].types[k] == "postal_code"){
+                                        zipcode = results[i].address_components[j].short_name;
+                                        $('span.zip').html(zipcode);
+                                    }
                                 }
                             }
                         }
-                    }
+                    });
+
                 });
 
+
             });
+        </script>
+        <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
+        <script type="text/javascript">
+            $('.my-challenge').collection({
+                    name_prefix: "{{ form.challenges.vars.full_name }}",
+                    add_at_the_end: true,
+                    hide_useless_buttons: true,
+                    add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter une challenge</a>',
+                    remove: '<a href="#" class="collection-remove btn btn-warning collection-action">Retirer</a>',
+                    allow_up: false,
+                    allow_down: false,
+                    init_with_n_elements: 0,
+                }
+            );
 
+        </script>
+    {% endblock javascripts %}
 
-        });
-    </script>
 {% endblock %}

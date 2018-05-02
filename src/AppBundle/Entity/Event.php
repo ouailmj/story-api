@@ -125,7 +125,7 @@ class Event
     /**
      * @var Challenge [] | ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Challenge", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Challenge", mappedBy="event" ,cascade={"persist", "remove"})
      */
     private $challenges;
 

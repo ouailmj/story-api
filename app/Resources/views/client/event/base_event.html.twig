@@ -1,1 +1,21 @@
 {% extends "base_user.html.twig" %}
+{% block stylesheets %}
+
+    <style>
+        div#appbundle_event_challenges > .form-group {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #d5d7d8;
+            border-radius: 2px;
+            box-shadow: 1px 1px gainsboro;
+        }
+        div[id^="appbundle_event_challenges"] > .col-lg-10{
+            width : 100%!important;
+        }
+        div[id^="appbundle_event_challenges"]  label{
+            display : none!important;
+        }
+    </style>
+{% endblock stylesheets %}
+
+ {% block container %}{% endblock %}
