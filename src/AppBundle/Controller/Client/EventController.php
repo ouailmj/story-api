@@ -26,16 +26,21 @@ use AppBundle\Form\ChallengeType;
 use AppBundle\Form\Event\ChoosePlanType;
 use AppBundle\Form\Event\EventCoverType;
 use AppBundle\Form\Event\EventInformationType;
+use AppBundle\Form\Event\InviteFriendsType;
+use AppBundle\Form\Event\PaymentEventType;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\MediaManager;
+use AppBundle\Model\Payment\PaymentManager;
 use AppBundle\Model\PlanManager;
 use Carbon\Carbon;
 use Doctrine\ORM\ORMException;
+use Payum\Core\Request\GetHumanStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -77,6 +82,9 @@ class EventController extends BaseController
                 break;
             case 'payment':
                 return $this->redirectToRoute('add_event_payment', ['id'=> $event->getId()]);
+                break;
+            case 'invite-friends':
+                return $this->redirectToRoute('add_event_invite_friends', ['id'=> $event->getId()]);
                 break;
             default:
                 return $this->redirectToRoute('add_event_choose_plan');
@@ -181,11 +189,13 @@ class EventController extends BaseController
                 }elseif($coverType === 'image'){
                     $gallery= array($form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData());
                     foreach($gallery as $img){
-                        /** @var Image $media */
-                        $media = $mediaManager->uploadImage($img, $this->getUser());
+                        if( $img != null ) {
+                            /** @var Image $media */
+                            $media = $mediaManager->uploadImage($img, $this->getUser());
 
-                       // $this->getDoctrine()->getManager()->persist($media);
-                        $event->addImagesGallery($media);
+                            // $this->getDoctrine()->getManager()->persist($media);
+                            $event->addImagesGallery($media);
+                        }
 
                     }
                 }
@@ -217,18 +227,83 @@ class EventController extends BaseController
      * @param Event $event
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function PaymentAction(Request $request, Event $event){
-        dump($event->getImagesGallery());
-        die;
-        $form = $this->createForm(EventCoverType::class, $event);
+    public function PaymentAction(Request $request, Event $event)
+    {
+        $form = $this->createForm(PaymentEventType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $gatewayName = 'offline';
+
+            $storage = $this->get('payum')->getStorage('AppBundle\Entity\Payment');
+
+            $payment = $storage->create();
+            $payment->setNumber($form->get('numberCard')->getData());
+            $payment->setCurrencyCode('EUR');
+            $payment->setTotalAmount($form->get('price')->getData()*100);
+            $payment->setUser( $this->getUser());
+            $payment->setEventPurchase( $event->getEventPurchase());
+            $payment->setClientEmail($this->getUser()->getEmail());
+            $storage->update($payment);
+
+            $event->getEventPurchase()->addPayment($payment);
+
+            $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
+                $gatewayName,
+                $payment,
+                'payment_done' , ['id' => $event->getId()]// the route to redirect after capture
+            );
+            return $this->redirect($captureToken->getTargetUrl()  );
+
+        }
+        return $this->render('client/event/payment.html.twig', [
+            'form' => $form->createView(),
+            'event' => $event
+        ]);
+    }
+
+
+    /**
+     * @Route("/payment-done/{id}" ,  name="payment_done")
+     *
+     * @param Request $request
+     * @param Event $event
+     * @param PaymentManager $paymentManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function doneAction(Request $request, Event $event , PaymentManager $paymentManager)
+    {
+        $token = $this->get('payum')->getHttpRequestVerifier()->verify($request);
+
+        $gateway = $this->get('payum')->getGateway($token->getGatewayName());
+
+        $gateway->execute($status = new GetHumanStatus($token) );
+
+        // Now you have order and payment status
+        if($paymentManager->isTotalPayed($event)) $event->setCurrentStep('invite-friends');
+
+        $this->getDoctrine()->getManager()->flush();
+        return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+    }
+
+
+
+    /**
+     * @Route("/invite-friends/{id}" ,  name="add_event_invite_friends")
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return Response
+     */
+    public function InviteFriendsAction(Request $request, Event $event)
+    {
+
+        $form = $this->createForm(InviteFriendsType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->getDoctrine()->getManager()->flush();
-            $event->setCurrentStep('payment');
-            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+            dump($form->get('emailLists')->getData());die;
         }
-        return $this->render('client/event/payment.html.twig', [
+        return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),
             'event' => $event
         ]);
