@@ -14,8 +14,7 @@
         </div>
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
      {% form_theme form 'Form/Registration/fields.html.twig' %}
-        <div class="event-info-form">
-            <div class="section-one">
+        <div class="event-info-form animated zoomInUp">
                 <div class="input-container">
                     <i class="icon icon-calendar2"></i>
                      {{ form_row(form.title ,{'attr': {'class': 'input-field'}}) }}
@@ -42,7 +41,6 @@
                 <div class="input-container challange-event">
                     {{ form_widget(form.challenges)}}
                 </div>
-            </div>
             <div class="arrows">
                 <ul>
                     <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>

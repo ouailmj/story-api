@@ -30,10 +30,15 @@ class EventCoverType extends AbstractType
     {
         $builder
             ->add('coverType', ChoiceType::class, [
-                'label' => 'event.fields.title',
+                'label' => false,
                 'choices' => [
                     'Video' => 'video',
-                    'Imgae' => 'image',
+                    'image' => 'image',
+                ],
+                'attr'  => [
+                    'name' => 'type',
+                    'class'=> 'form-check-input',
+                    'checked'=> 'checked'
                 ],
                 'multiple' => false,
                 'expanded' => true,
@@ -44,7 +49,7 @@ class EventCoverType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'file-input',
+                    'class' => 'file-input image-input',
                 ],
             ])
             ->add('secondImageCover', FileType::class, [
@@ -52,7 +57,7 @@ class EventCoverType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'file-input',
+                    'class' => 'file-input image-input',
                 ],
             ])
             ->add('thirdImageCover', FileType::class, [
@@ -60,7 +65,7 @@ class EventCoverType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'file-input',
+                    'class' => 'file-input image-input',
                 ],
             ])
             ->add('videoCover', FileType::class, [
@@ -68,7 +73,7 @@ class EventCoverType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'attr' => [
-                    'class' => 'file-input',
+                    'class' => 'file-input video-input',
                 ],
             ])
 

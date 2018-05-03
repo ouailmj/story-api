@@ -1037,7 +1037,6 @@ button:hover {
     width: 100% !important;
     padding: 10px !important;
     outline: none !important;
-    border: 2px solid #ddd !important;
     height: 77px !important
 
 }
@@ -1140,3 +1139,101 @@ button:hover {
     float: right;
     margin-right: 15px;
 }
+/*********************************
+    [Event pay]
+ */
+.event-cover-form{
+    min-height: 500px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 30px;
+    margin-top: 100px;
+    width: 996px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.event-cover-form .choose-cover-msg p{
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+    color: #7c7b7b;
+}
+
+#appbundle_event_coverType{
+    text-align: center;
+    margin-left: 100px;
+}
+
+.event-cover-form .radio input[type="radio"]{
+    display: inline-block;
+}
+
+.event-cover-form .radio{
+   display: inline-block;
+   margin: 10px;
+}
+
+.event-cover-form .radio label{
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 15px;
+    font-size: 13px;
+}
+/*
+.event-cover-form .radio input[type=radio] {
+    display: none;
+  }
+
+  .event-cover-form .radio label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    border: 1px solid #2ECC71;
+  }
+  
+  .event-cover-form .radio label:before {
+    border-radius: 50%;
+  }
+
+ input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: red;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
+}
+*/
+.event-cover-form #cover-images .image-input , .event-cover-form #cover-video .video-input{
+    border: 2px dashed #11c39a;
+    padding: 13px;
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+.event-cover-form input[type="file"]{
+    -webkit-appearance: none;
+    text-align: left;
+    -webkit-rtl-ordering:  left;
+    float: left;
+ }
+ input[type="file"]::-webkit-file-upload-button{
+    -webkit-appearance: none;
+    float: right;
+    margin: 0 0 0 10px;
+    background-color: #a1a1a1;
+    border: none;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #fff;
+ }

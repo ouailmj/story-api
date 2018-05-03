@@ -171,6 +171,7 @@ class EventController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $coverType=$form->get('coverType')->getData();
+                dump($coverType);die();
                 if($coverType === 'video'){
                     /** @var UploadedFile $uploadedVideo */
                     $uploadedVideo = $form->get('videoCover')->getData();
