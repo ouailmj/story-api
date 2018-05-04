@@ -118,7 +118,7 @@ class Event
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents" )
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents", cascade={"persist", "remove"})
      */
     private $createdBy;
 
@@ -132,21 +132,21 @@ class Event
     /**
      * @var MemberShip [] | ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberShip", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberShip", mappedBy="event",cascade={"persist", "remove"})
      */
     private $eventMemberShips;
 
     /**
      * @var InvitationRequest[] | ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"persist", "remove"})
      */
     private $invitationRequests;
 
     /**
      * @var Media [] | ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_media",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true)}
@@ -157,7 +157,7 @@ class Event
     /**
      * @var Video
      *
-     * @ORM\OneToOne(targetEntity="Video")
+     * @ORM\OneToOne(targetEntity="Video", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="video_gallery_id", referencedColumnName="id")
      */
     private $videoGallery;
@@ -165,7 +165,7 @@ class Event
     /**
      * @var Image [] | ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Image")
+     * @ORM\ManyToMany(targetEntity="Image", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_image_gellery",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="image_gallery_id", referencedColumnName="id", unique=true)}
@@ -190,7 +190,7 @@ class Event
     /**
      * @var Link
      *
-     * @ORM\OneToOne(targetEntity="Link")
+     * @ORM\OneToOne(targetEntity="Link", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="link_id", referencedColumnName="id")
      */
     private $link;

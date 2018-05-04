@@ -136,7 +136,13 @@ class EventManager
      */
     public function lastIncompleteEvent(User $user)
     {
-        $res=$this->entityManager->getRepository(Event::class)->findBy(array('createdBy'=>$user->getId()), array('createdAt' => 'desc'),1,0 );
-        return empty($res) ? null : $res[0];
+        $res=$this->entityManager->getRepository(Event::class)->findBy(['createdBy'=>$user->getId()], ['createdAt' => 'desc'],1,0 );
+
+        $res = empty($res) ? null : $res[0];
+        if($res != null){
+            $currentStep = $res->getCurrentStep();
+            if($currentStep === '') return null;
+        }
+        return $res;
     }
 }

@@ -24,11 +24,13 @@ use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\ChallengeType;
 use AppBundle\Form\Event\ChoosePlanType;
+use AppBundle\Form\Event\EventChallengeType;
 use AppBundle\Form\Event\EventCoverType;
 use AppBundle\Form\Event\EventInformationType;
 use AppBundle\Form\Event\InviteFriendsType;
 use AppBundle\Form\Event\PaymentEventType;
 use AppBundle\Model\EventManager;
+use AppBundle\Model\InvitationRequestManager;
 use AppBundle\Model\MediaManager;
 use AppBundle\Model\Payment\PaymentManager;
 use AppBundle\Model\PlanManager;
@@ -77,6 +79,9 @@ class EventController extends BaseController
             case 'event-information':
                 return $this->redirectToRoute('add_event_event_information', ['id'=> $event->getId()]);
                 break;
+            case 'event-challenge':
+                return $this->redirectToRoute('add_event_event_challenge', ['id'=> $event->getId()]);
+                break;
             case 'event-cover':
                 return $this->redirectToRoute('add_event_event_cover', ['id'=> $event->getId()]);
                 break;
@@ -85,6 +90,12 @@ class EventController extends BaseController
                 break;
             case 'invite-friends':
                 return $this->redirectToRoute('add_event_invite_friends', ['id'=> $event->getId()]);
+                break;
+            case 'finish':
+                //TODO: change route when develop event list
+                $event->setCurrentStep('');
+                $this->getDoctrine()->getManager()->flush();
+                return $this->redirectToRoute('list-event');
                 break;
             default:
                 return $this->redirectToRoute('add_event_choose_plan');
@@ -147,6 +158,36 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            if($event->getEventPurchase()->getPlan()->getEnableChallenges()){
+                $event->setCurrentStep('event-challenge');
+            }else{
+                $event->setCurrentStep('event-cover');
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+        }
+        return $this->render('client/event/event-information.html.twig', [
+            'form' => $form->createView(),
+            'event' => $event
+            ]);
+    }
+
+    /**
+     *
+     * @Route("/event-challenges/{id}", name="add_event_event_challenge")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function EventChallengeAction(Request $request, Event $event){
+
+        $form = $this->createForm(EventChallengeType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
             foreach ($form->get('challenges') as $challenge){
                 $plannedAtHour = $challenge->get('plannedAtHour')->getData();
                 $plannedAtHourToS = (($plannedAtHour['hour']*3600) + ($plannedAtHour['minute']*60)) ;
@@ -158,12 +199,11 @@ class EventController extends BaseController
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
-        return $this->render('client/event/event-information.html.twig', [
+        return $this->render('client/event/event-challenge.html.twig', [
             'form' => $form->createView(),
             'event' => $event
-            ]);
+        ]);
     }
-
     /**
      *
      * @Route("/event-cover/{id}", name="add_event_event_cover")
@@ -179,7 +219,6 @@ class EventController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $coverType=$form->get('coverType')->getData();
-                dump($coverType);die();
                 if($coverType === 'video'){
                     /** @var UploadedFile $uploadedVideo */
                     $uploadedVideo = $form->get('videoCover')->getData();
@@ -193,11 +232,8 @@ class EventController extends BaseController
                         if( $img != null ) {
                             /** @var Image $media */
                             $media = $mediaManager->uploadImage($img, $this->getUser());
-
-                            // $this->getDoctrine()->getManager()->persist($media);
                             $event->addImagesGallery($media);
                         }
-
                     }
                 }
             } catch (FileNotFoundException $exception) {
@@ -208,7 +244,12 @@ class EventController extends BaseController
                     $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
             } catch (ORMException $exception) {}
 
-            $event->setCurrentStep('payment');
+
+            if($event->getEventPurchase()->getPlan()->getPlanKey() === 'free'){
+                $event->setCurrentStep('invite-friends');
+            }else{
+                $event->setCurrentStep('payment');
+            }
 
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
@@ -291,18 +332,26 @@ class EventController extends BaseController
     /**
      * @Route("/invite-friends/{id}" ,  name="add_event_invite_friends")
      *
-     * @param Request $request
-     * @param Event $event
+     * @param Request                       $request
+     * @param Event                         $event
+     * @param InvitationRequestManager      $invitationRequestManager
      * @return Response
      */
-    public function InviteFriendsAction(Request $request, Event $event)
+    public function InviteFriendsAction(Request $request, Event $event, InvitationRequestManager $invitationRequestManager)
     {
 
         $form = $this->createForm(InviteFriendsType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($form->get('emailContent')->getData());die;
+            $emails = $form->get('emails')->getData();
+            foreach ( $emails as $email){
+                $invitationRequestManager->createInvitationRequest($email, $event, false);
+            }
+            $event->setCurrentStep('finish');
+            $this->getDoctrine()->getManager()->flush();
+            $this->addSuccessFlash();
+            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
         return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),

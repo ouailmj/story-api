@@ -12,11 +12,11 @@
                 <li class="active">Invite friends</li>
             </ul>
         </div>
-    <input id="email_content" type="email">  <a onclick="add()">ADD</a>
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
 
     {{ form_widget(form) }}
+    {{ form_rest(form)}}
     <div class="text-right">
         <div class="btn-group">
             <button class="btn btn-primary legitRipple" type="submit">SEND<i class="icon-rotate-cw2 position-right"></i></button>
@@ -80,13 +80,23 @@
                     $('#appbundle_invitation_request_emailLists option').prop('selected', true);
                 }
             }
-
-
-
-
-
-
         </script>
+        <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
+        <script type="text/javascript">
+                $('.my-emails').collection({
+                        name_prefix: "{{ form.emails.vars.full_name }}",
+                        add_at_the_end: true,
+                        hide_useless_buttons: true,
+                        add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter des invités</a>',
+                        remove: '<a href="#" class="collection-remove btn btn-warning collection-action">Retirer</a>',
+                        allow_up: false,
+                        allow_down: false,
+                        init_with_n_elements: 0,
+                    }
+                );
+
+            </script>
+
     {% endblock javascripts %}
 
 {% endblock %}

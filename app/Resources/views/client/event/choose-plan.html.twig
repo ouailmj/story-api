@@ -44,7 +44,7 @@
                                 <div class="generic_price_tag clearfix">
                                 <span class="price">
                                     <span class="sign">$</span>
-                                    {% set price = plans[loop.index-1].price|split('.') %}
+                                    {% set price = (plans[loop.index-1].price/100)|split('.') %}
                                     <span class="currency">
                                         {% if price[0] is defined %}
                                             {{ price[0] }}
@@ -115,6 +115,7 @@
             </div>
             <!--//BLOCK ROW END-->
         </div>
+    {{ form_rest(form)}}
         <div class="arrows">
             <ul>
                 <button disabled><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>

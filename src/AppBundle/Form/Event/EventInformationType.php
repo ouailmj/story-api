@@ -61,17 +61,7 @@ class EventInformationType extends AbstractType
         ->add('description', TextareaType::class, [
             'label' => false,
         ])
-        ->add('challenges', CollectionType::class, array(
-            'entry_type'   => ChallengeType::class,
-            'label'        => 'challenge',
-            'allow_add'    => true,
-            'allow_delete' => true,
-            'required'     => false,
-            'attr'         => [
-                'class' => 'my-challenge',
-            ],
 
-        ))
         ;
     }
 
