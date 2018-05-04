@@ -1011,11 +1011,11 @@ button:hover {
 
 .icon{
     padding: 25px;
-    background: #ddd;
+    background: rgb(150, 149, 149);
     color: #fff;
     min-width: 50px;
     text-align: center;
-    border: 2px solid #ddd;
+    border: 2px solid rgb(150, 149, 149);
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 
@@ -1037,7 +1037,8 @@ button:hover {
     width: 100% !important;
     padding: 10px !important;
     outline: none !important;
-    height: 77px !important
+    height: 77px !important;
+    background-color: #c5c5c5 !important;
 
 }
 
@@ -1139,6 +1140,10 @@ button:hover {
     float: right;
     margin-right: 15px;
 }
+
+.event-pay-form .pay-inputs{
+    padding: 10px;
+}
 /*********************************
     [Event pay]
  */
@@ -1236,4 +1241,15 @@ button:hover {
     padding-bottom: 10px;
     padding-top: 10px;
     color: #fff;
+ }
+
+ .event-cover-form .type-card{
+     display: inline-block;
+ }
+
+ .event-pay-form .type-card .icon-pay{
+    width: 20%;
+    height: auto;
+    display: inline-block;
+    margin: 15px;
  }

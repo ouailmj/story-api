@@ -24,7 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PaymentEventType extends AbstractType
 {
-
     /**
      * {@inheritdoc}
      */
@@ -34,20 +33,37 @@ class PaymentEventType extends AbstractType
             ->add('numberCard', TextType::class, [
                 'label' => 'payment.fields.numberCard',
                 'mapped' => false,
+                'attr'  =>[
+                    'placeholder' => 'Card number',
+                ]
             ])
             ->add('cvv', TextType::class, [
                 'label' => 'payment.fields.cvv',
                 'mapped' => false,
+                'attr'  =>[
+                    'placeholder' => 'CVV'
+                ]
             ])
-            ->add('expireAt', CreditCardExpirationDateType::class,[
-                    'input' => 'datetime',
-                    'widget' =>'choice',
-                    'label' => 'payment.fields.expires',
-                    'mapped' => false,
+            ->add('expireAtMonth',  TextType::class, [
+                'label' => 'payment.fields.price',
+                'mapped' => false,
+                'attr'  =>[
+                    'placeholder' => 'Date expire (Month)'
+                ]
+            ])
+            ->add('expireAtYear',  TextType::class, [
+                'label' => 'payment.fields.price',
+                'mapped' => false,
+                'attr'  =>[
+                    'placeholder' => 'Date expire (Year)'
+                ]
             ])
             ->add('price',  TextType::class, [
                 'label' => 'payment.fields.price',
                 'mapped' => false,
+                'attr'  =>[
+                    'placeholder' => 'Prix'
+                ]
             ])
         ;
     }
