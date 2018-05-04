@@ -70,4 +70,14 @@ class DefaultController extends BaseController
             // ...
         ]);
     }
+
+    /**
+     * @Route("/events")
+     */
+    public function eventsAction()
+    {
+        return $this->render('AppBundle:Events:index.html.twig', [
+            // ...
+        ]);
+    }
 }
