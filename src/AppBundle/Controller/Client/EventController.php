@@ -184,7 +184,10 @@ class EventController extends BaseController
      */
     public function EventChallengeAction(Request $request, Event $event){
 
-        $form = $this->createForm(EventChallengeType::class);
+       if(!$event->getEventPurchase()->getPlan()->getEnableChallenges()) return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+
+       $options = array('data' => [0,1,2,3,4,5,6]);
+        $form = $this->createForm(EventChallengeType::class, $event, $options);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -243,7 +246,6 @@ class EventController extends BaseController
                     $this->get('logger')->addError($exception->getTraceAsString());
                     $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
             } catch (ORMException $exception) {}
-
 
             if($event->getEventPurchase()->getPlan()->getPlanKey() === 'free'){
                 $event->setCurrentStep('invite-friends');
