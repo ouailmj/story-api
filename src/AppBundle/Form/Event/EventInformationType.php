@@ -34,19 +34,22 @@ class EventInformationType extends AbstractType
     {
         $builder
         ->add('title', TextType::class, [
-            'label' => 'event.fields.title',
+            'label' =>false,
         ])
         ->add('place', TextType::class, [
-            'label' => 'event.fields.place',
+            'label' => false,
         ])
         ->add('startsAt', DateTimeType::class, [
-            'label' => 'event.fields.startsAt',
+            'widget' => 'single_text',
+            'label' =>false,
         ])
         ->add('endsAt',  DateTimeType::class, [
-            'label' => 'event.fields.endsAt',
+            'widget' => 'single_text',
+            'label' => false,
+            'attr' => array('disabled' => 'disabled')
         ])
         ->add('privacy', ChoiceType::class, [
-            'label' => 'event.fields.privacy',
+            'label' => false,
             'attr' => ['class' => 'select-search'],
             'choices' => [
                 'event.fields.private' => 'private',
@@ -56,7 +59,7 @@ class EventInformationType extends AbstractType
             'mapped' => false,
         ])
         ->add('description', TextareaType::class, [
-            'label' => 'event.fields.description',
+            'label' => false,
         ])
         ->add('challenges', CollectionType::class, array(
             'entry_type'   => ChallengeType::class,

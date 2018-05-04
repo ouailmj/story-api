@@ -15,7 +15,7 @@
         </div>
     </div>
     {{ form_start(form) }}
-        <div id="generic_price_table">
+        <div id="generic_price_table" class="animated zoomInUp">
             <!--BLOCK ROW START-->
             <div class="row">
                 {% for plan in form.plan.children  %}
@@ -102,6 +102,7 @@
                             <!--BUTTON START-->
                             <div class="generic_price_btn clearfix">
                                 {{ form_widget(plan) }}
+                                <label class="role"></label>
                             </div>
                             <!--//BUTTON END-->
 

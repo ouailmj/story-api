@@ -15,13 +15,18 @@
     <link rel="stylesheet" href="{{ asset('build/css/front/style.css') }}">
     <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     {% block stylesheet %}{% endblock %}
 
 
 </head>
 {% block body %}
-
+  <script >
+    alert("00000")
+      
+        </script>
+    
     <body>
     <!-- Main navbar -->
     {% block sidebar %}
@@ -30,7 +35,9 @@
     {% block container %}
 
     {% endblock %}
-    {% block javascripts %}    {% endblock %}
+    {% block javascripts %}   
+  
+     {% endblock %}
     </body>
 {% endblock %}
 

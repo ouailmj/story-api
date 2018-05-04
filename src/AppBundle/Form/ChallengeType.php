@@ -19,6 +19,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ChallengeType extends AbstractType
@@ -27,10 +28,19 @@ class ChallengeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('description')
+            ->add('description', TextareaType::class , [
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Challange Description',
+                ]
+            ])
             ->add('plannedAtHour' , TimeType::class , [
                 'input'  => 'array',
-                'mapped'=> false
+                'mapped'=> false,
+                'label' => false,
+                'attr' =>[
+                    'class' => 'selectors'
+                ]
             ])
         ;
     }
