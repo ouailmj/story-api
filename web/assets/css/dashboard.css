@@ -1246,3 +1246,10 @@ button:hover {
  .event-cover-form .type-card{
      display: inline-block;
  }
+
+ .event-pay-form .type-card .icon-pay{
+    width: 20%;
+    height: auto;
+    display: inline-block;
+    margin: 15px;
+ }

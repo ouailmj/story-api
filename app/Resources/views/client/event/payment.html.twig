@@ -18,36 +18,47 @@
         <div class="row">
             <div class="price-label">
                 <span class="plan-name">Starter plan :</span>
-                <span class="plan-price">5.99</span>
+                <span class="plan-price">5.99€</span>
             </div>
         </div>
         <div class="pay-inputs">
             <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.numberCard) }}
+                </div>
+                <div class="type-card col-md-6">
+                    <img class="icon-pay" src="{{ asset('images/brands/visa.png') }}">
+                    <img class="icon-pay" src="{{ asset('images/brands/matsercard.png') }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.cvv) }}
+                </div>
+                <div>
+                    <p>Where i found it?</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.expireAtMonth) }}
+                </div>
+                <div>
                     <div class="col-md-6 input-container">
-                        <i class="icon icon-credit-card"></i>
-                        {{ form_row(form.numberCard) }}
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.expireAtYear) }}
                     </div>
-                    <div class="type-card col-md-6">
-                        <img class="responsive" src="{{ asset('images/brands/visa.png') }}">
-                        <img class="responsive" src="{{ asset('images/brands/matsercard.png') }}">
-                    </div>
-            
-            </div>
-            <div class="input-container">
-                <i class="icon icon-credit-card"></i>
-                {{ form_row(form.cvv) }}
-            </div>
-
-            <div class="input-container">
-                <i class="icon icon-credit-card"></i>
-                {{ form_row(form.expireAt) }}
+                </div>
             </div>
 
             <div class="input-container">
                 <i class="icon icon-credit-card"></i>
                 {{ form_row(form.price) }}
             </div>
-        </div>
+        {{ form_rest(form)}}
     </div>
     <div class="arrows">
         <ul>

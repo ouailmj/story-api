@@ -74,7 +74,7 @@ class DefaultController extends BaseController
     /**
      * @Route("/events")
      */
-    public function eventsAction()
+    public function eventAction()
     {
         return $this->render('AppBundle:Events:index.html.twig', [
             // ...
