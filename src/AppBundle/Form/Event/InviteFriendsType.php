@@ -31,14 +31,12 @@ class InviteFriendsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
-        $builder
-
+        $builder 
             ->add('emailLists', ChoiceType::class, [
                 'label' => false,
                 'multiple' => true,
                 'expanded' => false,
                 'mapped' => false,
-
             ])
 
         ;

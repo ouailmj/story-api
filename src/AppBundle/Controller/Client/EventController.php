@@ -301,7 +301,7 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($form->get('emailLists')->getData());die;
+            dump($form->get('emailContent')->getData());die;
         }
         return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),
