@@ -37,10 +37,13 @@ use AppBundle\Model\PlanManager;
 use Carbon\Carbon;
 use Doctrine\ORM\ORMException;
 use Payum\Core\Request\GetHumanStatus;
+use function PHPSTORM_META\type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -158,6 +161,21 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $maxEndsAt=Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($event->getEventPurchase()->getPlan()->getMaxEventDuration());
+            $startsAt=$event->getStartsAt() instanceof \DateTime ? Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) : null;
+            $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
+            /*if($startsAt->gt($maxEndsAt)){
+
+                dump($startsAt);die;
+            }
+
+            dump(get_class($startsAt));
+            dump($startsAt);
+            dump($endsAt);
+            dump($event->getEventPurchase()->getPlan()->getMaxEventDuration());
+            dump(get_class($maxEndsAt));
+            dump( $maxEndsAt);
+            die;*/
             if($event->getEventPurchase()->getPlan()->getEnableChallenges()){
                 $event->setCurrentStep('event-challenge');
             }else{
@@ -186,8 +204,8 @@ class EventController extends BaseController
 
        if(!$event->getEventPurchase()->getPlan()->getEnableChallenges()) return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
 
-       $options = array('data' => [0,1,2,3,4,5,6]);
-        $form = $this->createForm(EventChallengeType::class, $event, $options);
+       $options = array('data_hours' => [0,1,2,3,4,5,6]);
+       $form = $this->createForm(EventChallengeType::class, $event, $options);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
