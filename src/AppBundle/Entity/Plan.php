@@ -47,11 +47,11 @@ class Plan
     private $id;
 
     /**
-     * @var float
+     * @var int
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="integer")
      */
-    private $price = 0.0;
+    private $price = 0;
 
     /**
      * Max event duration in seconds.
@@ -147,7 +147,7 @@ class Plan
     /**
      * Set price.
      *
-     * @param float $price
+     * @param int $price
      *
      * @return Plan
      */
@@ -161,7 +161,7 @@ class Plan
     /**
      * Get price.
      *
-     * @return float
+     * @return int
      */
     public function getPrice()
     {

@@ -1,0 +1,52 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+        <div class="progressbar-container">
+            <ul class="progressbar">
+                <li>Choose plan</li>
+                <li class="active">Event information</li>
+                <li>Event Cover</li>
+                <li>Payement</li>
+                <li>Invite friends</li>
+            </ul>
+        </div>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+     {% form_theme form 'Form/Registration/fields.html.twig' %}
+        <div class="event-info-form animated zoomInUp">
+                <div class="input-container">
+                    <i class="icon icon-calendar2"></i>
+                     {{ form_row(form.title ,{'attr': {'class': 'input-field'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-location3"></i>
+                    {{ form_row(form.place ,{'attr': {'class': 'input-field' , 'id' : 'location', 'name' : 'location', 'placeholder' : 'place'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-calendar3"></i>
+                    {{ form_widget(form.startsAt ,{'attr': {'class': 'input-field unstyled'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-calendar22"></i>
+                    {{ form_widget(form.endsAt ,{'attr': {'class': 'input-field unstyled'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-eye"></i>
+                    {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
+                </div>
+                <div class="input-container">
+                    {{ form_widget(form.description ,{'attr': {'class': 'input-field', 'placeholder' : 'Description'}}) }}
+                </div>
+            {{ form_rest(form)}}
+            <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+            </div>
+        </div>
+       {{ form_end(form) }}
+</div>
+
+{% endblock %}

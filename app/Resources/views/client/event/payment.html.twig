@@ -1,0 +1,76 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+    <div class="progressbar-container">
+        <ul class="progressbar">
+            <li>Choose plan</li>
+            <li>Event information</li>
+            <li>Event Cover</li>
+            <li class="active">Payment</li>
+            <li>Invite friends</li>
+        </ul>
+    </div>
+    <div class="event-pay-form animated zoomInUp">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+         {% form_theme form 'Form/Registration/fields.html.twig' %}
+        <div class="row">
+            <div class="price-label">
+                <span class="plan-name">Starter plan :</span>
+                <span class="plan-price">5.99€</span>
+            </div>
+        </div>
+        <div class="pay-inputs">
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.numberCard) }}
+                </div>
+                <div class="type-card col-md-6">
+                    <img class="icon-pay" src="{{ asset('images/brands/visa.png') }}">
+                    <img class="icon-pay" src="{{ asset('images/brands/matsercard.png') }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.cvv) }}
+                </div>
+                <div>
+                    <p>Where i found it?</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.expireAtMonth) }}
+                </div>
+                <div>
+                    <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.expireAtYear) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <i class="icon icon-credit-card"></i>
+                {{ form_row(form.price) }}
+            </div>
+        {{ form_rest(form)}}
+    </div>
+    <div class="arrows">
+        <ul>
+            <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+            <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+        </ul>
+    </div>
+    {{ form_end(form) }}
+</div>
+
+    {% block javascripts %}
+
+    {% endblock javascripts %}
+
+{% endblock %}

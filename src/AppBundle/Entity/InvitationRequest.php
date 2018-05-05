@@ -59,7 +59,7 @@ class InvitationRequest
      *
      * @ORM\Column(name="channels", type="array")
      */
-    protected $channels = ['email'];
+    protected $channels = ['email'=> ''];
 
     /**
      * @var Event

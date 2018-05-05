@@ -66,9 +66,11 @@ class DefaultController extends BaseController
         ]);
     }
 
+
     /**
      * @Route("/add_event")
      */
+
     public function eventAction(ZMQDriver $driver)
     {
         $data = array(
@@ -82,9 +84,8 @@ class DefaultController extends BaseController
             VarDumper::dump($exception);
         }
         return $this->render('AppBundle:Events:add_event.html.twig', [
-            // ...
-        ]);
     }
+
 
      /**
       * @Route("/event/{event}/gallery")
@@ -97,9 +98,10 @@ class DefaultController extends BaseController
 
     public function galleryAction(Event $event)
     {
-       return $this->render('AppBundle:Events:gallery.html.twig', [
-           'event' => $event,
-                ]);
+        return $this->render('AppBundle:Events:gallery.html.twig', [
+            'event' => $event,
+        ]);
     }
+
 
 }

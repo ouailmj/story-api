@@ -1,0 +1,50 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+        <div class="progressbar-container">
+            <ul class="progressbar">
+                <li>Choose plan</li>
+                <li class="active">Event information</li>
+                <li>Event Cover</li>
+                <li>Payement</li>
+                <li>Invite friends</li>
+            </ul>
+        </div>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+     {% form_theme form 'Form/Registration/fields.html.twig' %}
+        <div class="event-info-form animated zoomInUp">
+                <div class="input-container challange-event">
+                    {{ form_widget(form.challenges)}}
+                </div>
+            {{ form_rest(form)}}
+            <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+            </div>
+        </div>
+       {{ form_end(form) }}
+</div>
+
+    {% block javascripts %}
+        <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
+        <script type="text/javascript">
+            $('.my-challenge').collection({
+                    name_prefix: "{{ form.challenges.vars.full_name }}",
+                    add_at_the_end: true,
+                    hide_useless_buttons: true,
+                    add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter une challenge</a>',
+                    remove: '<a href="#" class="collection-remove btn btn-warning collection-action">Retirer</a>',
+                    allow_up: false,
+                    allow_down: false,
+                    init_with_n_elements: 0,
+                }
+            );
+
+        </script>
+    {% endblock javascripts %}
+
+{% endblock %}
