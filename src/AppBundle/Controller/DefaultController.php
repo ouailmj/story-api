@@ -84,6 +84,7 @@ class DefaultController extends BaseController
             VarDumper::dump($exception);
         }
         return $this->render('AppBundle:Events:add_event.html.twig', [
+        ]);
     }
 
 
