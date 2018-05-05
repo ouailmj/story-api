@@ -102,20 +102,4 @@ class DefaultController extends BaseController
                 ]);
     }
 
-    /**
-     * @Route("/event/{event}/gallerytest")
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-
-
-    public function gallerytestAction(Event $event)
-    {
-        return $this->render('AppBundle:Events:gallerytest.html.twig', [
-            'event' => $event,
-        ]);
-    }
-
-
 }

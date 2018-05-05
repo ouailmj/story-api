@@ -74,7 +74,7 @@ class GalleryPublisher
     {
         $now = new \DateTime();
         $diff_sec = $media->getUploadedAt()->format('U')-$now->format('U');
-        if($diff_sec<30) {
+        if($diff_sec<900) {
             $data = array(
                 '_image' => "/uploads/" . $media->getSrc(),
                 '_eventId' => $event->getId(),
