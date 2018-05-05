@@ -16,6 +16,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\AppEvents;
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
 use AppBundle\Event\NewMediaUploadedEvent;
 use AppBundle\Messaging\Driver\ZMQDriver;
@@ -50,8 +51,7 @@ class DefaultController extends BaseController
     public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
         $event = $this->getEM()->find(Event::class, 1);
-        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/avatar.png', $this->getUser());
-
+        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/cat.jpg', $this->getUser());
         $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
        // VarDumper::dump($event->getUploadedMedias()->toArray());
@@ -100,6 +100,21 @@ class DefaultController extends BaseController
        return $this->render('AppBundle:Events:gallery.html.twig', [
            'event' => $event,
                 ]);
+    }
+
+    /**
+     * @Route("/event/{event}/gallerytest")
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+
+    public function gallerytestAction(Event $event)
+    {
+        return $this->render('AppBundle:Events:gallerytest.html.twig', [
+            'event' => $event,
+        ]);
     }
 
 

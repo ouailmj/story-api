@@ -72,13 +72,18 @@ class GalleryPublisher
 
     private function prepareData(Event $event, Media $media)
     {
-        $data = array(
-            '_image'    => 'https://d17fnq9dkz9hgj.cloudfront.net/uploads/2012/11/dv413039-feline-intestinal-lymphoma-outlook-632x475.jpg',
-            '_eventId'  => $event->getId(),
-            '_name'     => "Farah",
+        $now = new \DateTime();
+        $diff_sec = $media->getUploadedAt()->format('U')-$now->format('U');
+        if($diff_sec<30) {
+            $data = array(
+                '_image' => "/uploads/" . $media->getSrc(),
+                '_eventId' => $event->getId(),
+                '_name' => "Farah",
 //            'media'     => $this->serializer->normalize($media),
-           // 'event'     => $this->serializer->normalize($event)
-        );
-        return json_encode($data);
+                // 'event'     => $this->serializer->normalize($event)
+            );
+            return json_encode($data);
+        }
+        return null;
     }
 }
