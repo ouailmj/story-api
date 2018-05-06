@@ -63,9 +63,9 @@ a:focus {
     position: relative;
     width: 640px;
     height: 310px;
-    padding: 15px;
+    padding: 85px;
     border: 1px solid #ddd;
-    margin: 140px auto 2em;
+    margin: 75px auto 2em;
     -webkit-border-radius: 2px 2px 2px 2px;
     -moz-border-radius: 2px 2px 2px 2px;
     border-radius: 2px 2px 2px 2px;
@@ -341,7 +341,7 @@ a:focus {
 
 #slideshow figure {
     position:relative;
-    padding:0; margin:0;
+    padding:4px; margin:0;
     height:100%;
 }
 
