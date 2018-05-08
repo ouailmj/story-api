@@ -320,8 +320,10 @@ class EventController extends BaseController
             return $this->redirect($captureToken->getTargetUrl()  );
 
         }
-        $sumPayed=null;
-           // for $event->getEventPurchase()->getPayments();
+        $sumPayed=0;
+            foreach ( $event->getEventPurchase()->getPayments() as $item){
+                $sumPayed+=$item->getTotalAmount();
+            }
         return $this->render('client/event/payment.html.twig', [
             'form' => $form->createView(),
             'event' => $event,

@@ -19,14 +19,28 @@
             <div class="price-label">
                 <span class="plan-name">{{ event.eventPurchase.plan.name }} plan :</span>
                 {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
-                <span class="plan-price">{{price[0]  }}.{{ price[1] }}€</span>
+                <span class="plan-price">
+                    {% if price[0] is defined %}
+                        {{ price[0] }}
+                    {% else %}0{% endif %}.
+                    {% if price[1] is defined %}
+                    {{ price[1] }}
+                {% else %}00{% endif %}€
+                </span>
             </div>
         </div>
         <div class="row">
             <div class="price-label price-rest">
                 <span class="plan-name">Montant payé :</span>
-                {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
-                <span class="plan-price">{{price[0]  }}.{{ price[1] }}€</span>
+                {% set price = (sumPayed/100)|split('.') %}
+                <span class="plan-price">
+                    {% if price[0] is defined %}
+                        {{ price[0] }}
+                    {% else %}0{% endif %}.
+                {% if price[1] is defined %}
+                    {{ price[1] }}
+                {% else %}00{% endif %}€
+                </span>
             </div>
         </div>
         <div class="pay-inputs">
