@@ -162,20 +162,10 @@ class EventController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $maxEndsAt=Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($event->getEventPurchase()->getPlan()->getMaxEventDuration());
-            $startsAt=$event->getStartsAt() instanceof \DateTime ? Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) : null;
             $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
-            /*if($startsAt->gt($maxEndsAt)){
-
-                dump($startsAt);die;
+            if($endsAt->gt($maxEndsAt)){
+                $event->setEndsAt($maxEndsAt);
             }
-
-            dump(get_class($startsAt));
-            dump($startsAt);
-            dump($endsAt);
-            dump($event->getEventPurchase()->getPlan()->getMaxEventDuration());
-            dump(get_class($maxEndsAt));
-            dump( $maxEndsAt);
-            die;*/
             if($event->getEventPurchase()->getPlan()->getEnableChallenges()){
                 $event->setCurrentStep('event-challenge');
             }else{
@@ -187,7 +177,8 @@ class EventController extends BaseController
         }
         return $this->render('client/event/event-information.html.twig', [
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
+            'maxDuration' => $event->getEventPurchase()->getPlan()->getMaxEventDuration(),
             ]);
     }
 
@@ -204,16 +195,28 @@ class EventController extends BaseController
 
        if(!$event->getEventPurchase()->getPlan()->getEnableChallenges()) return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
 
-       $options = array('data_hours' => [0,1,2,3,4,5,6]);
-       $form = $this->createForm(EventChallengeType::class, $event, $options);
+
+        $hours = array( );
+        $startsAt=$event->getStartsAt() instanceof \DateTime ? Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) : null;
+        $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
+        $diffHour = $startsAt->diffInHours($endsAt);
+
+        for ($i=0;$i< $diffHour;$i++){
+            $hours [] = $i;
+        }
+        $options = array('data_hours' => $hours);
+        $form = $this->createForm(EventChallengeType::class, null, $options);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            foreach ($form->get('challenges') as $challenge){
-                $plannedAtHour = $challenge->get('plannedAtHour')->getData();
+            foreach ($form->get('challenges') as $item){
+                $challenge = new Challenge();
+                $challenge->setDescription($item->get('description')->getData());
+                $plannedAtHour = $item->get('plannedAtHour')->getData();
                 $plannedAtHourToS = (($plannedAtHour['hour']*3600) + ($plannedAtHour['minute']*60)) ;
-                $challenge->getData()->setPlannedAt(Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS));
-                $challenge->getData()->setEvent($event);
+                $challenge->setPlannedAt(Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS));
+                $challenge->setEvent($event);
+                $event->addChallenge($challenge);
             }
 
             $event->setCurrentStep('event-cover');
@@ -317,9 +320,12 @@ class EventController extends BaseController
             return $this->redirect($captureToken->getTargetUrl()  );
 
         }
+        $sumPayed=null;
+           // for $event->getEventPurchase()->getPayments();
         return $this->render('client/event/payment.html.twig', [
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
+            'sumPayed' => $sumPayed,
         ]);
     }
 

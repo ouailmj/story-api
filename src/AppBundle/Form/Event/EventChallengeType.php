@@ -34,6 +34,7 @@ class EventChallengeType extends AbstractType
                 'entry_type'   => ChallengeType::class,
                 'label'        => 'challenge',
                 'allow_add'    => true,
+                'mapped' => false,
                 'allow_delete' => true,
                 'required'     => false,
                 'attr'         => [
@@ -50,7 +51,7 @@ class EventChallengeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_hours' => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24),
+            'data_hours' => array(),
         ]);
     }
 }

@@ -17,8 +17,16 @@
          {% form_theme form 'Form/Registration/fields.html.twig' %}
         <div class="row">
             <div class="price-label">
-                <span class="plan-name">Starter plan :</span>
-                <span class="plan-price">5.99€</span>
+                <span class="plan-name">{{ event.eventPurchase.plan.name }} plan :</span>
+                {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
+                <span class="plan-price">{{price[0]  }}.{{ price[1] }}€</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="price-label price-rest">
+                <span class="plan-name">Montant payé :</span>
+                {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
+                <span class="plan-price">{{price[0]  }}.{{ price[1] }}€</span>
             </div>
         </div>
         <div class="pay-inputs">

@@ -1144,6 +1144,11 @@ button:hover {
 .event-pay-form .pay-inputs{
     padding: 10px;
 }
+
+.event-pay-form .price-rest{
+    width: 50%;
+    margin-top: 5px;
+}
 /*********************************
     [Event pay]
  */
