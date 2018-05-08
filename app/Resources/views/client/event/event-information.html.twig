@@ -7,8 +7,9 @@
             <ul class="progressbar">
                 <li>Choose plan</li>
                 <li class="active">Event information</li>
+                <li>Add Challange</li>
                 <li>Event Cover</li>
-                <li>Payement</li>
+                <li>Payment</li>
                 <li>Invite friends</li>
             </ul>
         </div>
@@ -48,5 +49,7 @@
         </div>
        {{ form_end(form) }}
 </div>
-
+<script src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/datepicker.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/anytime.js') }}"> </script>
 {% endblock %}
