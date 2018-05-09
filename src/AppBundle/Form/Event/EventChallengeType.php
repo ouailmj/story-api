@@ -34,17 +34,24 @@ class EventChallengeType extends AbstractType
                 'entry_type'   => ChallengeType::class,
                 'label'        => 'challenge',
                 'allow_add'    => true,
+                'mapped' => false,
                 'allow_delete' => true,
                 'required'     => false,
                 'attr'         => [
                     'class' => 'my-challenge',
                 ],
-
+                'entry_options'    => $options
             ))
         ;
     }
 
-
-
-
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_hours' => array(),
+        ]);
+    }
 }

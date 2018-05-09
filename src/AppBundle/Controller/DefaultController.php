@@ -72,7 +72,7 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @Route("/events")
+     * @Route("/events" , name="list-event")
      */
     public function eventAction()
     {

@@ -37,10 +37,13 @@ use AppBundle\Model\PlanManager;
 use Carbon\Carbon;
 use Doctrine\ORM\ORMException;
 use Payum\Core\Request\GetHumanStatus;
+use function PHPSTORM_META\type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -158,6 +161,11 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $maxEndsAt=Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($event->getEventPurchase()->getPlan()->getMaxEventDuration());
+            $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
+            if($endsAt->gt($maxEndsAt)){
+                $event->setEndsAt($maxEndsAt);
+            }
             if($event->getEventPurchase()->getPlan()->getEnableChallenges()){
                 $event->setCurrentStep('event-challenge');
             }else{
@@ -169,7 +177,8 @@ class EventController extends BaseController
         }
         return $this->render('client/event/event-information.html.twig', [
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
+            'maxDuration' => $event->getEventPurchase()->getPlan()->getMaxEventDuration(),
             ]);
     }
 
@@ -184,15 +193,30 @@ class EventController extends BaseController
      */
     public function EventChallengeAction(Request $request, Event $event){
 
-        $form = $this->createForm(EventChallengeType::class);
+       if(!$event->getEventPurchase()->getPlan()->getEnableChallenges()) return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+
+
+        $hours = array( );
+        $startsAt=$event->getStartsAt() instanceof \DateTime ? Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) : null;
+        $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
+        $diffHour = $startsAt->diffInHours($endsAt);
+
+        for ($i=0;$i< $diffHour;$i++){
+            $hours [] = $i;
+        }
+        $options = array('data_hours' => $hours);
+        $form = $this->createForm(EventChallengeType::class, null, $options);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            foreach ($form->get('challenges') as $challenge){
-                $plannedAtHour = $challenge->get('plannedAtHour')->getData();
+            foreach ($form->get('challenges') as $item){
+                $challenge = new Challenge();
+                $challenge->setDescription($item->get('description')->getData());
+                $plannedAtHour = $item->get('plannedAtHour')->getData();
                 $plannedAtHourToS = (($plannedAtHour['hour']*3600) + ($plannedAtHour['minute']*60)) ;
-                $challenge->getData()->setPlannedAt(Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS));
-                $challenge->getData()->setEvent($event);
+                $challenge->setPlannedAt(Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS));
+                $challenge->setEvent($event);
+                $event->addChallenge($challenge);
             }
 
             $event->setCurrentStep('event-cover');
@@ -243,7 +267,6 @@ class EventController extends BaseController
                     $this->get('logger')->addError($exception->getTraceAsString());
                     $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
             } catch (ORMException $exception) {}
-
 
             if($event->getEventPurchase()->getPlan()->getPlanKey() === 'free'){
                 $event->setCurrentStep('invite-friends');
@@ -297,9 +320,12 @@ class EventController extends BaseController
             return $this->redirect($captureToken->getTargetUrl()  );
 
         }
+        $sumPayed=null;
+           // for $event->getEventPurchase()->getPayments();
         return $this->render('client/event/payment.html.twig', [
             'form' => $form->createView(),
-            'event' => $event
+            'event' => $event,
+            'sumPayed' => $sumPayed,
         ]);
     }
 
@@ -344,9 +370,12 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $emails = $form->get('emails')->getData();
+            $items = $form->get('items')->getData();
+            
+            $emails= explode(";",$items );
             foreach ( $emails as $email){
-                $invitationRequestManager->createInvitationRequest($email, $event, false);
+              
+                if($email != null && $email != '')  $invitationRequestManager->createInvitationRequest($email, $event, false);
             }
             $event->setCurrentStep('finish');
             $this->getDoctrine()->getManager()->flush();
