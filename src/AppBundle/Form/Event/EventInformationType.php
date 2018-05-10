@@ -46,14 +46,14 @@ class EventInformationType extends AbstractType
         ->add('endsAt',  DateTimeType::class, [
             'widget' => 'single_text',
             'label' => false,
-            'attr' => array('disabled' => 'disabled')
+           // 'attr' => array('disabled' => 'disabled')
         ])
         ->add('privacy', ChoiceType::class, [
             'label' => false,
             'attr' => ['class' => 'select-search'],
             'choices' => [
                 'event.fields.private' => 'private',
-                'event.fields.public' => 'public',],
+                'event.fields.public' => 'public'],
             'multiple' => false,
             'expanded' => false,
             'mapped' => false,

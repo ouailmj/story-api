@@ -38,7 +38,7 @@ class EventCoverType extends AbstractType
                 'attr'  => [
                     'name' => 'type',
                     'class'=> 'form-check-input',
-                    'checked'=> 'checked'
+                    'checked'=> 'checked',
                 ],
                 'multiple' => false,
                 'expanded' => true,

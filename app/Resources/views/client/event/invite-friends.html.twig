@@ -4,99 +4,93 @@
 {% block container %}
 <div class="main" xmlns="">
         <div class="progressbar-container">
-            <ul class="progressbar">
-                <li>Choose plan</li>
-                <li>Event information</li>
-                <li>Event Cover</li>
-                <li >Payment</li>
-                <li class="active">Invite friends</li>
-            </ul>
+            <ul class="progress-indicator">
+            <li class="completed">
+                <span class="bubble"></span>
+                Choose plan
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Event information
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Add Challenge
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Event Cover
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Payment
+            </li>
+            <li class="active">
+                <span class="bubble"></span>
+                Invite Friends
+            </li>
+        </ul>
         </div>
-    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-
-
-    {{ form_widget(form) }}
-    {{ form_rest(form)}}
-    <div class="text-right">
-        <div class="btn-group">
-            <button class="btn btn-primary legitRipple" type="submit">SEND<i class="icon-rotate-cw2 position-right"></i></button>
+        <div class="invite-friends-form"> 
+            
+            {{ form_start(form, {'attr': {'class': 'list-friends'}}) }}
+            {{ form_widget(form) }}
+                <div class="row">
+                    <div class="email-input col-md-12">
+                        <input id="add-friend" type="email" name="listItem" placeholder="example@email.com" />
+                        <button class="btn add-friend-btn" type="button">Add</button>
+                    </div>
+                    <div class="list-emails col-md-12">
+                        <ol></ol>
+                    </div>
+                </div>
         </div>
-    </div>
-    {{ form_end(form) }}
+        <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+        </div>
+           {{ form_end(form) }}
 </div>
-
-    {% block javascripts %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTRusNhOQxYeGHi4U8cNOmHk4tAWzDjCs&libraries=places"></script>
-        <script src=""></script>
         <script>
-            $(function(){
 
-                var autocomplete;
-                var geocoder;
-                var input = document.getElementById('location');
-                var options = {
-                    componentRestrictions: {'country':'us'},
-                    types: ['(regions)'] // (cities)
-                };
-
-                autocomplete = new google.maps.places.Autocomplete(input,options);
-
-                $('#go').click(function(){
-                    var location = autocomplete.getPlace();
-                    geocoder = new google.maps.Geocoder();
-                    console.log(location['geometry'])
-                    lat = location['geometry']['location'].lat();
-                    lng = location['geometry']['location'].lng();
-                    var latlng = new google.maps.LatLng(lat,lng);
-
-                    // http://stackoverflow.com/a/5341468
-                    geocoder.geocode({'latLng': latlng}, function(results) {
-                        for(i=0; i < results.length; i++){
-                            for(var j=0;j < results[i].address_components.length; j++){
-                                for(var k=0; k < results[i].address_components[j].types.length; k++){
-                                    if(results[i].address_components[j].types[k] == "postal_code"){
-                                        zipcode = results[i].address_components[j].short_name;
-                                        $('span.zip').html(zipcode);
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                });
-
-
+            //add a variable called toAdd as the value of the input
+            $(document).ready(function() {
+                var list = [];
+                var email_inputs = $("input[id=appbundle_invitation_request_items]");
+            $('.btn').click(function() {
+                var toAdd = $("input[name=listItem]").val();
+                list.push(toAdd)
+                console.log(list)
+                //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
+                $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>x</h5></a>');
+                
+                email_inputs.val(email_inputs.val() + toAdd + ';');
             });
-        </script>
-        <script>
-            function add(){
-                let email= $('#email_content').val();
-                console.log(email);
-                if( email!= '') {
-                    $('#appbundle_invitation_request_emailLists')
-                        .append($("<option></option>")
-                            .attr("value", email)
-                            .text(email));
-                    $('#appbundle_invitation_request_emailLists option').prop('selected', true);
-                }
-            }
-        </script>
-        <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
-        <script type="text/javascript">
-                $('.my-emails').collection({
-                        name_prefix: "{{ form.emails.vars.full_name }}",
-                        add_at_the_end: true,
-                        hide_useless_buttons: true,
-                        add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter des invités</a>',
-                        remove: '<a href="#" class="collection-remove btn btn-warning collection-action">Retirer</a>',
-                        allow_up: false,
-                        allow_down: false,
-                        init_with_n_elements: 0,
-                    }
-                );
+            //The following will cross out and remove the list item when clicking on the button or the list item itself
+            $(document).on('click', 'a', function() {
+                var index = parseInt($(this).attr("index"));
+                delete list[index];
+                email_inputs.val('');
+                
+                var emls = "";
+                list.forEach(function(element) {
+                       emls += element+";"
+                });
+                email_inputs.val(emls);
 
-            </script>
+                $(this).remove();
+            });
+            //This clears the previous input when clicking on the iput box
+            $('input').focus(function() {
+                $(this).val('');
+            });
+            });
 
-    {% endblock javascripts %}
+            
+        </script>
+
 
 {% endblock %}

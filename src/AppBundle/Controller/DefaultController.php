@@ -114,6 +114,7 @@ class DefaultController extends BaseController
      */
 
 
+
     public function gallerytestAction(Event $event)
     {
         return $this->render('AppBundle:Events:gallerytest.html.twig', [

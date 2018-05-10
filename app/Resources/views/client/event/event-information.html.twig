@@ -4,13 +4,32 @@
 {% block container %}
 <div class="main">
         <div class="progressbar-container">
-            <ul class="progressbar">
-                <li>Choose plan</li>
-                <li class="active">Event information</li>
-                <li>Event Cover</li>
-                <li>Payement</li>
-                <li>Invite friends</li>
-            </ul>
+            <ul class="progress-indicator">
+            <li class="completed">
+                <span class="bubble"></span>
+                Choose plan
+            </li>
+            <li class="active">
+                <span class="bubble"></span>
+                Event information
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Add Challange
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Event Cover
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Payment
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Invite Friends
+            </li>
+        </ul>
         </div>
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
      {% form_theme form 'Form/Registration/fields.html.twig' %}
@@ -48,5 +67,40 @@
         </div>
        {{ form_end(form) }}
 </div>
+<script src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/datepicker.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/anytime.js') }}"> </script>
+    <script src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script>
+        {% set startsDate = event.startsAt|date('Y-m-d') %}
+        {% set startsHour = event.startsAt|date('H:i') %}
+        {% set startsAtToString = startsDate ~ 'T' ~ startsHour  %}
 
+        {% set endsDate = event.endsAt|date('Y-m-d') %}
+        {% set endsHour = event.endsAt|date('H:i') %}
+        {% set endsAtToString = endsDate ~ 'T' ~ endsHour  %}
+
+
+
+        (function(){
+            $('#appbundle_event_startsAt').val('{{ startsAtToString }}');
+            $('#appbundle_event_endsAt').val('{{ endsAtToString }}');
+          //  $('#startdate').attr('min', moment().format('YYYY-MM-DD'))
+
+
+            $('#appbundle_event_startsAt').on('change', function(e){
+
+                let startAt =  $('#appbundle_event_startsAt').val();
+                let date = moment( startAt, "YYYY-MM-DDTHH:mm");
+                let endsAt =date.add({{ maxDuration }}, 'seconds').format('YYYY-MM-DDTHH:mm');
+                $('#appbundle_event_endsAt').val(endsAt);
+                console.log(endsAt);
+
+
+               // console.log(  $('#appbundle_event_startsAt').val());
+
+            })
+        })()
+
+    </script>
 {% endblock %}
