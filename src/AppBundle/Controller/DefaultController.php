@@ -51,7 +51,7 @@ class DefaultController extends BaseController
     public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
         $event = $this->getEM()->find(Event::class, 1);
-        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/cat.jpg', $this->getUser());
+        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/img.jpg', $this->getUser());
         $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
        // VarDumper::dump($event->getUploadedMedias()->toArray());
@@ -104,5 +104,50 @@ class DefaultController extends BaseController
         ]);
     }
 
+
+    /**
+     * @Route("/event/{event}/gallerytest")
+     * @throws \Exception
+     *
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+
+    public function gallerytestAction(Event $event)
+    {
+        return $this->render('AppBundle:Events:gallerytest.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * @Route("/galleryexample2")
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+
+    public function galleryexample1Action()
+    {
+        return $this->render('AppBundle:Events:galleryexample2.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/galleryexample1")
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+
+
+    public function galleryexample2Action()
+    {
+        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
+
+        ]);
+    }
 
 }
