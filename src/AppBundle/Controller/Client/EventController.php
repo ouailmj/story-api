@@ -131,9 +131,15 @@ class EventController extends BaseController
         $form = $this->createForm(ChoosePlanType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $event->setCurrentStep('event-information');
+            $event->setCurrentStep('event-challenge');
             $plan = $form->getData()['plan'];
             $eventManager->createEvent($plan, $event, $this->getUser());
+            
+            if($event->getEventPurchase()->getPlan()->getEnableChallenges()){
+                $event->setCurrentStep('event-challenge');
+            }else{
+                $event->setCurrentStep('event-information');
+            }
             $this->addSuccessFlash();
             return $this->redirectToRoute('add_event_index',['id'=> $event->getId()]);
         }
@@ -166,11 +172,8 @@ class EventController extends BaseController
             if($endsAt->gt($maxEndsAt)){
                 $event->setEndsAt($maxEndsAt);
             }
-            if($event->getEventPurchase()->getPlan()->getEnableChallenges()){
-                $event->setCurrentStep('event-challenge');
-            }else{
                 $event->setCurrentStep('event-cover');
-            }
+            
 
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
@@ -219,7 +222,7 @@ class EventController extends BaseController
                 $event->addChallenge($challenge);
             }
 
-            $event->setCurrentStep('event-cover');
+            $event->setCurrentStep('event-information');
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
@@ -370,9 +373,12 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $emails = $form->get('emails')->getData();
+            $items = $form->get('items')->getData();
+            
+            $emails= explode(";",$items );
             foreach ( $emails as $email){
-                $invitationRequestManager->createInvitationRequest($email, $event, false);
+              
+                if($email != null && $email != '')  $invitationRequestManager->createInvitationRequest($email, $event, false);
             }
             $event->setCurrentStep('finish');
             $this->getDoctrine()->getManager()->flush();

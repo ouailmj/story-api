@@ -18,6 +18,7 @@ namespace AppBundle\Form\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Button;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -40,6 +41,11 @@ class InviteFriendsType extends AbstractType
                 'expanded' => false,
                 'mapped' => false,
             ])*/
+            ->add('items', HiddenType::class ,[ 
+                'mapped' => false,
+            ]
+            )
+
             ->add('emails', CollectionType::class, [
                 'entry_type'   => EmailType::class,
                 'label'        => 'emails',

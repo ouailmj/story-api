@@ -53,7 +53,7 @@ class EventInformationType extends AbstractType
             'attr' => ['class' => 'select-search'],
             'choices' => [
                 'event.fields.private' => 'private',
-                'event.fields.public' => 'public',],
+                'event.fields.public' => 'public'],
             'multiple' => false,
             'expanded' => false,
             'mapped' => false,

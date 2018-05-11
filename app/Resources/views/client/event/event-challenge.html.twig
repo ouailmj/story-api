@@ -4,18 +4,37 @@
 {% block container %}
 <div class="main">
         <div class="progressbar-container">
-            <ul class="progressbar">
-                <li>Choose plan</li>
-                <li class="active">Event information</li>
-                <li>Event Cover</li>
-                <li>Payement</li>
-                <li>Invite friends</li>
-            </ul>
+            <ul class="progress-indicator">
+            <li class="completed">
+                <span class="bubble"></span>
+                Choose plan
+            </li>
+            <li class="active">
+                <span class="bubble"></span>
+                Add Challenge
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Event information
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Event Cover
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Payment
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Invite Friends
+            </li>
+        </ul>
         </div>
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
      {% form_theme form 'Form/Registration/fields.html.twig' %}
-        <div class="event-info-form animated zoomInUp">
-                <div class="input-container challange-event">
+        <div class="event-challenge-form animated zoomInUp">
+                <div class="challange-event">
                     {{ form_widget(form.challenges)}}
                 </div>
             {{ form_rest(form)}}
@@ -24,7 +43,7 @@
                     <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
                     <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                 </ul>
-            </div>
+        </div>
         </div>
        {{ form_end(form) }}
 </div>
