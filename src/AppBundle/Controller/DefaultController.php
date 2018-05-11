@@ -123,7 +123,7 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @Route("/galleryexample2")
+     * @Route("/galleryexample1")
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -132,12 +132,12 @@ class DefaultController extends BaseController
 
     public function galleryexample1Action()
     {
-        return $this->render('AppBundle:Events:galleryexample2.html.twig', [
+        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
         ]);
     }
 
     /**
-     * @Route("/galleryexample1")
+     * @Route("/galleryexample2")
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -146,7 +146,7 @@ class DefaultController extends BaseController
 
     public function galleryexample2Action()
     {
-        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
+        return $this->render('AppBundle:Events:galleryexample2.html.twig', [
 
         ]);
     }
