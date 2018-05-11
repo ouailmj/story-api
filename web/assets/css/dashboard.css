@@ -510,6 +510,9 @@ body,html{
 .arrows{
     float: right;
     margin-right: 80px;
+    position: absolute;
+    bottom: 0;
+    right: 6%;
 }
 
 .arrows ul{
@@ -630,7 +633,7 @@ button:hover {
     color: #fff;
 }
 #generic_price_table{
-    margin: 50px 50px;
+    margin: 20px 50px;
     font-family: 'Raleway', sans-serif;
 }
 .row .table{
@@ -991,7 +994,7 @@ button:hover {
     min-height: 500px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
 }
 
 .input-container .section-one{
@@ -1074,7 +1077,7 @@ button:hover {
     min-height: 500px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
 }
 
 .event-challenge-form .my-challenge{
@@ -1105,7 +1108,7 @@ button:hover {
     min-height: 500px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
     width: 996px;
     margin-left: auto;
     margin-right: auto;
@@ -1171,7 +1174,7 @@ button:hover {
     min-height: 500px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
     width: 996px;
     margin-left: auto;
     margin-right: auto;
@@ -1186,7 +1189,7 @@ button:hover {
 
 #appbundle_event_coverType{
     text-align: center;
-    margin-left: 100px;
+    margin-left: 40%;
 }
 
 .event-cover-form .radio input[type="radio"]{
