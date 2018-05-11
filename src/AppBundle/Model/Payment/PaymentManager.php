@@ -61,14 +61,18 @@ class PaymentManager
 
     public function isTotalPayed(Event $event)
     {
+        $amount =  $this->TotalPayed($event);
+        if($amount >= $event->getEventPurchase()->getPlan()->getPrice())  return true;
+        return false;
+    }
+    public function TotalPayed(Event $event)
+    {
         $amount = 0;
         foreach ($event->getEventPurchase()->getPayments() as $payment)
         {
             $amount += $payment->getTotalAmount();
         }
-
-
-        if($amount >= $event->getEventPurchase()->getPlan()->getPrice())  return true;
-        return false;
+        return $amount;
     }
+
 }

@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
     <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -27,7 +26,7 @@
 </head>
 {% block body %}
 
-    <body {% block body_attributes %}class="layout-boxed"{% endblock %}>
+    <body {% block body_attributes %}class="navbar-bottom sidebar-opposite-visible  pace-done"{% endblock %}>
 
     <!-- Main navbar -->
     {% block main_navbar %}
@@ -91,16 +90,14 @@
             <!-- Page content -->
             <div class="page-content">
                 {% block left_sidebar %}
-                    {# {% include 'layout/left_sidebar.html.twig' %} #}
+                   {#  {% include 'layout/left_sidebar.html.twig' %}#}
                 {% endblock %}
                 <!-- Main content -->
                 <div class="content-wrapper">
                     {% block content %}{% endblock %}
                 </div>
-                <!-- /main content -->
-                {% block right_sidebar %}
-                    {# {% include 'layout/right_sidebar.html.twig' %} #}
-                {% endblock %}
+                {% block right_sidebar %}{% endblock %}
+
             </div>
             <!-- /page content -->
             </div>

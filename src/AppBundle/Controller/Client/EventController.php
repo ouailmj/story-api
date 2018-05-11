@@ -290,9 +290,10 @@ class EventController extends BaseController
      *
      * @param Request $request
      * @param Event $event
+     * @param PaymentManager $paymentManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function PaymentAction(Request $request, Event $event)
+    public function PaymentAction(Request $request, Event $event, PaymentManager $paymentManager)
     {
         $form = $this->createForm(PaymentEventType::class);
         $form->handleRequest($request);
@@ -320,10 +321,7 @@ class EventController extends BaseController
             return $this->redirect($captureToken->getTargetUrl()  );
 
         }
-        $sumPayed=0;
-            foreach ( $event->getEventPurchase()->getPayments() as $item){
-                $sumPayed+=$item->getTotalAmount();
-            }
+        $sumPayed=$paymentManager->TotalPayed($event);
         return $this->render('client/event/payment.html.twig', [
             'form' => $form->createView(),
             'event' => $event,

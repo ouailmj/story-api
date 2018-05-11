@@ -18,6 +18,7 @@ use AppBundle\AppEvents;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPurchase;
 use AppBundle\Entity\Media;
+use AppBundle\Entity\Payment;
 use AppBundle\Entity\Plan;
 use AppBundle\Entity\User;
 use AppBundle\Event\NewMediaUploadedEvent;
@@ -144,5 +145,28 @@ class EventManager
             if($currentStep === '') return null;
         }
         return $res;
+    }
+
+    public function countEventByPayment($isPayed=true)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->getNbEventByPyment($isPayed);
+        $res = empty($res) ? null : $res[0];
+        if($res === null) return 0;
+        return $res['NB_EVENT'];
+    }
+    public function countEventByPlan($planKey)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->getNbEventByPlan($planKey);
+        $res = empty($res) ? null : $res[0];
+        if($res === null) return 0;
+        return $res['NB_EVENT'];
+    }
+
+    public function countAllPayment()
+    {
+        $res = $this->entityManager->getRepository(Payment::class)->getAllSUMPayment();
+        $res = empty($res) ? null : $res[0];
+        if($res === null) return 0;
+        return $res['somme'];
     }
 }
