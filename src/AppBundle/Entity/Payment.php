@@ -15,6 +15,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Payum\Core\Model\Payment as BasePayment;
 
 /**
@@ -26,6 +27,8 @@ use Payum\Core\Model\Payment as BasePayment;
  */
 class Payment extends BasePayment
 {
+    use TimestampableEntity;
+
     /**
      * @var int
      *

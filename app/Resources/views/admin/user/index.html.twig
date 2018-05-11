@@ -20,7 +20,6 @@
         <table class="table datatable-responsive table-bordered table-hover datatable-highlight">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>{{ 'user.fields.username'|trans }}</th>
                     <th>{{ 'user.fields.full_name'|trans }}</th>
                     <th>{{ 'user.fields.email'|trans }}</th>
@@ -35,7 +34,6 @@
             <tbody>
             {% for user in users %}
                 <tr>
-                    <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.fullName }}</td>
                     <td>{{ user.email }}</td>

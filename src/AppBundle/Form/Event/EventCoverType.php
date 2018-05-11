@@ -33,8 +33,9 @@ class EventCoverType extends AbstractType
                 'label' => false,
                 'choices' => [
                     'Video' => 'video',
-                    'image' => 'image',
+                    'Image' => 'image',
                 ],
+                'data' => 'image',
                 'attr'  => [
                     'name' => 'type',
                     'class'=> 'form-check-input',

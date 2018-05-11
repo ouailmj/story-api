@@ -1,0 +1,190 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-success-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbEventPayed }}</h3>
+                        <span class="text-uppercase text-size-mini">  déja payé</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-coin-euro icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-danger-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbEventNoPayed }}</h3>
+                        <span class="text-uppercase text-size-mini">  non payé</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-coin-euro icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-indigo-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-left media-middle">
+                        <i class="icon-star-full2 icon-3x opacity-75"></i>
+                    </div>
+
+                    <div class="media-body text-right">
+                        <h3 class="no-margin">{{ nbEventFree}}</h3>
+                        <span class="text-uppercase text-size-mini">Gratuit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-orange-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-left media-middle">
+                        <i class="icon-cash3 icon-3x opacity-75"></i>
+                    </div>
+
+                    <div class="media-body text-right">
+                        <h3 class="no-margin">{{ nbEventNoPayed+nbEventPayed  }}</h3>
+                        <span class="text-uppercase text-size-mini">  payant</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-slate-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbEventStarter }}</h3>
+                        <span class="text-uppercase text-size-mini">  Starter</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-pulse2 icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-slate-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbEventLuxury }}</h3>
+                        <span class="text-uppercase text-size-mini">  Luxury</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-pulse2 icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-slate-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbEventPremium }}</h3>
+                        <span class="text-uppercase text-size-mini">  Premium</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-pulse2 icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-teal-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-left media-middle">
+                        <i class="icon-cash icon-3x opacity-75"></i>
+                    </div>
+                    {% set price = (sumPayment)|split('.') %}
+                    <div class="media-body text-right">
+                        <h3 class="no-margin text-bold">
+                            <span class="currency">
+                                {% if price[0] is defined %}
+                                    {{ price[0] }}
+                                {% else %}0{% endif %}
+                            </span>
+                            <span class="cent">.
+                                {% if price[1] is defined %}
+                                    {{ price[1] }}
+                                {% else %}00{% endif %}
+                                    </span>
+                            €
+                        </h3>
+                        <span class="text-uppercase text-size-mini">Chiffre d'affiare</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h5 class="panel-title">Events list</h5>
+            <div class="heading-elements">
+                <ul class="icons-list">
+                    <li><a data-action="collapse"></a></li>
+                    <li><a data-action="reload"></a></li>
+                    <li><a data-action="close"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel-body"></div>
+
+        <table class="table datatable-responsive table-bordered table-hover datatable-highlight">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Place</th>
+                    <th>Privacy</th>
+                    <th>Plan</th>
+                    <th>Startsat</th>
+                    <th>Endsat</th>
+                    <th>CreatedBy</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>{{ event.place }}</td>
+                    <td>{{ event.privacy }}</td>
+                    <td>{{ event.eventPurchase.plan.planKey }}</td>
+                    <td>{% if event.startsAt %}{{ event.startsAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if event.endsAt %}{{ event.endsAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td><a href="{{ path('user_show', { 'id': event.createdBy.id }) }}">{{ event.createdBy.fullName }}</a></td>
+                    <td class="text-center">
+                        <div class="">
+                            <a title="Afficher les détails" href="{{ path('event_show', { 'id': event.id }) }}" class="text-primary legitRipple"><i class="icon-eye position-left"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

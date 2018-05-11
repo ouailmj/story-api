@@ -38,14 +38,28 @@
             <div class="price-label">
                 <span class="plan-name">{{ event.eventPurchase.plan.name }} plan :</span>
                 {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
-                <span class="plan-price">{{price[0]  }}.{{ price[1] }}€</span>
+                <span class="plan-price">
+                    {% if price[0] is defined %}
+                        {{ price[0] }}
+                    {% else %}0{% endif %}.
+                    {% if price[1] is defined %}
+                    {{ price[1] }}
+                {% else %}00{% endif %}€
+                </span>
             </div>
         </div>
         <div class="row">
             <div class="col-md-5 price-label price-rest">
                 <span class="plan-name">Montant payé :</span>
-                {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
-                <span class="plan-price">{{price[0]  }}.{{ price[1] }}€</span>
+                {% set price = (sumPayed/100)|split('.') %}
+                <span class="plan-price">
+                    {% if price[0] is defined %}
+                        {{ price[0] }}
+                    {% else %}0{% endif %}.
+                {% if price[1] is defined %}
+                    {{ price[1] }}
+                {% else %}00{% endif %}€
+                </span>
             </div>
             <div class="col-md-5">
                 <a type="button" class="btn btn-info coupon" data-toggle="modal" data-target="#myModal">Add Coupon</a>
@@ -90,13 +104,14 @@
             </div>
         {{ form_rest(form)}}
     </div>
-    {{ form_end(form) }}
+
     <div class="arrows">
         <ul>
-            <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+            <a href="{{ path('add_event_event_cover' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
             <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
         </ul>
     </div>
+        {{ form_end(form) }}
 </div>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">

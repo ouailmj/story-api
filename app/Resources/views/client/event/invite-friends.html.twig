@@ -45,12 +45,15 @@
                     </div>
                 </div>
                 <div>
-                    <button>Send</button>
+                    <button type="submit">Send</button>
                     <button>Partager</button>
                 </div>
                 <div class="arrows">
                     <ul>
-                        <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                        {% set route = 'add_event_payment' %}
+                        {%  if isPaid %}    {% set route = 'add_event_event_cover' %}   {% endif %}
+
+                        <a href="{{ path(route , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
                         <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                     </ul>
                 </div>
