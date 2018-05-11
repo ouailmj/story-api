@@ -2,25 +2,30 @@
     <img src="{{ asset('assets/images/logo.png') }}" class="responsive" alt="">
     <div class="menu">
         <div class="item margin-bottom">
-            <i class="icon-quill4"></i><a href="#">Events</a>
+            <i class="icon-quill4"></i><a href="{{ path('list-event') }}">Events</a>
         </div>
         <div class="item active">
-            <i class="icon-plus3"></i><a href="">Add Event</a>
+            <i class="icon-plus3"></i><a href="{{ path('add_event_index') }}">Add Event</a>
         </div>
     </div>
     <div class="user">
         <div class="info">
             <div class="avatar">
-                <img src="{{ asset('images/image.png') }}" alt="">
+
+                {% if app.user.avatar == null %}
+                    <img src="{{ asset('images/image.png')|imagine_filter('media_thumb') }}" alt="">
+                {% else %}
+                    <img src="{{ asset('uploads/'~ app.user.avatar.src)|imagine_filter('media_thumb') }}" alt="">
+                {% endif %}
             </div>
-            <h4>username</h4>
+            <h4>{{ app.user.username }}</h4>
         </div>
         <div class="setting">
             <div class="item">
-               <a href="#"> <i class="icon-user"></i></a>
+               <a href="{{ path('fos_user_profile_edit') }}"> <i class="icon-user"></i></a>
             </div>
             <div class="item">
-                <a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                <a href="{{path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>

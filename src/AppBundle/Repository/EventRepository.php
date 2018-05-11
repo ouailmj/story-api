@@ -22,6 +22,11 @@ namespace AppBundle\Repository;
  */
 class EventRepository extends BaseRepository
 {
+    /**
+     * @param bool $payed
+     * @return array
+     * @throws \Doctrine\DBAL\DBALException
+     */
     public function getNbEventByPyment($payed=true)
     {
     /*    $subqueryBuilder = $this->createQueryBuilder('subev');
@@ -72,6 +77,10 @@ class EventRepository extends BaseRepository
 
     }
 
+    /**
+     * @param $planKey
+     * @return mixed
+     */
     public function getNbEventByPlan($planKey)
     {
         $qb = $this->createQueryBuilder('ev');
@@ -94,6 +103,32 @@ class EventRepository extends BaseRepository
                 ->getQuery()
                 ->getResult()
             ;
+        return $res;
+
+    }
+
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    public function getPassedEvents($user)
+    {
+        $qb = $this->createQueryBuilder('ev');
+
+        $res =
+            $qb
+                ->select("ev")
+                ->where('
+                             ev.createdBy = :user  
+                         AND
+                            ev.closedAt IS NOT NULL
+                         '
+                )
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult()
+        ;
         return $res;
 
     }

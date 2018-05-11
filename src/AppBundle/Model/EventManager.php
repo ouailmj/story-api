@@ -22,6 +22,7 @@ use AppBundle\Entity\Payment;
 use AppBundle\Entity\Plan;
 use AppBundle\Entity\User;
 use AppBundle\Event\NewMediaUploadedEvent;
+use AppBundle\Model\Payment\PaymentManager;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -40,18 +41,23 @@ class EventManager
     /** @var EventDispatcher */
     private $eventDispatcher;
 
+    /** @var PaymentManager */
+    private $paymentManager;
+
     /**
      * EventManager constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param MediaManager           $mediaManager
      * @param UserManager            $userManager
+     * @param PaymentManager            $paymentManager
      */
-    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager)
+    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, PaymentManager $paymentManager)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->userManager = $userManager;
+        $this->paymentManager = $paymentManager;
 
         $this->eventDispatcher = new EventDispatcher();
     }
@@ -147,6 +153,10 @@ class EventManager
         return $res;
     }
 
+    /**
+     * @param bool $isPayed
+     * @return int
+     */
     public function countEventByPayment($isPayed=true)
     {
         $res = $this->entityManager->getRepository(Event::class)->getNbEventByPyment($isPayed);
@@ -154,6 +164,11 @@ class EventManager
         if($res === null) return 0;
         return $res['NB_EVENT'];
     }
+
+    /**
+     * @param $planKey
+     * @return int
+     */
     public function countEventByPlan($planKey)
     {
         $res = $this->entityManager->getRepository(Event::class)->getNbEventByPlan($planKey);
@@ -162,11 +177,47 @@ class EventManager
         return $res['NB_EVENT'];
     }
 
+    /**
+     * @return int
+     */
     public function countAllPayment()
     {
         $res = $this->entityManager->getRepository(Payment::class)->getAllSUMPayment();
         $res = empty($res) ? null : $res[0];
         if($res === null) return 0;
         return $res['somme'];
+    }
+
+    /**
+     * @param $user
+     * @return mixed
+     */
+    public function getPassedEvents($user)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->getPassedEvents($user);
+        return $res;
+
+    }
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function getUpcomingEvents($user)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user, 'closedAt' => null]);
+        return $res;
+
+    }
+
+    public function getIsPaidEvents($user)
+    {
+        $events = $this->getUpcomingEvents($user);
+
+        $res = [];
+        foreach($events as $event){
+           $res[$event->getId()] =  $this->paymentManager->isTotalPayed($event);
+        }
+        return $res;
     }
 }
