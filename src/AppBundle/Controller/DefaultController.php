@@ -51,7 +51,7 @@ class DefaultController extends BaseController
     public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
         $event = $this->getEM()->find(Event::class, 1);
-        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/img.jpg', $this->getUser());
+        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/images/Imagetests/1.jpg', $this->getUser());
         $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
        // VarDumper::dump($event->getUploadedMedias()->toArray());
@@ -104,50 +104,33 @@ class DefaultController extends BaseController
         ]);
     }
 
-
     /**
-     * @Route("/event/{event}/gallerytest")
+     * @Route("/event/{event}/galleryex1")
      * @throws \Exception
      *
-     * @param Event $event
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
 
-
-    public function gallerytestAction(Event $event)
+    public function galleryexample1Action(Event $event)
     {
-        return $this->render('AppBundle:Events:gallerytest.html.twig', [
+        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
             'event' => $event,
         ]);
     }
 
     /**
-     * @Route("/galleryexample1")
+     * @Route("/event/{event}/galleryexample2")
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
 
 
-    public function galleryexample1Action()
-    {
-        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
-        ]);
-    }
-
-    /**
-     * @Route("/galleryexample2")
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-
-
-    public function galleryexample2Action()
+    public function galleryexample2Action(Event $event) //working with websocket
     {
         return $this->render('AppBundle:Events:galleryexample2.html.twig', [
-
+            'event' => $event,
         ]);
     }
 
