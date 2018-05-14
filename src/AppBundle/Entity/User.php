@@ -137,6 +137,17 @@ class User extends BaseUser
     protected $avatar = null;
 
     /**
+     * @var BaseNotification[] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BaseNotification", mappedBy="triggeredBy")
+     */
+    protected $triggeredNotifications;
+
+    /**
+     * @var NotificationCenter
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\NotificationCenter",  mappedBy="receiver", cascade={"persist", "remove"})
+     */
+    protected $notificationCenter;
+    /**
      * User constructor.
      */
     public function __construct()
@@ -644,4 +655,39 @@ class User extends BaseUser
     {
         return $this->medias->removeElement($media);
     }
+
+    /**
+     * @return BaseNotification[]|ArrayCollection
+     */
+    public function getTriggeredNotifications()
+    {
+        return $this->triggeredNotifications;
+    }
+
+    /**
+     * Add notification.
+     *
+     * @param \AppBundle\Entity\BaseNotification $notification
+     *
+     * @return User
+     */
+    public function addNotification(BaseNotification $notification)
+    {
+        $this->triggeredNotifications[] = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Remove notification.
+     *
+     * @param \AppBundle\Entity\BaseNotification $notification
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeNotification(BaseNotification $notification)
+    {
+        return $this->triggeredNotifications->removeElement($notification);
+    }
+
 }
