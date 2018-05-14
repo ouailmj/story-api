@@ -27,7 +27,6 @@ use Symfony\Component\HttpFoundation\Request;
  * User controller.
  *
  * @Route("admin/user")
- * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends BaseController
 {
