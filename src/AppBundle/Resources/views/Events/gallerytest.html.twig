@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/test.css') }}"/>
+    <script type="text/javascript" src="{{ asset('assets/js/test.js') }}"></script>
+</head>
+<body id="bd">
+<div id="gallery" data-event-id="{{ event.id }}"><!-- click to bring the slideshow in and out of fullscreen mode -->
+<figure id="container" onclick="fullScreen(this)">
+    <figure id="slideshow">
+        <div id="slide" class="slider" data-event-id="{{ event.id }}">
+        </div>
+        {#<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/dada-voltaire-tinkerbot.jpg" alt>#}
+        {#<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/happy-bot-tinkerbot.jpg" alt>#}
+        {#<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/sgt-swift-tinkerbot.jpg" alt>#}
+        {#<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/xf-3-fandicaff-tinkerbot.jpg" alt>#}
+    </figure>
+</figure>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('assets/js/autobahn.js') }}"></script>
+<script>
+    //const eventId = ""+ $("#gallery").data('event-id');
+    const eventId = ""+ $("#slide").data('event-id');
+
+    var conn = new ab.Session('ws://127.0.0.1:8888',
+        function() {
+            conn.subscribe(eventId, function(topic, data) {
+                // This is where you would add the new images to the DOM
+                console.log('Topic: ' + topic );
+                console.log(data);
+                //var gallery = $('#gallery');
+                var slide = $('#slideshow');
+                var author = $('#event_name');
+                // gallery.append("<p>Image By: " + data._name + "</p>");
+                //gallery.append("<img src=" + data._image +">");
+               slide.append("<img src="+ data._image +">");
+               //author.append("<p>Image By: " + data._name + "</p>");
+            });
+        },
+
+        function() {
+            console.warn('WebSocket connection closed');
+        },
+        {'skipSubprotocolCheck': true}
+    );
+</script>
+</body>
+</html>
