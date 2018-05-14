@@ -195,8 +195,12 @@ class EventController extends BaseController
      */
     public function EventChallengeAction(Request $request, Event $event){
 
-       if(!$event->getEventPurchase()->getPlan()->getEnableChallenges()) return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+       if(!$event->getEventPurchase()->getPlan()->getEnableChallenges()){
 
+           $event->setCurrentStep('event-information');
+           $this->getDoctrine()->getManager()->flush();
+           return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
+       }
 
         $hours = array( );
         $startsAt=$event->getStartsAt() instanceof \DateTime ? Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) : null;

@@ -66,7 +66,7 @@ class EventController extends BaseController
     {
         $deleteForm = $this->createDeleteForm($event);
 
-        return $this->render('admin/event/show.html.twig', array(
+        return $this->render('admin/event/show_2.html.twig', array(
             'event' => $event,
             'delete_form' => $deleteForm->createView(),
             'TotalPayed' => $paymentManager->TotalPayed($event),

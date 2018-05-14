@@ -44,7 +44,7 @@ class Challenge implements Timestampable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
-     * @Assert\NotBlank()
+     * 
      */
     private $description = '';
 
