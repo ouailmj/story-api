@@ -690,4 +690,20 @@ class User extends BaseUser
         return $this->triggeredNotifications->removeElement($notification);
     }
 
+    /**
+     * @return NotificationCenter
+     */
+    public function getNotificationCenter()
+    {
+        return $this->notificationCenter;
+    }
+
+    /**
+     * @param NotificationCenter $notificationCenter
+     */
+    public function setNotificationCenter(NotificationCenter $notificationCenter)
+    {
+        $this->notificationCenter = $notificationCenter;
+    }
+
 }
