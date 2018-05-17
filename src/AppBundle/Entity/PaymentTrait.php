@@ -9,6 +9,9 @@
 namespace AppBundle\Entity;
 
 
+use Payum\Core\Model\BankAccountInterface;
+use Payum\Core\Model\CreditCardInterface;
+
 trait PaymentTrait
 {
     /**
