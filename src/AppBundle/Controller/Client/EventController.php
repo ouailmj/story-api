@@ -94,7 +94,6 @@ class EventController extends BaseController
                 return $this->redirectToRoute('add_event_invite_friends', ['id'=> $event->getId()]);
                 break;
             case 'finish':
-                //TODO: change route when develop event list
                 $event->setCurrentStep('');
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('list-event');
@@ -385,7 +384,6 @@ class EventController extends BaseController
             
             $emails= explode(";",$items );
             foreach ( $emails as $email){
-              
                 if($email != null && $email != '')  $invitationRequestManager->createInvitationRequest($email, $event, false);
             }
             $event->setCurrentStep('finish');

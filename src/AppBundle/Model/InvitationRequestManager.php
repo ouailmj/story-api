@@ -25,22 +25,38 @@ class InvitationRequestManager
 {
     /** @var EntityManagerInterface */
     private $entityManager;
+
     /**
      * @var FOSUserManager
      */
     private $fosUserManager;
 
     /**
-     * InvitationRequestManager constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param FOSUserManager $fosUserManager
+     * @var NotificationManager
      */
-    public function __construct(EntityManagerInterface $entityManager,  FOSUserManager $fosUserManager)
+    private $notificationManager;
+
+    /**
+     * InvitationRequestManager constructor.
+     * @param EntityManagerInterface    $entityManager
+     * @param FOSUserManager            $fosUserManager
+     * @param NotificationManager       $notificationManager
+     */
+    public function __construct(EntityManagerInterface $entityManager,  FOSUserManager $fosUserManager, NotificationManager $notificationManager)
     {
         $this->entityManager = $entityManager;
         $this->fosUserManager = $fosUserManager;
+        $this->notificationManager = $notificationManager;
     }
 
+    /**
+     * @param $email
+     * @param Event $event
+     * @param bool $flush
+     * @return InvitationRequest
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function createInvitationRequest($email, Event $event, $flush = true){
 
         $user = $this->fosUserManager->findUserByUsernameOrEmail($email);
@@ -54,6 +70,8 @@ class InvitationRequestManager
             $invitationRequest->setUser($user);
             $user->addInvitationRequest($invitationRequest);
         }
+
+        $this->notificationManager->createNotificationForInvitationRequest($invitationRequest, $event->getCreatedBy());
 
         $this->entityManager->persist($invitationRequest);
        if($flush) $this->entityManager->flush();

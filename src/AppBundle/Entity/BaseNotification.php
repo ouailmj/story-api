@@ -17,6 +17,8 @@ namespace AppBundle\Entity;
 
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Templating\EngineInterface;
 
 /**
  * Class BaseNotification
@@ -59,9 +61,29 @@ abstract class BaseNotification implements NotificationInterface
     /**
      * @var string
      *
-     *  @ORM\Column(name="message", type="string")
+     *  @ORM\Column(name="message", type="text")
      */
     protected $message = '';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="read_at", type="datetime", nullable=true)
+     */
+    protected $readAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="send_at", type="datetime", nullable=true)
+     */
+    protected $sendAt = null;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $deleteOnRead=false;
 
     /**
      * @var User
@@ -147,26 +169,75 @@ abstract class BaseNotification implements NotificationInterface
         $this->notificationCenter = $notificationCenter;
     }
 
-
-    public function send()
+    /**
+     * @return \DateTime
+     */
+    public function getReadAt()
     {
-        // TODO: Implement send() method.
+        return $this->readAt;
     }
 
-    public function formatMessageToMail()
+    /**
+     * @param \DateTime $readAt
+     */
+    public function setReadAt(\DateTime $readAt)
     {
-        // TODO: Implement formatMessageToMail() method.
+        $this->readAt = $readAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleteOnRead(): bool
+    {
+        return $this->deleteOnRead;
+    }
+
+    /**
+     * @param bool $deleteOnRead
+     */
+    public function setDeleteOnRead(bool $deleteOnRead)
+    {
+        $this->deleteOnRead = $deleteOnRead;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getSendAt()
+    {
+        return $this->sendAt;
+    }
+
+    /**
+     * @param \DateTime $sendAt
+     */
+    public function setSendAt(\DateTime $sendAt)
+    {
+        $this->sendAt = $sendAt;
+    }
+
+
+    public function formatMessageToMail(EngineInterface $templateEngine, UrlGeneratorInterface $router)
+    {
+        switch ($this){
+            case InvitationRequestNotification::class:
+                // TODO: change url ...
+                $url = $router->generate('fos_user_registration_register');
+
+                return $templateEngine->render('mail/notification/invitation_request.html.twig', [
+                    'event_creator' => $this->triggeredBy->getUsername(),
+                    'message' => $this->message,
+                    'link' => $url,
+                ]);
+            default:
+                return false;
+        }
     }
 
     public function formatMessageToText()
     {
         // TODO: Implement formatMessageToText() method.
     }
-
-    public function sendBulk()
-    {
-        // TODO: Implement sendBulk() method.
-    }
-
 
 }
