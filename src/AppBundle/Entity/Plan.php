@@ -52,7 +52,6 @@ class Plan
      * @var int
      *
      * @ORM\Column(name="price", type="integer")
-     * @ORM\Column(name="price", type="decimal")
      */
     private $price = 0;
 

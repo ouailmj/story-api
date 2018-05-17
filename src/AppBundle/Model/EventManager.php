@@ -44,22 +44,16 @@ class EventManager
      * EventManager constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param MediaManager           $mediaManager
-     * @param UserManager            $userManager
-     * @param EventDispatcher        $eventDispatcher
      * @param MediaManager $mediaManager
      * @param UserManager $userManager
      * @param EventDispatcher $eventDispatcher
      */
     public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, EventDispatcher $eventDispatcher)
-    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager,EventDispatcher $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
-
-        $this->eventDispatcher = $eventDispatcher ;
     }
 
 
@@ -99,11 +93,11 @@ class EventManager
     }
 
     /**
-     * @param int       $eventId
-     * @param Media     $media
+     * @param int $eventId
+     * @param Media $media
      * @param User|null $by
-     *
      * @return Event
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function addMedia(int $eventId, Media $media, User $by = null): Event
     {
@@ -130,8 +124,8 @@ class EventManager
     /**
      * @param $eventId
      * @param bool $inTrash
-     *
      * @return Event
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function findEventById($eventId, $inTrash = false): Event
     {

@@ -73,7 +73,6 @@ class MediaManager
      *
      * @return Media
      */
-    public function createMediaFromFile(File $file, User $by, $andSave = true)
     public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class)
     {
         /**  @var Media $media  **/
@@ -138,16 +137,16 @@ class MediaManager
 
     /**
      * @param UploadedFile $file
-     * @param User|null    $by
-     * @param bool         $andSave
-     *
+     * @param User|null $by
+     * @param bool $andSave
+     * @return Media
      * @throws FileNotAuthorizedException
-     *
-     * @return Media|void
      */
     public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
     {
         $imageTypes = ['JPG', 'PNG', 'JPEG'];
+
+        // TODO: use the mime content type function @see mime_content_type($filename)
         if (in_array(strtoupper($file->getClientOriginalExtension()), $imageTypes, true)) {
             $file = $this->uploadManager->upload($file);
 
@@ -169,11 +168,22 @@ class MediaManager
     {
         $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV' ];
 
+        // TODO: use the mime content type function @see mime_content_type($filename)
         if (in_array(strtoupper($file->getClientOriginalExtension()), $videoTypes, true)) {
             $file = $this->uploadManager->upload($file);
 
             return $this->createMediaFromFile($file, $by, $andSave, Video::class);
         }
         throw new FileNotAuthorizedException();
+    }
+
+    private function isImage($file)
+    {
+        // TODO: use the mime content type function @see mime_content_type($filename)
+    }
+
+    private function isVideo($file)
+    {
+        // TODO: use the mime content type function @see mime_content_type($filename)
     }
 }
