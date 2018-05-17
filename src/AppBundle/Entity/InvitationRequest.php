@@ -61,7 +61,7 @@ class InvitationRequest
      *
      * @ORM\Column(name="channels", type="array")
      */
-    protected $channels = ['email'=> ''];
+    protected $channels = ['email' => ''];
 
     /**
      * @var Event
@@ -76,7 +76,6 @@ class InvitationRequest
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="invitationRequests")
      */
     protected $user;
-
 
     /**
      * @var InvitationRequestNotification
@@ -245,5 +244,4 @@ class InvitationRequest
     {
         $this->notification = $notification;
     }
-
 }

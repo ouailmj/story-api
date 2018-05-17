@@ -317,40 +317,48 @@ class UserManager
     }
 
     /**
-     * @return int
      * @throws \Doctrine\ORM\ORMException
+     *
+     * @return int
      */
     public function getNbAdmin()
     {
         $res = $this->em->getRepository(User::class)->getNbUsersByRole();
 
         $res = empty($res) ? null : $res[0];
-        if($res === null) return 0;
+        if (null === $res) {
+            return 0;
+        }
         return $res['NB_USERS'];
     }
 
     /**
-     * @return int
      * @throws \Doctrine\ORM\ORMException
+     *
+     * @return int
      */
     public function getNbUsersDisabled()
     {
         $res = $this->em->getRepository(User::class)->getNbUsersDisabled();
         $res = empty($res) ? null : $res[0];
-        if($res === null) return 0;
+        if (null === $res) {
+            return 0;
+        }
         return $res['NB_USERS'];
     }
 
     /**
-     * @return int
      * @throws \Doctrine\ORM\ORMException
+     *
+     * @return int
      */
     public function getNbClient()
     {
-        $res = $this->em->getRepository(User::class)->getNbUsersByRole("ROLE_USER");
+        $res = $this->em->getRepository(User::class)->getNbUsersByRole('ROLE_USER');
         $res = empty($res) ? null : $res[0];
-        if($res === null) return 0;
+        if (null === $res) {
+            return 0;
+        }
         return $res['NB_USERS'];
     }
-
 }

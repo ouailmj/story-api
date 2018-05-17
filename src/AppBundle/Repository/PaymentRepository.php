@@ -25,9 +25,10 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
     public function getSUMPayment($idEventPurchase)
     {
         $qb = $this->createQueryBuilder('p');
+
         return
             $qb
-                ->select("SUM(p.totalAmount) as somme , ep.id ")
+                ->select('SUM(p.totalAmount) as somme , ep.id ')
                 ->innerJoin('p.eventPurchase', 'ep')
                 ->where(
                     '
@@ -43,18 +44,17 @@ class PaymentRepository extends \Doctrine\ORM\EntityRepository
                 ->getQuery()
                 ->getResult()
             ;
-
     }
 
     public function getAllSUMPayment()
     {
         $qb = $this->createQueryBuilder('p');
+
         return
             $qb
-                ->select("SUM(p.totalAmount) as somme ")
+                ->select('SUM(p.totalAmount) as somme ')
                 ->getQuery()
                 ->getResult()
             ;
-
     }
 }

@@ -147,6 +147,7 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\NotificationCenter",  mappedBy="receiver", cascade={"persist", "remove"})
      */
     protected $notificationCenter;
+
     /**
      * User constructor.
      */
@@ -705,5 +706,4 @@ class User extends BaseUser
     {
         $this->notificationCenter = $notificationCenter;
     }
-
 }

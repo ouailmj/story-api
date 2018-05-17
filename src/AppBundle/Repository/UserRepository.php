@@ -24,16 +24,16 @@ class UserRepository extends BaseRepository
 {
     /**
      * @param string $role
+     *
      * @return mixed
      */
-    public function getNbUsersByRole($role = "ROLE_SUPER_ADMIN")
+    public function getNbUsersByRole($role = 'ROLE_SUPER_ADMIN')
     {
-
-        if( $role === "ROLE_USER" ){
-            $query=' u.roles = :roles';
+        if ('ROLE_USER' === $role) {
+            $query = ' u.roles = :roles';
             $role = 'a:0:{}';
-        }else{
-            $query='u.roles LIKE :roles';
+        } else {
+            $query = 'u.roles LIKE :roles';
             $role = '%"'.$role.'"%';
         }
 
@@ -41,12 +41,13 @@ class UserRepository extends BaseRepository
 
         $res =
             $qb
-                ->select("COUNT(u) as NB_USERS")
+                ->select('COUNT(u) as NB_USERS')
                 ->where($query)
                 ->setParameter('roles', $role)
                 ->getQuery()
                 ->getResult()
         ;
+
         return $res;
     }
 
@@ -59,11 +60,12 @@ class UserRepository extends BaseRepository
 
         $res =
             $qb
-                ->select("COUNT(u) as NB_USERS")
+                ->select('COUNT(u) as NB_USERS')
                 ->where('u.enabled = 0')
                 ->getQuery()
                 ->getResult()
         ;
+
         return $res;
     }
 }

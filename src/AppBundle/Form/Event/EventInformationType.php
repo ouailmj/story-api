@@ -14,11 +14,8 @@
 
 namespace AppBundle\Form\Event;
 
-
-use AppBundle\Form\ChallengeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,31 +31,31 @@ class EventInformationType extends AbstractType
     {
         $builder
         ->add('title', TextType::class, [
-            'label' =>false,
+            'label' => false,
         ])
         ->add('place', TextType::class, [
             'label' => false,
         ])
         ->add('startsAt', DateTimeType::class, [
             'widget' => 'single_text',
-            'label' =>false,
-            'attr'  => [
+            'label' => false,
+            'attr' => [
                 'id' => 'startAt',
-            ]
+            ],
         ])
-        ->add('endsAt',  DateTimeType::class, [
+        ->add('endsAt', DateTimeType::class, [
             'widget' => 'single_text',
             'label' => false,
-            'attr'  => [
+            'attr' => [
                 'id' => 'startAt',
-            ]
+            ],
         ])
         ->add('privacy', ChoiceType::class, [
             'label' => false,
             'attr' => ['class' => 'select-search'],
             'choices' => [
                 'event.fields.private' => 'private',
-                'event.fields.public' => 'public'],
+                'event.fields.public' => 'public', ],
             'multiple' => false,
             'expanded' => false,
             'mapped' => false,
@@ -87,5 +84,4 @@ class EventInformationType extends AbstractType
     {
         return 'appbundle_event';
     }
-
 }

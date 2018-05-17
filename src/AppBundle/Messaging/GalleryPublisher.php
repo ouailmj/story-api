@@ -17,7 +17,6 @@ namespace AppBundle\Messaging;
 use ApiPlatform\Core\JsonLd\Serializer\ItemNormalizer;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Media;
-use Symfony\Component\Serializer\Serializer;
 
 class GalleryPublisher
 {
@@ -30,7 +29,7 @@ class GalleryPublisher
     /**
      * GalleryPublisher constructor.
      *
-     * @param Client $client
+     * @param Client         $client
      * @param ItemNormalizer $serializer
      */
     public function __construct(Client $client, ItemNormalizer $serializer)
@@ -73,18 +72,19 @@ class GalleryPublisher
     private function prepareData(Event $event, Media $media)
     {
         $now = new \DateTime();
-        $diff_sec = $media->getUploadedAt()->format('U')-$now->format('U');
-        if($diff_sec<900) {
-            $data = array(
-                '_image' => "/uploads/" . $media->getSrc(),
-                '_eventId'  => $event->getId(),
-                '_name'     => 'Farah',
-                'media'     => $this->serializer->normalize($media),
-                'event'     => $this->serializer->normalize($event)
-            );
+        $diff_sec = $media->getUploadedAt()->format('U') - $now->format('U');
+        if ($diff_sec < 900) {
+            $data = [
+                '_image' => '/uploads/'.$media->getSrc(),
+                '_eventId' => $event->getId(),
+                '_name' => 'Farah',
+                'media' => $this->serializer->normalize($media),
+                'event' => $this->serializer->normalize($event),
+            ];
 
             return json_encode($data);
         }
+
         return null;
     }
 }

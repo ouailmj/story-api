@@ -20,7 +20,6 @@ use AppBundle\Messaging\GalleryPublisher;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\MediaManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\VarDumper\VarDumper;
 
 class AppEventSubscriber implements EventSubscriberInterface
 {
@@ -42,17 +41,16 @@ class AppEventSubscriber implements EventSubscriberInterface
     /**
      * AppEventSubscriber constructor.
      *
-     * @param EventManager $eventManager
-     * @param MediaManager $mediaManager
+     * @param EventManager     $eventManager
+     * @param MediaManager     $mediaManager
      * @param GalleryPublisher $galleryPublisher
      */
-    public function __construct(EventManager $eventManager, MediaManager $mediaManager,GalleryPublisher $gal)
+    public function __construct(EventManager $eventManager, MediaManager $mediaManager, GalleryPublisher $gal)
     {
         $this->eventManager = $eventManager;
         $this->mediaManager = $mediaManager;
-        $this->gal=$gal;
+        $this->gal = $gal;
     }
-
 
     /**
      * Returns an array of event names this subscriber wants to listen to.
@@ -85,6 +83,7 @@ class AppEventSubscriber implements EventSubscriberInterface
      * Notifies the socket server that a new media is available.
      *
      * @param NewMediaUploadedEvent $event
+     *
      * @throws \Exception
      */
     public function notifyWSServerForNewMedia(NewMediaUploadedEvent $event)

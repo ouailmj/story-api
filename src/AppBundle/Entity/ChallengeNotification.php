@@ -17,8 +17,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class ChallengeNotification
- * @package AppBundle\Entity
+ * Class ChallengeNotification.
  *
  *
  * @ORM\Table(name="challenge_notification")
@@ -26,8 +25,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ChallengeNotification extends BaseNotification
 {
-
-
     /**
      * @var int
      *
@@ -52,19 +49,19 @@ class ChallengeNotification extends BaseNotification
     }
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * @param Challenge $challenge
      */
     public function setChallenge(Challenge $challenge)
     {
         $this->challenge = $challenge;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     public function getObject()
@@ -76,6 +73,4 @@ class ChallengeNotification extends BaseNotification
     {
         // TODO: Implement getSource() method.
     }
-
-
 }

@@ -14,7 +14,6 @@
 
 namespace AppBundle\Form\Event;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -36,10 +35,10 @@ class EventCoverType extends AbstractType
                     'Image' => 'image',
                 ],
                 'data' => 'image',
-                'attr'  => [
+                'attr' => [
                     'name' => 'type',
-                    'class'=> 'form-check-input',
-                    'checked'=> 'checked',
+                    'class' => 'form-check-input',
+                    'checked' => 'checked',
                 ],
                 'multiple' => false,
                 'expanded' => true,
@@ -78,7 +77,6 @@ class EventCoverType extends AbstractType
                 ],
             ])
 
-
         ;
     }
 
@@ -99,5 +97,4 @@ class EventCoverType extends AbstractType
     {
         return 'appbundle_event';
     }
-
 }

@@ -14,10 +14,8 @@
 
 namespace AppBundle\Form\Event;
 
-
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -36,7 +34,7 @@ class ChoosePlanType extends AbstractType
                 'choice_label' => false,
                 'expanded' => true,
                 'multiple' => false,
-                'attr'=> ['class'=> 'form-check-input']
+                'attr' => ['class' => 'form-check-input'],
             ])
         ;
     }
@@ -50,6 +48,4 @@ class ChoosePlanType extends AbstractType
             'plan_data' => null,
         ]);
     }
-
-
 }

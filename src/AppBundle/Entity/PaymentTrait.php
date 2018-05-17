@@ -1,13 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mac
- * Date: 28/04/2018
- * Time: 11:11
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
  */
 
 namespace AppBundle\Entity;
-
 
 use Payum\Core\Model\BankAccountInterface;
 use Payum\Core\Model\CreditCardInterface;
@@ -15,7 +20,7 @@ use Payum\Core\Model\CreditCardInterface;
 trait PaymentTrait
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getNumber()
     {
@@ -31,7 +36,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDescription()
     {
@@ -47,7 +52,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getClientEmail()
     {
@@ -63,7 +68,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getClientId()
     {
@@ -79,7 +84,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTotalAmount()
     {
@@ -95,7 +100,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCurrencyCode()
     {
@@ -111,7 +116,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDetails()
     {
@@ -119,7 +124,7 @@ trait PaymentTrait
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @param array|\Traversable $details
      */

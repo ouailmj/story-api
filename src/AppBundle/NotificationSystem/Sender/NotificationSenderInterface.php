@@ -19,35 +19,38 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 interface NotificationSenderInterface
 {
-
     /**
      * @param Notification $notification
+     *
      * @return mixed
      */
     public function send(Notification $notification);
 
     /**
      * @param Notification $notification
+     *
      * @return mixed
      */
     public function sendNow(Notification $notification);
 
     /**
      * @param Notification[]|ArrayCollection $notifications
+     *
      * @return mixed
      */
     public function sendBulk(ArrayCollection $notifications);
 
     /**
-     * @param  Notification $notification
+     * @param Notification $notification
+     *
      * @return mixed
      */
-    public function sendScheduled (Notification $notification);
+    public function sendScheduled(Notification $notification);
 
     /**
      * @param string $channelName
+     *
      * @return DriverInterface | null
      */
     public function driver(string $channelName);
-
 }

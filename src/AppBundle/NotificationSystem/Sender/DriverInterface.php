@@ -20,8 +20,8 @@ interface DriverInterface
 {
     /**
      * @param Notification $notification
+     *
      * @return mixed
      */
     public function handle(Notification $notification);
-
 }
