@@ -14,6 +14,7 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Entity\Event;
 use AppBundle\Entity\Media;
 use AppBundle\Entity\Video;
 use AppBundle\Entity\Image;
@@ -88,6 +89,8 @@ class MediaManager
 
         return $media;
     }
+
+
 
     /**
      * Creates a media from a file in the local filesystem.
@@ -174,5 +177,18 @@ class MediaManager
             return $this->createMediaFromFile($file, $by, $andSave, Video::class);
         }
         throw new FileNotAuthorizedException();
+    }
+
+    public function mediaUploadedFifteenMinutes(Event $event)
+    {
+        $medias = $event->getUploadedMedias();
+        $now = new \DateTime();
+        $media=[];
+        foreach ($medias as $value){
+             if($value->getUploadedAt()->format('U')- $now->format('U')<900){
+                 $media[]=$value;
+             }
+        }
+        return $media;
     }
 }

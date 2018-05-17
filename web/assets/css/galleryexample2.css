@@ -17,6 +17,9 @@ p{
 html, body{
     line-height: 0.5 !important;
 }
+.w3-content{
+    max-width: 100% !important;
+}
 
 .w3-round-large{
     width: -moz-max-content;

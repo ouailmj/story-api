@@ -31,7 +31,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserManager
 {
-    protected static $defaultAvatar = __DIR__.'/../../../web/assets/images/cat.jpg';
+    protected static $defaultAvatar = __DIR__.'/../../../web/images/Imagetests/1.jpg';
 
     /**
      * @var \FOS\UserBundle\Doctrine\UserManager

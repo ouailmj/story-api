@@ -127,10 +127,12 @@ class DefaultController extends BaseController
      */
 
 
-    public function galleryexample2Action(Event $event) //working with websocket
+    public function galleryexample2Action(Event $event, MediaManager $media) //working with websocket
     {
+        $medias = $media->mediaUploadedFifteenMinutes($event);
         return $this->render('AppBundle:Events:galleryexample2.html.twig', [
             'event' => $event,
+            'medias' => $medias
         ]);
     }
 
