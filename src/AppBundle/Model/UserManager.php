@@ -31,7 +31,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class UserManager
 {
-    protected static $defaultAvatar = __DIR__.'/../../../web/assets/images/avatar.png';
+    protected static $defaultAvatar = __DIR__.'/../../../web/assets/images/cat.jpg';
 
     /**
      * @var \FOS\UserBundle\Doctrine\UserManager
@@ -86,6 +86,7 @@ class UserManager
      * @param TokenGeneratorInterface $tokenGenerator
      * @param TokenStorageInterface   $tokenStorage
      * @param MediaManager            $mediaManager
+     * @param EventDispatcher         $eventDispatcher
      */
     public function __construct(
         FOSUserManager $fosUserManager,
@@ -95,7 +96,8 @@ class UserManager
         JWTManager $jwtTokenManager,
         TokenGeneratorInterface $tokenGenerator,
         TokenStorageInterface $tokenStorage,
-        MediaManager $mediaManager
+        MediaManager $mediaManager,
+        EventDispatcher $eventDispatcher
     ) {
         $this->fosUserManager = $fosUserManager;
         $this->mailer = $mailer;
@@ -106,7 +108,7 @@ class UserManager
         $this->tokenStorage = $tokenStorage;
         $this->mediaManager = $mediaManager;
 
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher = $eventDispatcher;
         $this->retryTtl = 7200;
     }
 
@@ -312,5 +314,51 @@ class UserManager
                 return $event->getResponse();
             }
         }
+    }
+
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     *
+     * @return int
+     */
+    public function getNbAdmin()
+    {
+        $res = $this->em->getRepository(User::class)->getNbUsersByRole();
+
+        $res = empty($res) ? null : $res[0];
+        if (null === $res) {
+            return 0;
+        }
+        return $res['NB_USERS'];
+    }
+
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     *
+     * @return int
+     */
+    public function getNbUsersDisabled()
+    {
+        $res = $this->em->getRepository(User::class)->getNbUsersDisabled();
+        $res = empty($res) ? null : $res[0];
+        if (null === $res) {
+            return 0;
+        }
+        return $res['NB_USERS'];
+    }
+
+    /**
+     * @throws \Doctrine\ORM\ORMException
+     *
+     * @return int
+     */
+    public function getNbClient()
+    {
+        $res = $this->em->getRepository(User::class)->getNbUsersByRole('ROLE_USER');
+        $res = empty($res) ? null : $res[0];
+        if (null === $res) {
+            return 0;
+        }
+        return $res['NB_USERS'];
     }
 }

@@ -44,7 +44,7 @@ AppBundle\Entity\Media:
         expiresAt: <dateTime('+4 years')>
         hasBeenDownloaded: true
         uploadedAt: <dateTime('+2 years')>
-        src: 'image.png'
+        src: 'https://www.argospetinsurance.co.uk/assets/uploads/2017/12/cat-pet-animal-domestic-104827.jpeg'
 
 AppBundle\Entity\Payment:
     payment_{1..120}:
@@ -144,7 +144,7 @@ AppBundle\Entity\Plan:
          description: <sentence()>
          planKey: 'free'
     plan_starter:
-         price: 2.99
+         price: 299
          maxEventDuration: 86400
          maxUploads: 500
          maxGuests: -1
@@ -156,7 +156,7 @@ AppBundle\Entity\Plan:
          planKey: 'starter'
          description: <sentence()>
     plan_luxury:
-         price: 5.99
+         price: 599
          maxEventDuration: 172800
          maxUploads: 1000
          maxGuests: -1
@@ -168,7 +168,7 @@ AppBundle\Entity\Plan:
          planKey: 'luxury'
          description: <sentence()>
     plan_premium:
-         price: 14.99
+         price: 1499
          maxEventDuration: 604800
          maxUploads: 2000
          maxGuests: -1

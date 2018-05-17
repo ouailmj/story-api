@@ -1,0 +1,143 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+    <div class="progressbar-container">
+            <ul class="progress-indicator">
+            <li class="completed">
+                <span class="bubble"></span>
+                Choose plan
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Add Challenge
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Event information
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Event Cover
+            </li>
+            <li class="active">
+                <span class="bubble"></span>
+                Payment
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Invite Friends
+            </li>
+        </ul>
+        </div>
+    <div class="event-pay-form animated zoomInUp">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+         {% form_theme form 'Form/Registration/fields.html.twig' %}
+        <div class="row">
+            <div class="price-label">
+                <span class="plan-name">{{ event.eventPurchase.plan.name }} plan :</span>
+                {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
+                <span class="plan-price">
+                    {% if price[0] is defined %}
+                        {{ price[0] }}
+                    {% else %}0{% endif %}.
+                    {% if price[1] is defined %}
+                    {{ price[1] }}
+                {% else %}00{% endif %}€
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 price-label price-rest">
+                <span class="plan-name">Montant payé :</span>
+                {% set price = (sumPayed/100)|split('.') %}
+                <span class="plan-price">
+                    {% if price[0] is defined %}
+                        {{ price[0] }}
+                    {% else %}0{% endif %}.
+                {% if price[1] is defined %}
+                    {{ price[1] }}
+                {% else %}00{% endif %}€
+                </span>
+            </div>
+            <div class="col-md-5">
+                <a type="button" class="btn btn-info coupon" data-toggle="modal" data-target="#myModal">Add Coupon</a>
+            </div>
+        </div>
+        <div class="pay-inputs">
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.numberCard) }}
+                </div>
+                <div class="type-card col-md-6">
+                    <img class="icon-pay" src="{{ asset('images/brands/visa.png') }}">
+                    <img class="icon-pay" src="{{ asset('images/brands/matsercard.png') }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.cvv) }}
+                </div>
+                <div class="col-md-6 input-container">
+                    <p class="found-it">Where i found it?</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.expireAtMonth) }}
+                </div>
+                <div>
+                    <div class="col-md-6 input-container">
+                    <i class="icon icon-credit-card"></i>
+                    {{ form_row(form.expireAtYear) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <i class="icon icon-credit-card"></i>
+                {{ form_row(form.price) }}
+            </div>
+        {{ form_rest(form)}}
+    </div>
+
+    <div class="arrows">
+        <ul>
+            <a href="{{ path('add_event_event_cover' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+            <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+        </ul>
+    </div>
+        {{ form_end(form) }}
+</div>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Coupon</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" type="button">Add</button>
+                            </span>
+                            <input type="text" class="" placeholder="Search for...">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>    
+        </div>
+    </div>
+    {% block javascripts %}
+
+    {% endblock javascripts %}
+
+{% endblock %}

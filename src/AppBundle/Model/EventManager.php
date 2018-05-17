@@ -18,9 +18,11 @@ use AppBundle\AppEvents;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPurchase;
 use AppBundle\Entity\Media;
+use AppBundle\Entity\Payment;
 use AppBundle\Entity\Plan;
 use AppBundle\Entity\User;
 use AppBundle\Event\NewMediaUploadedEvent;
+use AppBundle\Model\Payment\PaymentManager;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -39,40 +41,43 @@ class EventManager
     /** @var EventDispatcher */
     private $eventDispatcher;
 
+    /** @var PaymentManager */
+    private $paymentManager;
+
     /**
      * EventManager constructor.
      *
      * @param EntityManagerInterface $entityManager
      * @param MediaManager           $mediaManager
      * @param UserManager            $userManager
+     * @param PaymentManager         $paymentManager
      */
-    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager)
+    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, PaymentManager $paymentManager, EventDispatcher $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->userManager = $userManager;
+        $this->paymentManager = $paymentManager;
 
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function deleteUserEvents(User $user)
     {
     }
 
-    public function createEvent(Plan $plan, User $createdBy = null)
+    public function createEvent(Plan $plan, Event $event, User $createdBy = null)
     {
-        $event = new Event();
-        $eventPurchase = new EventPurchase();
+        $eventPurchase = (null === $event->getEventPurchase()) ? new EventPurchase() : $event->getEventPurchase();
         $eventPurchase->setPlan($plan);
         $eventPurchase->setQuota($plan->getMaxUploads());
         $event->setEventPurchase($eventPurchase);
         $createdBy = ($createdBy instanceof User) ? $createdBy : $this->getCreatedBy();
+        $event->setCreatedBy($createdBy);
 
         $startsAt = Carbon::tomorrow($createdBy->getTimeZoneInstance());
+        $event->setStartsAt(Carbon::tomorrow($createdBy->getTimeZoneInstance()));
         $endsAt = $startsAt->addRealSeconds($plan->getMaxEventDuration());
-
-        $event->setCreatedBy($createdBy);
-        $event->setStartsAt($startsAt);
         $event->setEndsAt($endsAt);
         $event->setExpiresAt($endsAt->addRealSeconds($plan->getMaxAlbumLifeTime()));
 
@@ -82,20 +87,22 @@ class EventManager
         return $event;
     }
 
-    public function createEventWithFreePlan(User $createdBy = null)
+    public function createEventWithFreePlan(User $createdBy = null, Event $event)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $event, $createdBy);
     }
 
-    public function createEventWithStarterPlan(User $createdBy = null)
+    public function createEventWithStarterPlan(User $createdBy = null, Event $event)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $event, $createdBy);
     }
 
     /**
      * @param int       $eventId
      * @param Media     $media
      * @param User|null $by
+     *
+     * @throws \Doctrine\ORM\EntityNotFoundException
      *
      * @return Event
      */
@@ -125,10 +132,117 @@ class EventManager
      * @param $eventId
      * @param bool $inTrash
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
      * @return Event
      */
-    private function findEventById($eventId, $inTrash = false): Event
+    public function findEventById($eventId, $inTrash = false): Event
     {
         return $this->entityManager->getRepository(Event::class)->findOneOrFail($eventId);
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return array
+     */
+    public function lastIncompleteEvent(User $user)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user->getId()], ['createdAt' => 'desc'], 1, 0);
+
+        $res = empty($res) ? null : $res[0];
+        if (null !== $res) {
+            $currentStep = $res->getCurrentStep();
+            if ('' === $currentStep) {
+                return null;
+            }
+        }
+
+        return $res;
+    }
+
+    /**
+     * @param bool $isPayed
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     *
+     * @return int
+     */
+    public function countEventByPayment($isPayed = true)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->getNbEventByPyment($isPayed);
+        $res = empty($res) ? null : $res[0];
+        if (null === $res) {
+            return 0;
+        }
+        return $res['NB_EVENT'];
+    }
+
+    /**
+     * @param $planKey
+     *
+     * @return int
+     */
+    public function countEventByPlan($planKey)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->getNbEventByPlan($planKey);
+        $res = empty($res) ? null : $res[0];
+        if (null === $res) {
+            return 0;
+        }
+        return $res['NB_EVENT'];
+    }
+
+    /**
+     * @return int
+     */
+    public function countAllPayment()
+    {
+        $res = $this->entityManager->getRepository(Payment::class)->getAllSUMPayment();
+        $res = empty($res) ? null : $res[0];
+        if (null === $res) {
+            return 0;
+        }
+        return $res['somme'];
+    }
+
+    /**
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function getPassedEvents($user)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->getPassedEvents($user);
+
+        return $res;
+    }
+
+    /**
+     * @param $user
+     *
+     * @return array
+     */
+    public function getUpcomingEvents($user)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user, 'closedAt' => null]);
+
+        return $res;
+    }
+
+    /**
+     * @param $user
+     * @return array
+     */
+    public function getIsPaidEvents($user)
+    {
+        $events = $this->getUpcomingEvents($user);
+
+        $res = [];
+        foreach ($events as $event) {
+            $res[$event->getId()] = $this->paymentManager->isTotalPayed($event);
+        }
+
+        return $res;
     }
 }

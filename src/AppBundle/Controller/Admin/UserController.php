@@ -12,21 +12,20 @@
  *
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Admin;
 
+use AppBundle\Controller\BaseController;
 use AppBundle\Entity\User;
 use AppBundle\Form\Type\UserType;
 use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User controller.
  *
  * @Route("admin/user")
- * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends BaseController
 {
@@ -39,9 +38,15 @@ class UserController extends BaseController
     public function indexAction(UserManager $userManager)
     {
         $users = $userManager->allUsers();
+        $nbAdmins = $userManager->getNbAdmin();
+        $nbClient = $userManager->getNbClient();
+        $nbDisabledUsers = $userManager->getNbUsersDisabled();
 
         return $this->render('admin/user/index.html.twig', [
             'users' => $users,
+            'nbAdmins' => $nbAdmins,
+            'nbClient' => $nbClient,
+            'nbDisabledUsers' => $nbDisabledUsers,
         ]);
     }
 

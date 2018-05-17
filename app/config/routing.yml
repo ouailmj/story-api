@@ -1,5 +1,9 @@
+app_event:
+    resource: "@AppBundle/Controller/Admin/EventController.php"
+    type:     annotation
+
 app_user:
-    resource: "@AppBundle/Controller/UserController.php"
+    resource: "@AppBundle/Controller/Admin/UserController.php"
     type:     annotation
 
 api:

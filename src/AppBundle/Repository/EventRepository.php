@@ -22,4 +22,119 @@ namespace AppBundle\Repository;
  */
 class EventRepository extends BaseRepository
 {
+    /**
+     * @param bool $payed
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     *
+     * @return array
+     */
+    public function getNbEventByPyment($payed = true)
+    {
+        /*    $subqueryBuilder = $this->createQueryBuilder('subev');
+
+            $subquery = $subqueryBuilder->select('SUM(py.totalAmount)')
+                ->from('AppBundle:Payment', 'py');
+            $subquery->andWhere($subquery->expr()->eq('py.eventPurchase', 'ep.id'))
+                 ;
+
+                 $qb = $this->createQueryBuilder('ev');
+
+                 $res =
+                     $qb
+                         ->distinct()
+                         ->select("COUNT(ev)")
+                         ->innerJoin('ev.eventPurchase','ep')
+                         ->innerJoin('ep.plan','pl')
+                         ->where(
+                             '
+                                 ep.id = ev.eventPurchase
+                             AND
+                                 ep.plan = pl.id
+                             '
+                         )
+                         ->andWhere(
+                             '
+                             pl.price <= :price
+                             '
+                         )
+                         ->setParameter('price', "SELECT SUM(py.totalAmount) FROM   AppBundle:Payment py WHERE py.eventPurchase = ep.id")
+                         ->getQuery()
+                         ->getResult()
+                     ;
+                 return $res;*/
+        $sign = '>';
+        if ($payed) {
+            $sign = '<=';
+        }
+        $sql = " 
+        SELECT DISTINCT COUNT(*) as NB_EVENT
+        FROM event ev, event_purchase ep, plan pl
+        WHERE ev.event_purchase_id = ep.id 
+        AND ep.plan_id = pl.id
+        AND   pl.plan_key !=  'free'
+        AND pl.price ".$sign.' (SELECT COALESCE( SUM(payment.total_amount) , 0) as somme FROM payment WHERE payment.event_purchase_id = ep.id)
+    ';
+        $stmt = $this->_em->getConnection()->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    /**
+     * @param $planKey
+     *
+     * @return mixed
+     */
+    public function getNbEventByPlan($planKey)
+    {
+        $qb = $this->createQueryBuilder('ev');
+
+        $res =
+            $qb
+                ->distinct()
+                ->select('COUNT(ev) as NB_EVENT')
+                ->innerJoin('ev.eventPurchase', 'ep')
+                ->innerJoin('ep.plan', 'pl')
+                ->where('
+                             ep.id = ev.eventPurchase  
+                         AND
+                             ep.plan = pl.id
+                         '
+                )
+                ->andWhere('pl.planKey = :plan')
+                ->setParameter('plan', $planKey)
+
+                ->getQuery()
+                ->getResult()
+            ;
+
+        return $res;
+    }
+
+    /**
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function getPassedEvents($user)
+    {
+        $qb = $this->createQueryBuilder('ev');
+
+        $res =
+            $qb
+                ->select('ev')
+                ->where('
+                             ev.createdBy = :user  
+                         AND
+                            ev.closedAt IS NOT NULL
+                         '
+                )
+                ->setParameter('user', $user)
+                ->getQuery()
+                ->getResult()
+        ;
+
+        return $res;
+    }
 }

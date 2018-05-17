@@ -22,4 +22,39 @@ namespace AppBundle\Repository;
  */
 class PaymentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getSUMPayment($idEventPurchase)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return
+            $qb
+                ->select('SUM(p.totalAmount) as somme , ep.id ')
+                ->innerJoin('p.eventPurchase', 'ep')
+                ->where(
+                    '
+                        p.eventPurchase = ep.id
+                        AND
+                        ep.id=:idEP
+                    '
+                )
+
+                ->setParameter('idEP', $idEventPurchase)
+                ->groupBy('ep.id')
+                ->orderBy('ep.id', 'DESC')
+                ->getQuery()
+                ->getResult()
+            ;
+    }
+
+    public function getAllSUMPayment()
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return
+            $qb
+                ->select('SUM(p.totalAmount) as somme ')
+                ->getQuery()
+                ->getResult()
+            ;
+    }
 }

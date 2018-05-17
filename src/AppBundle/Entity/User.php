@@ -60,13 +60,13 @@ class User extends BaseUser
      * @var string
      * @ORM\Column( type="string", nullable=true)
      */
-    protected $firstName;
+    protected $firstName = '';
 
     /**
      * @var string
      * @ORM\Column( type="string", nullable=true)
      */
-    protected $lastName;
+    protected $lastName = '';
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
@@ -137,6 +137,18 @@ class User extends BaseUser
     protected $avatar = null;
 
     /**
+     * @var BaseNotification[] | ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BaseNotification", mappedBy="triggeredBy")
+     */
+    protected $triggeredNotifications;
+
+    /**
+     * @var NotificationCenter
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\NotificationCenter",  mappedBy="receiver", cascade={"persist", "remove"})
+     */
+    protected $notificationCenter;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -162,7 +174,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -178,7 +190,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName()
     {
         return $this->lastName;
     }
@@ -643,5 +655,55 @@ class User extends BaseUser
     public function removeMedia(\AppBundle\Entity\Media $media)
     {
         return $this->medias->removeElement($media);
+    }
+
+    /**
+     * @return BaseNotification[]|ArrayCollection
+     */
+    public function getTriggeredNotifications()
+    {
+        return $this->triggeredNotifications;
+    }
+
+    /**
+     * Add notification.
+     *
+     * @param \AppBundle\Entity\BaseNotification $notification
+     *
+     * @return User
+     */
+    public function addNotification(BaseNotification $notification)
+    {
+        $this->triggeredNotifications[] = $notification;
+
+        return $this;
+    }
+
+    /**
+     * Remove notification.
+     *
+     * @param \AppBundle\Entity\BaseNotification $notification
+     *
+     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
+     */
+    public function removeNotification(BaseNotification $notification)
+    {
+        return $this->triggeredNotifications->removeElement($notification);
+    }
+
+    /**
+     * @return NotificationCenter
+     */
+    public function getNotificationCenter()
+    {
+        return $this->notificationCenter;
+    }
+
+    /**
+     * @param NotificationCenter $notificationCenter
+     */
+    public function setNotificationCenter(NotificationCenter $notificationCenter)
+    {
+        $this->notificationCenter = $notificationCenter;
     }
 }

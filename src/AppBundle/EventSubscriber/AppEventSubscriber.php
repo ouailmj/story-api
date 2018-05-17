@@ -16,6 +16,7 @@ namespace AppBundle\EventSubscriber;
 
 use AppBundle\AppEvents;
 use AppBundle\Event\NewMediaUploadedEvent;
+use AppBundle\Messaging\GalleryPublisher;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\MediaManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -29,17 +30,26 @@ class AppEventSubscriber implements EventSubscriberInterface
 
     /** @var MediaManager */
     private $mediaManager;
+    /** @var GalleryPublisher */
+    private $gal;
+
+    /**
+     * @var GalleryPublisher
+     */
+    private $galleryPublisher;
 
     /**
      * AppEventSubscriber constructor.
      *
-     * @param EventManager $eventManager
-     * @param MediaManager $mediaManager
+     * @param EventManager     $eventManager
+     * @param MediaManager     $mediaManager
+     * @param GalleryPublisher $galleryPublisher
      */
-    public function __construct(EventManager $eventManager, MediaManager $mediaManager)
+    public function __construct(EventManager $eventManager, MediaManager $mediaManager, GalleryPublisher $gal)
     {
         $this->eventManager = $eventManager;
         $this->mediaManager = $mediaManager;
+        $this->gal = $gal;
     }
 
     /**
@@ -64,7 +74,7 @@ class AppEventSubscriber implements EventSubscriberInterface
     {
         return [
             AppEvents::EVENT_NEW_MEDIA_UPLOADED => [
-                ['notifyWSServerForNewMedia'],
+                ['notifyWSServerForNewMedia', 15],
             ],
         ];
     }
@@ -73,9 +83,13 @@ class AppEventSubscriber implements EventSubscriberInterface
      * Notifies the socket server that a new media is available.
      *
      * @param NewMediaUploadedEvent $event
+     *
+     * @throws \Exception
      */
     public function notifyWSServerForNewMedia(NewMediaUploadedEvent $event)
     {
+        $this->gal->publishMedia($event->getEvent(), $event->getMedia());
         // TODO: This is where we should notify the socket server that a new media has been uploaded.
+        $this->galleryPublisher->publishMedia($event->getEvent(), $event->getMedia());
     }
 }

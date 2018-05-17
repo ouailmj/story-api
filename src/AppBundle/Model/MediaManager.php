@@ -14,8 +14,10 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Filesystem\FileManager;
 use AppBundle\Filesystem\UploadManager;
@@ -44,9 +46,6 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /** @var UserManager */
-    protected $userManager;
-
     /**
      * MediaManager constructor.
      *
@@ -54,33 +53,31 @@ class MediaManager
      * @param FileManager            $fileManager
      * @param TokenStorageInterface  $tokenStorage
      * @param EntityManagerInterface $entityManager
-     * @param UserManager            $userManager
      */
-    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, UserManager $userManager)
+    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
     {
         $this->uploadManager = $uploadManager;
         $this->fileManager = $fileManager;
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
-        $this->userManager = $userManager;
     }
 
     /**
      * Creates a media from a Gaufrette file.
      *
-     * @param File      $file
-     * @param User|null $by
-     * @param bool      $andSave
+     * @param File   $file
+     * @param User   $by
+     * @param bool   $andSave
+     * @param string $type
      *
      * @return Media
      */
-    public function createMediaFromFile(File $file, User $by = null, $andSave = true)
+    public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class)
     {
-        $media = new Media();
+        /** @var Media $media * */
+        $media = new $type();
         $media->setSrc($file->getKey());
         $media->setUploadedAt(new \DateTime());
-
-        $by = ($by instanceof User) ? $by : $this->userManager->getLoggedInUser();
 
         $media->setCreatedBy($by);
 
@@ -144,16 +141,50 @@ class MediaManager
      *
      * @throws FileNotAuthorizedException
      *
-     * @return Media|void
+     * @return Media
      */
     public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $imageTypes = ['jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG'];
-        if (in_array($file->getClientOriginalExtension(), $imageTypes, true)) {
+        $imageTypes = ['JPG', 'PNG', 'JPEG'];
+
+        // TODO: use the mime content type function @see mime_content_type($filename)
+        if (in_array(strtoupper($file->getClientOriginalExtension()), $imageTypes, true)) {
             $file = $this->uploadManager->upload($file);
 
-            return $this->createMediaFromFile($file, $by, $andSave);
+            return $this->createMediaFromFile($file, $by, $andSave, Image::class);
         }
         throw new FileNotAuthorizedException();
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @param User|null    $by
+     * @param bool         $andSave
+     *
+     * @throws FileNotAuthorizedException
+     *
+     * @return Media
+     */
+    public function uploadVideo(UploadedFile $file, User $by = null, $andSave = true)
+    {
+        $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV'];
+
+        // TODO: use the mime content type function @see mime_content_type($filename)
+        if (in_array(strtoupper($file->getClientOriginalExtension()), $videoTypes, true)) {
+            $file = $this->uploadManager->upload($file);
+
+            return $this->createMediaFromFile($file, $by, $andSave, Video::class);
+        }
+        throw new FileNotAuthorizedException();
+    }
+
+    private function isImage($file)
+    {
+        // TODO: use the mime content type function @see mime_content_type($filename)
+    }
+
+    private function isVideo($file)
+    {
+        // TODO: use the mime content type function @see mime_content_type($filename)
     }
 }

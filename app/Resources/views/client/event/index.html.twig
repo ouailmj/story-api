@@ -1,0 +1,78 @@
+{% extends "::base_user.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+    <div class="main">
+
+        <!-- Upcoming Event Start -->
+        <section>
+            <h4 class="upcoming-title">Upcoming Events</h4>
+            <div class="upcoming-events">
+                {% for event in upcomingEvents %}
+
+                    <div class="card-event">
+                        <div class="event-image">
+                            <img src="http://placehold.it/50/ccc" alt="">
+                        </div>
+                        <div class="event-info">
+                            <div class="event-date">
+                                <h5>{{ event.startsAt|date('D, d M Y H:m') }}</h5>
+                            </div>
+                            <div class="event-desc">
+                                <p>{{ event.description }}</p>
+                            </div>
+                            <div class="event-place">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i><p>{{ event.place }}</p>
+                            </div>
+                        </div>
+                        <div class="event-settings">
+                            <div class="edit-event">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                            </div>
+                            <div class="pay-status">
+                                {% set paidClass = 'unpaid' %}
+                                {% if isPaidEvent[event.id] %}
+                                    {% set paidClass = 'paid' %}
+                                {% endif %}
+                                <i class="fa fa-usd {{ paidClass }}" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+                <div class="card-event add-event">
+                    <a href="{{ path('add_event_index') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </section>
+        <!-- Upcoming Event End -->
+        <!-- Passed Event --->
+        <section>
+            <h4 class="passed-title">passed Events</h4>
+            <div class="passed-events">
+                {% for event in passedEvents %}
+
+                <div class="card-event">
+                    <div class="event-image">
+                        <img src="http://placehold.it/50/ccc" alt="">
+                    </div>
+                    <div class="event-info">
+                        <div class="event-date">
+                            <h5>{{ event.startsAt|date('D, d M Y H:m') }}</h5>
+                        </div>
+                        <div class="event-desc">
+                            <p>{{ event.description }}</p>
+                        </div>
+                        <div class="event-place">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>{{ event.place }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+             </div>
+        </section>
+    </div>
+
+
+{% endblock %}

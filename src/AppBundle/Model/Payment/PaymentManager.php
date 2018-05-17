@@ -58,4 +58,33 @@ class PaymentManager
     {
         throw new \LogicException('Not yet implemented.');
     }
+
+    /**
+     * @param Event $event
+     *
+     * @return bool
+     */
+    public function isTotalPayed(Event $event)
+    {
+        $amount = $this->TotalPayed($event);
+        if ($amount >= $event->getEventPurchase()->getPlan()->getPrice()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param Event $event
+     *
+     * @return int
+     */
+    public function TotalPayed(Event $event)
+    {
+        $amount = 0;
+        foreach ($event->getEventPurchase()->getPayments() as $payment) {
+            $amount += $payment->getTotalAmount();
+        }
+
+        return $amount;
+    }
 }

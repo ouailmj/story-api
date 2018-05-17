@@ -87,7 +87,7 @@ class Mailer
     /**
      * Notifies a user that his account has been created.
      *
-     * @param User $user
+     * @param string $email
      */
     public function sendAccountDeletedMessage($email)
     {
@@ -112,5 +112,13 @@ class Mailer
             'password' => $user->getPlainPassword(),
         ]);
         $this->sendEmailMessage($bodyMessage, $user->getEmail(), $subject);
+    }
+
+    /**
+     * @return EngineInterface
+     */
+    public function getTemplateEngine()
+    {
+        return $this->templateEngine;
     }
 }

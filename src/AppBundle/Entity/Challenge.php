@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -25,6 +26,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Table(name="challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ChallengeRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ApiResource()
  */
 class Challenge implements Timestampable
 {
@@ -66,6 +68,12 @@ class Challenge implements Timestampable
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="challenges" )
      */
     private $event;
+
+    /**
+     * @var ChallengeNotification
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ChallengeNotification",  inversedBy="challenge", cascade={"persist", "remove"})
+     */
+    private $notification;
 
     /**
      * Get id.
@@ -171,5 +179,21 @@ class Challenge implements Timestampable
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * @return ChallengeNotification
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param ChallengeNotification $notification
+     */
+    public function setNotification(ChallengeNotification $notification)
+    {
+        $this->notification = $notification;
     }
 }

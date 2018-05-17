@@ -13,22 +13,27 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('build/css/front/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/progress-wizard.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block stylesheet %}{% endblock %}
 
 
 </head>
 {% block body %}
-
-    <body>
+ <body>
     <!-- Main navbar -->
     {% block sidebar %}
         {% include 'front/sidebar.html.twig' %}
     {% endblock %}
     {% block container %}
-
     {% endblock %}
+    {% block javascripts %}   
+  
+     {% endblock %}
     </body>
 {% endblock %}
 

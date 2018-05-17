@@ -1,30 +1,40 @@
 
-
-<div class="sidebar sidebar-main">
+<div class="sidebar sidebar-main sidebar-default">
     <div class="sidebar-content">
+
         <!-- Main navigation -->
         <div class="sidebar-category sidebar-category-visible">
+            <div class="sidebar-user-material">
+                <div class="category-content">
+                    <div class="sidebar-user-material-content">
+                        <a href="{{ path('fos_user_profile_edit') }}">
+                            {% if app.user.avatar == null %}
+                                <img src="{{ asset('images/image.png')|imagine_filter('media_thumb') }}" class="img-circle img-responsive" alt="">
+                            {% else %}
+                                <img src="{{ asset('uploads/'~ app.user.avatar.src)|imagine_filter('media_thumb') }}" class="img-circle img-responsive" alt="">
+                            {% endif %}
+                        </a>
+                        <h6>{{ app.user.fullName }}</h6>
+                    </div>
+                    {#  <div class="sidebar-user-material-menu">
+                          <a href="#user-nav" data-toggle="collapse"><span>My account</span> <i class="caret"></i></a>
+                      </div>#}
+                </div>
+                {# <div class="navigation-wrapper collapse" id="user-nav">
+                     <ul class="navigation">
+                         <li><a href="{{ path('fos_user_profile_edit') }}"><i class="icon-user-plus"></i> <span>My profile</span></a></li>
+                         <li><a href="{{ path('fos_user_security_logout') }}"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+                     </ul>
+                 </div>#}
+            </div>
+
             <div class="category-content no-padding">
                 <ul class="navigation navigation-main navigation-accordion">
 
                     <!-- Main -->
-                    <li class="navigation-header"><span>Events</span> <i class="icon-menu" title="Main pages"></i></li>
-                    <li>
-                        <a href="{{ path('app_default_mockup') }}"><i class="icon-pie-chart3"></i> <span>Overview</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_default_event') }}"><i class="icon-calendar"></i> <span>My Events</span></a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_default_event') }}"><i class="icon-add"></i> <span>Add Event</span></a>
-                    </li>
-
-
-                    <li class="navigation-header"><span>Upgrade</span> <i class="icon-menu" title="Main pages"></i></li>
-
-                    <li>
-                        <a href=""><i class="icon-server"></i> <span>Upgrade</span></a>
-                    </li>
+                    <li class="navigation-header"><span>Administration</span> <i class="icon-menu" title="Main pages"></i></li>
+                    <li><a href="{{ path('user_index') }}"><i class="icon-users2"></i> <span>Users</span></a></li>
+                    <li><a href="{{ path('event_index') }}"><i class="icon-calendar2"></i> <span>Events</span></a></li>
                     <!-- /main -->
 
                 </ul>

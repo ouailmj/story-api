@@ -22,4 +22,50 @@ namespace AppBundle\Repository;
  */
 class UserRepository extends BaseRepository
 {
+    /**
+     * @param string $role
+     *
+     * @return mixed
+     */
+    public function getNbUsersByRole($role = 'ROLE_SUPER_ADMIN')
+    {
+        if ('ROLE_USER' === $role) {
+            $query = ' u.roles = :roles';
+            $role = 'a:0:{}';
+        } else {
+            $query = 'u.roles LIKE :roles';
+            $role = '%"'.$role.'"%';
+        }
+
+        $qb = $this->createQueryBuilder('u');
+
+        $res =
+            $qb
+                ->select('COUNT(u) as NB_USERS')
+                ->where($query)
+                ->setParameter('roles', $role)
+                ->getQuery()
+                ->getResult()
+        ;
+
+        return $res;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbUsersDisabled()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $res =
+            $qb
+                ->select('COUNT(u) as NB_USERS')
+                ->where('u.enabled = 0')
+                ->getQuery()
+                ->getResult()
+        ;
+
+        return $res;
+    }
 }

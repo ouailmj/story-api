@@ -1,0 +1,85 @@
+<?php
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
+namespace AppBundle\NotificationSystem\Sender;
+
+use AppBundle\Entity\BaseNotification as Notification;
+use AppBundle\NotificationSystem\Sender\Driver\DriverFactory;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Ldap\Exception\DriverNotFoundException;
+
+class NotificationSender implements NotificationSenderInterface
+{
+    /**
+     * @param string $channelName
+     *
+     * @return DriverInterface|null
+     */
+    public function driver(string $channelName)
+    {
+        $driver = DriverFactory::getDriver($channelName);
+        if (null === $driver) {
+            throw new DriverNotFoundException();
+        }
+        return $driver;
+    }
+
+    /**
+     * @param ArrayCollection $notifications
+     *
+     * @return mixed|void
+     */
+    public function sendBulk(ArrayCollection $notifications)
+    {
+        foreach ($notifications as $notification) {
+            if ($notification instanceof Notification) {
+                $this->send($notification);
+            }
+        }
+    }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return mixed
+     */
+    public function send(Notification $notification)
+    {
+        if (null === $notification->getSendAt()) {
+            return $this->sendNow($notification);
+        }
+        return $this->sendScheduled($notification);
+    }
+
+    /**
+     * @param Notification $notification
+     *
+     * @return array|mixed
+     */
+    public function sendNow(Notification $notification)
+    {
+        $channels = $notification->getChannels();
+        foreach (array_keys($channels) as $key) {
+            DriverFactory::getDriver($key)->handle($notification);
+        }
+
+        return $channels;
+    }
+
+    public function sendScheduled(Notification $notification)
+    {
+        // TODO: Implement sendScheduled() method.
+        return null;
+    }
+}
