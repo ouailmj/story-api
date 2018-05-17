@@ -1,0 +1,87 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<style>
+.form-control{
+    border-top-right-radius: 5px !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-right-radius: 5px !important;
+    border-bottom-left-radius: 0 !important;
+    width: 100% !important;
+    padding: 10px !important;
+    outline: none !important;
+    border: 0px solid #ddd !important;
+    height: 77px !important;
+
+}
+</style>
+<div class="main">
+        <div class="progressbar-container">
+            <ul class="progress-indicator">
+            <li class="completed">
+                <span class="bubble"></span>
+                Choose plan
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Event information
+            </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Add Challenge
+            </li>
+            <li class="active">
+                <span class="bubble"></span>
+                Event Cover
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Payment
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Invite Friends
+            </li>
+        </ul>
+        </div>
+        <div class="event-cover-form animated zoomInUp">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+            <div class="choose-cover-msg">
+                <p>You can choose between one video or 3 images for your event cover</p>
+            </div>
+            <div class="choose-cover-type">
+                {{ form_row(form.coverType ,{'attr': {'class': ''}}) }}
+            </div>
+                <div id="cover-video" style="display:none">
+                    {{ form_widget(form.videoCover) }}
+                </div>
+                <div id="cover-images">
+                    {{ form_widget(form.firstImageCover) }}
+                    {{ form_widget(form.secondImageCover) }}
+                    {{ form_widget(form.thirdImageCover) }}
+                </div>
+            </div>
+    {{ form_rest(form)}}
+        </div>
+        <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+        </div>
+       {{ form_end(form) }}
+</div>
+</div>
+<script>
+document.getElementById("appbundle_event_coverType_0").addEventListener("click", ()=>
+        {
+        document.getElementById('cover-video').style.display ='none';
+        document.getElementById('cover-images').style.display ='block';
+        });
+document.getElementById("appbundle_event_coverType_1").addEventListener("click", ()=>{
+        document.getElementById('cover-video').style.display = 'block';
+        document.getElementById('cover-images').style.display = 'none';
+        });
+        </script>
+{% endblock %}

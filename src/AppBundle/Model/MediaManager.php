@@ -15,6 +15,8 @@
 namespace AppBundle\Model;
 
 use AppBundle\Entity\Media;
+use AppBundle\Entity\Video;
+use AppBundle\Entity\Image;
 use AppBundle\Entity\User;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Filesystem\FileManager;
@@ -44,6 +46,7 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+
     /**
      * MediaManager constructor.
      *
@@ -66,14 +69,18 @@ class MediaManager
      * @param File      $file
      * @param User $by
      * @param bool      $andSave
+     * @param string $type
      *
      * @return Media
      */
     public function createMediaFromFile(File $file, User $by, $andSave = true)
+    public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class)
     {
-        $media = new Media();
+        /**  @var Media $media  **/
+        $media = new $type();
         $media->setSrc($file->getKey());
         $media->setUploadedAt(new \DateTime());
+
         $media->setCreatedBy($by);
 
         if ($andSave) {
@@ -140,11 +147,32 @@ class MediaManager
      */
     public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $imageTypes = ['jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG'];
-        if (in_array($file->getClientOriginalExtension(), $imageTypes, true)) {
+        $imageTypes = ['JPG', 'PNG', 'JPEG'];
+        if (in_array(strtoupper($file->getClientOriginalExtension()), $imageTypes, true)) {
             $file = $this->uploadManager->upload($file);
 
-            return $this->createMediaFromFile($file, $by, $andSave);
+            return $this->createMediaFromFile($file, $by, $andSave, Image::class);
+        }
+        throw new FileNotAuthorizedException();
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @param User|null $by
+     * @param bool $andSave
+     *
+     * @return Media
+     *
+     * @throws FileNotAuthorizedException
+     */
+    public function uploadVideo(UploadedFile $file, User $by = null, $andSave = true)
+    {
+        $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV' ];
+
+        if (in_array(strtoupper($file->getClientOriginalExtension()), $videoTypes, true)) {
+            $file = $this->uploadManager->upload($file);
+
+            return $this->createMediaFromFile($file, $by, $andSave, Video::class);
         }
         throw new FileNotAuthorizedException();
     }

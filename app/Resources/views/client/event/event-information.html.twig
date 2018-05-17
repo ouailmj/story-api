@@ -1,0 +1,106 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+<div class="main">
+        <div class="progressbar-container">
+            <ul class="progress-indicator">
+            <li class="completed">
+                <span class="bubble"></span>
+                Choose plan
+            </li>
+            <li class="active">
+                <span class="bubble"></span>
+                Event information
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Add Challange
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Event Cover
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Payment
+            </li>
+            <li>
+                <span class="bubble"></span>
+                Invite Friends
+            </li>
+        </ul>
+        </div>
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+     {% form_theme form 'Form/Registration/fields.html.twig' %}
+        <div class="event-info-form animated zoomInUp">
+                <div class="input-container">
+                    <i class="icon icon-calendar2"></i>
+                     {{ form_row(form.title ,{'attr': {'class': 'input-field'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-location3"></i>
+                    {{ form_row(form.place ,{'attr': {'class': 'input-field' , 'id' : 'location', 'name' : 'location', 'placeholder' : 'place'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-calendar3"></i>
+                    {{ form_widget(form.startsAt ,{'attr': {'class': 'input-field unstyled'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-calendar22"></i>
+                    {{ form_widget(form.endsAt ,{'attr': {'class': 'input-field unstyled'}}) }}
+                </div>
+                <div class="input-container">
+                    <i class="icon icon-eye"></i>
+                    {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
+                </div>
+                <div class="input-container">
+                    {{ form_widget(form.description ,{'attr': {'class': 'input-field', 'placeholder' : 'Description'}}) }}
+                </div>
+            {{ form_rest(form)}}
+            <div class="arrows">
+                <ul>
+                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                </ul>
+            </div>
+        </div>
+       {{ form_end(form) }}
+</div>
+<script src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/datepicker.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/anytime.js') }}"> </script>
+    <script src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
+    <script>
+        {% set startsDate = event.startsAt|date('Y-m-d') %}
+        {% set startsHour = event.startsAt|date('H:i') %}
+        {% set startsAtToString = startsDate ~ 'T' ~ startsHour  %}
+
+        {% set endsDate = event.endsAt|date('Y-m-d') %}
+        {% set endsHour = event.endsAt|date('H:i') %}
+        {% set endsAtToString = endsDate ~ 'T' ~ endsHour  %}
+
+
+
+        (function(){
+            $('#appbundle_event_startsAt').val('{{ startsAtToString }}');
+            $('#appbundle_event_endsAt').val('{{ endsAtToString }}');
+          //  $('#startdate').attr('min', moment().format('YYYY-MM-DD'))
+
+
+            $('#appbundle_event_startsAt').on('change', function(e){
+
+                let startAt =  $('#appbundle_event_startsAt').val();
+                let date = moment( startAt, "YYYY-MM-DDTHH:mm");
+                let endsAt =date.add({{ maxDuration }}, 'seconds').format('YYYY-MM-DDTHH:mm');
+                $('#appbundle_event_endsAt').val(endsAt);
+                console.log(endsAt);
+
+
+               // console.log(  $('#appbundle_event_startsAt').val());
+
+            })
+        })()
+
+    </script>
+{% endblock %}

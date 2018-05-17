@@ -59,3 +59,14 @@ profile:
     update_profile: 'Modifier mon profil'
     change_password: 'Changer de mot de passe'
     avatar_avatar: 'Image du profil'
+event:
+    name: 'événement'
+    fields:
+        title: 'Titre '
+        place: 'Endroit '
+        startsAt: 'Commencer à '
+        endsAt: 'Fin at'
+        privacy: 'Confidentialité'
+        private: 'privé'
+        public: 'public'
+        description: 'description'
