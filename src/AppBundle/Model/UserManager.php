@@ -315,4 +315,42 @@ class UserManager
             }
         }
     }
+
+    /**
+     * @return int
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getNbAdmin()
+    {
+        $res = $this->em->getRepository(User::class)->getNbUsersByRole();
+
+        $res = empty($res) ? null : $res[0];
+        if($res === null) return 0;
+        return $res['NB_USERS'];
+    }
+
+    /**
+     * @return int
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getNbUsersDisabled()
+    {
+        $res = $this->em->getRepository(User::class)->getNbUsersDisabled();
+        $res = empty($res) ? null : $res[0];
+        if($res === null) return 0;
+        return $res['NB_USERS'];
+    }
+
+    /**
+     * @return int
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getNbClient()
+    {
+        $res = $this->em->getRepository(User::class)->getNbUsersByRole("ROLE_USER");
+        $res = empty($res) ? null : $res[0];
+        if($res === null) return 0;
+        return $res['NB_USERS'];
+    }
+
 }

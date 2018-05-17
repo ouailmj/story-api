@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\BankAccountInterface;
 use Payum\Core\Model\CreditCardInterface;
 use Payum\Core\Model\DirectDebitPaymentInterface;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Payum\Core\Model\Payment as BasePayment;
 use Payum\Core\Model\PaymentInterface;
 
@@ -32,7 +33,7 @@ use Payum\Core\Model\PaymentInterface;
  */
 class Payment  implements PaymentInterface, DirectDebitPaymentInterface
 {
-    use PaymentTrait;
+    use PaymentTrait, TimestampableEntity;
 
     /**
      * @var int

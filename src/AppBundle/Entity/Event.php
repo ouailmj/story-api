@@ -465,7 +465,7 @@ class Event
     /**
      * Set createdBy.
      *
-     * @param string $createdBy
+     * @param User $createdBy
      *
      * @return Event
      */
@@ -479,7 +479,7 @@ class Event
     /**
      * Get createdBy.
      *
-     * @return string
+     * @return User
      */
     public function getCreatedBy()
     {

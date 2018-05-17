@@ -49,8 +49,10 @@ mail:
     user_deleted_body: 'You account is deleted, please contact the adminstration '
     header: 'Dear'
     footer: 'Sincerely'
+    notification:
+        invitation_request: '%event_creator% has invited you to join their event. You''ll find a link to accept the invitation below  '
 flash:
-    success: 'Your operation has been successfully executed''Votre opération a été exécutée avec succès'
+    success: 'Your operation has been successfully executed'
     error: 'Your operation could not be executed.'
     warning: 'Your operation could not be executed'
     file_error: 'Your operation was not executed because the sent file is unreadable.'

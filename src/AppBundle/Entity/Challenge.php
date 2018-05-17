@@ -46,7 +46,7 @@ class Challenge implements Timestampable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
-     * @Assert\NotBlank()
+     * 
      */
     private $description = '';
 
@@ -70,6 +70,12 @@ class Challenge implements Timestampable
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="challenges" )
      */
     private $event;
+
+    /**
+     * @var ChallengeNotification
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ChallengeNotification",  inversedBy="challenge", cascade={"persist", "remove"})
+     */
+    private $notification;
 
     /**
      * Get id.
@@ -176,4 +182,22 @@ class Challenge implements Timestampable
     {
         return $this->event;
     }
+
+    /**
+     * @return ChallengeNotification
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param ChallengeNotification $notification
+     */
+    public function setNotification(ChallengeNotification $notification)
+    {
+        $this->notification = $notification;
+    }
+
+
 }

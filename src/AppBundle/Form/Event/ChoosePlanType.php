@@ -32,12 +32,23 @@ class ChoosePlanType extends AbstractType
             ->add('plan', EntityType::class, [
                 'label' => false,
                 'class' => 'AppBundle:Plan',
+                'data' => $options['plan_data'],
                 'choice_label' => false,
                 'expanded' => true,
                 'multiple' => false,
                 'attr'=> ['class'=> 'form-check-input']
             ])
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'plan_data' => null,
+        ]);
     }
 
 
