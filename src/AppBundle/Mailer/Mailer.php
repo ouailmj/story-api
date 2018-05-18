@@ -121,6 +121,4 @@ class Mailer
     {
         return $this->templateEngine;
     }
-
-
 }

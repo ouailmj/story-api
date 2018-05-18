@@ -14,7 +14,6 @@
 
 namespace AppBundle\NotificationSystem\Sender\Driver;
 
-
 use AppBundle\Entity\BaseNotification as Notification;
 use AppBundle\NotificationSystem\Sender\DriverInterface;
 
@@ -24,6 +23,4 @@ class Push implements DriverInterface
     {
         // TODO: Implement handle() method.
     }
-
-
 }

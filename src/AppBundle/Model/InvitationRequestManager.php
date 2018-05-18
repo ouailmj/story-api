@@ -14,7 +14,6 @@
 
 namespace AppBundle\Model;
 
-
 use AppBundle\Entity\Event;
 use AppBundle\Entity\InvitationRequest;
 use AppBundle\Entity\User;
@@ -38,11 +37,12 @@ class InvitationRequestManager
 
     /**
      * InvitationRequestManager constructor.
-     * @param EntityManagerInterface    $entityManager
-     * @param FOSUserManager            $fosUserManager
-     * @param NotificationManager       $notificationManager
+     *
+     * @param EntityManagerInterface $entityManager
+     * @param FOSUserManager         $fosUserManager
+     * @param NotificationManager    $notificationManager
      */
-    public function __construct(EntityManagerInterface $entityManager,  FOSUserManager $fosUserManager, NotificationManager $notificationManager)
+    public function __construct(EntityManagerInterface $entityManager, FOSUserManager $fosUserManager, NotificationManager $notificationManager)
     {
         $this->entityManager = $entityManager;
         $this->fosUserManager = $fosUserManager;
@@ -52,22 +52,24 @@ class InvitationRequestManager
     /**
      * @param $email
      * @param Event $event
-     * @param bool $flush
-     * @return InvitationRequest
+     * @param bool  $flush
+     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @return InvitationRequest
      */
     public function createInvitationRequest($email, Event $event, $flush = true)
     {
 
         $user = $this->fosUserManager->findUserByUsernameOrEmail($email);
-        $channels = $user instanceof User ? ['email'=> $email, 'push' => true] : ['email'=> $email, 'push' => false];
+        $channels = $user instanceof User ? ['email' => $email, 'push' => true] : ['email' => $email, 'push' => false];
 
         $invitationRequest = new InvitationRequest();
         $invitationRequest->setChannels($channels);
         $invitationRequest->setEvent($event);
         $event->addInvitationRequest($invitationRequest);
-        if($user instanceof User){
+        if ($user instanceof User) {
             $invitationRequest->setUser($user);
             $user->addInvitationRequest($invitationRequest);
         }
@@ -75,7 +77,9 @@ class InvitationRequestManager
         $this->notificationManager->createNotificationForInvitationRequest($invitationRequest, $event->getCreatedBy());
 
         $this->entityManager->persist($invitationRequest);
-       if($flush) $this->entityManager->flush();
+        if ($flush) {
+            $this->entityManager->flush();
+        }
 
         return $invitationRequest;
     }

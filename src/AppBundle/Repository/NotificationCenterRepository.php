@@ -14,8 +14,6 @@
 
 namespace AppBundle\Repository;
 
-
 class NotificationCenterRepository
 {
-
 }

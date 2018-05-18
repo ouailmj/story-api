@@ -14,7 +14,6 @@
 
 namespace AppBundle\Model;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 
 class PlanManager
@@ -26,6 +25,7 @@ class PlanManager
 
     /**
      * PlanManager constructor.
+     *
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
@@ -43,6 +43,7 @@ class PlanManager
 
     /**
      * @param array $criteria
+     *
      * @return null|object
      */
     public function findPlanByCriteria(array $criteria)

@@ -14,10 +14,7 @@
 
 namespace AppBundle\Form\Event;
 
-
-use Payum\Core\Bridge\Symfony\Form\Type\CreditCardExpirationDateType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,37 +30,37 @@ class PaymentEventType extends AbstractType
             ->add('numberCard', TextType::class, [
                 'label' => 'payment.fields.numberCard',
                 'mapped' => false,
-                'attr'  =>[
+                'attr' => [
                     'placeholder' => 'Card number',
-                ]
+                ],
             ])
             ->add('cvv', TextType::class, [
                 'label' => 'payment.fields.cvv',
                 'mapped' => false,
-                'attr'  =>[
-                    'placeholder' => 'CVV'
-                ]
+                'attr' => [
+                    'placeholder' => 'CVV',
+                ],
             ])
-            ->add('expireAtMonth',  TextType::class, [
+            ->add('expireAtMonth', TextType::class, [
                 'label' => 'payment.fields.price',
                 'mapped' => false,
-                'attr'  =>[
-                    'placeholder' => 'Date expire (Month)'
-                ]
+                'attr' => [
+                    'placeholder' => 'Date expire (Month)',
+                ],
             ])
-            ->add('expireAtYear',  TextType::class, [
+            ->add('expireAtYear', TextType::class, [
                 'label' => 'payment.fields.price',
                 'mapped' => false,
-                'attr'  =>[
-                    'placeholder' => 'Date expire (Year)'
-                ]
+                'attr' => [
+                    'placeholder' => 'Date expire (Year)',
+                ],
             ])
-            ->add('price',  TextType::class, [
+            ->add('price', TextType::class, [
                 'label' => 'payment.fields.price',
                 'mapped' => false,
-                'attr'  =>[
-                    'placeholder' => 'Prix'
-                ]
+                'attr' => [
+                    'placeholder' => 'Prix',
+                ],
             ])
         ;
     }
@@ -85,5 +82,4 @@ class PaymentEventType extends AbstractType
     {
         return 'appbundle_payment';
     }
-
 }

@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use AppBundle\Model\Trashable;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +32,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  *
  * @ORM\HasLifecycleCallbacks()
+ * @ApiResource()
  */
 class Media implements Trashable
 {
@@ -311,7 +313,7 @@ class Media implements Trashable
     /**
      * @return \DateTime
      */
-    public function getTrashedAt(): \DateTime
+    public function getTrashedAt()
     {
         return $this->trashedAt;
     }

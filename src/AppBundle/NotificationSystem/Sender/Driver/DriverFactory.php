@@ -20,20 +20,20 @@ use AppBundle\NotificationSystem\Sender\DriverInterface;
 
 class DriverFactory
 {
-
     /**
      * @param string $driverType
+     *
      * @return DriverInterface|null
      */
-    static function getDriver(string $driverType = "email"){
-
-        switch ($driverType){
+    public static function getDriver(string $driverType = 'email')
+    {
+        switch ($driverType) {
             case 'email':
                 return new Mail();
             case 'push':
                 return new Push();
             default:
-                return null ;
+                return null;
         }
     }
 }

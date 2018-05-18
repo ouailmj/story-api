@@ -14,14 +14,11 @@
 
 namespace AppBundle\NotificationSystem\Sender\Driver;
 
-
 use AppBundle\Entity\BaseNotification as Notification;
 use AppBundle\Entity\ChallengeNotification;
-use AppBundle\Mailer\Mailer;
 use AppBundle\NotificationSystem\Sender\DriverInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class Mail  implements DriverInterface
+class Mail implements DriverInterface
 {
 
     /**

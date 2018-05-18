@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="member_ship")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MemberShipRepository")
+ * @ApiResource()
  */
 class MemberShip
 {

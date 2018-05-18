@@ -14,8 +14,6 @@
 
 namespace AppBundle\Exception;
 
-
 class DriverNotFoundException extends BaseException
 {
-
 }
