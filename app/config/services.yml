@@ -44,3 +44,7 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
         arguments: [ '%jwt_token_ttl%' ]
+
+    mit_notification.mail_driver:
+        class: AppBundle\NotificationSystem\Sender\Driver\Mail
+        arguments: ['@mailer','@']

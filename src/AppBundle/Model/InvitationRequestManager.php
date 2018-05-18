@@ -57,7 +57,8 @@ class InvitationRequestManager
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createInvitationRequest($email, Event $event, $flush = true){
+    public function createInvitationRequest($email, Event $event, $flush = true)
+    {
 
         $user = $this->fosUserManager->findUserByUsernameOrEmail($email);
         $channels = $user instanceof User ? ['email'=> $email, 'push' => true] : ['email'=> $email, 'push' => false];

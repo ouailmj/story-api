@@ -23,34 +23,17 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Mail  implements DriverInterface
 {
-    /** @var Mailer */
-    private $mailer;
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    protected $router;
-
-    /**
-     * Mail constructor.
-     * @param Mailer                    $mailer
-     * @param UrlGeneratorInterface     $router
-     */
-    public function __construct(Mailer $mailer, UrlGeneratorInterface $router)
-    {
-        $this->mailer = $mailer;
-        $this->router = $router;
-    }
 
     /**
      * @param Notification $notification
+     * @param array $params
      * @return mixed|void
      */
-    public function handle(Notification $notification)
+    public function handle(Notification $notification, array $params)
     {
         if($notification instanceof ChallengeNotification) return;
-        $body = $notification->formatMessageToMail($this->mailer->getTemplateEngine(), $this->router);
-        $this->mailer->sendEmail($body, $notification->getChannels()['email'], "Instan't Notification");
+        $body = $notification->formatMessageToMail($params['mailer']->getTemplateEngine(), $params['router']);
+        $params['mailer']->sendEmail($body, $notification->getChannels()['email'], "Instan't Notification");
         return;
     }
 
