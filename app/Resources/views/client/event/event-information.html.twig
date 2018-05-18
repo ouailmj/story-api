@@ -71,7 +71,7 @@
         </div>
        {{ form_end(form) }}
 </div>
-<script src="{{ asset('assets/js/plugins/pickers/anytime.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/anytime.min.js') }}"> </script>
     <script src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
     <script>
         {% set startsDate = event.startsAt|date('Y-m-d') %}
@@ -103,23 +103,11 @@
 
             })
         })
+         AnyTime.picker( "appbundle_event_startsAt",
+            { format: "%d-%m-%Y %T", firstDOW: 1 } );
 
-        $(function() {
-          $('input[name="datetimes"]').daterangepicker({
-            timePicker: true,
-            startDate: moment().startOf('hour'),
-            endDate: moment().startOf('hour').add(32, 'hour'),
-            locale: {
-              format: 'M/DD hh:mm A'
-            }
-          });
-        });
+        AnyTime.picker( "appbundle_event_endsAt",
+            { format: "%d-%m-%Y %T", firstDOW: 1, placement: "popup" } );
 
-         $('input[name="datetimes"]').AnyTime_picker( {
-    format: "%b %e, %y, %l:%i",
-    labelTitle: "Time",
-    labelHour: "Hour",
-    labelMinute: "Minute,
-    } );
-        </script>
+    </script>
 {% endblock %}

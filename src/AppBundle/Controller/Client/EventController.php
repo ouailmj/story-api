@@ -413,4 +413,15 @@ class EventController extends BaseController
             'isPaidEvent' => $isPaidEvent,
         ]);
     }
+
+    /**
+     * @Route("/edit-event")
+     */
+
+    public function editAction()
+    {
+    return $this->render('client/event/edit-event.html.twig', [
+        // ...
+    ]);
+    }
 }

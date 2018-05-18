@@ -1,0 +1,26 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+    <div class="main">
+        <div class="event-manager">
+            <div class="row">
+            <span>
+                <i class="icon-calendar"></i>
+            </span>
+            <h1>Manage Event</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-11">
+                <i class="icon-search4"></i>
+                <input type="text">
+            </div>
+            <div class="col-md-1">
+                <button>
+                    Search
+                </button>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

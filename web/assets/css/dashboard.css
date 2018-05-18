@@ -1409,3 +1409,27 @@ button:hover {
   .list-emails{
     overflow-x: hidden;
   }
+
+    /*********************************
+    [Event Manager]
+ */
+
+ .main .event-manager{
+    padding: 20px 10px;    
+}
+
+.main .event-manager h1{
+    display: inline;
+    padding: 5px 20px;
+}
+
+.main .event-manager span{
+    background: rgb(224, 221, 221);
+    padding: 15px;
+    border-radius: 100%;
+}
+
+.main .event-manager i{
+    color: #161954;
+    font-weight: 900;
+}
