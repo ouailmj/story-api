@@ -1,0 +1,12 @@
+.w3-container, .w3-panel{
+    padding: 0;
+}
+.w3-padding{
+    text-align: center;
+}
+.w3-black, .w3-hover-black:hover{
+    font-family: "Poppins", sans-serif;
+}
+.w3-opacity, .w3-hover-opacity:hover{
+    opacity: 0.8;
+}

@@ -21,12 +21,12 @@ final class AppEvents
      *
      * @var string
      */
-    const USER_REGISTERED_WEB = 'user.registered.web';
+    const USER_REGISTERED_WEB = 'user.registered_web';
 
     /**
      * Event fired after a new has been uploaded to an event.
      *
      * @var string
      */
-    const EVENT_NEW_MEDIA_UPLOADED = 'event.new.media.uploaded';
+    const EVENT_NEW_MEDIA_UPLOADED = 'appevent.new_media_uploaded';
 }

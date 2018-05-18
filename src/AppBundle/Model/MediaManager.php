@@ -14,10 +14,10 @@
 
 namespace AppBundle\Model;
 
-use AppBundle\Entity\Media;
-use AppBundle\Entity\Video;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Filesystem\FileManager;
 use AppBundle\Filesystem\UploadManager;
@@ -46,7 +46,6 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-
     /**
      * MediaManager constructor.
      *
@@ -66,16 +65,16 @@ class MediaManager
     /**
      * Creates a media from a Gaufrette file.
      *
-     * @param File      $file
-     * @param User|null $by
-     * @param bool      $andSave
+     * @param File   $file
+     * @param User   $by
+     * @param bool   $andSave
      * @param string $type
      *
      * @return Media
      */
     public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class)
     {
-        /**  @var Media $media  **/
+        /** @var Media $media * */
         $media = new $type();
         $media->setSrc($file->getKey());
         $media->setUploadedAt(new \DateTime());
@@ -142,11 +141,13 @@ class MediaManager
      *
      * @throws FileNotAuthorizedException
      *
-     * @return Media|void
+     * @return Media
      */
     public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
     {
         $imageTypes = ['JPG', 'PNG', 'JPEG'];
+
+        // TODO: use the mime content type function @see mime_content_type($filename)
         if (in_array(strtoupper($file->getClientOriginalExtension()), $imageTypes, true)) {
             $file = $this->uploadManager->upload($file);
 
@@ -157,22 +158,33 @@ class MediaManager
 
     /**
      * @param UploadedFile $file
-     * @param User|null $by
-     * @param bool $andSave
-     *
-     * @return Media
+     * @param User|null    $by
+     * @param bool         $andSave
      *
      * @throws FileNotAuthorizedException
+     *
+     * @return Media
      */
     public function uploadVideo(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV' ];
+        $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV'];
 
+        // TODO: use the mime content type function @see mime_content_type($filename)
         if (in_array(strtoupper($file->getClientOriginalExtension()), $videoTypes, true)) {
             $file = $this->uploadManager->upload($file);
 
             return $this->createMediaFromFile($file, $by, $andSave, Video::class);
         }
         throw new FileNotAuthorizedException();
+    }
+
+    private function isImage($file)
+    {
+        // TODO: use the mime content type function @see mime_content_type($filename)
+    }
+
+    private function isVideo($file)
+    {
+        // TODO: use the mime content type function @see mime_content_type($filename)
     }
 }

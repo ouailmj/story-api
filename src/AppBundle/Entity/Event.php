@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -22,8 +23,9 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * Event.
  *
  *
- * @ORM\Table(name="event")
+ * @ORM\Table(name="app_event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ * @ApiResource()
  */
 class Event
 {
@@ -224,10 +226,14 @@ class Event
     /**
      * @return bool
      */
-    public function isStarted(){
-        if($this->startedAt === null) return false;
+    public function isStarted()
+    {
+        if (null === $this->startedAt) {
+            return false;
+        }
         return true;
     }
+
     /**
      * @return \DateTime
      */
@@ -247,8 +253,11 @@ class Event
     /**
      * @return bool
      */
-    public function isClosed(){
-        if($this->closedAt === null) return false;
+    public function isClosed()
+    {
+        if (null === $this->closedAt) {
+            return false;
+        }
         return true;
     }
 
@@ -271,8 +280,11 @@ class Event
     /**
      * @return bool
      */
-    public function isEnabled(){
-        if($this->enabledAt === null) return false;
+    public function isEnabled()
+    {
+        if (null === $this->enabledAt) {
+            return false;
+        }
         return false;
     }
 
@@ -767,8 +779,11 @@ class Event
     /**
      * @return bool
      */
-    public function isCanceled(){
-        if($this->canceledAt === null) return false;
+    public function isCanceled()
+    {
+        if (null === $this->canceledAt) {
+            return false;
+        }
         return true;
     }
 
@@ -787,7 +802,6 @@ class Event
     {
         $this->link = $link;
     }
-
 
     public function __toString()
     {

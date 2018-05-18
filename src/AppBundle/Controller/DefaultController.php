@@ -14,6 +14,9 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Event;
+use AppBundle\Entity\Media;
+use AppBundle\Messaging\Driver\ZMQDriver;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -43,12 +46,11 @@ class DefaultController extends BaseController
      */
     public function dummyAction(Request $request, MediaManager $mediaManager, EventManager $eventManager)
     {
-        $event = $eventManager->createEventWithFreePlan($this->getUser());
-        $media = $mediaManager->createMediaFromLocalFile(__FILE__, $this->getUser());
-
+        $event = $this->getEM()->find(Event::class, 1);
+        $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/assets/images/img.jpg', $this->getUser());
         $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
-        VarDumper::dump($event->getUploadedMedias()->toArray());
+        // VarDumper::dump($event->getUploadedMedias()->toArray());
         $form = $this->createFormBuilder()
             ->add('file', FileType::class)
             ->add('submit', SubmitType::class)
@@ -60,17 +62,82 @@ class DefaultController extends BaseController
         ]);
     }
 
-
     /**
-     * @Route("/gallery")
+     * @Route("/add_event")
      */
-    public function galleryAction()
+    public function eventAction(ZMQDriver $driver)
     {
-        return $this->render('AppBundle:Events:gallery.html.twig', [
-            // ...
+        $data = [
+            '_eventId' => '1',
+            '_name' => 'test',
+            '_image' => 'https://pbs.twimg.com/media/Cb6-pZiWIAIutOl.jpg:large',
+        ];
+        try {
+            $driver->push(json_encode($data));
+        } catch (\Exception $exception) {
+            VarDumper::dump($exception);
+        }
+
+        return $this->render('AppBundle:Events:add_event.html.twig', [
         ]);
     }
 
-    
+    /**
+     * @Route("/event/{event}/gallery")
+     *
+     * @param Event $event
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function galleryAction(Event $event)
+    {
+        return $this->render('AppBundle:Events:gallery.html.twig', [
+            'event' => $event,
+        ]);
+    }
 
+
+    /**
+     * @Route("/event/{event}/gallerytest")
+     *
+     * @param Event $event
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function gallerytestAction(Event $event)
+    {
+        return $this->render('AppBundle:Events:gallerytest.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * @Route("/galleryexample1")
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function galleryexample1Action()
+    {
+        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/galleryexample2")
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function galleryexample2Action()
+    {
+        return $this->render('AppBundle:Events:galleryexample2.html.twig', [
+        ]);
+    }
 }

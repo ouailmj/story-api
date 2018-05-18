@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -24,6 +25,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *
  * @ORM\Table(name="event_purchase")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventPurchaseRepository")
+ * @ApiResource()
  */
 class EventPurchase
 {
@@ -41,7 +43,7 @@ class EventPurchase
     /**
      * @var float
      *
-     * @ORM\Column(name="quota", type="float")
+     * @ORM\Column(name="quota", type="decimal")
      */
     private $quota;
 

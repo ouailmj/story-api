@@ -14,6 +14,7 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="invitation_request")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InvitationRequestRepository")
+ * @ApiResource()
  */
 class InvitationRequest
 {
@@ -59,7 +61,7 @@ class InvitationRequest
      *
      * @ORM\Column(name="channels", type="array")
      */
-    protected $channels = ['email'=> ''];
+    protected $channels = ['email' => ''];
 
     /**
      * @var Event
@@ -74,7 +76,6 @@ class InvitationRequest
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="invitationRequests")
      */
     protected $user;
-
 
     /**
      * @var InvitationRequestNotification
@@ -243,5 +244,4 @@ class InvitationRequest
     {
         $this->notification = $notification;
     }
-
 }

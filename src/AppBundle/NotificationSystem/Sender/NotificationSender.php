@@ -14,7 +14,6 @@
 
 namespace AppBundle\NotificationSystem\Sender;
 
-
 use AppBundle\Entity\BaseNotification as Notification;
 use AppBundle\NotificationSystem\Sender\Driver\DriverFactory;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,19 +21,50 @@ use Symfony\Component\Ldap\Exception\DriverNotFoundException;
 
 class NotificationSender implements NotificationSenderInterface
 {
+    /**
+     * @param string $channelName
+     *
+     * @return DriverInterface|null
+     */
+    public function driver(string $channelName)
+    {
+        $driver = DriverFactory::getDriver($channelName);
+        if (null === $driver) {
+            throw new DriverNotFoundException();
+        }
+        return $driver;
+    }
+
+    /**
+     * @param ArrayCollection $notifications
+     *
+     * @return mixed|void
+     */
+    public function sendBulk(ArrayCollection $notifications)
+    {
+        foreach ($notifications as $notification) {
+            if ($notification instanceof Notification) {
+                $this->send($notification);
+            }
+        }
+    }
 
     /**
      * @param Notification $notification
+     *
      * @return mixed
      */
     public function send(Notification $notification)
     {
-        if($notification->getSendAt() === null) return $this->sendNow($notification);
+        if (null === $notification->getSendAt()) {
+            return $this->sendNow($notification);
+        }
         return $this->sendScheduled($notification);
     }
 
     /**
      * @param Notification $notification
+     *
      * @return array|mixed
      */
     public function sendNow(Notification $notification)
@@ -43,29 +73,8 @@ class NotificationSender implements NotificationSenderInterface
         foreach (array_keys($channels) as $key) {
             DriverFactory::getDriver($key)->handle($notification);
         }
+
         return $channels;
-    }
-
-    /**
-     * @param string $channelName
-     * @return DriverInterface|null
-     */
-    public function driver(string $channelName)
-    {
-        $driver =  DriverFactory::getDriver($channelName);
-        if($driver === null)  throw new DriverNotFoundException();
-        return $driver;
-    }
-
-    /**
-     * @param ArrayCollection $notifications
-     * @return mixed|void
-     */
-    public function sendBulk(ArrayCollection $notifications)
-    {
-       foreach ($notifications as $notification){
-           if($notification instanceof Notification) $this->send($notification);
-       }
     }
 
     public function sendScheduled(Notification $notification)
@@ -73,5 +82,4 @@ class NotificationSender implements NotificationSenderInterface
         // TODO: Implement sendScheduled() method.
         return null;
     }
-
 }

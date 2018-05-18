@@ -50,16 +50,16 @@ class EventManager
      * @param EntityManagerInterface $entityManager
      * @param MediaManager           $mediaManager
      * @param UserManager            $userManager
-     * @param PaymentManager            $paymentManager
+     * @param PaymentManager         $paymentManager
      */
-    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, PaymentManager $paymentManager)
+    public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, PaymentManager $paymentManager, EventDispatcher $eventDispatcher)
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;
         $this->userManager = $userManager;
         $this->paymentManager = $paymentManager;
 
-        $this->eventDispatcher = new EventDispatcher();
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function deleteUserEvents(User $user)
@@ -68,7 +68,7 @@ class EventManager
 
     public function createEvent(Plan $plan, Event $event, User $createdBy = null)
     {
-        $eventPurchase = ($event->getEventPurchase() === null) ? new EventPurchase() : $event->getEventPurchase();
+        $eventPurchase = (null === $event->getEventPurchase()) ? new EventPurchase() : $event->getEventPurchase();
         $eventPurchase->setPlan($plan);
         $eventPurchase->setQuota($plan->getMaxUploads());
         $event->setEventPurchase($eventPurchase);
@@ -102,6 +102,8 @@ class EventManager
      * @param Media     $media
      * @param User|null $by
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
      * @return Event
      */
     public function addMedia(int $eventId, Media $media, User $by = null): Event
@@ -130,6 +132,8 @@ class EventManager
      * @param $eventId
      * @param bool $inTrash
      *
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     *
      * @return Event
      */
     public function findEventById($eventId, $inTrash = false): Event
@@ -139,41 +143,53 @@ class EventManager
 
     /**
      * @param User $user
+     *
      * @return array
      */
     public function lastIncompleteEvent(User $user)
     {
-        $res=$this->entityManager->getRepository(Event::class)->findBy(['createdBy'=>$user->getId()], ['createdAt' => 'desc'],1,0 );
+        $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user->getId()], ['createdAt' => 'desc'], 1, 0);
 
         $res = empty($res) ? null : $res[0];
-        if($res != null){
+        if (null !== $res) {
             $currentStep = $res->getCurrentStep();
-            if($currentStep === '') return null;
+            if ('' === $currentStep) {
+                return null;
+            }
         }
+
         return $res;
     }
 
     /**
      * @param bool $isPayed
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     *
      * @return int
      */
-    public function countEventByPayment($isPayed=true)
+    public function countEventByPayment($isPayed = true)
     {
         $res = $this->entityManager->getRepository(Event::class)->getNbEventByPyment($isPayed);
         $res = empty($res) ? null : $res[0];
-        if($res === null) return 0;
+        if (null === $res) {
+            return 0;
+        }
         return $res['NB_EVENT'];
     }
 
     /**
      * @param $planKey
+     *
      * @return int
      */
     public function countEventByPlan($planKey)
     {
         $res = $this->entityManager->getRepository(Event::class)->getNbEventByPlan($planKey);
         $res = empty($res) ? null : $res[0];
-        if($res === null) return 0;
+        if (null === $res) {
+            return 0;
+        }
         return $res['NB_EVENT'];
     }
 
@@ -184,40 +200,49 @@ class EventManager
     {
         $res = $this->entityManager->getRepository(Payment::class)->getAllSUMPayment();
         $res = empty($res) ? null : $res[0];
-        if($res === null) return 0;
+        if (null === $res) {
+            return 0;
+        }
         return $res['somme'];
     }
 
     /**
      * @param $user
+     *
      * @return mixed
      */
     public function getPassedEvents($user)
     {
         $res = $this->entityManager->getRepository(Event::class)->getPassedEvents($user);
-        return $res;
 
+        return $res;
+    }
+
+    /**
+     * @param $user
+     *
+     * @return array
+     */
+    public function getUpcomingEvents($user)
+    {
+        $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user, 'closedAt' => null]);
+
+        return $res;
     }
 
     /**
      * @param $user
      * @return array
      */
-    public function getUpcomingEvents($user)
-    {
-        $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user, 'closedAt' => null]);
-        return $res;
-
-    }
-
     public function getIsPaidEvents($user)
     {
         $events = $this->getUpcomingEvents($user);
 
         $res = [];
-        foreach($events as $event){
-           $res[$event->getId()] =  $this->paymentManager->isTotalPayed($event);
+        foreach ($events as $event) {
+            $res[$event->getId()] = $this->paymentManager->isTotalPayed($event);
         }
+
         return $res;
     }
 }

@@ -14,15 +14,13 @@
 
 namespace AppBundle\Entity;
 
-
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Templating\EngineInterface;
 
 /**
- * Class BaseNotification
- * @package AppBundle\Entity
+ * Class BaseNotification.
  *
  * @ORM\Table(name="notification")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\BaseNotificationRepository")
@@ -36,7 +34,6 @@ use Symfony\Component\Templating\EngineInterface;
  *     })
  *
  * @ORM\HasLifecycleCallbacks()
- *
  */
 abstract class BaseNotification implements NotificationInterface
 {
@@ -56,7 +53,7 @@ abstract class BaseNotification implements NotificationInterface
      *
      * @ORM\Column(name="channels", type="array")
      */
-    protected $channels = [ 'email'=> '', 'push'=> false ];
+    protected $channels = ['email' => '', 'push' => false];
 
     /**
      * @var string
@@ -83,7 +80,7 @@ abstract class BaseNotification implements NotificationInterface
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    protected $deleteOnRead=false;
+    protected $deleteOnRead = false;
 
     /**
      * @var User
@@ -217,10 +214,9 @@ abstract class BaseNotification implements NotificationInterface
         $this->sendAt = $sendAt;
     }
 
-
     public function formatMessageToMail(EngineInterface $templateEngine, UrlGeneratorInterface $router)
     {
-        switch ($this){
+        switch ($this) {
             case InvitationRequestNotification::class:
                 // TODO: change url ...
                 $url = $router->generate('fos_user_registration_register');
@@ -239,5 +235,4 @@ abstract class BaseNotification implements NotificationInterface
     {
         // TODO: Implement formatMessageToText() method.
     }
-
 }
