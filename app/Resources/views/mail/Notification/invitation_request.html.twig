@@ -1,0 +1,11 @@
+{% extends "mail/layout.html.twig" %}
+
+{% block content %}
+    <br><br>
+    <p>
+         {{ 'mail.notification.invitation_request'|trans({'%event_creator%': event_creator}) }}
+        {{ link }}
+        {{ message }}
+    </p>
+
+{% endblock %}

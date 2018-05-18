@@ -49,6 +49,8 @@ mail:
     password_deleted_body: 'Votre compte est supprimé, contactez l''administrateur'
     header: 'Bonjour'
     footer: 'Cordialement'
+    notification:
+        invitation_request: 'vous a invité à rejoindre leur événement. Vous trouverez un lien pour accepter l''invitation ci-dessous  '
 flash:
     success: 'Votre opération a été exécutée avec succès'
     error: 'Votre opération n'' a pas pu être exécutée.'

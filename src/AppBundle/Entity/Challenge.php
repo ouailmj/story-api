@@ -70,6 +70,12 @@ class Challenge implements Timestampable
     private $event;
 
     /**
+     * @var ChallengeNotification
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\ChallengeNotification",  inversedBy="challenge", cascade={"persist", "remove"})
+     */
+    private $notification;
+
+    /**
      * Get id.
      *
      * @return int
@@ -174,4 +180,22 @@ class Challenge implements Timestampable
     {
         return $this->event;
     }
+
+    /**
+     * @return ChallengeNotification
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param ChallengeNotification $notification
+     */
+    public function setNotification(ChallengeNotification $notification)
+    {
+        $this->notification = $notification;
+    }
+
+
 }

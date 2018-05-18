@@ -75,6 +75,13 @@ class InvitationRequest
      */
     protected $user;
 
+
+    /**
+     * @var InvitationRequestNotification
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\InvitationRequestNotification",  inversedBy="invitationRequest", cascade={"persist", "remove"})
+     */
+    private $notification;
+
     /**
      * Get id.
      *
@@ -220,4 +227,21 @@ class InvitationRequest
 
         return $this;
     }
+
+    /**
+     * @return InvitationRequestNotification
+     */
+    public function getNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * @param InvitationRequestNotification $notification
+     */
+    public function setNotification(InvitationRequestNotification $notification)
+    {
+        $this->notification = $notification;
+    }
+
 }
