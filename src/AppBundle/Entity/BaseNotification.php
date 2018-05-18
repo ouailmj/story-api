@@ -216,19 +216,14 @@ abstract class BaseNotification implements NotificationInterface
 
     public function formatMessageToMail(EngineInterface $templateEngine, UrlGeneratorInterface $router)
     {
-        switch ($this) {
-            case InvitationRequestNotification::class:
                 // TODO: change url ...
-                $url = $router->generate('fos_user_registration_register');
+                $url = $router->generate('fos_user_registration_register', array(),  UrlGeneratorInterface::ABSOLUTE_URL );
 
                 return $templateEngine->render('mail/notification/invitation_request.html.twig', [
                     'event_creator' => $this->triggeredBy->getUsername(),
                     'message' => $this->message,
                     'link' => $url,
                 ]);
-            default:
-                return false;
-        }
     }
 
     public function formatMessageToText()

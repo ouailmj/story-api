@@ -15,12 +15,34 @@
 namespace AppBundle\NotificationSystem\Sender;
 
 use AppBundle\Entity\BaseNotification as Notification;
+use AppBundle\Mailer\Mailer;
 use AppBundle\NotificationSystem\Sender\Driver\DriverFactory;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Ldap\Exception\DriverNotFoundException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class NotificationSender implements NotificationSenderInterface
 {
+
+    /** @var Mailer */
+    private $mailer;
+
+    /**
+     * @var UrlGeneratorInterface
+     */
+    protected $router;
+
+    /**
+     * Mail constructor.
+     * @param Mailer                    $mailer
+     * @param UrlGeneratorInterface     $router
+     */
+    public function __construct(Mailer $mailer, UrlGeneratorInterface $router)
+    {
+        $this->mailer = $mailer;
+        $this->router = $router;
+    }
+
     /**
      * @param string $channelName
      *
@@ -49,6 +71,7 @@ class NotificationSender implements NotificationSenderInterface
         }
     }
 
+
     /**
      * @param Notification $notification
      *
@@ -71,7 +94,7 @@ class NotificationSender implements NotificationSenderInterface
     {
         $channels = $notification->getChannels();
         foreach (array_keys($channels) as $key) {
-            DriverFactory::getDriver($key)->handle($notification);
+            DriverFactory::getDriver($key)->handle($notification, $this->getParams());
         }
 
         return $channels;
@@ -81,5 +104,17 @@ class NotificationSender implements NotificationSenderInterface
     {
         // TODO: Implement sendScheduled() method.
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    private function getParams()
+    {
+        return
+            $params = array(
+                'mailer' => $this->mailer,
+                'router' => $this->router,
+            );
     }
 }
