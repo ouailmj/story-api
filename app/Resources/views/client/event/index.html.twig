@@ -27,7 +27,7 @@
                         </div>
                         <div class="event-settings">
                             <div class="edit-event">
-                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                                <a href="{{ path('show-event-client', { 'id' : event.id }) }}"><i class="fa fa-wrench" aria-hidden="true"></i> </a>
                             </div>
                             <div class="pay-status">
                                 {% set paidClass = 'unpaid' %}
@@ -73,6 +73,4 @@
              </div>
         </section>
     </div>
-
-
 {% endblock %}

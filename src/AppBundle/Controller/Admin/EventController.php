@@ -88,9 +88,9 @@ class EventController extends BaseController
     /**
      * Creates a form to delete a event entity.
      *
-     * @param Event $event The event entity
+     * @param Event $event
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createDeleteForm(Event $event)
     {
@@ -106,6 +106,10 @@ class EventController extends BaseController
      *
      * @Route("/{id}", name="event_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Event $event)
     {

@@ -34,6 +34,10 @@ class UserController extends BaseController
      *
      * @Route("/", name="user_index")
      * @Method("GET")
+     *
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      */
     public function indexAction(UserManager $userManager)
     {
