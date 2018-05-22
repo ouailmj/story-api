@@ -118,17 +118,21 @@ class UserManager
      * @param User $user
      * @param bool $flush
      * @param bool $sendMail
+     * @param bool $api
      *
      * @return User
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function createUser(User $user, $flush = true, $sendMail = false)
+    public function createUser(User $user, $flush = true, $sendMail = false, $api = false)
     {
         $plainPassword = $user->getPlainPassword();
 
-        if (!$user->getAvatar()) {
+       /* if (!$user->getAvatar()) {
             $avatar = $this->mediaManager->createMediaFromLocalFile(static::$defaultAvatar);
             $user->setAvatar($avatar);
-        }
+        } */
 
         $this->fosUserManager->updateUser($user, $flush);
 
@@ -136,6 +140,14 @@ class UserManager
 
         if ($sendMail) {
             $this->mailer->sendAccountCreatedMessage($user);
+        }
+        if ($api) {
+            $user->setEnabled(false);
+            if (null === $user->getConfirmationToken()) {
+                $user->setConfirmationToken($this->tokenGenerator->generateToken());
+            }
+            $this->em->flush();
+            $this->fos_mailer->sendConfirmationEmailMessage($user);
         }
 
         return $user;

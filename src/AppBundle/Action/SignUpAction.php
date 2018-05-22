@@ -24,10 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SignUpAction extends Controller
 {
     /**
-     * @param User        $data
-     * @param UserManager $userManager
      *
-     * @return JsonResponse
      *
      * @Route(
      *     name="signUpAPI",
@@ -39,11 +36,17 @@ class SignUpAction extends Controller
      *     },
      * )
      * @Method({"POST"})
+     *
+     * @param User $data
+     * @param UserManager $userManager
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function __invoke(User $data, UserManager $userManager)
     {
-        $user = $userManager->createUser($data);
 
+        $user = $userManager->createUser($data,true ,true, true);
         $jwtManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
 
         return new JsonResponse(['token' => $jwtManager->create($user)]);
