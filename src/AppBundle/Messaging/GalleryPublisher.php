@@ -17,26 +17,25 @@ namespace AppBundle\Messaging;
 use ApiPlatform\Core\JsonLd\Serializer\ItemNormalizer;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Media;
-use AppBundle\Entity\User;
-use Symfony\Component\Serializer\Serializer;
 
 class GalleryPublisher
 {
     /** @var Client */
     private $client;
-    /** @var Serializer */
+
+    /** @var ItemNormalizer */
     private $serializer;
 
     /**
      * GalleryPublisher constructor.
      *
-     * @param Client $client
+     * @param Client         $client
+     * @param ItemNormalizer $serializer
      */
-    public function __construct(Client $client,Serializer $serializer)
+    public function __construct(Client $client, ItemNormalizer $serializer)
     {
         $this->client = $client;
-        $this->serializer=$serializer;
-
+        $this->serializer = $serializer;
     }
 
     /**
@@ -73,17 +72,19 @@ class GalleryPublisher
     private function prepareData(Event $event, Media $media)
     {
         $now = new \DateTime();
-        $diff_sec = $media->getUploadedAt()->format('U')-$now->format('U');
-        if($diff_sec<900) {
-            $data = array(
-                '_image' => "/uploads/" . $media->getSrc(),
+        $diff_sec = $media->getUploadedAt()->format('U') - $now->format('U');
+        if ($diff_sec < 900) {
+            $data = [
+                '_image' => '/uploads/'.$media->getSrc(),
                 '_eventId' => $event->getId(),
-                '_name' => "Farah",
-//            'media'     => $this->serializer->normalize($media),
-                // 'event'     => $this->serializer->normalize($event)
-            );
+                '_name' => 'Farah',
+                'media' => $this->serializer->normalize($media),
+                'event' => $this->serializer->normalize($event),
+            ];
+
             return json_encode($data);
         }
+
         return null;
     }
 }

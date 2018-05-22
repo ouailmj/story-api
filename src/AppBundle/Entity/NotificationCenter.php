@@ -14,14 +14,12 @@
 
 namespace AppBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
- * Class NotificationCenter
- * @package AppBundle\Entity
+ * Class NotificationCenter.
  *
  * @ORM\Table(name="notification_center")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationCenterRepository")
@@ -29,7 +27,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class NotificationCenter
 {
-
     use TimestampableEntity;
 
     /**
@@ -110,6 +107,4 @@ class NotificationCenter
     {
         $this->receiver = $receiver;
     }
-
-
 }

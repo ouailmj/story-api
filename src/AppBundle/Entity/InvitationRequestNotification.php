@@ -17,15 +17,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class InvitationRequestNotification
- * @package AppBundle\Entity
+ * Class InvitationRequestNotification.
  *
  * @ORM\Table(name="invitation_request_notification")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InvitationRequestNotificationRepository")
  */
 class InvitationRequestNotification extends BaseNotification
 {
-
     /**
      * @var int
      *
@@ -74,6 +72,4 @@ class InvitationRequestNotification extends BaseNotification
     {
         // TODO: Implement getSource() method.
     }
-
-
 }

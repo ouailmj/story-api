@@ -14,10 +14,9 @@
 
 namespace AppBundle\Controller;
 
-
 use Payum\Core\Request\GetHumanStatus;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class PaymentController extends BaseController
@@ -39,7 +38,6 @@ class PaymentController extends BaseController
         $payment->setClientId('anId');
         $payment->setClientEmail('foo@example.com');
 
-
         $storage->update($payment);
 
         $captureToken = $this->get('payum')->getTokenFactory()->createCaptureToken(
@@ -50,6 +48,7 @@ class PaymentController extends BaseController
         // dump($captureToken);die;
         return $this->redirect($captureToken->getTargetUrl());
     }
+
     /**
      * @Route("/payment-done" ,  name="done")
      */
@@ -72,13 +71,13 @@ class PaymentController extends BaseController
 
         // Now you have order and payment status
 
-        return new JsonResponse(array(
+        return new JsonResponse([
             'status' => $status->getValue(),
-            'payment' => array(
+            'payment' => [
                 'total_amount' => $payment->getTotalAmount(),
                 'currency_code' => $payment->getCurrencyCode(),
                 'details' => $payment->getDetails(),
-            ),
-        ));
+            ],
+        ]);
     }
 }

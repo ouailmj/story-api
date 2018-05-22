@@ -60,13 +60,13 @@ class User extends BaseUser
      * @var string
      * @ORM\Column( type="string", nullable=true)
      */
-    protected $firstName;
+    protected $firstName = '';
 
     /**
      * @var string
      * @ORM\Column( type="string", nullable=true)
      */
-    protected $lastName;
+    protected $lastName = '';
 
     /**
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
@@ -147,6 +147,7 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\NotificationCenter",  mappedBy="receiver", cascade={"persist", "remove"})
      */
     protected $notificationCenter;
+
     /**
      * User constructor.
      */
@@ -705,5 +706,4 @@ class User extends BaseUser
     {
         $this->notificationCenter = $notificationCenter;
     }
-
 }

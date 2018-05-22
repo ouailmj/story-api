@@ -14,7 +14,6 @@
 
 namespace AppBundle\Form\Event;
 
-
 use AppBundle\Form\ChallengeType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -30,18 +29,17 @@ class EventChallengeType extends AbstractType
     {
         $builder
 
-            ->add('challenges', CollectionType::class, array(
-                'entry_type'   => ChallengeType::class,
-                'label'        => 'challenge',
+            ->add('challenges', CollectionType::class, [
+                'entry_type' => ChallengeType::class,
+                'label' => 'challenge',
                 'allow_add'    => true,
-                'mapped' => false,
                 'allow_delete' => true,
+                'prototype'    => true,
                 'required'     => false,
                 'attr'         => [
-                    'class' => 'my-challenge',
+                    'class' => "my-challenge",
                 ],
-                'entry_options'    => $options
-            ))
+            ])
         ;
     }
 
@@ -50,8 +48,18 @@ class EventChallengeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_hours' => array(),
-        ]);
+
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Event',
+            'data_hours' => [],
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'appbundle_event';
     }
 }

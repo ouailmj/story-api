@@ -20,7 +20,6 @@ use AppBundle\Form\Type\UserType;
 use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -35,13 +34,18 @@ class UserController extends BaseController
      *
      * @Route("/", name="user_index")
      * @Method("GET")
+     *
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      */
     public function indexAction(UserManager $userManager)
     {
         $users = $userManager->allUsers();
-        $nbAdmins=$userManager->getNbAdmin();
-        $nbClient=$userManager->getNbClient();
-        $nbDisabledUsers=$userManager->getNbUsersDisabled();
+        $nbAdmins = $userManager->getNbAdmin();
+        $nbClient = $userManager->getNbClient();
+        $nbDisabledUsers = $userManager->getNbUsersDisabled();
+
         return $this->render('admin/user/index.html.twig', [
             'users' => $users,
             'nbAdmins' => $nbAdmins,

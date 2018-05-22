@@ -14,21 +14,17 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\AppEvents;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Media;
-use AppBundle\Entity\User;
-use AppBundle\Event\NewMediaUploadedEvent;
 use AppBundle\Messaging\Driver\ZMQDriver;
 use AppBundle\Model\EventManager;
 use AppBundle\Model\MediaManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\VarDumper\VarDumper;
+
 class DefaultController extends BaseController
 {
     /**
@@ -54,7 +50,7 @@ class DefaultController extends BaseController
         $media = $mediaManager->createMediaFromLocalFile(__DIR__.'/../../../web/images/Imagetests/1.jpg', $this->getUser());
         $eventManager->addMedia($event->getId(), $media, $this->getUser());
 
-       // VarDumper::dump($event->getUploadedMedias()->toArray());
+        // VarDumper::dump($event->getUploadedMedias()->toArray());
         $form = $this->createFormBuilder()
             ->add('file', FileType::class)
             ->add('submit', SubmitType::class)
@@ -66,37 +62,35 @@ class DefaultController extends BaseController
         ]);
     }
 
-
     /**
      * @Route("/add_event")
      */
-
     public function eventAction(ZMQDriver $driver)
     {
-        $data = array(
-            '_eventId' =>'1',
+        $data = [
+            '_eventId' => '1',
             '_name' => 'test',
-            '_image'  => 'https://pbs.twimg.com/media/Cb6-pZiWIAIutOl.jpg:large'
-        );
-        try{
+            '_image' => 'https://pbs.twimg.com/media/Cb6-pZiWIAIutOl.jpg:large',
+        ];
+        try {
             $driver->push(json_encode($data));
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             VarDumper::dump($exception);
         }
+
         return $this->render('AppBundle:Events:add_event.html.twig', [
         ]);
     }
 
-
-     /**
-      * @Route("/event/{event}/gallery")
-      * @throws \Exception
-      *
-      * @param Event $event
-      * @return \Symfony\Component\HttpFoundation\Response
-      */
-
-
+    /**
+     * @Route("/event/{event}/gallery")
+     *
+     * @param Event $event
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function galleryAction(Event $event)
     {
         return $this->render('AppBundle:Events:gallery.html.twig', [
@@ -104,6 +98,7 @@ class DefaultController extends BaseController
         ]);
     }
 
+<<<<<<< HEAD
 
     /**
      * @Route("/event/{event}/galleryex1")
@@ -114,6 +109,32 @@ class DefaultController extends BaseController
 
 
     public function galleryexample1Action(Event $event)
+=======
+    /**
+     * @Route("/event/{event}/gallerytest")
+     *
+     * @param Event $event
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function gallerytestAction(Event $event)
+    {
+        return $this->render('AppBundle:Events:gallerytest.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * @Route("/galleryexample1")
+     *
+     * @throws \Exception
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function galleryexample1Action()
+>>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
     {
         return $this->render('AppBundle:Events:galleryexample1.html.twig', [
             'event' => $event,
@@ -121,21 +142,35 @@ class DefaultController extends BaseController
     }
 
     /**
+<<<<<<< HEAD
      * @Route("/event/{event}/galleryexample2")
+=======
+     * @Route("/galleryexample2")
+     *
+>>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
+<<<<<<< HEAD
 
 
     public function galleryexample2Action(Event $event, MediaManager $media) //working with websocket
+=======
+    public function galleryexample2Action()
+>>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
     {
         $medias = $media->mediaUploadedFifteenMinutes($event);
         return $this->render('AppBundle:Events:galleryexample2.html.twig', [
+<<<<<<< HEAD
             'event' => $event,
             'medias' => $medias
         ]);
     }
 
 
+=======
+        ]);
+    }
+>>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
 }

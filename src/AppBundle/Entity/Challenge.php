@@ -14,10 +14,10 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Timestampable;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Challenge.
@@ -26,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ChallengeRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ApiResource()
  */
 class Challenge implements Timestampable
 {
@@ -44,7 +45,6 @@ class Challenge implements Timestampable
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
-     * 
      */
     private $description = '';
 
@@ -74,6 +74,13 @@ class Challenge implements Timestampable
      * @ORM\OneToOne(targetEntity="AppBundle\Entity\ChallengeNotification",  inversedBy="challenge", cascade={"persist", "remove"})
      */
     private $notification;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $randomDate = false;
 
     /**
      * Get id.
@@ -195,6 +202,22 @@ class Challenge implements Timestampable
     public function setNotification(ChallengeNotification $notification)
     {
         $this->notification = $notification;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRandomDate(): bool
+    {
+        return $this->randomDate;
+    }
+
+    /**
+     * @param bool $randomDate
+     */
+    public function setRandomDate(bool $randomDate)
+    {
+        $this->randomDate = $randomDate;
     }
 
 

@@ -15,10 +15,10 @@
 namespace AppBundle\Model;
 
 use AppBundle\Entity\Event;
-use AppBundle\Entity\Media;
-use AppBundle\Entity\Video;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Filesystem\FileManager;
 use AppBundle\Filesystem\UploadManager;
@@ -47,7 +47,6 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-
     /**
      * MediaManager constructor.
      *
@@ -67,16 +66,16 @@ class MediaManager
     /**
      * Creates a media from a Gaufrette file.
      *
-     * @param File      $file
-     * @param User|null $by
-     * @param bool      $andSave
+     * @param File   $file
+     * @param User   $by
+     * @param bool   $andSave
      * @param string $type
      *
      * @return Media
      */
     public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class)
     {
-        /**  @var Media $media  **/
+        /** @var Media $media * */
         $media = new $type();
         $media->setSrc($file->getKey());
         $media->setUploadedAt(new \DateTime());
@@ -89,8 +88,6 @@ class MediaManager
 
         return $media;
     }
-
-
 
     /**
      * Creates a media from a file in the local filesystem.
@@ -145,12 +142,11 @@ class MediaManager
      *
      * @throws FileNotAuthorizedException
      *
-     * @return Media|void
+     * @return Media
      */
     public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $imageTypes = ['JPG', 'PNG', 'JPEG'];
-        if (in_array(strtoupper($file->getClientOriginalExtension()), $imageTypes, true)) {
+        if ($this->isImage($file)) {
             $file = $this->uploadManager->upload($file);
 
             return $this->createMediaFromFile($file, $by, $andSave, Image::class);
@@ -160,23 +156,45 @@ class MediaManager
 
     /**
      * @param UploadedFile $file
-     * @param User|null $by
-     * @param bool $andSave
-     *
-     * @return Media
+     * @param User|null    $by
+     * @param bool         $andSave
      *
      * @throws FileNotAuthorizedException
+     *
+     * @return Media
      */
     public function uploadVideo(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV' ];
-
-        if (in_array(strtoupper($file->getClientOriginalExtension()), $videoTypes, true)) {
+        if ($this->isVideo($file)) {
             $file = $this->uploadManager->upload($file);
 
             return $this->createMediaFromFile($file, $by, $andSave, Video::class);
         }
         throw new FileNotAuthorizedException();
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
+    private function isImage(UploadedFile $file)
+    {
+        $mimeType = $file->getMimeType();
+        $type = explode('/',$mimeType)[0];
+        if( 'image' === $type ) return true;
+        return false;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
+    private function isVideo(UploadedFile $file)
+    {
+        $mimeType = $file->getMimeType();
+        $type = explode('/',$mimeType)[0];
+        if( 'video' === $type ) return true;
+        return false;
     }
 
     public function mediaUploadedFifteenMinutes(Event $event)
@@ -185,9 +203,9 @@ class MediaManager
         $now = new \DateTime();
         $media=[];
         foreach ($medias as $value){
-             if($value->getUploadedAt()->format('U')- $now->format('U')<900){
-                 $media[]=$value;
-             }
+            if($value->getUploadedAt()->format('U')- $now->format('U')<900){
+                $media[]=$value;
+            }
         }
         return $media;
     }
