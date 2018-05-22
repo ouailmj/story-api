@@ -104,6 +104,7 @@ class DefaultController extends BaseController
         ]);
     }
 
+
     /**
      * @Route("/event/{event}/galleryex1")
      * @throws \Exception
@@ -135,5 +136,6 @@ class DefaultController extends BaseController
             'medias' => $medias
         ]);
     }
+
 
 }

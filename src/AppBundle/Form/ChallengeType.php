@@ -33,6 +33,7 @@ class ChallengeType extends AbstractType
         $builder
             ->add('description', TextareaType::class , [
                 'label' => false,
+                'empty_data' => '',
                 'attr' => [
                     'placeholder' => 'Challange Description',
                 ]

@@ -1,6 +1,70 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block content %}
+
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-teal has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ users|length }}</h3>
+                        <span class="text-uppercase text-size-mini">  Nombre total des utilisateurs</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-users4 icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-primary-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbAdmins }}</h3>
+                        <span class="text-uppercase text-size-mini">Nombre des Administrateurs</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-user-tie icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-indigo-400 has-bg-image">
+                <div class="media no-margin">
+
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbClient}}</h3>
+                        <span class="text-uppercase text-size-mini">Nombre des clients</span>
+                    </div>
+                    <div class="media-right media-middle">
+                        <i class="icon-user icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-body bg-danger-400 has-bg-image">
+                <div class="media no-margin">
+                    <div class="media-body">
+                        <h3 class="no-margin">{{ nbDisabledUsers }}</h3>
+                        <span class="text-uppercase text-size-mini">Nombre des utilisateurs Inactif</span>
+                    </div>
+
+                    <div class="media-right media-middle">
+                        <i class="icon-user-cancel icon-3x opacity-75"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="panel panel-flat">
         <div class="panel-heading">
             <h5 class="panel-title">{{ 'user.index.list_title'|trans }}</h5>
@@ -20,7 +84,6 @@
         <table class="table datatable-responsive table-bordered table-hover datatable-highlight">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>{{ 'user.fields.username'|trans }}</th>
                     <th>{{ 'user.fields.full_name'|trans }}</th>
                     <th>{{ 'user.fields.email'|trans }}</th>
@@ -35,7 +98,6 @@
             <tbody>
             {% for user in users %}
                 <tr>
-                    <td><a href="{{ path('user_show', { 'id': user.id }) }}">{{ user.id }}</a></td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.fullName }}</td>
                     <td>{{ user.email }}</td>

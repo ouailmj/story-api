@@ -25,11 +25,11 @@
             </li>
             <li class="completed">
                 <span class="bubble"></span>
-                Event information
+                Add Challenge
             </li>
             <li class="completed">
                 <span class="bubble"></span>
-                Add Challenge
+                Event information
             </li>
             <li class="active">
                 <span class="bubble"></span>
@@ -61,25 +61,25 @@
                     {{ form_widget(form.secondImageCover) }}
                     {{ form_widget(form.thirdImageCover) }}
                 </div>
+                <div class="arrows">
+                    <ul>
+                        <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+                        <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                    </ul>
+            </div>
             </div>
     {{ form_rest(form)}}
-        </div>
-        <div class="arrows">
-                <ul>
-                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
-                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
-                </ul>
         </div>
        {{ form_end(form) }}
 </div>
 </div>
 <script>
-document.getElementById("appbundle_event_coverType_0").addEventListener("click", ()=>
+document.getElementById("appbundle_event_coverType_1").addEventListener("click", ()=>
         {
         document.getElementById('cover-video').style.display ='none';
         document.getElementById('cover-images').style.display ='block';
         });
-document.getElementById("appbundle_event_coverType_1").addEventListener("click", ()=>{
+document.getElementById("appbundle_event_coverType_0").addEventListener("click", ()=>{
         document.getElementById('cover-video').style.display = 'block';
         document.getElementById('cover-images').style.display = 'none';
         });

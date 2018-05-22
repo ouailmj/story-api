@@ -11,11 +11,11 @@
             </li>
             <li class="completed">
                 <span class="bubble"></span>
-                Event information
+                Add Challenge
             </li>
             <li class="completed">
                 <span class="bubble"></span>
-                Add Challenge
+                Event information
             </li>
             <li class="completed">
                 <span class="bubble"></span>
@@ -44,12 +44,22 @@
                         <ol></ol>
                     </div>
                 </div>
-        </div>
-        <div class="arrows">
-                <ul>
-                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
-                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
-                </ul>
+                <div>
+                    <div class="col-md-6">
+                        <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2F127.0.0.190%3A8000%2F&layout=button&size=large&mobile_iframe=true&width=72&height=28&appId" width="72" height="28" style="border:none;overflow:hidden;margin-top: 20px" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                    <div class="col-md-6 mt-15">
+                    <button type="submit">Send</button>
+                    </div>
+                </div>
+                <div class="arrows">
+                    <ul>
+                        {% set route = 'add_event_payment' %}
+                        {%  if isPaid %}    {% set route = 'add_event_event_cover' %}   {% endif %}
+                        <a href="{{ path(route , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+                        <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
+                    </ul>
+                </div>
         </div>
            {{ form_end(form) }}
 </div>

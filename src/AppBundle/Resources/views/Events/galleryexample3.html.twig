@@ -2,17 +2,19 @@
 <html>
 <title>Instan't</title>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/galleryexample2.css') }}">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <style>
-
-    </style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .mySlides {display:none}
+    .w3-left, .w3-right, .w3-badge {cursor:pointer}
+    .w3-badge {height:13px;width:13px;padding:0}
+</style>
 </head>
 <body>
 <div class="w3-content w3-display-container" style="width:100%" id="slide" data-event-id="{{ event.id }}" >
     {% for media in medias %}
-        <img class='mySlides' src="/uploads/{{ media.src }}">
+    <img class='mySlides' src="/uploads/{{ media.src }}">
     {% endfor %}
     {#<img class="mySlides" src="img_nature_wide.jpg" style="width:100%">#}
     {#<img class="mySlides" src="img_fjords_wide.jpg" style="width:100%">#}
@@ -54,7 +56,8 @@
         dots[slideIndex-1].className += " w3-white";
     }
 </script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset('assets/js/autobahn.js') }}"></script>
 <script>
     //const eventId = ""+ $("#gallery").data('event-id');
     const eventId = ""+ $("#slide").data('event-id');
@@ -91,7 +94,5 @@
         {'skipSubprotocolCheck': true}
     );
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="{{ asset('assets/js/autobahn.js') }}"></script>
 </body>
 </html>

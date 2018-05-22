@@ -9,13 +9,13 @@
                 <span class="bubble"></span>
                 Choose plan
             </li>
+            <li class="completed">
+                <span class="bubble"></span>
+                Add Challange
+            </li>
             <li class="active">
                 <span class="bubble"></span>
                 Event information
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Add Challange
             </li>
             <li>
                 <span class="bubble"></span>
@@ -60,15 +60,17 @@
             {{ form_rest(form)}}
             <div class="arrows">
                 <ul>
-                    <button href=""><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
+                    {%  if event.eventPurchase.plan.planKey == 'free' %}
+                        <a href="{{ path('add_event_choose_plan' , { 'event'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+                    {% else %}
+                    <a href="{{ path('add_event_event_challenge' , { 'id'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+                   {% endif %}
                     <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                 </ul>
             </div>
         </div>
        {{ form_end(form) }}
 </div>
-<script src="{{ asset('assets/js/plugins/pickers/daterangepicker.js') }}"> </script>
-<script src="{{ asset('assets/js/plugins/pickers/datepicker.js') }}"> </script>
 <script src="{{ asset('assets/js/plugins/pickers/anytime.js') }}"> </script>
     <script src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
     <script>
@@ -100,7 +102,24 @@
                // console.log(  $('#appbundle_event_startsAt').val());
 
             })
-        })()
+        })
 
-    </script>
+        $(function() {
+          $('input[name="datetimes"]').daterangepicker({
+            timePicker: true,
+            startDate: moment().startOf('hour'),
+            endDate: moment().startOf('hour').add(32, 'hour'),
+            locale: {
+              format: 'M/DD hh:mm A'
+            }
+          });
+        });
+
+         $('input[name="datetimes"]').AnyTime_picker( {
+    format: "%b %e, %y, %l:%i",
+    labelTitle: "Time",
+    labelHour: "Hour",
+    labelMinute: "Minute,
+    } );
+        </script>
 {% endblock %}

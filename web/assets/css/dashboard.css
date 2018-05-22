@@ -510,6 +510,9 @@ body,html{
 .arrows{
     float: right;
     margin-right: 80px;
+    position: absolute;
+    bottom: 0;
+    right: 6%;
 }
 
 .arrows ul{
@@ -630,7 +633,7 @@ button:hover {
     color: #fff;
 }
 #generic_price_table{
-    margin: 50px 50px;
+    margin: 20px 50px;
     font-family: 'Raleway', sans-serif;
 }
 .row .table{
@@ -988,10 +991,10 @@ button:hover {
  */
 
 .event-info-form{
-    min-height: 500px;
+    min-height: 650px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
 }
 
 .input-container .section-one{
@@ -1071,10 +1074,10 @@ button:hover {
     [Event Challange]
  */
 .event-challenge-form{
-    min-height: 500px;
+    min-height: 650px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
 }
 
 .event-challenge-form .my-challenge{
@@ -1102,10 +1105,10 @@ button:hover {
  */
 
 .event-pay-form{
-    min-height: 500px;
+    min-height: 650px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
     width: 996px;
     margin-left: auto;
     margin-right: auto;
@@ -1168,10 +1171,10 @@ button:hover {
     [Event Cover]
  */
 .event-cover-form{
-    min-height: 500px;
+    min-height: 650px;
     padding-left: 150px;
     padding-right: 150px;
-    padding-top: 30px;
+    padding-top: 80px;
     width: 996px;
     margin-left: auto;
     margin-right: auto;
@@ -1186,7 +1189,7 @@ button:hover {
 
 #appbundle_event_coverType{
     text-align: center;
-    margin-left: 100px;
+    margin-left: 40%;
 }
 
 .event-cover-form .radio input[type="radio"]{
@@ -1278,7 +1281,7 @@ button:hover {
  */
 
  .invite-friends-form{
-    min-height: 500px;
+    min-height: 650px;
     padding-left: 150px;
     padding-right: 150px;
     padding-top: 30px;
@@ -1377,4 +1380,32 @@ button:hover {
     float: right;
     border-radius: 10px;
     padding: 2px 0;
+  }
+
+  .list-emails{
+      padding: 20px 5px;
+  }
+
+  .list-emails::-webkit-scrollbar-track
+  {
+      /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+      border-radius: 10px;
+      background-color: transparent;
+  }
+
+  .list-emails::-webkit-scrollbar
+  {
+      width: 12px;
+      background-color: transparent;
+  }
+
+  .list-emails::-webkit-scrollbar-thumb
+  {
+      border-radius: 10px;
+      /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);*/
+      background-color: #11C39A;
+  }
+
+  .list-emails{
+    overflow-x: hidden;
   }

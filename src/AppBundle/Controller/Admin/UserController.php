@@ -27,7 +27,6 @@ use Symfony\Component\HttpFoundation\Request;
  * User controller.
  *
  * @Route("admin/user")
- * @Security("has_role('ROLE_ADMIN')")
  */
 class UserController extends BaseController
 {
@@ -40,9 +39,14 @@ class UserController extends BaseController
     public function indexAction(UserManager $userManager)
     {
         $users = $userManager->allUsers();
-
+        $nbAdmins=$userManager->getNbAdmin();
+        $nbClient=$userManager->getNbClient();
+        $nbDisabledUsers=$userManager->getNbUsersDisabled();
         return $this->render('admin/user/index.html.twig', [
             'users' => $users,
+            'nbAdmins' => $nbAdmins,
+            'nbClient' => $nbClient,
+            'nbDisabledUsers' => $nbDisabledUsers,
         ]);
     }
 
