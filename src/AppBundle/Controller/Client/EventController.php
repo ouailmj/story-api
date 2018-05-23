@@ -177,6 +177,8 @@ class EventController extends BaseController
                 $event->setEndsAt($maxEndsAt);
             }
 
+            $event->setExpiresAt(Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m'))->addRealSeconds($event->getEventPurchase()->getPlan()->getMaxAlbumLifeTime()));
+
             if($event->getEventPurchase()->getPlan()->getEnableChallenges())
             {
                 $event->setCurrentStep('event-challenge');
@@ -221,9 +223,6 @@ class EventController extends BaseController
         $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
         $diffHour = $startsAt->diffInHours($endsAt);
 
-        Carbon::macro('range', function ($startDate, $endDate) {
-            return new \DatePeriod($startDate, new \DateInterval('P1H'), $endDate);
-        });
         for ($i=0;$i< $diffHour;$i++)
         {
             $hours [] = $i;

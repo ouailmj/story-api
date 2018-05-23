@@ -25,7 +25,21 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *
  * @ORM\Table(name="app_event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
- * @ApiResource()
+ * @ORM\HasLifecycleCallbacks()
+ * @ApiResource(
+ *     itemOperations={
+ *     "get",
+ *     "put",
+ *     "delete",
+ *     },
+ *     collectionOperations= {
+ *     "post",
+ *     "api_new_event"={
+ *          "route_name"="newEventAPI",
+ *          "method"="GET"
+ *      },
+ *     }
+ * )
  */
 class Event
 {

@@ -66,7 +66,7 @@ class EventManager
     {
     }
 
-    public function createEvent(Plan $plan, Event $event, User $createdBy = null)
+    public function createEvent(Plan $plan, Event $event, User $createdBy = null, $flush = true)
     {
         $eventPurchase = (null === $event->getEventPurchase()) ? new EventPurchase() : $event->getEventPurchase();
         $eventPurchase->setPlan($plan);
@@ -82,19 +82,20 @@ class EventManager
         $event->setExpiresAt($endsAt->addRealSeconds($plan->getMaxAlbumLifeTime()));
 
         $this->entityManager->persist($event);
-        $this->entityManager->flush();
+
+        if($flush)  $this->entityManager->flush();
 
         return $event;
     }
 
-    public function createEventWithFreePlan(User $createdBy = null, Event $event)
+    public function createEventWithFreePlan(User $createdBy = null, Event $event, $flush = true)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $event, $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $event, $createdBy, $flush);
     }
 
-    public function createEventWithStarterPlan(User $createdBy = null, Event $event)
+    public function createEventWithStarterPlan(User $createdBy = null, Event $event, $flush = true)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $event, $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $event, $createdBy, $flush);
     }
 
     /**
@@ -245,4 +246,14 @@ class EventManager
 
         return $res;
     }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
+    }
+
+
 }

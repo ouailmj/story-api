@@ -17,11 +17,10 @@ namespace AppBundle\Action;
 use AppBundle\Entity\User;
 use AppBundle\Model\UserManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SignUpAction extends Controller
+class SignUpAction extends BaseAction
 {
     /**
      *

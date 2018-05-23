@@ -141,9 +141,11 @@ class UserManager
         if ($sendMail) {
             $this->mailer->sendAccountCreatedMessage($user);
         }
-        if ($api) {
+        if ($api)
+        {
             $user->setEnabled(false);
-            if (null === $user->getConfirmationToken()) {
+            if (null === $user->getConfirmationToken())
+            {
                 $user->setConfirmationToken($this->tokenGenerator->generateToken());
             }
             $this->em->flush();
