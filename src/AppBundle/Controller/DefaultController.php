@@ -98,18 +98,7 @@ class DefaultController extends BaseController
         ]);
     }
 
-<<<<<<< HEAD
 
-    /**
-     * @Route("/event/{event}/galleryex1")
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-
-
-    public function galleryexample1Action(Event $event)
-=======
     /**
      * @Route("/event/{event}/gallerytest")
      *
@@ -126,51 +115,23 @@ class DefaultController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/galleryexample1")
-     *
-     * @throws \Exception
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function galleryexample1Action()
->>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
-    {
-        return $this->render('AppBundle:Events:galleryexample1.html.twig', [
-            'event' => $event,
-        ]);
-    }
 
     /**
-<<<<<<< HEAD
      * @Route("/event/{event}/galleryexample2")
-=======
      * @Route("/galleryexample2")
      *
->>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
      * @throws \Exception
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-<<<<<<< HEAD
 
 
     public function galleryexample2Action(Event $event, MediaManager $media) //working with websocket
-=======
-    public function galleryexample2Action()
->>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
-    {
+            {
         $medias = $media->mediaUploadedFifteenMinutes($event);
         return $this->render('AppBundle:Events:galleryexample2.html.twig', [
-<<<<<<< HEAD
             'event' => $event,
             'medias' => $medias
         ]);
     }
-
-
-=======
-        ]);
-    }
->>>>>>> d3d0d6ac888bd32b5a7e12bea8ef9e12e450099e
 }
