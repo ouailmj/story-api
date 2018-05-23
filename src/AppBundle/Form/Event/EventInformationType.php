@@ -38,17 +38,11 @@ class EventInformationType extends AbstractType
         ])
         ->add('startsAt', DateTimeType::class, [
             'widget' => 'single_text',
-            'label' => false,
-            'attr' => [
-                'id' => 'startAt',
-            ],
+            'label' =>false,
         ])
         ->add('endsAt', DateTimeType::class, [
             'widget' => 'single_text',
             'label' => false,
-            'attr' => [
-                'id' => 'startAt',
-            ],
         ])
         ->add('privacy', ChoiceType::class, [
             'label' => false,

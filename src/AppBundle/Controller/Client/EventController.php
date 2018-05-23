@@ -465,6 +465,7 @@ class EventController extends BaseController
         ]);
     }
 
+
     /**
      * @Route("/event/{id}" ,  name="show-event-client")
      *
@@ -478,4 +479,20 @@ class EventController extends BaseController
         ]);
     }
 
-}
+
+
+
+    /**
+     * @Route("/edit-event")
+     */
+
+    public function editAction()
+    {
+    return $this->render('client/event/edit-event.html.twig', [
+        // ...
+    ]);
+        }
+    }
+
+
+
