@@ -21,7 +21,7 @@ a {
   }
 
 body,html{
-    background: #F3F5F7 !important;
+    background: rgb(255, 255, 255) !important;
     height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -1593,7 +1593,7 @@ button:hover {
           transform: translateY(0);
 }
 .instant-card .menu-content li {
-  width: 33.333333%;
+  width: 25%;
   float: left;
   background-color: #77d7b9;
   height: 60px;
