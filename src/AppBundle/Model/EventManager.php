@@ -66,6 +66,20 @@ class EventManager
     {
     }
 
+    public function deleteEvent(Event $event)
+    {
+
+        $this->entityManager->remove($event);
+        $this->entityManager->flush();
+        //TODO: delete all uploaded files and delete all scheduler
+    }
+
+    public function closeEvent(Event $event)
+    {
+        $event->setClosedAt(new \DateTime());
+        $this->entityManager->flush();
+        //TODO:  delete all scheduler
+    }
     public function createEvent(Plan $plan, Event $event, User $createdBy = null, $flush = true)
     {
         $eventPurchase = (null === $event->getEventPurchase()) ? new EventPurchase() : $event->getEventPurchase();

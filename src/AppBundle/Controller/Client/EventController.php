@@ -22,6 +22,7 @@ use AppBundle\Entity\Payment;
 use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\Event\ChoosePlanType;
+use AppBundle\Form\Event\ConfirmationType;
 use AppBundle\Form\Event\editEventType;
 use AppBundle\Form\Event\EventChallengeType;
 use AppBundle\Form\Event\EventCoverType;
@@ -41,9 +42,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * User controller.
@@ -469,12 +472,80 @@ class EventController extends BaseController
      *
      * @param Event $event
      * @return Response
+     * @Method("GET")
      */
-    public function showEventAction(Event $event){
+    public function showEventAction(Request $request,Event $event){
+        if($event->getCreatedBy() !== $this->getUser()) throw new AccessDeniedException();
+
+        $form_delete =$this->createDeleteForm($event);
 
         return $this->render('client/event/show.html.twig', [
+            'event' => $event,
+            'delete_form' => $form_delete->createView(),
+        ]);
+    }
+    /**
+     * Deletes a user entity.
+     *
+     * @Route("/event/{id}", name="event_delete")
+     * @Method("DELETE")
+     */
+    public function deleteAction(Request $request, EventManager $eventManager, Event $event)
+    {
+
+        $form = $this->createDeleteForm($event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $eventManager->deleteEvent($event);
+            $this->addSuccessFlash();
+
+        }
+
+        return $this->redirectToRoute('list-event');
+    }
+
+    /**
+     * @Route("/event/close/{id}", name="event_close")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Event $event
+     * @param EventManager $eventManager
+     * @return Response
+     */
+    public  function closeEventAction(Request $request, Event $event, EventManager $eventManager){
+        $form = $this->createForm(ConfirmationType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if($form->get('title')->getData() === $event->getTitle()){
+
+                $eventManager->closeEvent($event);
+                $this->addSuccessFlash();
+                return $this->redirectToRoute('list-event');
+            }else  {
+                //TODO: Translate
+                $form->get('title')->addError(new FormError('title is invalid'));
+            }
+
+        }
+        return $this->render('client/event/confirmation.html.twig', [
+            'form' => $form->createView(),
             'event' => $event,
         ]);
     }
 
+    /**
+     * @param Event $event
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createDeleteForm(Event $event)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('event_delete', ['id' => $event->getId()]))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
 }

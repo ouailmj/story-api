@@ -134,7 +134,7 @@ class Event
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents")
      */
     private $createdBy;
 

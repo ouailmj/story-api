@@ -1,0 +1,30 @@
+{% extends "client/event/base_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+    <div class="main" xmlns="http://www.w3.org/1999/html">
+        <div class="event-info-form animated zoomInUp">
+            <div>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat, diam sed fermentum tincidunt, leo mauris ornare odio, ut lobortis erat magna sit amet justo. Vivamus odio neque, pellentesque ut pretium sed, vestibulum ut nulla. Curabitur diam metus, mattis sed gravida in, faucibus sed sem. Nulla rutrum mattis nisl quis commodo. Sed pretium non felis cursus sagittis. Aliquam vel viverra neque. Mauris ligula nulla, elementum sit amet fringilla ac, egestas quis arcu. Suspendisse pellentesque hendrerit massa eu rutrum.
+                </p>
+                <p>
+                    Vestibulum suscipit porttitor massa, ultricies laoreet sem tincidunt id. Sed vel condimentum diam. Vestibulum ultrices commodo tortor, a venenatis nisl gravida vitae. Quisque et massa non tellus ullamcorper tempus nec sed ipsum. Pellentesque suscipit a magna iaculis varius. Vivamus malesuada condimentum maximus. Curabitur cursus magna vitae velit egestas sagittis. Duis egestas dolor sit amet risus aliquet, ut sodales dui tempus. Maecenas cursus ut orci ac blandit. Nullam consequat lorem maximus ultrices accumsan. Vestibulum a risus sodales, auctor ante vel, hendrerit sem. Vivamus sed sem quis mi pharetra dignissim. Donec convallis tellus at lacus feugiat, nec egestas ex tristique.
+                </p>
+                <p>
+                    Etiam hendrerit tincidunt vulputate. Praesent in rhoncus ligula. Ut sit amet velit egestas, sollicitudin nibh ac, elementum massa. Donec eu nulla at dolor fermentum iaculis quis sed justo. Praesent aliquet rutrum eros quis ornare. Suspendisse varius, orci viverra pellentesque luctus, tellus velit varius ipsum, id laoreet sapien mi sed urna. Quisque eu arcu erat. Sed et massa quis neque varius facilisis. Sed non tincidunt ipsum, sed suscipit ex. Aliquam lobortis libero dui. Donec tristique dapibus pharetra. Donec at dolor commodo, sollicitudin arcu tincidunt, lacinia turpis. Etiam pulvinar feugiat tincidunt.
+                </p>
+            </div>
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+            {{ form_widget(form) }}
+            <div class="text-right">
+                <div class="btn-group">
+                    {% set  confirm =  'user.delete_account'|trans %}
+                    <button class="btn btn-danger legitRipple" type="submit">close<i class="icon-trash-alt position-right"></i></button>
+                    <a   class="btn btn-primary  legitRipple" href="{{ path('show-event-client', { 'id': event.id }) }}">retour<i class="icon-rotate-cw2 position-right"></i></a>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

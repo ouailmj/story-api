@@ -98,6 +98,7 @@ class DefaultController extends BaseController
         ]);
     }
 
+
     /**
      * @Route("/event/{event}/gallerytest")
      *
