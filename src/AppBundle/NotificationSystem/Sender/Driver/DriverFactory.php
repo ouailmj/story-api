@@ -14,6 +14,8 @@
 
 namespace AppBundle\NotificationSystem\Sender\Driver;
 
+
+use AppBundle\Mailer\Mailer;
 use AppBundle\NotificationSystem\Sender\DriverInterface;
 
 class DriverFactory

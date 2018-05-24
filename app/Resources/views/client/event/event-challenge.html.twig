@@ -40,7 +40,8 @@
             {{ form_rest(form)}}
             <div class="arrows">
                 <ul>
-                    <a href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+
+                    <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
                     <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                 </ul>
         </div>
@@ -48,7 +49,6 @@
        {{ form_end(form) }}
 </div>
 
-    {% block javascripts %}
         <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
         <script type="text/javascript">
             $('.my-challenge').collection({
@@ -64,6 +64,47 @@
             );
 
         </script>
-    {% endblock javascripts %}
+        <script>
+            function getElementsFinishWithId( id ) {
+                var children = document.body.getElementsByTagName('*');
+                var elements = [], child;
+                for (var i = 0; i < children.length; i++) {
+
+                    child = children[i];
+                    if (child.id.split('_')[4] == id)
+                        elements.push(child);
+                }
+                return elements;
+            }
+           elements =  getElementsFinishWithId('randomDate') ;
+
+            elements.forEach((element)=>{
+                onChangeCheckbox(element)
+            });
+
+            function onChangeCheckbox(element){
+
+               let id = element.id.split('_')[3];
+                let state = false;
+                if( element.checked){
+                    state = true;
+                };
+
+                var nodes = document.getElementById('appbundle_event_challenges_'+id+'_plannedAtHour').getElementsByTagName('*');
+                for(var i = 0; i < nodes.length; i++){
+                    nodes[i].disabled = state;
+                }
+            }
+        </script>
+    <script>
+        {% for challenge in event.challenges  %}
+            {% set hour = challenge.plannedAt|date('H') %}
+            {% set minute = challenge.plannedAt|date('m') %}
+            {% set idHour = 'appbundle_event_challenges_'~ (loop.index-1) ~'_plannedAtHour_hour' %}
+            {% set idMinute = 'appbundle_event_challenges_'~ (loop.index-1) ~'_plannedAtHour_minute' %}
+        document.getElementById('{{ idHour }}').getElementsByTagName('option')[{{ hour }}].selected = 'selected';
+        document.getElementById('{{ idMinute }}').getElementsByTagName('option')[{{ minute }}].selected = 'selected';
+        {% endfor %}
+    </script>
 
 {% endblock %}

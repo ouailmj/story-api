@@ -69,7 +69,7 @@ class EventRepository extends BaseRepository
         }
         $sql = " 
         SELECT DISTINCT COUNT(*) as NB_EVENT
-        FROM event ev, event_purchase ep, plan pl
+        FROM app_event ev, event_purchase ep, plan pl
         WHERE ev.event_purchase_id = ep.id 
         AND ep.plan_id = pl.id
         AND   pl.plan_key !=  'free'

@@ -1,213 +1,233 @@
 {% extends 'admin/base.html.twig' %}
 
 {% block content %}
-<div class="panel panel-flat">
-    <div class="panel-heading">
-        <h6 class="panel-title">Event Information<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
-        <div class="heading-elements">
-            <a onclick="return confirm('Êtes-vous sûr ? Cette action est irréversible.');"  class="btn btn-danger btn-xs" href="{{ path('event_delete', { 'id': event.id }) }}">Supprimer <i class="icon-trash-alt position-right"></i></a>
-            <a href="{{ path('event_index') }}" class="btn btn-primary btn-xs "><b><i class="icon-loop3"></i></b> Retour à la liste</a>
-        </div>
-    </div>
-    <div class="panel-body">
-        <div class="col-md-12 col-lg-12">
-            <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>Title</th>
-                            <td>{{ event.title }}</td>
-                        </tr>
-                        <tr>
-                            <th>Description</th>
-                            <td>{{ event.description }}</td>
-                        </tr>
-                        <tr>
-                            <th>Place</th>
-                            <td>{{ event.place }}</td>
-                        </tr>
-                        <tr>
-                            <th>Privacy</th>
-                            <td>{{ event.privacy }}</td>
-                        </tr>
-                        <tr>
-                            <th>CreatedBy</th>
-                            <td>{{ event.createdBy.fullName }}</td>
-                        </tr>
-                        <tr>
-                            <th>Plan</th>
-                            <td>{{ event.eventPurchase.plan.planKey }}</td>
-                        </tr>
-                        <tr>
-                            <th>Startsat</th>
-                            <td>{% if event.startsAt %}{{ event.startsAt|date('Y-m-d') }} <strong>{{ event.startsAt|date('H:i') }}</strong>{% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th>Endsat</th>
-                            <td>{% if event.endsAt %}{{ event.endsAt|date('Y-m-d') }} <strong>{{ event.endsAt|date('H:i') }}</strong>{% endif %}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-        </div>
-    </div>
-</div>
-<div class="panel panel-flat">
-    <div class="panel-heading">
-        <h6 class="panel-title">Détails</h6>
-    </div>
-    <div class="panel-body">
-        <div class="tabbable">
-            <ul class="nav nav-tabs nav-tabs-top top-divided nav-justified">
-                <li class="active"><a href="#event-createdBy" data-toggle="tab">createdBy</a></li>
-                <li><a href="#event-payment" data-toggle="tab">Payment</a></li>
-                <li><a href="#event-challenges" data-toggle="tab">Challenges</a></li>
-            </ul>
+    <div class="panel panel-white">
+        <div class="panel-heading">
+            <h6 class="panel-title text-semibold">{{ event.title }}<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+            <div class="heading-elements">
+                <ul class="list-inline list-inline-separate heading-text">
+                    <li> <i class="icon-location3 text-blue"></i>  <span class="text-italic"> {{ event.place }}</span></li>
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="event-createdBy">
-                    <div class="col-md-12 col-lg-12">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <td>{{ 'user.fields.username'|trans }}</td>
-                                <td>{{ event.createdBy.username }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.full_name'|trans }}</td>
-                                <td>{{ event.createdBy.fullName }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.email'|trans }}</td>
-                                <td>{{ event.createdBy.email }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.phone_number'|trans }}</td>
-                                <td>{{ event.createdBy.phoneNumber }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.time_zone'|trans }}</td>
-                                <td>{{ event.createdBy.timezoneId }}</td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.role'|trans }}</td>
-                                <td>
-                                        <span class="label label-info">
-                                            {% if event.createdBy.roles.0 == 'ROLE_USER' %}
-                                                {{ 'user.fields.user'|trans }}
-                                            {% elseif event.createdBy.roles.0 == 'ROLE_ADMIN' %}
-                                                {{ 'user.fields.admin'|trans }}
-                                            {% elseif event.createdBy.roles.0 == 'ROLE_SUPER_ADMIN' %}
-                                                Super Admin
-                                            {% else %}
-                                                No Role
-                                            {% endif %}
-                                        </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.state'|trans }}</td>
-                                <td>
-                                    {% if event.createdBy.enabled ==1 %}
-                                        <span class="label bg-success heading-text">{{ 'user.index.enable'|trans }}</span>
-                                    {% else %}
-                                        <span class="label bg-danger heading-text">{{ 'user.index.disable'|trans }}</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'user.fields.lastLogin'|trans }}</td>
-                                <td>{{ event.createdBy.lastLogin|date }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="course-overview">
+                <div class="panel-body">
+                    <div class="content-group-lg">
+                        <h6 class="text-semibold">Description</h6>
+                        <p>
+                            {{ event.description }}
+                        </p>
                     </div>
                 </div>
-                <div class="tab-pane" id="event-payment">
-                    {% set TotalPrice = (TotalPayed/100)|split('.') %}
-                    {% set bg ='bg-danger'  %}
-                    {% set txt ='text-danger'  %}
-                    {% set lbl ='non payer'  %}
-                    {%  if isPayed %}
-                        {% set bg ='bg-success'  %}
-                        {% set txt ='text-success'  %}
-                        {% set lbl ='payer'  %}
+        </div>
+    </div>
+    </div>
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">About the creator<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+        </div>
+
+        <div class="media panel-body no-margin">
+            <div class="media-left">
+                <a href="#">
+                    {% if event.createdBy.avatar == null %}
+                        <img src="{{ asset('images/image.png')|imagine_filter('media_thumb') }}" style="width: 68px; height: 68px;" class="img-circle" alt="">
+                    {% else %}
+                        <img src="{{ asset('uploads/'~ event.createdBy.avatar.src)|imagine_filter('media_thumb') }}" style="width: 68px; height: 68px;" class="img-circle" alt="">
                     {% endif %}
-                    <span class="facture-total {{ txt }}">
-                                {% if TotalPrice[0] is defined %}
-                        {{ TotalPrice[0] }}
-                    {% else %}0{% endif %}.
-                        {% if TotalPrice[1] is defined %}
-                            {{ TotalPrice[1] }}
-                        {% else %}00{% endif %}
-                        €
-                                <span class="label {{ bg }}">{{ lbl }}</span>
-                            </span>
-                    <span class="text-total">Total</span>
-                    <div class="row">
-                        {% for payment in event.eventPurchase.payments %}
-                            <div class="col-md-12">
+                </a>
+            </div>
 
-                                <div class="content-group">
-                                    <h6 class="text-bold">Payment N° {{ loop.index }}</h6>
-                                    <div class="table-responsive no-border">
-                                        <table class="table">
-                                            <tbody>
-                                            <tr>
-                                                <th>Montant:</th>
-                                                {% set price = (payment.totalAmount/100)|split('.') %}
-                                                <td class="text-right text-primary">
-                                                    <h5 class="text-semibold">
-                                                        {% if price[0] is defined %}
-                                                        {{ price[0] }}
-                                                    {% else %}0{% endif %}.
-                                                        {% if price[1] is defined %}
-                                                            {{ price[1] }}
-                                                        {% else %}00{% endif %}
-                                                        €
-                                                    </h5>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>date:</th>
-                                                <td class="text-right">{% if payment.createdAt %}{{ payment.createdAt|date('Y-m-d') }} <strong>{{ payment.createdAt|date('H:i') }}</strong>{% endif %}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+            <div class="media-body">
+                <h6 class="media-heading text-semibold">{{ event.createdBy.fullName }}</h6>
+
+                <ul class="list-inline list-inline-separate no-margin">
+                    <li><a href="#">{{ event.createdBy.email }}</a></li>
+                    <li><a href="{{ path('user_show', {'id' : event.createdBy.id}) }}">Plus ...</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">Membre Ships<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+            <div class="heading-elements">
+                <ul class="list-inline list-inline-separate heading-text">
+                    <li class="text-left">
+                        <div class="text-semibold">Total member ships</div>
+                        <div class="text-muted"><span class="status-mark border-success position-left"></span> {{ event.EventMemberShips|length}} </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="media panel-body no-margin">
+        <div class="table-responsive content-group">
+            <table class="table table-framed">
+                <thead>
+                <tr>
+                    <th style="width: 20px;">#</th>
+                    <th class="col-xs-3">Username</th>
+                    <th class="col-xs-3">Email</th>
+                    <th class="col-xs-3">Phone number</th>
+                    <th class="col-xs-1"><i class=" icon-file-eye"></i></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for eventMemberShip in event.EventMemberShips %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ eventMemberShip.Member.Username }}</td>
+                    <td>{{ eventMemberShip.Member.Email }}</td>
+                    <td>{{ eventMemberShip.Member.PhoneNumber }}</td>
+                    <td><a href="{{ path('user_show',{'id': eventMemberShip.Member.id }) }}"><i class="icon-eye"></i></a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    <div class="panel panel-flat">
+        <div class="panel-heading">
+            <h6 class="panel-title">Challenges<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+            <div class="heading-elements">
+                <ul class="list-inline list-inline-separate heading-text">
+                    <li class="text-left">
+                        <div class="text-semibold">Total challenges</div>
+                        <div class="text-muted"><span class="status-mark border-success position-left"></span> {{ event.Challenges|length}} </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="media panel-body no-margin">
+        <div class="table-responsive content-group">
+            <table class="table table-framed">
+                <thead>
+                <tr>
+                    <th style="width: 20px;">#</th>
+                    <th class="col-xs-2">Due date</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for challenge in event.Challenges %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <div class="input-group input-group-transparent">
+                            <div class="input-group-addon"><i class="icon-calendar22 position-left"></i></div>
+                            {% if challenge.plannedAt %}{{ challenge.plannedAt|date('Y-m-d') }} <strong>{{ challenge.plannedAt|date('H:i') }}</strong>{% endif %}
+                        </div>
+                    </td>
+                    <td>{{ challenge.description }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block right_sidebar %}
+        <div class="sidebar sidebar-opposite sidebar-default sidebar-separate">
+            <div class="sidebar-content">
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Event details</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="category-content">
+                        <div class="form-group">
+                            <label class="control-label no-margin text-semibold">Plan :</label>
+                            <div class="pull-right">{{ event.eventPurchase.plan.planKey }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label no-margin text-semibold">Duration:</label>
+                            <div class="pull-right">{{ event.eventPurchase.plan.maxEventDuration/3600 }} hours</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label no-margin text-semibold">Status:</label>
+                            {% set bg ='bg-danger'  %}
+                            {% set lbl ='non payé'  %}
+                            {%  if isPayed %}
+                                {% set bg ='bg-success'  %}
+                                {% set lbl ='payé'  %}
+                            {% endif %}
+                            <div class="pull-right"><span class="label {{ bg }}">{{ lbl }}</span></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label no-margin text-semibold">Start date:</label>
+                            <div class="pull-right">
+                                {% if event.startsAt %}{{ event.startsAt|date('Y-m-d') }} <strong>{{ event.startsAt|date('H:i') }}</strong>{% endif %}
                             </div>
-                        {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label no-margin text-semibold">End date:</label>
+                            <div class="pull-right">
+                                {% if event.endsAt %}{{ event.endsAt|date('Y-m-d') }} <strong>{{ event.endsAt|date('H:i') }}</strong>{% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label no-margin text-semibold">Privacy:</label>
+                            <div class="pull-right"><span class="label bg-info">{{ event.privacy }}</span></div>
+                        </div>
+
                     </div>
                 </div>
-                <div class="tab-pane" id="event-challenges">
-                    <div class="row">
-                        {% for challenge in event.Challenges %}
-                            <div class="col-md-12">
+                <div class="sidebar-category">
+                    <div class="category-title">
+                        <span>Latest payment</span>
+                        <ul class="icons-list">
+                            <li><a href="#" data-action="collapse"></a></li>
+                        </ul>
+                    </div>
 
-                                <div class="content-group">
-                                    <h6 class="text-bold">Challenge N° {{ loop.index }}</h6>
-                                    <div class="table-responsive no-border">
-                                        <table class="table">
-                                            <tbody>
-                                            <tr>
-                                                <th>Description:</th>
-                                                <td class="text-right text-primary">
-                                                    <h5 class="text-semibold"> {{ challenge.description }}</h5>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>date:</th>
-                                                <td class="text-right">{% if challenge.plannedAt %}{{ challenge.plannedAt|date('Y-m-d') }} <strong>{{ challenge.plannedAt|date('H:i') }}</strong>{% endif %}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                    <div class="category-content no-padding">
+                        <ul class="media-list media-list-linked">
+
+                            {% for payment in event.eventPurchase.payments %}
+                            <li class="media">
+                                <a href="#" class="media-link">
+                                    <div class="media-body">
+                                        <span class="media-heading text-semibold">
+                                            {% set price = (payment.totalAmount/100)|split('.') %}
+                                            {% if price[0] is defined %}
+                                            {{ price[0] }}
+                                        {% else %}0{% endif %}.
+                                            {% if price[1] is defined %}
+                                                {{ price[1] }}
+                                            {% else %}00{% endif %}
+                                            €
+                                        </span>
+                                        <span class="text-size-mini text-muted display-block">
+                                            {% if payment.createdAt %}{{ payment.createdAt|date('Y-m-d') }} <strong>{{ payment.createdAt|date('H:i') }}</strong>{% endif %}
+                                        </span>
                                     </div>
-                                </div>
-                            </div>
-                        {% endfor %}
+                                    <div class="media-right media-middle">
+                                        <span class="status-mark bg-success"></span>
+                                    </div>
+                                </a>
+                            </li>
+                            {% endfor %}
+
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 {% endblock %}

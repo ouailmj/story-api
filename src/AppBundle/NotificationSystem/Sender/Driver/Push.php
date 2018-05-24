@@ -19,7 +19,7 @@ use AppBundle\NotificationSystem\Sender\DriverInterface;
 
 class Push implements DriverInterface
 {
-    public function handle(Notification $notification)
+    public function handle(Notification $notification, array $params)
     {
         // TODO: Implement handle() method.
     }

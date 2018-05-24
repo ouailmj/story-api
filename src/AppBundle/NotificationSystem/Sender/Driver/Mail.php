@@ -16,42 +16,23 @@ namespace AppBundle\NotificationSystem\Sender\Driver;
 
 use AppBundle\Entity\BaseNotification as Notification;
 use AppBundle\Entity\ChallengeNotification;
-use AppBundle\Mailer\Mailer;
 use AppBundle\NotificationSystem\Sender\DriverInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Mail implements DriverInterface
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    protected $router;
-    /** @var Mailer */
-    private $mailer;
-
-    /**
-     * Mail constructor.
-     *
-     * @param Mailer                $mailer
-     * @param UrlGeneratorInterface $router
-     */
-    public function __construct(Mailer $mailer, UrlGeneratorInterface $router)
-    {
-        $this->mailer = $mailer;
-        $this->router = $router;
-    }
 
     /**
      * @param Notification $notification
-     *
+     * @param array $params
      * @return mixed|void
      */
-    public function handle(Notification $notification)
+    public function handle(Notification $notification, array $params)
     {
-        if ($notification instanceof ChallengeNotification) {
-            return;
-        }
-        $body = $notification->formatMessageToMail($this->mailer->getTemplateEngine(), $this->router);
-        $this->mailer->sendEmail($body, $notification->getChannels()['email'], "Instan't Notification");
+        if($notification instanceof ChallengeNotification) return;
+        $body = $notification->formatMessageToMail($params['mailer']->getTemplateEngine(), $params['router']);
+        $params['mailer']->sendEmail($body, $notification->getChannels()['email'], "Instan't Notification");
+        return;
     }
+
+
 }

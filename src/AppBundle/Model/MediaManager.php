@@ -145,10 +145,7 @@ class MediaManager
      */
     public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $imageTypes = ['JPG', 'PNG', 'JPEG'];
-
-        // TODO: use the mime content type function @see mime_content_type($filename)
-        if (in_array(strtoupper($file->getClientOriginalExtension()), $imageTypes, true)) {
+        if ($this->isImage($file)) {
             $file = $this->uploadManager->upload($file);
 
             return $this->createMediaFromFile($file, $by, $andSave, Image::class);
@@ -167,10 +164,7 @@ class MediaManager
      */
     public function uploadVideo(UploadedFile $file, User $by = null, $andSave = true)
     {
-        $videoTypes = ['MP4', 'MPEG4', 'AVI', 'FLV'];
-
-        // TODO: use the mime content type function @see mime_content_type($filename)
-        if (in_array(strtoupper($file->getClientOriginalExtension()), $videoTypes, true)) {
+        if ($this->isVideo($file)) {
             $file = $this->uploadManager->upload($file);
 
             return $this->createMediaFromFile($file, $by, $andSave, Video::class);
@@ -178,13 +172,27 @@ class MediaManager
         throw new FileNotAuthorizedException();
     }
 
-    private function isImage($file)
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
+    private function isImage(UploadedFile $file)
     {
-        // TODO: use the mime content type function @see mime_content_type($filename)
+        $mimeType = $file->getMimeType();
+        $type = explode('/',$mimeType)[0];
+        if( 'image' === $type ) return true;
+        return false;
     }
 
-    private function isVideo($file)
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
+    private function isVideo(UploadedFile $file)
     {
-        // TODO: use the mime content type function @see mime_content_type($filename)
+        $mimeType = $file->getMimeType();
+        $type = explode('/',$mimeType)[0];
+        if( 'video' === $type ) return true;
+        return false;
     }
 }

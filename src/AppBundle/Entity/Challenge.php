@@ -76,6 +76,13 @@ class Challenge implements Timestampable
     private $notification;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $randomDate = false;
+
+    /**
      * Get id.
      *
      * @return int
@@ -196,4 +203,22 @@ class Challenge implements Timestampable
     {
         $this->notification = $notification;
     }
+
+    /**
+     * @return bool
+     */
+    public function isRandomDate(): bool
+    {
+        return $this->randomDate;
+    }
+
+    /**
+     * @param bool $randomDate
+     */
+    public function setRandomDate(bool $randomDate)
+    {
+        $this->randomDate = $randomDate;
+    }
+
+
 }

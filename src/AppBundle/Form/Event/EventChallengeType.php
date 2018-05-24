@@ -32,14 +32,13 @@ class EventChallengeType extends AbstractType
             ->add('challenges', CollectionType::class, [
                 'entry_type' => ChallengeType::class,
                 'label' => 'challenge',
-                'allow_add' => true,
-                'mapped' => false,
+                'allow_add'    => true,
                 'allow_delete' => true,
-                'required' => false,
-                'attr' => [
-                    'class' => 'my-challenge',
+                'prototype'    => true,
+                'required'     => false,
+                'attr'         => [
+                    'class' => "my-challenge",
                 ],
-                'entry_options' => $options,
             ])
         ;
     }
@@ -49,8 +48,18 @@ class EventChallengeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\Event',
             'data_hours' => [],
-        ]);
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'appbundle_event';
     }
 }

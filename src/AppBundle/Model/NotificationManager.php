@@ -71,8 +71,9 @@ class NotificationManager
      *
      * @return InvitationRequestNotification
      */
-    public function createNotificationForInvitationRequest(InvitationRequest $invitationRequest, User $triggeredBy, $deleteOnRead = false)
+    public function createNotificationForInvitationRequest(InvitationRequest $invitationRequest, User $triggeredBy, $deleteOnRead=false)
     {
+
         $notification = new InvitationRequestNotification();
         $notification->setInvitationRequest($invitationRequest);
         $notification->setTriggeredBy($triggeredBy);
@@ -107,7 +108,9 @@ class NotificationManager
     public function createNotificationsForChallenge(Challenge $challenge, User $triggeredBy, $deleteOnRead = false)
     {
         $notifications = [];
-        foreach ($challenge->getEvent()->getEventMemberShips() as $eventMemberShip) {
+        foreach ($challenge->getEvent()->getEventMemberShips() as $eventMemberShip)
+        {
+
             $notification = new ChallengeNotification();
             $notification->setChallenge($challenge);
             $notification->setChannels(['email' => $eventMemberShip->getMember()->getEmail(), 'push' => true]);

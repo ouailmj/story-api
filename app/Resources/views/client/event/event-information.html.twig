@@ -30,10 +30,13 @@
                 Invite Friends
             </li>
         </ul>
-        </div>
+    </div>
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
      {% form_theme form 'Form/Registration/fields.html.twig' %}
         <div class="event-info-form animated zoomInUp">
+                <div class="input-container">
+                    {{ form_widget(form.description ,{'attr': {'class': 'input-field', 'placeholder' : 'Description'}}) }}
+                </div>
                 <div class="input-container">
                     <i class="icon icon-calendar2"></i>
                      {{ form_row(form.title ,{'attr': {'class': 'input-field'}}) }}
@@ -54,24 +57,18 @@
                     <i class="icon icon-eye"></i>
                     {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
                 </div>
-                <div class="input-container">
-                    {{ form_widget(form.description ,{'attr': {'class': 'input-field', 'placeholder' : 'Description'}}) }}
-                </div>
             {{ form_rest(form)}}
             <div class="arrows">
                 <ul>
-                    {%  if event.eventPurchase.plan.planKey == 'free' %}
-                        <a href="{{ path('add_event_choose_plan' , { 'event'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
-                    {% else %}
-                    <a href="{{ path('add_event_event_challenge' , { 'id'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
-                   {% endif %}
+
+                    <a href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
                     <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                 </ul>
             </div>
         </div>
        {{ form_end(form) }}
 </div>
-<script src="{{ asset('assets/js/plugins/pickers/anytime.js') }}"> </script>
+<script src="{{ asset('assets/js/plugins/pickers/anytime.min.js') }}"> </script>
     <script src="{{ asset('assets/js/plugins/ui/moment/moment.min.js') }}"></script>
     <script>
         {% set startsDate = event.startsAt|date('Y-m-d') %}
@@ -103,23 +100,11 @@
 
             })
         })
+        /* AnyTime.picker( "appbundle_event_startsAt",
+            { format: "%d-%m-%Y %T", firstDOW: 1 } );
 
-        $(function() {
-          $('input[name="datetimes"]').daterangepicker({
-            timePicker: true,
-            startDate: moment().startOf('hour'),
-            endDate: moment().startOf('hour').add(32, 'hour'),
-            locale: {
-              format: 'M/DD hh:mm A'
-            }
-          });
-        });
+        AnyTime.picker( "appbundle_event_endsAt",
+            { format: "%d-%m-%Y %T", firstDOW: 1, placement: "popup" } );
 
-         $('input[name="datetimes"]').AnyTime_picker( {
-    format: "%b %e, %y, %l:%i",
-    labelTitle: "Time",
-    labelHour: "Hour",
-    labelMinute: "Minute,
-    } );
-        </script>
+    </script>
 {% endblock %}
