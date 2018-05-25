@@ -1,9 +1,120 @@
-{% extends "::base_user.html.twig" %}
+{% extends "client/event/base_event.html.twig" %}
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
     <div class="main">
-{{ dump(event) }}
+        <div class="event-manager">
+            <div class="row">
+                <div class="instant-card card">
+                    <div class="wrapper">
+                        <div class="date">
+                            <span class="day">{{ event.startsAt|date('d') }}</span>
+                            <span class="month">{{ event.startsAt|date('M') }}</span>
+                            <span class="year">{{ event.startsAt|date('Y') }}</span>
+                        </div>
+                        <div class="data">
+                            <div class="content">
+                            <span class="author">{{ event.place }}</span>
+                            <h1 class="title"><a href="#">{{ event.title }}</a></h1>
+                            <p class="text">{{ event.description }}</p>
+                            <label for="show-menu" class="menu-button"><span></span></label>
+                            </div>
+                            <input type="checkbox" id="show-menu" />
+                            <ul class="menu-content">
+                                <li>
+                                    {{ form_start(delete_form) }}
+                                    {{ form_widget(delete_form) }}
+                                    <a  onclick="confirmSubmit();"  class="fa fa-trash-o"  ></a>
+                                    {{ form_end(delete_form) }}
+                                </li>
+                                <li>
+                                    <a href="{{ path('add_event_choose_plan',{'event': event.id}) }}" class="fa fa-pencil"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="fa fa-share-alt"></a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('event_close',{'id': event.id}) }}" class="fa fa-close"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img src="http://placehold.it/150" alt="">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <a href="" data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-eye"></i></a>
+                                        <a href="" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-cloud-download2"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img src="http://placehold.it/150" alt="">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <a href="" data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-eye"></i></a>
+                                        <a href="" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-cloud-download2"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img src="http://placehold.it/150" alt="">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <a href="" data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-eye"></i></a>
+                                        <a href="" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-cloud-download2"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="thumbnail">
+                            <div class="thumb">
+                                <img src="http://placehold.it/150" alt="">
+                                <div class="caption-overflow">
+                                    <span>
+                                        <a href="" data-popup="lightbox" rel="gallery" class="btn border-white text-white btn-flat btn-icon btn-rounded"><i class="icon-eye"></i></a>
+                                        <a href="" class="btn border-white text-white btn-flat btn-icon btn-rounded ml-5"><i class="icon-cloud-download2"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script>
+        function confirmSubmit()
+        {
+            {% set  confirm =  'user.delete_account'|trans %}
+            var agree=confirm("{{ confirm }}");
+            if (agree){
+                console.log("dededee")
+                 //document.getElementsByTagName('form')[0].submit();
+                 $('form')[0].submit();
+            }
+            else
+                return false ;
+        }
+    </script>
 {% endblock %}
