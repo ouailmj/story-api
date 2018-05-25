@@ -469,10 +469,11 @@ class EventController extends BaseController
 
     /**
      * @Route("/event/{id}" ,  name="show-event-client")
+     * @Method("GET")
      *
+     * @param Request $request
      * @param Event $event
      * @return Response
-     * @Method("GET")
      */
     public function showEventAction(Request $request,Event $event){
         if($event->getCreatedBy() !== $this->getUser()) throw new AccessDeniedException();
@@ -489,6 +490,11 @@ class EventController extends BaseController
      *
      * @Route("/event/{id}", name="event_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param EventManager $eventManager
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, EventManager $eventManager, Event $event)
     {

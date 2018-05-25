@@ -38,6 +38,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *          "route_name"="newEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_incomplete_event"={
+ *          "route_name"="incompleteEventAPI",
+ *          "method"="GET"
+ *      },
  *     }
  * )
  */

@@ -165,10 +165,13 @@ class EventManager
     {
         $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user->getId()], ['createdAt' => 'desc'], 1, 0);
 
+        /**
+         * @var Event $res
+         */
         $res = empty($res) ? null : $res[0];
         if (null !== $res) {
             $currentStep = $res->getCurrentStep();
-            if ('' === $currentStep) {
+            if ('' === $currentStep || $res->getClosedAt() != null) {
                 return null;
             }
         }
