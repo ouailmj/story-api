@@ -59,6 +59,7 @@ class NewEventAction extends BaseAction
         $event->setCurrentStep('choose-plan');
         $eventManager->getEntityManager()->flush();
         return new JsonResponse([
+            //TODO: Translate
             'message' => 'Your event has been create successfully',
             'appEventURI' => "/api/events/".$event->getId()
         ]);

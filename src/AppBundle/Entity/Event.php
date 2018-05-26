@@ -196,7 +196,7 @@ class Event
     /**
      * @var EventPurchase
      *
-     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist"})
      */
     private $eventPurchase;
 

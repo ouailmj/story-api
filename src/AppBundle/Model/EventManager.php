@@ -68,10 +68,20 @@ class EventManager
 
     public function deleteEvent(Event $event)
     {
-
         $this->entityManager->remove($event);
+
+
+        foreach ($event->getImagesGallery() as $img)
+        $this->mediaManager->deleteMedia($img);
+
+        foreach ($event->getUploadedMedias() as $img)
+        $this->mediaManager->deleteMedia($img);
+
+        if ($img = $event->getVideoGallery() !== null)
+        $this->mediaManager->deleteMedia($img);
+
         $this->entityManager->flush();
-        //TODO: delete all uploaded files and delete all scheduler
+        //TODO: delete all scheduler
     }
 
     public function closeEvent(Event $event)
