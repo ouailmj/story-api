@@ -282,5 +282,36 @@ class EventManager
         return $this->entityManager;
     }
 
+    /**
+     * @param Event $event
+     * @param bool $flush
+     */
+    public function clearCover(Event $event, $flush = true)
+    {
+        /**
+         * delete all covers
+         */
+        foreach ($event->getImagesGallery() as $img)
+            $this->mediaManager->deleteMedia($img);
+
+        if (  $event->getVideoGallery() !== null)
+            $this->mediaManager->deleteMedia($event->getVideoGallery());
+
+        /**
+         * remove all covers from DB
+         */
+        if($event->getVideoGallery() !== null)
+        {
+            $video = $event->getVideoGallery();
+            $event->setVideoGallery(null);
+            $this->entityManager->remove( $video);
+        }
+        foreach ($event->getImagesGallery() as $img){
+            $event->removeImagesGallery($img);
+            $this->entityManager->remove($img);
+        }
+
+        if($flush) $this->entityManager->flush();
+    }
 
 }

@@ -272,18 +272,23 @@ class EventController extends BaseController
      * @Route("add-event/event-cover/{id}", name="add_event_event_cover")
      * @Method({"GET", "POST"})
      *
-     * @param Request      $request
-     * @param Event        $event
+     *
+     * @param Request $request
+     * @param Event $event
      * @param MediaManager $mediaManager
+     * @param EventManager $eventManager
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function EventCoverAction(Request $request, Event $event, MediaManager $mediaManager)
+    public function EventCoverAction(Request $request, Event $event, MediaManager $mediaManager, EventManager $eventManager)
     {
         $form = $this->createForm(EventCoverType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+
+                $eventManager->clearCover($event);
+
                 $coverType = $form->get('coverType')->getData();
                 if ('video' === $coverType) {
                     /** @var UploadedFile $uploadedVideo */
