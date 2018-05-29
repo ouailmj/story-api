@@ -26,13 +26,19 @@ let vendorCSS = [
 
 let frontCSS = [
     './web/assets/css/icons/icomoon/styles.css',
-    './web/assets/css/bootstrap.css',
-    './web/assets/css/core.css',
-    './web/assets/css/components.css',
+    './web/assets/css/demo.css',
     './web/assets/css/colors.css',
     './web/assets/css/dashboard.css',
-    './web/assets/css/home.css'
+    './web/assets/css/bootstrap_v4/bootstrap.min.css',
+    './web/assets/css/bootstrap_v4/bootstrap-grid.min.css',
+    './web/assets/css/bootstrap_v4/bootstrap-reboot.min.css',
+    
 ];
+
+let frontJs = [
+    './web/assets/css/bootstrap_v4/bootstrap.bundle.min.js',
+    './web/assets/css/bootstrap_v4/bootstrap.min.js',
+]
 
 let loginJs = vendorJs.concat([
     './web/assets/js/pages/login_validation.js'
@@ -54,6 +60,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .addEntry('js/home', homeJs)
     .addEntry('js/login', loginJs)
+    .addEntry('js/front/script', frontJs)
     .createSharedEntry('js/app', vendorJs)
     // .addEntry('js/training', trainingJs)
     .addStyleEntry('css/style', vendorCSS)

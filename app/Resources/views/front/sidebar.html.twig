@@ -1,33 +1,34 @@
 
-<div class="sidenav animated fadeInLeft">
-    <img src="{{ asset('assets/images/logo.png') }}" class="responsive" alt="">
-    <div class="menu">
-        <div class="item margin-bottom">
-            <i class="icon-quill4"></i><a href="{{ path('list-event') }}">Events</a>
-        </div>
-        <div class="item active">
-            <i class="icon-plus3"></i><a href="{{ path('add_event_index') }}">Add Event</a>
-        </div>
-    </div>
-    <div class="user">
-        <div class="info">
-            <div class="avatar">
 
-                {% if app.user.avatar == null %}
-                    <img src="{{ asset('images/image.png')|imagine_filter('media_thumb') }}" alt="">
-                {% else %}
-                    <img src="{{ asset('uploads/'~ app.user.avatar.src)|imagine_filter('media_thumb') }}" alt="">
-                {% endif %}
-            </div>
-            <h4>{{ app.user.username }}</h4>
-        </div>
-        <div class="setting">
-            <div class="item">
-               <a href="{{ path('fos_user_profile_edit') }}"> <i class="icon-user"></i></a>
-            </div>
-            <div class="item">
-                <a href="{{path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
-            </div>
-        </div>
+<div class="sidebar" data-color="instant">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+    -->
+      <div class="logo">
+        <a href="" class="simple-text logo-normal">
+          <img src="{{ asset('assets/images/logo.png') }}" alt="">
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="active">
+            <a href="">
+              <i class="now-ui-icons fa fa-calendar-o"></i>
+              <p>Events</p>
+            </a>
+          </li>
+          <li >
+            <a href="./user.html">
+              <i class="now-ui-icons fa fa-plus"></i>
+              <p>Add Event</p>
+            </a>
+          </li>
+          <li class="active-pro">
+            <a href="./upgrade.html">
+              <i class="now-ui-icons fa fa-user"></i>
+              <p>Profile</p>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
-</div>

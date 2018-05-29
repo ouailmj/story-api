@@ -2,145 +2,129 @@
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
-<div class="main" xmlns="http://www.w3.org/1999/html">
-    <div class="row">
-        <div class="progressbar-container">
-            <ul class="progress-indicator">
-            <li class="active">
-                <span class="bubble"></span>
-                Choose plan
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Event information
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Add Challange
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Event Cover
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Payment
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Invite Friends
-            </li>
-        </ul>
-        </div>
-    </div>
-    {{ form_start(form) }}
-        <div id="generic_price_table" class="animated zoomInUp">
-            <!--BLOCK ROW START-->
-            <div class="row">
-                {% for plan in form.plan.children  %}
-                    <div class="col-md-3">
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+        
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <canvas id="bigDashboardChart"></canvas>
+      </div>
+        <div class="content">
+            <div class="col-md-10 mr-auto ml-auto">
+                <!--      Wizard container        -->
+                <div class="wizard-container">
+                    <div class="card card-wizard active" data-color="primary" id="wizardProfile">
+                        <form action="" method="" novalidate="novalidate">
+                    <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
 
-                        <!--PRICE CONTENT START-->
-                        <div class="generic_content clearfix">
-
-                            <!--HEAD PRICE DETAIL START-->
-                            <div class="generic_head_price clearfix">
-
-                                <!--HEAD CONTENT START-->
-                                <div class="generic_head_content clearfix">
-
-                                    <!--HEAD START-->
-                                    <div class="head_bg"></div>
-                                    <div class="head">
-                                        <span>{{ plans[loop.index-1].name }}</span>
-                                    </div>
-                                    <!--//HEAD END-->
-
+                            <div class="card-header text-center" data-background-color="orange">
+                                <h5 class="card-title">
+                                    NEW EVENT
+                                </h5>
+                                <div class="wizard-navigation">
+                                    <ul class="nav nav-pills">
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link active" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-tag"></i>
+                                                Choose plan
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-info"></i>
+                                                Event Informations
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="#address" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-gamepad"></i>
+                                                Add Chalanges
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-picture-o"></i>
+                                                Event Cover
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-money"></i>
+                                                Payment
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="#address" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-users"></i>
+                                                Invite Friends
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <!--//HEAD CONTENT END-->
+                            </div>
 
-                                <!--PRICE START-->
-                                <div class="generic_price_tag clearfix">
-                                <span class="price">
-                                    <span class="sign">€</span>
-                                    {% set price = (plans[loop.index-1].price/100)|split('.') %}
-                                    <span class="currency">
-                                        {% if price[0] is defined %}
-                                            {{ price[0] }}
-                                        {% else %}0{% endif %}
-                                    </span>
-                                    <span class="cent">.
-                                        {% if price[1] is defined %}
-                                            {{ price[1] }}
-                                        {% else %}00{% endif %}
-                                    </span>
-                                </span>
+                            <div class="card-body">
+                                <div class="row">
+                                {{ form_start(form) }}
+                                    {% for plan in form.plan.children  %}
+                                    <div class="col-s-3 col-md-3">
+                                        <div class='pricing pricing-palden'>
+                                            <div class='pricing-item'>
+                                                <div class='pricing-deco'>
+                                                    <svg class='pricing-deco-img' enable-background='new 0 0 300 100' height='100px' id='Layer_1' preserveAspectRatio='none' version='1.1' viewBox='0 0 300 100' width='300px' x='0px' xml:space='preserve' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns='http://www.w3.org/2000/svg' y='0px'>
+                                                        <path class='deco-layer deco-layer--1' d='M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729&#x000A;	c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z' fill='#FFFFFF' opacity='0.6'></path>
+                                                        <path class='deco-layer deco-layer--2' d='M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729&#x000A;	c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z' fill='#FFFFFF' opacity='0.6'></path>
+                                                        <path class='deco-layer deco-layer--3' d='M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716&#x000A;	H42.401L43.415,98.342z' fill='#FFFFFF' opacity='0.7'></path>
+                                                        <path class='deco-layer deco-layer--4' d='M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428&#x000A;	c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z' fill='#FFFFFF'></path>
+                                                    </svg>
+                                                    <div class='pricing-price'><span class='pricing-currency'>€</span>{{ plans[loop.index-1].price/100 }}
+                                                        
+                                                    </div>
+                                                    <h3 class='pricing-title'>{{ plans[loop.index-1].name }}</h3>
+                                                </div>
+                                                <ul class='pricing-feature-list'>
+                                                    <li class='pricing-feature'>{{ plans[loop.index-1].maxUploads }}: Nb Photo</li>
+                                                    <li class='pricing-feature'>{{ plans[loop.index-1].maxEventDuration/3600 }}h : Durée Event</li>
+                                                    <li class='pricing-feature'>{{ plans[loop.index-1].maxAlbumLifeTime/86400 }} jour : Album Dispo</li>
+                                                    <li class='pricing-feature'>{% if plans[loop.index-1].maxGuests == -1 %}
+                                                                                    illimité
+                                                                                {% else %}
+                                                                                    {{ plans[loop.index-1].maxGuests }}
+                                                                                {% endif %} : Nb Invité</li>
+                                                    <li class='pricing-feature'>{% if plans[loop.index-1].enableGamification == 1 %}
+                                                                                    <i class="icon-checkmark3 text-success"></i>
+                                                                                {% else %}
+                                                                                    <i class="icon-cross2 text-danger-400"></i>
+                                                                                {% endif %} : Gamification</li>
+                                                    <li class='pricing-feature'>{% if plans[loop.index-1].enableChallenges == 1 %}
+                                                                                    <i class="icon-checkmark3 text-success"></i>
+                                                                                {% else %}
+                                                                                    <i class="icon-cross2 text-danger-400"></i>
+                                                                                {% endif %} : Défi</li>
+                                                </ul>
+                                                {{ form_widget(plan) }}
+                                            </div>
+                                        </div>
+
+                                    </div> 
+                                    {% endfor %}
+                                {{ form_rest(form)}}
+                            <div class="card-footer">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
                                 </div>
-                                <!--//PRICE END-->
-
+                                
+                                <div class="pull-left">
+                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous"></button>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <!--//HEAD PRICE DETAIL END-->
-
-                            <!--FEATURE LIST START-->
-                            <div class="generic_feature_list">
-                                <ul>
-                                    <li><span>{{ plans[loop.index-1].maxUploads }}</span> Nb Photo</li>
-                                    <li><span>{{ plans[loop.index-1].maxEventDuration/3600 }}h</span> Durée Event</li>
-                                    <li><span>{{ plans[loop.index-1].maxAlbumLifeTime/86400 }} jour</span> Album Dispo</li>
-                                    <li>
-                                                <span>
-                                                    {% if plans[loop.index-1].maxGuests == -1 %}
-                                                        illimité
-                                                    {% else %}
-                                                        {{ plans[loop.index-1].maxGuests }}
-                                                    {% endif %}
-                                                </span> Nb Invité
-                                    </li>
-                                    <li>
-                                                <span>
-                                                    {% if plans[loop.index-1].enableGamification == 1 %}
-                                                        <i class="icon-checkmark3 text-success"></i>
-                                                    {% else %}
-                                                        <i class="icon-cross2 text-danger-400"></i>
-                                                    {% endif %}
-                                                </span> Gamification
-                                    </li>
-                                    <li>
-                                                <span>
-                                                    {% if plans[loop.index-1].enableChallenges == 1 %}
-                                                        <i class="icon-checkmark3 text-success"></i>
-                                                    {% else %}
-                                                        <i class="icon-cross2 text-danger-400"></i>
-                                                    {% endif %}
-                                                </span> Défi
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--//FEATURE LIST END-->
-
-                            <!--BUTTON START-->
-                            <div class="generic_price_btn clearfix">
-                                {{ form_widget(plan) }}
-                                <label class="role"></label>
-                            </div>
-                            <!--//BUTTON END-->
-
-                        </div>
-                        <!--//PRICE CONTENT END-->
-
                     </div>
-
-                {% endfor %}
+                    {{ form_end(form) }}
+                </div> <!-- wizard container -->
             </div>
-            <!--//BLOCK ROW END-->
         </div>
-    {{ form_rest(form)}}
-        <div class="arrows">
-            <ul>
-                <button disabled><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></button>
-                <button  type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
-            </ul>
-        </div>
-    {{ form_end(form) }}
-</div>
+      </div>
 {% endblock %}
