@@ -285,37 +285,39 @@ class EventController extends BaseController
         $form = $this->createForm(EventCoverType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
 
-                $eventManager->clearCover($event);
+            if($form->get('videoCover')->getData() !== null && ($form->get('firstImageCover')->getData() !== null || $form->get('secondImageCover')->getData() !== null || $form->get('thirdImageCover')->getData() !== null))
+            {
+                    try {
+                    $eventManager->clearCover($event);
 
-                $coverType = $form->get('coverType')->getData();
-                if ('video' === $coverType) {
-                    /** @var UploadedFile $uploadedVideo */
-                    $uploadedVideo = $form->get('videoCover')->getData();
-                    /** @var Video $media */
-                    $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
-                    $event->setVideoGallery($media);
-                    $this->addSuccessFlash();
-                } elseif ('image' === $coverType) {
-                    $gallery = [$form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData()];
-                    foreach ($gallery as $img) {
-                        if (null !== $img) {
-                            /** @var Image $media */
-                            $media = $mediaManager->uploadImage($img, $this->getUser());
-                            $event->addImagesGallery($media);
+                    $coverType = $form->get('coverType')->getData();
+                    if ('video' === $coverType) {
+                        /** @var UploadedFile $uploadedVideo */
+                        $uploadedVideo = $form->get('videoCover')->getData();
+                        /** @var Video $media */
+                        $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
+                        $event->setVideoGallery($media);
+                        $this->addSuccessFlash();
+                    } elseif ('image' === $coverType) {
+                        $gallery = [$form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData()];
+                        foreach ($gallery as $img) {
+                            if (null !== $img) {
+                                /** @var Image $media */
+                                $media = $mediaManager->uploadImage($img, $this->getUser());
+                                $event->addImagesGallery($media);
+                            }
                         }
                     }
-                }
-            } catch (FileNotFoundException $exception) {
-                $this->get('logger')->addError($exception->getTraceAsString());
-                $this->addFlash('error', $this->get('translator')->trans('flash.file_error'));
-            } catch (FileNotAuthorizedException $exception) {
-                $this->get('logger')->addError($exception->getTraceAsString());
-                $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
-            } catch (ORMException $exception) {
+                } catch (FileNotFoundException $exception) {
+                    $this->get('logger')->addError($exception->getTraceAsString());
+                    $this->addFlash('error', $this->get('translator')->trans('flash.file_error'));
+                } catch (FileNotAuthorizedException $exception) {
+                    $this->get('logger')->addError($exception->getTraceAsString());
+                    $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
+                } catch (ORMException $exception) {
             }
-
+            }
             if ('free' === $event->getEventPurchase()->getPlan()->getPlanKey()) {
                 $event->setCurrentStep('invite-friends');
             } else {
@@ -431,9 +433,25 @@ class EventController extends BaseController
         $form = $this->createForm(InviteFriendsType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $items = $form->get('items')->getData();
 
+            $items = $form->get('items')->getData();
             $emails = explode(';', $items);
+
+            //delete last value
+            unset($emails[count($emails)-1]);
+
+            if($event->getEventPurchase()->getPlan()->getPlanKey() === 'free')
+            {
+                $nbInvite = $event->getEventPurchase()->getPlan()->getMaxGuests() ;
+                $res = count($emails) + $event->getInvitationRequests()->count();
+                if($res > $nbInvite){
+                    $diff = count($emails) - $event->getInvitationRequests()->count();
+                    foreach ($emails as $key=>$email)
+                    {
+                        if($key > $diff) unset($emails[$key]);
+                    }
+                }
+            }
             foreach ($emails as $email) {
                 if (null !== $email && '' !== $email) {
                     $invitationRequestManager->createInvitationRequest($email, $event, false);
@@ -490,6 +508,7 @@ class EventController extends BaseController
             'delete_form' => $form_delete->createView(),
         ]);
     }
+
     /**
      * Deletes a user entity.
      *

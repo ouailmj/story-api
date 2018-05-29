@@ -77,8 +77,8 @@ class EventManager
         foreach ($event->getUploadedMedias() as $img)
         $this->mediaManager->deleteMedia($img);
 
-        if ($img = $event->getVideoGallery() !== null)
-        $this->mediaManager->deleteMedia($img);
+        if ( $event->getVideoGallery() !== null)
+        $this->mediaManager->deleteMedia($event->getVideoGallery());
 
         $this->entityManager->flush();
         //TODO: delete all scheduler
