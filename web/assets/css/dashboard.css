@@ -4651,9 +4651,9 @@
   }
   
   .card label {
-    font-size: 0.8571em;
+    font-size: 16px;
     margin-bottom: 5px;
-    color: #9A9A9A;
+    color: #43c6ac;
   }
   
   .card .card-footer {
@@ -5479,3 +5479,36 @@
     position: absolute;
     visibility: visible;
   }
+
+  .event-challenge-form{
+    width: 100%;
+  }
+
+  .event-challenge-form .control-label{
+    display: none !important
+  }
+
+  .collection-actions{
+    display: inline-block;
+  }
+div[id^="appbundle_event_challenges_"]{
+  border: 1px solid #43c6ac;
+  padding: 5px;
+  border-radius: 20px;
+  text-align: center;
+
+}
+
+div[id^="appbundle_event_challenges_"] div{
+  border-radius: 0;
+  border:none;
+  width: 100%;
+  text-align: center;
+  margin: auto auto;
+}
+.footer {
+  padding: 24px 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}

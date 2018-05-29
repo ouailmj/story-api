@@ -36,7 +36,8 @@ class ChallengeType extends AbstractType
             ])
             ->add('randomDate',CheckboxType::class,[
                 'attr'=>[
-                    'onchange' => 'onChangeCheckbox(this)'
+                    'onchange' => 'onChangeCheckbox(this)',
+                    'class'=>''
                 ],
                 ])
             ->add('plannedAtHour', TimeType::class, [
