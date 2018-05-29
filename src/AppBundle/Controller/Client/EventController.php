@@ -117,7 +117,7 @@ class EventController extends BaseController
 
     /**
      * @Route("add-event/choose-plan", name="add_event_choose_plan")
-     * @Method({"GET", "POST"})
+     * @Method({"POST","GET" })
      *
      * @param Request $request
      * @param EventManager $eventManager
