@@ -33,7 +33,7 @@
             <tbody>
             {% for proposition in propositions %}
                 <tr>
-                    <td>{{ proposition.id }}</td>
+                    <td>{{ loop.index }}</td>
                     <td>{{ proposition.description }}</td>
                     <td><a href="{{ path('user_show', { 'id': proposition.createdBy.id }) }}">{{ proposition.createdBy.fullName }}</a></td>
                     <td>
@@ -48,13 +48,13 @@
                     </td>
                     <td class="text-center">
                         <div class="">
-                            <a title="Edit" data-toggle="modal" data-target="#modal_form_edit{{ loop.index }}" href="{{ path('event_show', { 'id': proposition.id }) }}" class="text-primary legitRipple"><i class="icon-pen position-left"></i></a>
+                            <a title="Edit" data-toggle="modal" data-target="#modal_form_edit{{ loop.index }}"  class="text-primary legitRipple"><i class="icon-pen position-left"></i></a>
 
                             {% set  delete_form =  forms[loop.index-1]['delete'] %}
                             {{ form_start(delete_form, {'attr': {'id':'formid'~loop.index} } ) }}
                             {{ form_widget(delete_form) }}
                             {% set  confirm =  'user.delete_account'|trans %}
-                            <a title="Delete" onclick="send=confirm(' {{ confirm }}');if(send)document.getElementById('formid{{  loop.index}}').submit();"     class="text-primary legitRipple"  ><i class="icon-trash-alt position-left"></i></a>
+                            <a title="Delete" onclick="send=confirm(' {{ confirm }}');if(send)document.getElementById('formid{{  loop.index}}').submit();"     class="text-primary legitRipple"  ><i class="icon-trash position-left"></i></a>
                             {{ form_end(delete_form) }}
                         </div>
                     </td>
