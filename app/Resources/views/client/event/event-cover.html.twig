@@ -29,7 +29,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link active" href="" data-toggle="tab">
+                                            <a class="nav-link" href="" data-toggle="tab">
                                                 <i class="now-ui-icons fa fa-info"></i>
                                                 Event Informations
                                             </a>
@@ -41,7 +41,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
+                                            <a class="nav-link active" href="" data-toggle="tab">
                                                 <i class="now-ui-icons fa fa-picture-o"></i>
                                                 Event Cover
                                             </a>
@@ -64,20 +64,22 @@
 
                             <div class="card-body">
                                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                                <div class="choose-cover-msg">
-                                    <p>You can choose between one video or 3 images for your event cover</p>
-                                </div>
-                                <div class="choose-cover-type">
-                                    {{ form_row(form.coverType ,{'attr': {'class': ''}}) }}
-                                </div>
-                                    <div id="cover-video" style="display:none">
-                                        {{ form_widget(form.videoCover) }}
+                               <div class="event-cover-form">
+                                    <div class="choose-cover-msg">
+                                        <p>You can choose between one video or 3 images for your event cover</p>
                                     </div>
+                                    <div class="choose-cover-type">
+                                        {{ form_row(form.coverType ,{'attr': {'class': ''}}) }}
+                                    </div>
+                                        <div id="cover-video" style="display:none">
+                                            {{ form_widget(form.videoCover) }}
+                                        </div>
                                     <div id="cover-images">
                                         {{ form_widget(form.firstImageCover) }}
                                         {{ form_widget(form.secondImageCover) }}
                                         {{ form_widget(form.thirdImageCover) }}
                                     </div>
+                                </div>
                                 <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
@@ -93,4 +95,16 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+document.getElementById("appbundle_event_coverType_1").addEventListener("click", ()=>
+        {
+        document.getElementById('cover-video').style.display ='none';
+        document.getElementById('cover-images').style.display ='block';
+        });
+document.getElementById("appbundle_event_coverType_0").addEventListener("click", ()=>{
+        document.getElementById('cover-video').style.display = 'block';
+        document.getElementById('cover-images').style.display = 'none';
+        });
+        </script>
 {% endblock %}
