@@ -35,6 +35,9 @@
      {% form_theme form 'Form/Registration/fields.html.twig' %}
         <div class="event-info-form animated zoomInUp">
                 <div class="input-container">
+                    {{ form_widget(form.description ,{'attr': {'class': 'input-field', 'placeholder' : 'Description'}}) }}
+                </div>
+                <div class="input-container">
                     <i class="icon icon-calendar2"></i>
                      {{ form_row(form.title ,{'attr': {'class': 'input-field'}}) }}
                 </div>
@@ -54,17 +57,11 @@
                     <i class="icon icon-eye"></i>
                     {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
                 </div>
-                <div class="input-container">
-                    {{ form_widget(form.description ,{'attr': {'class': 'input-field', 'placeholder' : 'Description'}}) }}
-                </div>
             {{ form_rest(form)}}
             <div class="arrows">
                 <ul>
-                    {%  if event.eventPurchase.plan.planKey == 'free' %}
-                        <a href="{{ path('add_event_choose_plan' , { 'event'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
-                    {% else %}
-                    <a href="{{ path('add_event_event_challenge' , { 'id'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
-                   {% endif %}
+
+                    <a href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
                     <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                 </ul>
             </div>

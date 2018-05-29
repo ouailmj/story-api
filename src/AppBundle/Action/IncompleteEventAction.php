@@ -14,28 +14,37 @@
 
 namespace AppBundle\Action;
 
-use AppBundle\Entity\User;
+
+use AppBundle\Model\EventManager;
+use AppBundle\Entity\Event;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Component\Routing\Annotation\Route;
 
-class CurrentUserAction extends BaseAction
+class IncompleteEventAction extends BaseAction
 {
     /**
+     *
      * @Route(
-     *     name="currentUserAPI",
-     *     path="/current-user",
+     *     name="incompleteEventAPI",
+     *     path="/event/incomplete",
      *     defaults={
-     *          "_api_resource_class"=User::class,
-     *          "_api_collection_operation_name"="api_current_user"
+     *          "_api_resource_class"=Event::class,
+     *          "_api_collection_operation_name"="api_incomplete_event"
      *     },
      *
      * )
      * @Method({"GET"})
      * @Security("has_role('ROLE_USER')")
+     *
+     * @param EventManager $eventManager
+     * @return array
      */
-    public function __invoke(): User
+    public function __invoke(EventManager $eventManager)
     {
-        return $this->getUser();
+        return $eventManager->lastIncompleteEvent($this->getUser());
+
     }
+
+
 }

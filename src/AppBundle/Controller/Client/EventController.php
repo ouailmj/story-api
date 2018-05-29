@@ -22,6 +22,8 @@ use AppBundle\Entity\Payment;
 use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\Event\ChoosePlanType;
+use AppBundle\Form\Event\ConfirmationType;
+use AppBundle\Form\Event\editEventType;
 use AppBundle\Form\Event\EventChallengeType;
 use AppBundle\Form\Event\EventCoverType;
 use AppBundle\Form\Event\EventInformationType;
@@ -33,15 +35,18 @@ use AppBundle\Model\MediaManager;
 use AppBundle\Model\Payment\PaymentManager;
 use AppBundle\Model\PlanManager;
 use Carbon\Carbon;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\ORMException;
 use Payum\Core\Request\GetHumanStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * User controller.
@@ -54,16 +59,24 @@ class EventController extends BaseController
      * @Route("add-event/", name="add_event_index")
      * @Method("GET")
      *
+     * @param Request $request
      * @param EventManager $eventManager
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function indexAction(EventManager $eventManager)
+    public function indexAction(Request $request, EventManager $eventManager)
     {
         /**
          * @var Event
          */
-        $event = $eventManager->lastIncompleteEvent($this->getUser());
+        if($request->query->get('id') != null)
+        {
+
+            $event = $eventManager->findEventById($request->query->get('id'));
+        }else{
+
+            $event = $eventManager->lastIncompleteEvent($this->getUser());
+        }
 
         if($event === null)
         {
@@ -104,22 +117,21 @@ class EventController extends BaseController
 
     /**
      * @Route("add-event/choose-plan", name="add_event_choose_plan")
-     * @Method({"GET", "POST"})
+     * @Method({"POST","GET" })
      *
-     * @param Request      $request
+     * @param Request $request
      * @param EventManager $eventManager
-     * @param PlanManager  $planManager
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param PlanManager $planManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\ORM\EntityNotFoundException
      */
     public function choosePlanAction(Request $request, EventManager  $eventManager, PlanManager $planManager)
     {
-        $lastEvent = $eventManager->lastIncompleteEvent($this->getUser());
 
-        if($lastEvent != null)
+        if($request->query->get('event') != null)
         {
-            if($request->query->get('event') === null) return $this->redirectToRoute('add_event_index');
             $event = $eventManager->findEventById($request->query->get('event'));
+
             if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
         }else{
             $event = new Event();
@@ -128,16 +140,10 @@ class EventController extends BaseController
         $form = $this->createForm(ChoosePlanType::class, null, $options);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $event->setCurrentStep('event-challenge');
+            $event->setCurrentStep('event-information');
             $plan = $form->getData()['plan'];
             $eventManager->createEvent($plan, $event, $this->getUser());
-            
-            if($event->getEventPurchase()->getPlan()->getEnableChallenges())
-            {
-                $event->setCurrentStep('event-challenge');
-            } else {
-                $event->setCurrentStep('event-information');
-            }
+
             $this->addSuccessFlash();
 
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
@@ -173,7 +179,15 @@ class EventController extends BaseController
             {
                 $event->setEndsAt($maxEndsAt);
             }
-            $event->setCurrentStep('event-cover');
+
+            $event->setExpiresAt(Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m'))->addRealSeconds($event->getEventPurchase()->getPlan()->getMaxAlbumLifeTime()));
+
+            if($event->getEventPurchase()->getPlan()->getEnableChallenges())
+            {
+                $event->setCurrentStep('event-challenge');
+            } else {
+                $event->setCurrentStep('event-cover');
+            }
 
             $this->getDoctrine()->getManager()->flush();
 
@@ -217,23 +231,32 @@ class EventController extends BaseController
             $hours [] = $i;
         }
         $options = ['data_hours' => $hours];
-        $form = $this->createForm(EventChallengeType::class, null, $options);
+        $form = $this->createForm(EventChallengeType::class, $event, $options);
         $form->handleRequest($request);
+
+
         if ($form->isSubmitted() && $form->isValid())
         {
 
             foreach ($form->get('challenges') as $item)
             {
-                $challenge = new Challenge();
-                $challenge->setDescription($item->get('description')->getData());
-                $plannedAtHour = $item->get('plannedAtHour')->getData();
-                $plannedAtHourToS = (($plannedAtHour['hour'] * 3600) + ($plannedAtHour['minute'] * 60));
-                $challenge->setPlannedAt(Carbon::parse($event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS));
+                /**  @var $challenge Challenge */
+                $challenge = $item->getData();
+
+                if($item->get('randomDate')->getData()){
+                    $int= mt_rand((int) $startsAt->getTimestamp(),(int) $endsAt->getTimestamp());
+                    $string = date("Y-m-d H:i:s",$int);
+                    $plannedAt = new Carbon($string);
+                }else{
+                    $plannedAtHour = $item->get('plannedAtHour')->getData();
+                    $plannedAtHourToS = (($plannedAtHour['hour'] * 3600) + ($plannedAtHour['minute'] * 60));
+                    $plannedAt= Carbon::parse($event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS);
+                }
+                $challenge->setPlannedAt($plannedAt);
                 $challenge->setEvent($event);
-                $event->addChallenge($challenge);
             }
 
-            $event->setCurrentStep('event-information');
+            $event->setCurrentStep('event-cover');
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
@@ -249,45 +272,52 @@ class EventController extends BaseController
      * @Route("add-event/event-cover/{id}", name="add_event_event_cover")
      * @Method({"GET", "POST"})
      *
-     * @param Request      $request
-     * @param Event        $event
+     *
+     * @param Request $request
+     * @param Event $event
      * @param MediaManager $mediaManager
+     * @param EventManager $eventManager
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function EventCoverAction(Request $request, Event $event, MediaManager $mediaManager)
+    public function EventCoverAction(Request $request, Event $event, MediaManager $mediaManager, EventManager $eventManager)
     {
         $form = $this->createForm(EventCoverType::class, $event);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $coverType = $form->get('coverType')->getData();
-                if ('video' === $coverType) {
-                    /** @var UploadedFile $uploadedVideo */
-                    $uploadedVideo = $form->get('videoCover')->getData();
-                    /** @var Video $media */
-                    $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
-                    $event->setVideoGallery($media);
-                    $this->addSuccessFlash();
-                } elseif ('image' === $coverType) {
-                    $gallery = [$form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData()];
-                    foreach ($gallery as $img) {
-                        if (null !== $img) {
-                            /** @var Image $media */
-                            $media = $mediaManager->uploadImage($img, $this->getUser());
-                            $event->addImagesGallery($media);
+
+            if($form->get('videoCover')->getData() !== null && ($form->get('firstImageCover')->getData() !== null || $form->get('secondImageCover')->getData() !== null || $form->get('thirdImageCover')->getData() !== null))
+            {
+                    try {
+                    $eventManager->clearCover($event);
+
+                    $coverType = $form->get('coverType')->getData();
+                    if ('video' === $coverType) {
+                        /** @var UploadedFile $uploadedVideo */
+                        $uploadedVideo = $form->get('videoCover')->getData();
+                        /** @var Video $media */
+                        $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
+                        $event->setVideoGallery($media);
+                        $this->addSuccessFlash();
+                    } elseif ('image' === $coverType) {
+                        $gallery = [$form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData()];
+                        foreach ($gallery as $img) {
+                            if (null !== $img) {
+                                /** @var Image $media */
+                                $media = $mediaManager->uploadImage($img, $this->getUser());
+                                $event->addImagesGallery($media);
+                            }
                         }
                     }
-                }
-            } catch (FileNotFoundException $exception) {
-                $this->get('logger')->addError($exception->getTraceAsString());
-                $this->addFlash('error', $this->get('translator')->trans('flash.file_error'));
-            } catch (FileNotAuthorizedException $exception) {
-                $this->get('logger')->addError($exception->getTraceAsString());
-                $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
-            } catch (ORMException $exception) {
+                } catch (FileNotFoundException $exception) {
+                    $this->get('logger')->addError($exception->getTraceAsString());
+                    $this->addFlash('error', $this->get('translator')->trans('flash.file_error'));
+                } catch (FileNotAuthorizedException $exception) {
+                    $this->get('logger')->addError($exception->getTraceAsString());
+                    $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
+                } catch (ORMException $exception) {
             }
-
+            }
             if ('free' === $event->getEventPurchase()->getPlan()->getPlanKey()) {
                 $event->setCurrentStep('invite-friends');
             } else {
@@ -321,7 +351,7 @@ class EventController extends BaseController
             $event->setCurrentStep('invite-friends');
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('add_event_index');
+            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
         $form = $this->createForm(PaymentEventType::class);
         $form->handleRequest($request);
@@ -383,7 +413,7 @@ class EventController extends BaseController
 
         $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('add_event_index');
+        return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
     }
 
     /**
@@ -403,9 +433,25 @@ class EventController extends BaseController
         $form = $this->createForm(InviteFriendsType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $items = $form->get('items')->getData();
 
+            $items = $form->get('items')->getData();
             $emails = explode(';', $items);
+
+            //delete last value
+            unset($emails[count($emails)-1]);
+
+            if($event->getEventPurchase()->getPlan()->getPlanKey() === 'free')
+            {
+                $nbInvite = $event->getEventPurchase()->getPlan()->getMaxGuests() ;
+                $res = count($emails) + $event->getInvitationRequests()->count();
+                if($res > $nbInvite){
+                    $diff = count($emails) - $event->getInvitationRequests()->count();
+                    foreach ($emails as $key=>$email)
+                    {
+                        if($key > $diff) unset($emails[$key]);
+                    }
+                }
+            }
             foreach ($emails as $email) {
                 if (null !== $email && '' !== $email) {
                     $invitationRequestManager->createInvitationRequest($email, $event, false);
@@ -444,17 +490,92 @@ class EventController extends BaseController
         ]);
     }
 
-
     /**
-     * @Route("/edit-event")
+     * @Route("/event/{id}" ,  name="show-event-client")
+     * @Method("GET")
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return Response
      */
+    public function showEventAction(Request $request,Event $event){
+        if($event->getCreatedBy() !== $this->getUser()) throw new AccessDeniedException();
 
-    public function editAction()
-    {
-    return $this->render('client/event/edit-event.html.twig', [
-        // ...
-    ]);
-        }
+        $form_delete =$this->createDeleteForm($event);
+
+        return $this->render('client/event/show.html.twig', [
+            'event' => $event,
+            'delete_form' => $form_delete->createView(),
+        ]);
     }
 
+    /**
+     * Deletes a user entity.
+     *
+     * @Route("/event/{id}", name="event_delete")
+     * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param EventManager $eventManager
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Request $request, EventManager $eventManager, Event $event)
+    {
 
+        $form = $this->createDeleteForm($event);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $eventManager->deleteEvent($event);
+            $this->addSuccessFlash();
+
+        }
+
+        return $this->redirectToRoute('list-event');
+    }
+
+    /**
+     * @Route("/event/close/{id}", name="event_close")
+     * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Event $event
+     * @param EventManager $eventManager
+     * @return Response
+     */
+    public  function closeEventAction(Request $request, Event $event, EventManager $eventManager){
+        $form = $this->createForm(ConfirmationType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if($form->get('title')->getData() === $event->getTitle()){
+
+                $eventManager->closeEvent($event);
+                $this->addSuccessFlash();
+                return $this->redirectToRoute('list-event');
+            }else  {
+                //TODO: Translate
+                $form->get('title')->addError(new FormError('title is invalid'));
+            }
+
+        }
+        return $this->render('client/event/confirmation.html.twig', [
+            'form' => $form->createView(),
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * @param Event $event
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    private function createDeleteForm(Event $event)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('event_delete', ['id' => $event->getId()]))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
+}

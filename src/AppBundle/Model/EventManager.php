@@ -66,7 +66,31 @@ class EventManager
     {
     }
 
-    public function createEvent(Plan $plan, Event $event, User $createdBy = null)
+    public function deleteEvent(Event $event)
+    {
+        $this->entityManager->remove($event);
+
+
+        foreach ($event->getImagesGallery() as $img)
+        $this->mediaManager->deleteMedia($img);
+
+        foreach ($event->getUploadedMedias() as $img)
+        $this->mediaManager->deleteMedia($img);
+
+        if ( $event->getVideoGallery() !== null)
+        $this->mediaManager->deleteMedia($event->getVideoGallery());
+
+        $this->entityManager->flush();
+        //TODO: delete all scheduler
+    }
+
+    public function closeEvent(Event $event)
+    {
+        $event->setClosedAt(new \DateTime());
+        $this->entityManager->flush();
+        //TODO:  delete all scheduler
+    }
+    public function createEvent(Plan $plan, Event $event, User $createdBy = null, $flush = true)
     {
         $eventPurchase = (null === $event->getEventPurchase()) ? new EventPurchase() : $event->getEventPurchase();
         $eventPurchase->setPlan($plan);
@@ -82,19 +106,20 @@ class EventManager
         $event->setExpiresAt($endsAt->addRealSeconds($plan->getMaxAlbumLifeTime()));
 
         $this->entityManager->persist($event);
-        $this->entityManager->flush();
+
+        if($flush)  $this->entityManager->flush();
 
         return $event;
     }
 
-    public function createEventWithFreePlan(User $createdBy = null, Event $event)
+    public function createEventWithFreePlan(User $createdBy = null, Event $event, $flush = true)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $event, $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getFreePlan(), $event, $createdBy, $flush);
     }
 
-    public function createEventWithStarterPlan(User $createdBy = null, Event $event)
+    public function createEventWithStarterPlan(User $createdBy = null, Event $event, $flush = true)
     {
-        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $event, $createdBy);
+        return $this->createEvent($this->entityManager->getRepository(Plan::class)->getStarterPlan(), $event, $createdBy, $flush);
     }
 
     /**
@@ -150,10 +175,13 @@ class EventManager
     {
         $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user->getId()], ['createdAt' => 'desc'], 1, 0);
 
+        /**
+         * @var Event $res
+         */
         $res = empty($res) ? null : $res[0];
         if (null !== $res) {
             $currentStep = $res->getCurrentStep();
-            if ('' === $currentStep) {
+            if ('' === $currentStep || $res->getClosedAt() != null) {
                 return null;
             }
         }
@@ -245,4 +273,45 @@ class EventManager
 
         return $res;
     }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * @param Event $event
+     * @param bool $flush
+     */
+    public function clearCover(Event $event, $flush = true)
+    {
+        /**
+         * delete all covers
+         */
+        foreach ($event->getImagesGallery() as $img)
+            $this->mediaManager->deleteMedia($img);
+
+        if (  $event->getVideoGallery() !== null)
+            $this->mediaManager->deleteMedia($event->getVideoGallery());
+
+        /**
+         * remove all covers from DB
+         */
+        if($event->getVideoGallery() !== null)
+        {
+            $video = $event->getVideoGallery();
+            $event->setVideoGallery(null);
+            $this->entityManager->remove( $video);
+        }
+        foreach ($event->getImagesGallery() as $img){
+            $event->removeImagesGallery($img);
+            $this->entityManager->remove($img);
+        }
+
+        if($flush) $this->entityManager->flush();
+    }
+
 }

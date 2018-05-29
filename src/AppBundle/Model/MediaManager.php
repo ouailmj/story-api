@@ -118,11 +118,13 @@ class MediaManager
         return $media;
     }
 
-    public function deleteMedia(int $mediaId)
+    public function deleteMedia(Media $media)
     {
-        // Remove the file from the filesystem.
+        $filePath =__DIR__."/../../../web/uploads/".$media->getSrc();
+        if (file_exists($filePath)) {
+            return unlink($filePath);
+    }
 
-        // Remove Entity.
     }
 
     public function trashMedia(int $mediaId)

@@ -68,12 +68,38 @@ class FileManager
      * @param $file
      * @param string $dir
      * @param string $fileSystem
+     * @return bool
+     */
+    private function delete($file, $dir = '', $fileSystem = 'default')
+    {
+        $filePath = $this->buildFileKey($file, $dir);
+        return $this
+            ->getFileSystem($fileSystem)
+            ->delete($filePath);
+
+    }
+
+    /**
+     * @param $file
+     * @param string $dir
+     * @param string $fileSystem
      *
      * @return \Gaufrette\File|mixed
      */
     public function createFile($file, $dir = '', $fileSystem = 'default')
     {
         return $this->write($file, $dir, $fileSystem);
+    }
+
+    /**
+     * @param $file
+     * @param string $dir
+     * @param string $fileSystem
+     * @return bool
+     */
+    public function deleteFile($file, $dir = '', $fileSystem = 'default')
+    {
+        return $this->delete($file, $dir, $fileSystem);
     }
 
     /**

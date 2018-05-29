@@ -25,7 +25,25 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *
  * @ORM\Table(name="app_event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
- * @ApiResource()
+ * @ORM\HasLifecycleCallbacks()
+ * @ApiResource(
+ *     itemOperations={
+ *     "get",
+ *     "put",
+ *     "delete",
+ *     },
+ *     collectionOperations= {
+ *     "post",
+ *     "api_new_event"={
+ *          "route_name"="newEventAPI",
+ *          "method"="GET"
+ *      },
+ *     "api_incomplete_event"={
+ *          "route_name"="incompleteEventAPI",
+ *          "method"="GET"
+ *      },
+ *     }
+ * )
  */
 class Event
 {
@@ -120,7 +138,7 @@ class Event
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents")
      */
     private $createdBy;
 
@@ -178,7 +196,7 @@ class Event
     /**
      * @var EventPurchase
      *
-     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist"})
      */
     private $eventPurchase;
 

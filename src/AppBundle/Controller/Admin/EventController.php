@@ -77,7 +77,7 @@ class EventController extends BaseController
     {
         $deleteForm = $this->createDeleteForm($event);
 
-        return $this->render('admin/event/show_2.html.twig', [
+        return $this->render('admin/event/show.html.twig', [
             'event' => $event,
             'delete_form' => $deleteForm->createView(),
             'TotalPayed' => $paymentManager->TotalPayed($event),
@@ -88,9 +88,9 @@ class EventController extends BaseController
     /**
      * Creates a form to delete a event entity.
      *
-     * @param Event $event The event entity
+     * @param Event $event
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
     private function createDeleteForm(Event $event)
     {
@@ -106,6 +106,10 @@ class EventController extends BaseController
      *
      * @Route("/{id}", name="event_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, Event $event)
     {

@@ -192,3 +192,8 @@ AppBundle\Entity\InvitationRequest:
     invitationrequest_{51..500}:
         event: '@event_*'
         user: '@user_*'
+
+AppBundle\Entity\PropositionChallenge:
+    challenge_proposition_{1..100}:
+        description: <sentence()>
+        createdBy: '@administrator'

@@ -63,7 +63,12 @@
                 </div>
                 <div class="arrows">
                     <ul>
-                        <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+
+                        {%  if event.eventPurchase.plan.planKey == 'free' %}
+                            <a href="{{ path('add_event_event_information' , { 'id'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+                        {% else %}
+                            <a href="{{ path('add_event_event_challenge' , { 'id'  : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
+                        {% endif %}
                         <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
                     </ul>
             </div>
