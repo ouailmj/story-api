@@ -5,7 +5,7 @@
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
-        
+
       </nav>
       <!-- End Navbar -->
       <div class="panel-header panel-header-lg">
@@ -68,27 +68,29 @@
                                     <div class="panel panel-default credit-card-box">
                                         <div class="panel-heading display-table">
                                             <div class="row display-tr">
-                                            <h3 class="panel-title display-td">
-                                            {{ event.eventPurchase.plan.name }} plan :</span>
-                                            {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
-                                            <span class="plan-price">
-                                                {% if price[0] is defined %}
-                                                    {{ price[0] }}
-                                                {% else %}0{% endif %}.
-                                                {% if price[1] is defined %}
-                                                {{ price[1] }}
-                                            {% else %}00{% endif %}€
-                                            <span class="plan-name">Montant payé :</span>
-                                            {% set price = (sumPayed/100)|split('.') %}
-                                            <span class="plan-price">
-                                                {% if price[0] is defined %}
-                                                    {{ price[0] }}
-                                                {% else %}0{% endif %}.
-                                            {% if price[1] is defined %}
-                                                {{ price[1] }}
-                                            {% else %}00{% endif %}€
-                                            </span>
-                                            </h3><img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png"></div>
+                                                <h3 class="panel-title display-td">
+                                                    {{ event.eventPurchase.plan.name }} plan :</span>
+                                                    {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
+                                                    <span class="plan-price">
+                                                        {% if price[0] is defined %}
+                                                            {{ price[0] }}
+                                                        {% else %}0{% endif %}.
+                                                        {% if price[1] is defined %}
+                                                        {{ price[1] }}
+                                                    {% else %}00{% endif %}€
+                                                    <span class="plan-name">Montant payé :</span>
+                                                    {% set price = (sumPayed/100)|split('.') %}
+                                                    <span class="plan-price">
+                                                        {% if price[0] is defined %}
+                                                            {{ price[0] }}
+                                                        {% else %}0{% endif %}.
+                                                    {% if price[1] is defined %}
+                                                        {{ price[1] }}
+                                                    {% else %}00{% endif %}€
+                                                    </span>
+                                                </h3>
+                                                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                                            </div>
                                         </div>
                                     </div><br>
                                     <label for="cardNumber">CARD NUMBER</label>
@@ -105,7 +107,7 @@
                                     <label for="couponCode">DISCOUNT CODE</label>
                                         <input class="form-control" name="couponCode" type="text"><br>
                                     <br>
-                                </form>
+
                                 <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
@@ -121,4 +123,6 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 {% endblock %}
