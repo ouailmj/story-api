@@ -28,35 +28,35 @@ class PaymentEventType extends AbstractType
     {
         $builder
             ->add('numberCard', TextType::class, [
-                'label' => 'payment.fields.numberCard',
+                'label' => false,
                 'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Card number',
                 ],
             ])
             ->add('cvv', TextType::class, [
-                'label' => 'payment.fields.cvv',
+                'label' => false,
                 'mapped' => false,
                 'attr' => [
                     'placeholder' => 'CVV',
                 ],
             ])
             ->add('expireAtMonth', TextType::class, [
-                'label' => 'payment.fields.price',
+                'label' => false,
                 'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Date expire (Month)',
                 ],
             ])
             ->add('expireAtYear', TextType::class, [
-                'label' => 'payment.fields.price',
+                'label' => false,
                 'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Date expire (Year)',
                 ],
             ])
             ->add('price', TextType::class, [
-                'label' => 'payment.fields.price',
+                'label' => false,
                 'mapped' => false,
                 'attr' => [
                     'placeholder' => 'Prix',
