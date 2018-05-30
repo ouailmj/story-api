@@ -134,7 +134,8 @@ class EventController extends BaseController
 
             if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
         }else{
-           if( $eventManager->lastIncompleteEvent($this->getUser())->getCurrentStep() !== 'finish' && $eventManager->lastIncompleteEvent($this->getUser())->getCurrentStep() !== '') return $this->redirectToRoute('add_event_index');
+            if($eventManager->lastIncompleteEvent($this->getUser()) !== null)
+                if( $eventManager->lastIncompleteEvent($this->getUser())->getCurrentStep() !== 'finish' && $eventManager->lastIncompleteEvent($this->getUser())->getCurrentStep() !== '') return $this->redirectToRoute('add_event_index');
             $event = new Event();
         }
         $options = ['plan_data' => (null !== $event->getEventPurchase()) ? $event->getEventPurchase()->getPlan() : null];
