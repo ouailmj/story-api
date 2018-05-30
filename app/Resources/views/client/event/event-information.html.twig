@@ -4,132 +4,160 @@
 {% block container %}
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
-        
-      </nav>
+        <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top"></nav>
       <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
-        <canvas id="bigDashboardChart"></canvas>
-      </div>
+        <div class="panel-header panel-header-lg">
+            <canvas id="bigDashboardChart"></canvas>
+        </div>
         <div class="content">
             <div class="col-md-10 mr-auto ml-auto">
-                <!--      Wizard container        -->
+                    <!--      Wizard container        -->
                 <div class="wizard-container">
                     <div class="card card-wizard active" data-color="primary" id="wizardProfile">
-                            <div class="card-header text-center" data-background-color="orange">
-                                <h5 class="card-title">
-                                    NEW EVENT
-                                </h5>
-                                <div class="wizard-navigation">
-                                    <ul class="nav nav-pills">
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-tag"></i>
-                                                Choose plan
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link active" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-info"></i>
-                                                Event Informations
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="#address" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-gamepad"></i>
-                                                Add Chalanges
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-picture-o"></i>
-                                                Event Cover
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-money"></i>
-                                                Payment
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="#address" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-users"></i>
-                                                Invite Friends
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                        <div class="card-header text-center" data-background-color="orange">
+                            <h5 class="card-title">
+                                NEW EVENT
+                            </h5>
+                            <div class="wizard-navigation">
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item" style="width: 16.666667%;">
+                                        <a class="nav-link" href="" data-toggle="tab">
+                                            <i class="now-ui-icons fa fa-tag"></i>
+                                            Choose plan
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="width: 16.666667%;">
+                                        <a class="nav-link active" href="" data-toggle="tab">
+                                            <i class="now-ui-icons fa fa-info"></i>
+                                            Event Informations
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="width: 16.666667%;">
+                                        <a class="nav-link" href="#address" data-toggle="tab">
+                                            <i class="now-ui-icons fa fa-gamepad"></i>
+                                            Add Chalanges
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="width: 16.666667%;">
+                                        <a class="nav-link" href="" data-toggle="tab">
+                                            <i class="now-ui-icons fa fa-picture-o"></i>
+                                            Event Cover
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="width: 16.666667%;">
+                                        <a class="nav-link" href="" data-toggle="tab">
+                                            <i class="now-ui-icons fa fa-money"></i>
+                                            Payment
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="width: 16.666667%;">
+                                        <a class="nav-link" href="#address" data-toggle="tab">
+                                            <i class="now-ui-icons fa fa-users"></i>
+                                            Invite Friends
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
+                        </div>
 
-                            <div class="card-body">
-                                {{ form_start(form) }}
+                        <div class="card-body">
+                            {{ form_start(form) }}
                             {% form_theme form 'Form/Registration/fields.html.twig' %}
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            {{ form_widget(form.description)}}
-                                        </div>
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        {{ form_widget(form.description)}}
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pr-1">
-                                        <div class="form-group">
-                                            <label>Event Name</label>
-                                            {{ form_row(form.title)}}
-                                        </div>
-                                        </div>
-                                        <div class="col-md-6 pl-1">
-                                        <div class="form-group">
-                                            <label>Event Place</label>
-                                            {{ form_row(form.place)}}
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 pr-1">
-                                        <div class="form-group">
-                                            <label>Start At</label>
-                                             {{ form_widget(form.startsAt)}}
-                                        </div>
-                                        </div>
-                                        <div class="col-md-6 pl-1">
-                                        <div class="form-group">
-                                            <label>End At</label>
-                                            {{ form_widget(form.endsAt)}}
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 pr-1">
-                                        <div class="form-group">
-                                            <label>Catégorie</label>
-                                            <select class="form-control">
-                                                {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
-                                            </select>
-                                        </div>
-                                    </div>
-                                <div class="card-footer">
-                                <div class="pull-right">
-                                    <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
                                 </div>
-                                {{ form_end(form) }}
-                                <div class="pull-left">
-                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Event Name</label>
+                                    {{ form_row(form.title)}}
                                 </div>
-                                <div class="clearfix"></div>
+                                </div>
+                                <div class="col-md-6 pl-1">
+                                <div class="form-group">
+                                    <label>Event Place</label>
+                                    {{ form_row(form.place)}}
+                                </div>
+                                </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Start At</label>
+                                     {{ form_widget(form.startsAt)}}
+                                </div>
+                                </div>
+                                <div class="col-md-6 pl-1">
+                                <div class="form-group">
+                                    <label>End At</label>
+                                    {{ form_widget(form.endsAt)}}
+                                </div>
+                                </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-12 pr-1">
+                                <div class="form-group">
+                                    <label>Catégorie</label>
+                                        {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
+                                </div>
+                            </div>
+                        <div class="card-footer">
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
+                        </div>
+                        {{ form_end(form) }}
+                        <div class="pull-left">
+                            <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
+        </div>
+    </div>
             <script>
                 
             $(function () {
                 $('#datetimepicker4').datetimepicker();
             });
             </script>
+    <script>
+        var placeSearch, autocomplete, geocoder;
+
+        function initAutocomplete() {
+            geocoder = new google.maps.Geocoder();
+            autocomplete = new google.maps.places.Autocomplete(
+                (document.getElementById('appbundle_event_place')), {
+                    types: ['geocode']
+                });
+
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        function codeAddress(address) {
+            geocoder.geocode({
+                'address': address
+            });
+        }
+
+        function fillInAddress() {
+            var place = autocomplete.getPlace();
+
+            codeAddress(document.getElementById('appbundle_event_place').value);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPtDMghVAYF11e_NrdccLPs2OZ6tSMXCs&libraries=places&callback=initAutocomplete"
+            async defer></script>
+
+
+
+
 {% endblock %}

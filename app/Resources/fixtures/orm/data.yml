@@ -1,3 +1,7 @@
+parameters:
+    app.alice.private: private
+    app.alice.public: public
+
 AppBundle\Entity\User:
     administrator:
         username: admin
@@ -193,7 +197,17 @@ AppBundle\Entity\InvitationRequest:
         event: '@event_*'
         user: '@user_*'
 
-#AppBundle\Entity\PropositionChallenge:
- #   challenge_proposition_{1..100}:
-  #      description: <sentence()>
-   #     createdBy: '@administrator'
+AppBundle\Entity\PropositionChallenge:
+    challenge_proposition_{1..100}:
+        description: <sentence()>
+        __construct: ['@administrator']
+
+AppBundle\Entity\Category:
+    challenge_proposition_{1..5}:
+        title (unique): <name()>
+        description: <sentence()>
+        privacy: <{app.alice.public}>
+    challenge_proposition_{6..15}:
+        title (unique): <name()>
+        description: <sentence()>
+        privacy: <{app.alice.private}>

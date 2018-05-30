@@ -182,6 +182,15 @@ class Event
      */
     private $videoGallery;
 
+
+    /**
+     * @var Category
+     *
+     * @ORM\OneToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category ;
+
     /**
      * @var Image [] | ArrayCollection
      *
@@ -941,4 +950,22 @@ class Event
     {
         return $this->uploadedMedias->removeElement($uploadedMedia);
     }
+
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+    }
+
+
 }

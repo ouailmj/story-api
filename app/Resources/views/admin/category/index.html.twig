@@ -1,0 +1,137 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h6 class="panel-title">add category<a class="heading-elements-toggle"><i class="icon-more"></i></a></h6>
+                    <div class="heading-elements">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <p class="content-group-lg"></p>
+
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                    {{ form_widget(form) }}
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary legitRipple" name="send">{{ 'user.submit'|trans }} <i class="icon-arrow-right14 position-right"></i></button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="  col-sm-12 col-md-12">
+                    <div class="panel panel-body bg-success-400 has-bg-image">
+                        <div class="media no-margin">
+                            <div class="media-body">
+                                <h3 class="no-margin">{{ publicCat }}</h3>
+                                <span class="text-uppercase text-size-mini">  Public Category</span>
+                            </div>
+
+                            <div class="media-right media-middle">
+                                <i class="icon-unlocked icon-3x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12  col-md-12">
+                    <div class="panel panel-body bg-danger-400 has-bg-image">
+                        <div class="media no-margin">
+                            <div class="media-body">
+                                <h3 class="no-margin">{{ privateCat }}</h3>
+                                <span class="text-uppercase text-size-mini">  Private Category</span>
+                            </div>
+
+                            <div class="media-right media-middle">
+                                <i class="icon-lock5 icon-3x opacity-75"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-flat">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Categories list</h5>
+
+                </div>
+
+                <div class="panel-body"></div>
+
+                <table class="table datatable-responsive table-bordered table-hover datatable-highlight">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Privacy</th>
+                        <th>Date création</th>
+                        <th>Date de dernière modification </th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>{{ category.title }}</td>
+                            <td>{{ category.description }}</td>
+                            <td>{{ category.privacy }}</td>
+                            <td>
+                                {% if category.createdAt is not null %}
+                                    {{ category.createdAt|date }}
+                                {% endif %}
+                            </td>
+                        <td>
+                            {% if category.updatedAt is not null %}
+                                {{ category.updatedAt|date }}
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <div class="">
+                                <a title="Modifier" data-toggle="modal" data-target="#modal_form_edit{{ loop.index }}" href="#" class="text-primary legitRipple"><i class="icon-pen position-left"></i></a>
+
+                                {% set  delete_form =  forms[loop.index-1]['delete'] %}
+                                {{ form_start(delete_form, {'attr': {'id':'formid'~loop.index} } ) }}
+                                {{ form_widget(delete_form) }}
+                                {% set  confirm =  'user.delete_account'|trans %}
+                                <a title="Delete" onclick="send=confirm(' {{ confirm }}');if(send)document.getElementById('formid{{  loop.index}}').submit();"     class="text-primary legitRipple"  ><i class="icon-trash position-left"></i></a>
+                                {{ form_end(delete_form) }}
+                            </div>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% for form in forms %}
+        {% set form = form['edit'] %}
+        <div id="modal_form_edit{{ loop.index }}" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h5 class="modal-title">edit category</h5>
+                    </div>
+
+                    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+                    <div class="modal-body">
+                        {{ form_widget(form) }}
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

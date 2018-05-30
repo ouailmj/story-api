@@ -169,7 +169,7 @@ class EventManager
     /**
      * @param User $user
      *
-     * @return array
+     * @return Event
      */
     public function lastIncompleteEvent(User $user)
     {
