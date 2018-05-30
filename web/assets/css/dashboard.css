@@ -4651,9 +4651,9 @@
   }
   
   .card label {
-    font-size: 0.8571em;
+    font-size: 16px;
     margin-bottom: 5px;
-    color: #9A9A9A;
+    color: #43c6ac;
   }
   
   .card .card-footer {
@@ -5479,3 +5479,141 @@
     position: absolute;
     visibility: visible;
   }
+
+  .event-challenge-form{
+    width: 100%;
+  }
+
+  .event-challenge-form .control-label{
+    display: none !important
+  }
+
+  .collection-actions{
+    display: inline-block;
+  }
+div[id^="appbundle_event_challenges_"]{
+  border: 1px solid #43c6ac;
+  padding: 5px;
+  border-radius: 20px;
+  text-align: center;
+
+}
+
+div[id^="appbundle_event_challenges_"] div{
+  border-radius: 0;
+  border:none;
+  width: 100%;
+  text-align: center;
+  margin: auto auto;
+}
+.footer {
+  padding: 24px 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.event-cover-form{
+    min-height: 650px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 80px;
+    width: 996px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.event-cover-form .choose-cover-msg p{
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+    color: #7c7b7b;
+}
+
+#appbundle_event_coverType{
+    text-align: center;
+    margin-left: 40%;
+}
+
+.event-cover-form .radio input[type="radio"]{
+    display: none;
+}
+
+.event-cover-form .radio{
+   display: inline-block;
+   margin: 10px;
+}
+
+.event-cover-form .radio label{
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 20px;
+    margin-right: 25px;
+    font-size: 18px;
+}
+/*
+.event-cover-form .radio input[type=radio] {
+    display: none;
+  }
+  .event-cover-form .radio label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 1px;
+    border: 1px solid #2ECC71;
+  }
+  
+  .event-cover-form .radio label:before {
+    border-radius: 50%;
+  }
+ input[type=radio]:checked + label:before {
+    content: "\2022";
+    color: red;
+    font-size: 30px;
+    text-align: center;
+    line-height: 18px;
+}
+*/
+.event-cover-form #cover-images .image-input , .event-cover-form #cover-video .video-input{
+    border: 2px dashed #11c39a;
+    padding: 13px;
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+
+.event-cover-form input[type="file"]{
+    -webkit-appearance: none;
+    text-align: left;
+    -webkit-rtl-ordering:  left;
+    float: left;
+ }
+ input[type="file"]::-webkit-file-upload-button{
+    -webkit-appearance: none;
+    float: right;
+    margin: 0 0 0 10px;
+    background-color: #a1a1a1;
+    border: none;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #fff;
+ }
+
+ .event-cover-form .type-card{
+     display: inline-block;
+ }
+
+ .event-pay-form .type-card .icon-pay{
+    width: 20%;
+    height: auto;
+    display: inline-block;
+    margin: 15px;
+ }

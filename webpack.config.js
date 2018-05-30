@@ -38,6 +38,10 @@ let frontCSS = [
 let frontJs = [
     './web/assets/css/bootstrap_v4/bootstrap.bundle.min.js',
     './web/assets/css/bootstrap_v4/bootstrap.min.js',
+    './web/assets/css/bootstrap_v4/callapse.js',
+    './web/assets/css/bootstrap_v4/carousel.js',
+    './web/assets/css/bootstrap_v4/transitions.js',
+    './web/assets/css/bootstrap_v4/bootstrap-datetimepicker.js',
 ]
 
 let loginJs = vendorJs.concat([

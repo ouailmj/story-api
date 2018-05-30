@@ -2,74 +2,111 @@
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
-<div class="main">
-        <div class="progressbar-container">
-            <ul class="progress-indicator">
-            <li class="completed">
-                <span class="bubble"></span>
-                Choose plan
-            </li>
-            <li class="active">
-                <span class="bubble"></span>
-                Add Challenge
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Event information
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Event Cover
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Payment
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Invite Friends
-            </li>
-        </ul>
-        </div>
-    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-     {% form_theme form 'Form/Registration/fields.html.twig' %}
-        <div class="event-challenge-form animated zoomInUp">
-                <div class="challange-event">
-                    {{ form_widget(form.challenges)}}
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+        
+      </nav>
+      <!-- End Navbar -->
+      <div class="panel-header panel-header-lg">
+        <canvas id="bigDashboardChart"></canvas>
+      </div>
+        <div class="content">
+            <div class="col-md-10 mr-auto ml-auto">
+                <!--      Wizard container        -->
+                <div class="wizard-container">
+                    <div class="card card-wizard active" data-color="primary" id="wizardProfile">
+                            <div class="card-header text-center" data-background-color="orange">
+                                <h5 class="card-title">
+                                    NEW EVENT
+                                </h5>
+                                <div class="wizard-navigation">
+                                    <ul class="nav nav-pills">
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-tag"></i>
+                                                Choose plan
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-info"></i>
+                                                Event Informations
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link active" href="#address" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-gamepad"></i>
+                                                Add Chalanges
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-picture-o"></i>
+                                                Event Cover
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-money"></i>
+                                                Payment
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="width: 16.666667%;">
+                                            <a class="nav-link" href="#address" data-toggle="tab">
+                                                <i class="now-ui-icons fa fa-users"></i>
+                                                Invite Friends
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                                {% form_theme form 'Form/Registration/fields.html.twig' %}
+                                    <div class="row">
+                                        <div class="event-challenge-form animated zoomInUp">
+                                                <div class="challange-event">
+                                                    {{ form_widget(form.challenges)}}
+                                                </div>
+                                            {{ form_rest(form)}}
+                                        </div>
+                                    </div>
+                                <div class="card-footer">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
+                                </div>
+                                {{ form_end(form) }}
+                                <div class="pull-left">
+                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            </div>
+                    </div>
                 </div>
-            {{ form_rest(form)}}
-            <div class="arrows">
-                <ul>
+            </div>
 
-                    <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
-                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
-                </ul>
-        </div>
-        </div>
-       {{ form_end(form) }}
-</div>
-
-        <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
+            <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
         <script type="text/javascript">
             $('.my-challenge').collection({
                     name_prefix: "{{ form.challenges.vars.full_name }}",
                     add_at_the_end: true,
                     hide_useless_buttons: true,
                     add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter une challenge</a>',
-                    remove: '<a href="#" class="collection-remove btn btn-warning collection-action">Retirer</a>',
+                    remove: '<a href="#" class="collection-remove btn btn-warning collection-action">X</a>',
                     allow_up: false,
                     allow_down: false,
                     init_with_n_elements: 0,
                 }
             );
-
         </script>
         <script>
             function getElementsFinishWithId( id ) {
                 var children = document.body.getElementsByTagName('*');
                 var elements = [], child;
                 for (var i = 0; i < children.length; i++) {
-
                     child = children[i];
                     if (child.id.split('_')[4] == id)
                         elements.push(child);
@@ -77,19 +114,15 @@
                 return elements;
             }
            elements =  getElementsFinishWithId('randomDate') ;
-
             elements.forEach((element)=>{
                 onChangeCheckbox(element)
             });
-
             function onChangeCheckbox(element){
-
                let id = element.id.split('_')[3];
                 let state = false;
                 if( element.checked){
                     state = true;
                 };
-
                 var nodes = document.getElementById('appbundle_event_challenges_'+id+'_plannedAtHour').getElementsByTagName('*');
                 for(var i = 0; i < nodes.length; i++){
                     nodes[i].disabled = state;
@@ -106,5 +139,4 @@
         document.getElementById('{{ idMinute }}').getElementsByTagName('option')[{{ minute }}].selected = 'selected';
         {% endfor %}
     </script>
-
 {% endblock %}
