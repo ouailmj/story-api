@@ -112,7 +112,7 @@
                         </div>
                         {{ form_end(form) }}
                         <div class="pull-left">
-                            <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                            <a href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -123,12 +123,12 @@
             </div>
         </div>
     </div>
-            <script>
-                
-            $(function () {
-                $('#datetimepicker4').datetimepicker();
-            });
-            </script>
+
+    <script>
+        $(function () {
+            $('#datetimepicker4').datetimepicker();
+        });
+    </script>
     <script>
         var placeSearch, autocomplete, geocoder;
 

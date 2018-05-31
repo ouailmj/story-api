@@ -116,7 +116,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("add-event/choose-plan", name="add_event_choose_plan")
+     * @Route("event/choose-plan/{event}", name="add_event_choose_plan", defaults={"event" = null})
      * @Method({"POST","GET" })
      *
      * @param Request $request
@@ -134,10 +134,9 @@ class EventController extends BaseController
 
             if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
         }else{
-            if($eventManager->lastIncompleteEvent($this->getUser()) !== null)
-                if( $eventManager->lastIncompleteEvent($this->getUser())->getCurrentStep() !== 'finish' && $eventManager->lastIncompleteEvent($this->getUser())->getCurrentStep() !== '') return $this->redirectToRoute('add_event_index');
             $event = new Event();
         }
+
         $options = ['plan_data' => (null !== $event->getEventPurchase()) ? $event->getEventPurchase()->getPlan() : null];
         $form = $this->createForm(ChoosePlanType::class, null, $options);
         $form->handleRequest($request);
@@ -159,7 +158,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("add-event/event-information/{id}", name="add_event_event_information")
+     * @Route("event/event-information/{id}", name="add_event_event_information")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -204,7 +203,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("add-event/event-challenges/{id}", name="add_event_event_challenge")
+     * @Route("event/event-challenges/{id}", name="add_event_event_challenge")
      * @Method({"GET", "POST"})
      *
      * @param Request $request
@@ -267,11 +266,12 @@ class EventController extends BaseController
         return $this->render('client/event/event-challenge.html.twig', [
             'form' => $form->createView(),
             'event' => $event,
+            'propositions'=>   $this->getDoctrine()->getManager()->getRepository('AppBundle:PropositionChallenge')->findAll()
         ]);
     }
 
     /**
-     * @Route("add-event/event-cover/{id}", name="add_event_event_cover")
+     * @Route("event/event-cover/{id}", name="add_event_event_cover")
      * @Method({"GET", "POST"})
      *
      *
@@ -288,26 +288,30 @@ class EventController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if($form->get('videoCover')->getData() !== null && ($form->get('firstImageCover')->getData() !== null || $form->get('secondImageCover')->getData() !== null || $form->get('thirdImageCover')->getData() !== null))
-            {
                     try {
                     $eventManager->clearCover($event);
 
                     $coverType = $form->get('coverType')->getData();
                     if ('video' === $coverType) {
-                        /** @var UploadedFile $uploadedVideo */
-                        $uploadedVideo = $form->get('videoCover')->getData();
-                        /** @var Video $media */
-                        $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
-                        $event->setVideoGallery($media);
-                        $this->addSuccessFlash();
+                        if($form->get('videoCover')->getData() !== null)
+                        {
+                            /** @var UploadedFile $uploadedVideo */
+                            $uploadedVideo = $form->get('videoCover')->getData();
+                            /** @var Video $media */
+                            $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
+                            $event->setVideoGallery($media);
+                            $this->addSuccessFlash();
+                        }
                     } elseif ('image' === $coverType) {
-                        $gallery = [$form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData()];
-                        foreach ($gallery as $img) {
-                            if (null !== $img) {
-                                /** @var Image $media */
-                                $media = $mediaManager->uploadImage($img, $this->getUser());
-                                $event->addImagesGallery($media);
+                        if($form->get('firstImageCover')->getData() !== null || $form->get('secondImageCover')->getData() !== null || $form->get('thirdImageCover')->getData() !== null)
+                        {
+                            $gallery = [$form->get('firstImageCover')->getData(), $form->get('secondImageCover')->getData(), $form->get('thirdImageCover')->getData()];
+                            foreach ($gallery as $img) {
+                                if (null !== $img) {
+                                    /** @var Image $media */
+                                    $media = $mediaManager->uploadImage($img, $this->getUser());
+                                    $event->addImagesGallery($media);
+                                }
                             }
                         }
                     }
@@ -319,7 +323,7 @@ class EventController extends BaseController
                     $this->addFlash('error', $this->get('translator')->trans('flash.file_not_authorized'));
                 } catch (ORMException $exception) {
             }
-            }
+
             if ('free' === $event->getEventPurchase()->getPlan()->getPlanKey()) {
                 $event->setCurrentStep('invite-friends');
             } else {
@@ -338,7 +342,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("add-event/payment/{id}", name="add_event_payment")
+     * @Route("event/payment/{id}", name="add_event_payment")
      * @Method({"GET", "POST"})
      *
      * @param Request        $request
@@ -392,7 +396,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("add-event/payment-done/{id}" ,  name="payment_done")
+     * @Route("event/payment-done/{id}" ,  name="payment_done")
      *
      * @param Request        $request
      * @param Event          $event
@@ -419,7 +423,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("add-event/invite-friends/{id}" ,  name="add_event_invite_friends")
+     * @Route("event/invite-friends/{id}" ,  name="add_event_invite_friends")
      *
      * @param Request                       $request
      * @param Event                         $event
@@ -432,6 +436,7 @@ class EventController extends BaseController
      */
     public function InviteFriendsAction(Request $request, Event $event, InvitationRequestManager $invitationRequestManager, PaymentManager $paymentManager)
     {
+        if(!$paymentManager->isTotalPayed($event)) return $this->redirectToRoute('add_event_index');
         $form = $this->createForm(InviteFriendsType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -47,7 +47,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item active" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
+                                            <a class="nav-link active" href="" data-toggle="tab">
                                                 <i class="now-ui-icons fa fa-money"></i>
                                                 Payment
                                             </a>
@@ -115,7 +115,7 @@
                                 {{ form_rest(form)}}
                                 {{ form_end(form) }}
                                 <div class="pull-left">
-                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                                    <a href="{{ path('add_event_event_cover' , { 'id' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
