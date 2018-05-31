@@ -26,6 +26,8 @@ use Gaufrette\File;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MediaManager
@@ -46,6 +48,9 @@ class MediaManager
     /** @var EntityManagerInterface */
     protected $entityManager;
 
+    /** @var RequestStack */
+    protected $requestStack;
+
     /**
      * MediaManager constructor.
      *
@@ -54,12 +59,13 @@ class MediaManager
      * @param TokenStorageInterface  $tokenStorage
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
+    public function __construct(UploadManager $uploadManager, FileManager $fileManager, TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, RequestStack $requestStack)
     {
         $this->uploadManager = $uploadManager;
         $this->fileManager = $fileManager;
         $this->tokenStorage = $tokenStorage;
         $this->entityManager = $entityManager;
+        $this->requestStack =  $requestStack;
     }
 
     /**
@@ -77,6 +83,7 @@ class MediaManager
         /** @var Media $media * */
         $media = new $type();
         $media->setSrc($file->getKey());
+        $media->setDownloadLink($this->requestStack->getCurrentRequest()->getUriForPath('/uploads/'.$file->getKey()));
         $media->setUploadedAt(new \DateTime());
 
         $media->setCreatedBy($by);
@@ -118,8 +125,17 @@ class MediaManager
         return $media;
     }
 
-    public function deleteMedia(Media $media)
+    /**
+     * @param Media $media
+     * @param bool $removeBdd
+     * @return bool
+     */
+    public function deleteMedia(Media $media, $removeBdd=false)
     {
+        if($removeBdd){
+            $this->entityManager->remove($media);
+            $this->entityManager->flush();
+        }
         $filePath =__DIR__."/../../../web/uploads/".$media->getSrc();
         if (file_exists($filePath)) {
             return unlink($filePath);

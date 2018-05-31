@@ -73,11 +73,18 @@
                                     </div>
                                         <div id="cover-video" style="display:none">
                                             {{ form_widget(form.videoCover) }}
+                                            {{ form_errors(form.videoCover) }}
+                                            OR :
+                                            {{ form_widget(form.videoYoutubeCover) }}
+                                            {{ form_errors(form.videoYoutubeCover) }}
                                         </div>
                                     <div id="cover-images">
                                         {{ form_widget(form.firstImageCover) }}
+                                        {{ form_errors(form.firstImageCover) }}
                                         {{ form_widget(form.secondImageCover) }}
+                                        {{ form_errors(form.secondImageCover) }}
                                         {{ form_widget(form.thirdImageCover) }}
+                                        {{ form_errors(form.thirdImageCover) }}
                                     </div>
                                 </div>
                                 <div class="card-footer">

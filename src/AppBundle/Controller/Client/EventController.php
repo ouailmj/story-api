@@ -293,14 +293,29 @@ class EventController extends BaseController
 
                     $coverType = $form->get('coverType')->getData();
                     if ('video' === $coverType) {
-                        if($form->get('videoCover')->getData() !== null)
+                        if($form->get('videoCover')->getData() !== null || $form->get('videoYoutubeCover')->getData() !== null)
                         {
-                            /** @var UploadedFile $uploadedVideo */
-                            $uploadedVideo = $form->get('videoCover')->getData();
-                            /** @var Video $media */
-                            $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
-                            $event->setVideoGallery($media);
-                            $this->addSuccessFlash();
+                            if($form->get('videoYoutubeCover')->getData() !== null)
+                            {
+                                $video  = new Video();
+                                $video->setDownloadLink($form->get('videoYoutubeCover')->getData());
+                                $video->setSrc($form->get('videoYoutubeCover')->getData());
+                                $video->setUploadedAt(new \DateTime());
+                                $video->setCreatedBy($this->getUser());
+                                $event->setVideoGallery($video);
+                                $mediaManager->saveMedia($video);
+                                $this->addSuccessFlash();
+                            }
+                            if($form->get('videoCover')->getData() !== null)
+                            {
+                                /** @var UploadedFile $uploadedVideo */
+                                $uploadedVideo = $form->get('videoCover')->getData();
+                                /** @var Video $media */
+                                $media = $mediaManager->uploadVideo($uploadedVideo, $this->getUser());
+                                $event->setVideoGallery($media);
+                                $this->addSuccessFlash();
+                            }
+
                         }
                     } elseif ('image' === $coverType) {
                         if($form->get('firstImageCover')->getData() !== null || $form->get('secondImageCover')->getData() !== null || $form->get('thirdImageCover')->getData() !== null)
