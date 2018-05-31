@@ -112,7 +112,7 @@
                         </div>
                         {{ form_end(form) }}
                         <div class="pull-left">
-                            <a href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
+                            <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -123,12 +123,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $(function () {
-            $('#datetimepicker4').datetimepicker();
-        });
-    </script>
     <script>
         var placeSearch, autocomplete, geocoder;
 
@@ -144,7 +138,7 @@
 
         function codeAddress(address) {
             geocoder.geocode({
-                'address': address
+                'address': address,
             });
         }
 
@@ -156,6 +150,15 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPtDMghVAYF11e_NrdccLPs2OZ6tSMXCs&libraries=places&callback=initAutocomplete"
             async defer></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#appbundle_event_endsAt').datetimepicker();
+        });
+    </script><script type="text/javascript">
+        $(function () {
+            $('#appbundle_event_startsAt').datetimepicker();
+        });
+    </script>
 
 
 

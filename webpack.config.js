@@ -32,17 +32,18 @@ let frontCSS = [
     './web/assets/css/bootstrap_v4/bootstrap.min.css',
     './web/assets/css/bootstrap_v4/bootstrap-grid.min.css',
     './web/assets/css/bootstrap_v4/bootstrap-reboot.min.css',
-    
+
 ];
 
 let frontJs = [
-    './web/assets/css/bootstrap_v4/bootstrap.bundle.min.js',
-    './web/assets/css/bootstrap_v4/bootstrap.min.js',
-    './web/assets/css/bootstrap_v4/callapse.js',
-    './web/assets/css/bootstrap_v4/carousel.js',
-    './web/assets/css/bootstrap_v4/transitions.js',
-    './web/assets/css/bootstrap_v4/bootstrap-datetimepicker.js',
-]
+    './web/assets/js/bootstrap.bundle.min.js',
+    './web/assets/js/bootstrap.min.js',
+    './web/assets/js/callapse.js',
+    './web/assets/js/carousel.js',
+    './web/assets/js/transitions.js',
+    './web/assets/js/bootstrap-datetimepicker.js',
+
+];
 
 let loginJs = vendorJs.concat([
     './web/assets/js/pages/login_validation.js'
@@ -64,7 +65,7 @@ Encore
     .cleanupOutputBeforeBuild()
     .addEntry('js/home', homeJs)
     .addEntry('js/login', loginJs)
-    .addEntry('js/front/script', frontJs)
+    .addEntry('js/front/main', frontJs)
     .createSharedEntry('js/app', vendorJs)
     // .addEntry('js/training', trainingJs)
     .addStyleEntry('css/style', vendorCSS)

@@ -46,7 +46,7 @@
                                                 Event Cover
                                             </a>
                                         </li>
-                                        <li class="nav-item active" style="width: 16.666667%;">
+                                        <li class="nav-item" style="width: 16.666667%;">
                                             <a class="nav-link active" href="" data-toggle="tab">
                                                 <i class="now-ui-icons fa fa-money"></i>
                                                 Payment
@@ -78,6 +78,7 @@
                                                         {% if price[1] is defined %}
                                                         {{ price[1] }}
                                                     {% else %}00{% endif %}€
+                                                    </span>
                                                     <span class="plan-name">Montant payé :</span>
                                                     {% set price = (sumPayed/100)|split('.') %}
                                                     <span class="plan-price">

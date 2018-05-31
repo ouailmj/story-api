@@ -36,12 +36,12 @@ class EventInformationType extends AbstractType
         ->add('place', TextType::class, [
             'label' => false,
         ])
-        ->add('startsAt', DateTimeType::class, [
-            'widget' => 'single_text',
+        ->add('startsAt', TextType::class, [
+            'mapped'=>false,
             'label' =>false,
         ])
-        ->add('endsAt', DateTimeType::class, [
-            'widget' => 'single_text',
+        ->add('endsAt', TextType::class, [
+            'mapped'=>false,
             'label' => false,
         ])
         ->add('privacy', ChoiceType::class, [
