@@ -15,10 +15,12 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,6 +42,13 @@ class ChallengeType extends AbstractType
                     'class'=>''
                 ],
                 ])
+            ->add('proposition', ButtonType::class,[
+                'attr'=>[
+                    'onClick' => 'onClickProposition(this)',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#myModal'
+                ],
+            ])
             ->add('plannedAtHour', TimeType::class, [
                 'input' => 'array',
                 'hours' => $options['data_hours'],

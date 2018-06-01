@@ -1,16 +1,13 @@
 {% extends "client/event/base_event.html.twig" %}
 {% block title %}AppBundle:Default:index{% endblock %}
-
 {% block container %}
     <div class="main-panel">
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
-        
-      </nav>
+        <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top"></nav>
       <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
-        <canvas id="bigDashboardChart"></canvas>
-      </div>
+        <div class="panel-header panel-header-lg">
+            <canvas id="bigDashboardChart"></canvas>
+        </div>
         <div class="content">
             <div class="col-md-10 mr-auto ml-auto">
                 <!--      Wizard container        -->
@@ -79,57 +76,73 @@
                                 </div>
                                 {{ form_end(form) }}
                                 <div class="pull-left">
-                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                                    <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
                             </div>
                     </div>
+
                 </div>
             </div>
 
-            <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
-        <script type="text/javascript">
-            $('.my-challenge').collection({
-                    name_prefix: "{{ form.challenges.vars.full_name }}",
-                    add_at_the_end: true,
-                    hide_useless_buttons: true,
-                    add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter une challenge</a>',
-                    remove: '<a href="#" class="collection-remove btn btn-warning collection-action">X</a>',
-                    allow_up: false,
-                    allow_down: false,
-                    init_with_n_elements: 0,
-                }
-            );
-        </script>
-        <script>
-            function getElementsFinishWithId( id ) {
-                var children = document.body.getElementsByTagName('*');
-                var elements = [], child;
-                for (var i = 0; i < children.length; i++) {
-                    child = children[i];
-                    if (child.id.split('_')[4] == id)
-                        elements.push(child);
-                }
-                return elements;
+
+
+        </div>
+    </div>
+    <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
+    <script type="text/javascript">
+        $('.my-challenge').collection({
+                name_prefix: "{{ form.challenges.vars.full_name }}",
+                add_at_the_end: true,
+                hide_useless_buttons: true,
+                add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter une challenge</a>',
+                remove: '<a href="#" class="collection-remove btn btn-warning collection-action">X</a>',
+                allow_up: false,
+                allow_down: false,
+                init_with_n_elements: 0,
             }
-           elements =  getElementsFinishWithId('randomDate') ;
-            elements.forEach((element)=>{
-                onChangeCheckbox(element)
-            });
-            function onChangeCheckbox(element){
-               let id = element.id.split('_')[3];
-                let state = false;
-                if( element.checked){
-                    state = true;
-                };
-                var nodes = document.getElementById('appbundle_event_challenges_'+id+'_plannedAtHour').getElementsByTagName('*');
-                for(var i = 0; i < nodes.length; i++){
-                    nodes[i].disabled = state;
-                }
+        );
+
+        function getElementsFinishWithId( id ) {
+            var children = document.body.getElementsByTagName('*');
+            var elements = [], child;
+            for (var i = 0; i < children.length; i++) {
+                child = children[i];
+                if (child.id.split('_')[4] === id)
+                    elements.push(child);
             }
-        </script>
-    <script>
+            return elements;
+        }
+       elements =  getElementsFinishWithId('randomDate') ;
+        elements.forEach((element)=>{
+            onChangeCheckbox(element)
+        });
+        function onChangeCheckbox(element){
+           let id = element.id.split('_')[3];
+            let state = false;
+            if( element.checked){
+                state = true;
+            };
+            var nodes = document.getElementById('appbundle_event_challenges_'+id+'_plannedAtHour').getElementsByTagName('*');
+            for(var i = 0; i < nodes.length; i++){
+                nodes[i].disabled = state;
+            }
+        }
+
+        function onClickProposition(element)
+        {
+            let
+                index = element.id.split('_')[3];
+            onClickProposition.identifiantDescription = 'appbundle_event_challenges_'+index+'_description';
+            //
+
+        }
+        onClickProposition.identifiantDescription=0;
+        function onChooseProposition() {
+            $('#'+onClickProposition.identifiantDescription).val($("#propositionSelect option:selected").text())
+        }
+
         {% for challenge in event.challenges  %}
             {% set hour = challenge.plannedAt|date('H') %}
             {% set minute = challenge.plannedAt|date('m') %}

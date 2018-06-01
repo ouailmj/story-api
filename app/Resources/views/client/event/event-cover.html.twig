@@ -87,7 +87,11 @@
                                 {{ form_rest(form)}}
                                 {{ form_end(form) }}
                                 <div class="pull-left">
-                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                                    {%  if event.eventPurchase.plan.planKey == 'free' %}
+                                        <a  href="{{ path('add_event_event_information' , { 'id'  : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
+                                    {% else %}
+                                        <a  href="{{ path('add_event_event_challenge' , { 'id'  : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
+                                    {% endif %}
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

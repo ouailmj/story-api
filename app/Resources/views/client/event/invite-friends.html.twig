@@ -87,7 +87,9 @@
                                 </div>
                                 {{ form_end(form) }}
                                 <div class="pull-left">
-                                    <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                                    {% set route = 'add_event_payment' %}
+                                    {% if isPaid %} {% set route = 'add_event_event_cover' %} {% endif %}
+                                    <a href="{{ path(route , { 'id' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
