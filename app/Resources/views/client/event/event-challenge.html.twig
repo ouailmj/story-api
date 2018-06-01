@@ -82,19 +82,11 @@
                             </div>
                             </div>
                     </div>
+
                 </div>
             </div>
 
 
-            <div id="myModal">
-
-                <select id="propositionSelect" size="6" >
-                    {% for proposition in propositions %}
-                    <option>{{ proposition.description }}</option>
-                    {% endfor %}
-                </select>
-                <button onclick="onChooseProposition()">choose</button>
-            </div>
 
         </div>
     </div>
@@ -111,8 +103,7 @@
                 init_with_n_elements: 0,
             }
         );
-    </script>
-    <script>
+
         function getElementsFinishWithId( id ) {
             var children = document.body.getElementsByTagName('*');
             var elements = [], child;
@@ -138,8 +129,7 @@
                 nodes[i].disabled = state;
             }
         }
-    </script>
-    <script>
+
         function onClickProposition(element)
         {
             let
@@ -152,8 +142,7 @@
         function onChooseProposition() {
             $('#'+onClickProposition.identifiantDescription).val($("#propositionSelect option:selected").text())
         }
-    </script>
-    <script>
+
         {% for challenge in event.challenges  %}
             {% set hour = challenge.plannedAt|date('H') %}
             {% set minute = challenge.plannedAt|date('m') %}

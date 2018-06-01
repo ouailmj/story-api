@@ -45,7 +45,8 @@ class ChallengeType extends AbstractType
             ->add('proposition', ButtonType::class,[
                 'attr'=>[
                     'onClick' => 'onClickProposition(this)',
-                    'class'=>''
+                    'data-toggle' => 'modal',
+                    'data-target' => '#myModal'
                 ],
             ])
             ->add('plannedAtHour', TimeType::class, [
