@@ -174,6 +174,10 @@ class EventController extends BaseController
         if ($form->isSubmitted() && $form->isValid())
         {
 
+
+           $event->setStartsAt(new \DateTime($form->get('startsAt')->getData()));
+           $event->setEndsAt(new \DateTime($form->get('endsAt')->getData()));
+
             $maxEndsAt=Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($event->getEventPurchase()->getPlan()->getMaxEventDuration());
             $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
             if($endsAt->gt($maxEndsAt))

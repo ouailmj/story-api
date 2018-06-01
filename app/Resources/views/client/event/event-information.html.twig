@@ -112,7 +112,7 @@
                         </div>
                         {{ form_end(form) }}
                         <div class="pull-left">
-                            <button type="" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Previous">Previous</button>
+                            <a href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -152,12 +152,31 @@
             async defer></script>
     <script type="text/javascript">
         $(function () {
-            $('#appbundle_event_endsAt').datetimepicker();
-        });
-    </script><script type="text/javascript">
-        $(function () {
-            $('#appbundle_event_startsAt').datetimepicker();
-        });
+            let startsAt =moment('{{ event.startsAt|date('Y-m-d H:i') }}','YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+            let endsAt =moment('{{ event.endsAt|date('Y-m -d H:i')  }}', 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+            $('#appbundle_event_startsAt').datetimepicker({
+                defaultDate: startsAt,
+                format: 'YYYY-MM-DD HH:mm',
+                sideBySide: true,
+            })
+            $('#appbundle_event_endsAt').datetimepicker({
+                defaultDate: endsAt,
+                format: 'YYYY-MM-DD HH:mm',
+                sideBySide: true,
+                useCurrent: false,
+            })
+            controleDate(  $("#appbundle_event_startsAt").data("DateTimePicker").date() )
+            $("#appbundle_event_startsAt").on("dp.change", function (e) {
+                controleDate(e.date)
+            });
+
+             function controleDate(date) {
+                var myDate = new Date(date._d)
+                myDate.setSeconds(myDate.getSeconds()+60+{{ maxDuration }})
+                $('#appbundle_event_endsAt').data("DateTimePicker").maxDate(myDate)
+                $('#appbundle_event_endsAt').data("DateTimePicker").minDate(date)
+            }
+        })
     </script>
 
 
