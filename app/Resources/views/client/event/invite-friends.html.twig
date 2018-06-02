@@ -67,12 +67,21 @@
             var email_inputs = $("input[id=appbundle_invitation_request_items]");
             $('.btn').click(function() {
                 var toAdd = $("input[name=listItem]").val();
-                list.push(toAdd)
-                console.log(list)
-                //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
-                $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>x</h5></a>');
+                var atpos = toAdd.indexOf("@");
+                var dotpos = toAdd.lastIndexOf(".");
 
-                email_inputs.val(email_inputs.val() + toAdd + ';');
+                if (atpos<1 || dotpos<atpos+2 || dotpos+2>=toAdd.length) {
+                    alert("Not a valid e-mail address");
+                    return false;
+                }else{
+                    list.push(toAdd)
+                    console.log(list)
+                    //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
+                    $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>x</h5></a>');
+
+                    email_inputs.val(email_inputs.val() + toAdd + ';');
+                }
+
             });
             //The following will cross out and remove the list item when clicking on the button or the list item itself
             $(document).on('click', 'a', function() {
