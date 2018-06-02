@@ -80,13 +80,15 @@ class EventController extends BaseController
 
         if($event === null)
         {
-            return $this->redirectToRoute('add_event_choose_plan');
+            $event = new Event();
+            $eventManager->createEventWithFreePlan($this->getUser(), $event );
+            return $this->redirectToRoute('add_event_choose_plan', ['event' => $event->getId()]);
         }
 
         switch($event->getCurrentStep())
         {
             case 'choose-plan':
-               return $this->redirectToRoute('add_event_choose_plan');
+               return $this->redirectToRoute('add_event_choose_plan', ['event' => $event->getId()]);
                 break;
             case 'event-information':
                 return $this->redirectToRoute('add_event_event_information', ['id' => $event->getId()]);
@@ -116,26 +118,18 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("event/choose-plan/{event}", name="add_event_choose_plan", defaults={"event" = null})
+     * @Route("event/choose-plan/{event}", name="add_event_choose_plan")
      * @Method({"POST","GET" })
      *
      * @param Request $request
+     * @param Event $event
      * @param EventManager $eventManager
      * @param PlanManager $planManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Doctrine\ORM\EntityNotFoundException
      */
-    public function choosePlanAction(Request $request, EventManager  $eventManager, PlanManager $planManager)
+    public function choosePlanAction(Request $request, Event $event, EventManager  $eventManager, PlanManager $planManager)
     {
-
-        if($request->query->get('event') != null)
-        {
-            $event = $eventManager->findEventById($request->query->get('event'));
-
-            if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
-        }else{
-            $event = new Event();
-        }
+        if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
 
         $options = ['plan_data' => (null !== $event->getEventPurchase()) ? $event->getEventPurchase()->getPlan() : null];
         $form = $this->createForm(ChoosePlanType::class, null, $options);
@@ -226,22 +220,14 @@ class EventController extends BaseController
            return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
        }
 
-        $hours = array();
-        $startsAt=$event->getStartsAt() instanceof \DateTime ? Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) : null;
-        $endsAt= $event->getEndsAt() instanceof \DateTime ? Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) : null;
-        $diffHour = $startsAt->diffInHours($endsAt);
-
-        for ($i=0;$i< $diffHour;$i++)
-        {
-            $hours [] = $i;
-        }
-        $options = ['data_hours' => $hours];
-        $form = $this->createForm(EventChallengeType::class, $event, $options);
+        $form = $this->createForm(EventChallengeType::class, $event);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $startsAt = Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) ;
+            $endsAt = Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) ;
 
             foreach ($form->get('challenges') as $item)
             {
@@ -253,9 +239,7 @@ class EventController extends BaseController
                     $string = date("Y-m-d H:i:s",$int);
                     $plannedAt = new Carbon($string);
                 }else{
-                    $plannedAtHour = $item->get('plannedAtHour')->getData();
-                    $plannedAtHourToS = (($plannedAtHour['hour'] * 3600) + ($plannedAtHour['minute'] * 60));
-                    $plannedAt= Carbon::parse($event->getStartsAt()->format('Y-m-d H:m'))->addRealSeconds($plannedAtHourToS);
+                    $plannedAt = new Carbon($item->get('plannedAt')->getData());
                 }
                 $challenge->setPlannedAt($plannedAt);
                 $challenge->setEvent($event);
@@ -380,7 +364,17 @@ class EventController extends BaseController
         }
         $form = $this->createForm(PaymentEventType::class);
         $form->handleRequest($request);
+        $sumPayed = $paymentManager->TotalPayed($event);
         if ($form->isSubmitted() && $form->isValid()) {
+            if($form->get('price')->getData() * 100 > $event->getEventPurchase()->getPlan()->getPrice()){
+                //TODO: translate
+                $form->get('price')->addError(new FormError('  invalid price'));
+                return $this->render('client/event/payment.html.twig', [
+                    'form' => $form->createView(),
+                    'event' => $event,
+                    'sumPayed' => $sumPayed,
+                ]);
+            }
             $gatewayName = 'offline';
 
             $storage = $this->get('payum')->getStorage('AppBundle\Entity\Payment');
@@ -405,7 +399,6 @@ class EventController extends BaseController
 
             return $this->redirect($captureToken->getTargetUrl());
         }
-        $sumPayed = $paymentManager->TotalPayed($event);
 
         return $this->render('client/event/payment.html.twig', [
             'form' => $form->createView(),
