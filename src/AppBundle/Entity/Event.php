@@ -186,8 +186,12 @@ class Event
     /**
      * @var Category
      *
-     * @ORM\OneToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Category"  ).
+     * @ORM\ManyToMany(targetEntity="Category")
+     * @ORM\JoinTable(name="event_category",
+     *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id", unique=true)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     *      )
      */
     private $category ;
 

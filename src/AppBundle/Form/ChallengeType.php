@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -36,12 +37,6 @@ class ChallengeType extends AbstractType
                     'placeholder' => 'Challange Description',
                 ],
             ])
-            ->add('randomDate',CheckboxType::class,[
-                'attr'=>[
-                    'onchange' => 'onChangeCheckbox(this)',
-                    'class'=>''
-                ],
-                ])
             ->add('proposition', ButtonType::class,[
                 'attr'=>[
                     'onClick' => 'onClickProposition(this)',
@@ -49,14 +44,16 @@ class ChallengeType extends AbstractType
                     'data-target' => '#myModal'
                 ],
             ])
-            ->add('plannedAtHour', TimeType::class, [
-                'input' => 'array',
-                'hours' => $options['data_hours'],
-                'mapped' => false,
-                'label' => false,
-                'attr' => [
-                    'class' => 'selectors',
+
+            ->add('randomDate',CheckboxType::class,[
+                'attr'=>[
+                    'onchange' => 'onChangeCheckbox(this)',
+                    'class'=>''
                 ],
+            ])
+            ->add('plannedAt', TextType::class, [
+                'mapped'=>false,
+                'label' =>false,
             ])
         ;
     }
@@ -68,7 +65,6 @@ class ChallengeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Challenge',
-            'data_hours' => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
         ]);
     }
 

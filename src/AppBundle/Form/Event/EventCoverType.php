@@ -17,6 +17,7 @@ namespace AppBundle\Form\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -75,6 +76,21 @@ class EventCoverType extends AbstractType
                 'attr' => [
                     'class' => 'file-input video-input',
                 ],
+            ])
+            ->add('videoYoutubeCover', UrlType::class, [
+                'label' => 'user.fields.videoYoutubeCover',
+                'required' => false,
+                'mapped' => false,
+                'attr' => [
+                    'placeholder' => 'url youtube',
+                ],
+                'constraints' => array(
+                    new \Symfony\Component\Validator\Constraints\Regex([
+                        'pattern' => "#^(http|https)://(www.youtube.com|www.dailymotion.com|vimeo.com)/#",
+                        "match" => true,
+                        "message" => "L'url doit correspondre à l'url d'une vidéo Youtube, DailyMotion ou Vimeo"
+                        ]),
+                )
             ])
 
         ;

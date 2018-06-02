@@ -20,46 +20,8 @@
                                 <h5 class="card-title">
                                     NEW EVENT
                                 </h5>
-                                <div class="wizard-navigation">
-                                    <ul class="nav nav-pills">
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-tag"></i>
-                                                Choose plan
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-info"></i>
-                                                Event Informations
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="#address" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-gamepad"></i>
-                                                Add Chalanges
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link active" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-picture-o"></i>
-                                                Event Cover
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-money"></i>
-                                                Payment
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="width: 16.666667%;">
-                                            <a class="nav-link" href="#address" data-toggle="tab">
-                                                <i class="now-ui-icons fa fa-users"></i>
-                                                Invite Friends
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+
+                                {% include 'client/event/menu_creation.html.twig'  with {'cover': 'active'} %}
                             </div>
 
                             <div class="card-body">
@@ -73,11 +35,18 @@
                                     </div>
                                         <div id="cover-video" style="display:none">
                                             {{ form_widget(form.videoCover) }}
+                                            {{ form_errors(form.videoCover) }}
+                                            OR :
+                                            {{ form_widget(form.videoYoutubeCover) }}
+                                            {{ form_errors(form.videoYoutubeCover) }}
                                         </div>
                                     <div id="cover-images">
                                         {{ form_widget(form.firstImageCover) }}
+                                        {{ form_errors(form.firstImageCover) }}
                                         {{ form_widget(form.secondImageCover) }}
+                                        {{ form_errors(form.secondImageCover) }}
                                         {{ form_widget(form.thirdImageCover) }}
+                                        {{ form_errors(form.thirdImageCover) }}
                                     </div>
                                 </div>
                                 <div class="card-footer">

@@ -203,11 +203,19 @@ AppBundle\Entity\PropositionChallenge:
         __construct: ['@administrator']
 
 AppBundle\Entity\Category:
-    challenge_proposition_{1..5}:
-        title (unique): <name()>
-        description: <sentence()>
-        privacy: <{app.alice.public}>
-    challenge_proposition_{6..15}:
-        title (unique): <name()>
+    category_mariage:
+        title (unique): 'Mariage'
         description: <sentence()>
         privacy: <{app.alice.private}>
+    category_anniversaire:
+        title (unique): 'Anniversaire'
+        description: <sentence()>
+        privacy: <{app.alice.private}>
+    category_festival‎ :
+        title (unique): 'Festival‎ '
+        description: <sentence()>
+        privacy: <{app.alice.public}>
+    category_fete‎ :
+        title (unique): 'Fête '
+        description: <sentence()>
+        privacy: <{app.alice.public}>

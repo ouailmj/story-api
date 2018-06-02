@@ -51,7 +51,6 @@ class EventChallengeType extends AbstractType
 
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Event',
-            'data_hours' => [],
         ));
     }
 

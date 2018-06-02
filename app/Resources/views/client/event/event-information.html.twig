@@ -18,46 +18,8 @@
                             <h5 class="card-title">
                                 NEW EVENT
                             </h5>
-                            <div class="wizard-navigation">
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item" style="width: 16.666667%;">
-                                        <a class="nav-link" href="" data-toggle="tab">
-                                            <i class="now-ui-icons fa fa-tag"></i>
-                                            Choose plan
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" style="width: 16.666667%;">
-                                        <a class="nav-link active" href="" data-toggle="tab">
-                                            <i class="now-ui-icons fa fa-info"></i>
-                                            Event Informations
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" style="width: 16.666667%;">
-                                        <a class="nav-link" href="#address" data-toggle="tab">
-                                            <i class="now-ui-icons fa fa-gamepad"></i>
-                                            Add Chalanges
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" style="width: 16.666667%;">
-                                        <a class="nav-link" href="" data-toggle="tab">
-                                            <i class="now-ui-icons fa fa-picture-o"></i>
-                                            Event Cover
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" style="width: 16.666667%;">
-                                        <a class="nav-link" href="" data-toggle="tab">
-                                            <i class="now-ui-icons fa fa-money"></i>
-                                            Payment
-                                        </a>
-                                    </li>
-                                    <li class="nav-item" style="width: 16.666667%;">
-                                        <a class="nav-link" href="#address" data-toggle="tab">
-                                            <i class="now-ui-icons fa fa-users"></i>
-                                            Invite Friends
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+
+                            {% include 'client/event/menu_creation.html.twig'  with {'information': 'active'} %}
                         </div>
 
                         <div class="card-body">
@@ -103,7 +65,7 @@
                                 <div class="col-md-12 pr-1">
                                 <div class="form-group">
                                     <label>Catégorie</label>
-                                        {{ form_widget(form.privacy ,{'attr': {'class': 'input-field unstyled'}}) }}
+                                        {{ form_widget(form.category ,{'attr': {'class': 'input-field unstyled'}}) }}
                                 </div>
                             </div>
                         <div class="card-footer">
@@ -152,12 +114,31 @@
             async defer></script>
     <script type="text/javascript">
         $(function () {
-            $('#appbundle_event_endsAt').datetimepicker();
-        });
-    </script><script type="text/javascript">
-        $(function () {
-            $('#appbundle_event_startsAt').datetimepicker();
-        });
+            let startsAt =moment('{{ event.startsAt|date('Y-m-d H:i') }}','YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+            let endsAt =moment('{{ event.endsAt|date('Y-m -d H:i')  }}', 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+            $('#appbundle_event_startsAt').datetimepicker({
+                defaultDate: startsAt,
+                format: 'YYYY-MM-DD HH:mm',
+                sideBySide: true,
+            })
+            $('#appbundle_event_endsAt').datetimepicker({
+                defaultDate: endsAt,
+                format: 'YYYY-MM-DD HH:mm',
+                sideBySide: true,
+                useCurrent: false,
+            })
+            controleDate(  $("#appbundle_event_startsAt").data("DateTimePicker").date() )
+            $("#appbundle_event_startsAt").on("dp.change", function (e) {
+                controleDate(e.date)
+            });
+
+             function controleDate(date) {
+                var myDate = new Date(date._d)
+                myDate.setSeconds(myDate.getSeconds()+60+{{ maxDuration }})
+                $('#appbundle_event_endsAt').data("DateTimePicker").maxDate(myDate)
+                $('#appbundle_event_endsAt').data("DateTimePicker").minDate(date)
+            }
+        })
     </script>
 
 

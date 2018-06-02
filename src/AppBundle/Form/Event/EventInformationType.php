@@ -14,6 +14,7 @@
 
 namespace AppBundle\Form\Event;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -38,22 +39,19 @@ class EventInformationType extends AbstractType
         ])
         ->add('startsAt', TextType::class, [
             'mapped'=>false,
-
             'label' =>false,
         ])
         ->add('endsAt', TextType::class, [
             'mapped'=>false,
             'label' => false,
         ])
-        ->add('privacy', ChoiceType::class, [
+        ->add('category', EntityType::class, [
             'label' => false,
             'attr' => ['class' => 'select-search'],
-            'choices' => [
-                'event.fields.private' => 'private',
-                'event.fields.public' => 'public', ],
+            'class' => 'AppBundle:Category',
+            'choice_label' => 'title',
             'multiple' => false,
             'expanded' => false,
-            'mapped' => false,
         ])
         ->add('description', TextareaType::class, [
             'label' => false,
