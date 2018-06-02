@@ -5161,9 +5161,7 @@
 div[id^="appbundle_event_challenges_"]{
   border: 1px solid #43c6ac;
   padding: 5px;
-  border-radius: 20px;
   text-align: center;
-
 }
 
 div[id^="appbundle_event_challenges_"] div{
@@ -5733,6 +5731,12 @@ select.form-control:not([size]):not([multiple]){
 
 .main .gallery{
     padding: 20px 10px;
+}
+
+.modal-backdrop.in {
+    filter: alpha(opacity=50);
+    opacity: .5;
+    display: none;
 }
 
 
