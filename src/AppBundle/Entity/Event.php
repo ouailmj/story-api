@@ -972,4 +972,17 @@ class Event
     }
 
 
+    /**
+     * @return bool
+     */
+    public function isTotalPayed()
+    {
+        $sum = 0;
+        foreach ($this->eventPurchase->getPayments() as $payment)
+        {
+            $sum += $payment->getTotalAmount();
+        }
+        if($sum >= $this->eventPurchase->getPlan()->getPrice()) return true;
+        return false;
+    }
 }

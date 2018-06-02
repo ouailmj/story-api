@@ -11,19 +11,19 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li>
-            <a href="">
+          <li class="{{ list|default('') }}">
+            <a href="{{ path('list-event') }}">
               <i class="now-ui-icons fa fa-calendar-o"></i>
               <p>Events</p>
             </a>
           </li>
-          <li class="active">
-            <a href="./user.html">
+          <li class="{{ creation|default('') }}">
+            <a href="{{ path('add_event_index') }}">
               <i class="now-ui-icons fa fa-plus"></i>
               <p>Add Event</p>
             </a>
           </li>
-          <li class="active-pro">
+          <li class="">
             <a href="./upgrade.html">
               <i class="now-ui-icons fa fa-user"></i>
               <p>Profile</p>

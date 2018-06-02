@@ -86,9 +86,9 @@ class EventCoverType extends AbstractType
                 ],
                 'constraints' => array(
                     new \Symfony\Component\Validator\Constraints\Regex([
-                        'pattern' => "#^(http|https)://(www.youtube.com|www.dailymotion.com|vimeo.com)/#",
+                        'pattern' => "#^(http|https)://(www.youtube.com)/#",
                         "match" => true,
-                        "message" => "L'url doit correspondre à l'url d'une vidéo Youtube, DailyMotion ou Vimeo"
+                        "message" => "L'url doit correspondre à l'url d'une vidéo Youtube"
                         ]),
                 )
             ])
