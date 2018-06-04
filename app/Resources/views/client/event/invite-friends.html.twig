@@ -37,8 +37,13 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="col-md-2">
-                                            <iframe src="https://www.facebook.com/plugins/share_button.php?href=http%3A%2F%2F127.0.0.190%3A8000%2F&layout=button&size=large&mobile_iframe=true&width=72&height=28&appId" width="72" height="28" style="border:none;overflow:hidden;margin-top: 20px" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                                        <div class="row">
+                                            <div class="col-md-6 left">
+                                                <h5>Left: 18</h5>
+                                            </div>
+                                            <div class="col-md-6 right">
+                                                <h5>Right: 20</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -67,19 +72,23 @@
             var email_inputs = $("input[id=appbundle_invitation_request_items]");
             $('.btn').click(function() {
                 var toAdd = $("input[name=listItem]").val();
+                //Email Validation
                 var atpos = toAdd.indexOf("@");
-                var dotpos = toAdd.lastIndexOf(".");
-
+                var dotpos = toAdd.lastIndexOf(".")
                 if (atpos<1 || dotpos<atpos+2 || dotpos+2>=toAdd.length) {
                     alert("Not a valid e-mail address");
                     return false;
                 }else{
-                    list.push(toAdd)
-                    console.log(list)
-                    //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
-                    $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>x</h5></a>');
-
+                    if(jQuery.inArray(toAdd,list) === -1){
+                        console.log(jQuery.inArray(toAdd,list));
+                        list.push(toAdd);
+                        //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
+                    $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>><i class="fa fa-close" aria-hidden="true"></i></h5></a>');
                     email_inputs.val(email_inputs.val() + toAdd + ';');
+                    }else if(jQuery.inArray(toAdd,list) === 0){
+                        alert('Already Exist')
+                    }
+                    
                 }
 
             });
