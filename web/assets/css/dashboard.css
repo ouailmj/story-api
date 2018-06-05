@@ -5911,4 +5911,23 @@ select.form-control:not([size]):not([multiple]){
   color: #e74c3c;
 }
 
+.upcoming, .passed{
+  margin: 10px auto;
+}
+
+.upcoming .alert{
+  background: #99E1E9;
+  color: #95b7c1;
+  font-weight: bolder;
+  font-size: 18px;
+  margin: 20px auto;
+}
+
+.passed .alert{
+  background: rgb(41, 133, 131);
+  color: #95b7c1;
+  font-weight: bolder;
+  font-size: 18px;
+  margin: 20px auto;
+}
 
