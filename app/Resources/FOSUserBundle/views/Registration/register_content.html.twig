@@ -23,28 +23,29 @@
 
 
         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-            {{ form_row(form.username)}}
+            {{ form_widget(form.username)}}
             <span class="focus-input100"></span>
             <span class="symbol-input100">
 							<i class="fa fa-smile-o" aria-hidden="true"></i>
 						</span>
         </div>
-
+        {{ form_errors(form.username)}}
         <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-            {{ form_row(form.email)}}
+            {{ form_widget(form.email)}}
             <span class="focus-input100"></span>
             <span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
         </div>
-
+        {{ form_errors(form.email)}}
         <div class="wrap-input100 validate-input" data-validate = "Password is required">
-            {{ form_row(form.plainPassword)}}
+            {{ form_widget(form.plainPassword)}}
             <span class="focus-input100"></span>
             <span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
         </div>
+        {{ form_errors(form.plainPassword)}}
         <div class="container-login100-form-btn">
             <button class="login100-form-btn" type="submit" name="create" >
                 Créer un compte
