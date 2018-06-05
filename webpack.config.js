@@ -38,8 +38,6 @@ let frontCSS = [
 let frontJs = [
     './web/assets/js/bootstrap.bundle.min.js',
     './web/assets/js/bootstrap.min.js',
-    './web/assets/js/callapse.js',
-    './web/assets/js/carousel.js',
     './web/assets/js/transitions.js',
     './web/assets/js/bootstrap-datetimepicker.js',
 

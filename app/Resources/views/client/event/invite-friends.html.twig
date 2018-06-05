@@ -38,11 +38,17 @@
                                     </div>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-6 left">
-                                                <h5>Left: 18</h5>
+                                            <div class="col-md-6">
+                                                <h5 class="invited"></script></h5>
                                             </div>
-                                            <div class="col-md-6 right">
-                                                <h5>Right: 20</h5>
+                                            <div class="col-md-6">
+                                                <h5 class="Left">
+                                                    {% if event.eventPurchase.plan.maxGuests == -1 %}
+                                                        Inllimited
+                                                    {% else %}
+                                                        {{ event.eventPurchase.plan.maxGuests }}
+                                                    {% endif %}
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -80,8 +86,8 @@
                     return false;
                 }else{
                     if(jQuery.inArray(toAdd,list) === -1){
-                        console.log(jQuery.inArray(toAdd,list));
                         list.push(toAdd);
+                        $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
                     $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>><i class="fa fa-close" aria-hidden="true"></i></h5></a>');
                     email_inputs.val(email_inputs.val() + toAdd + ';');
@@ -96,6 +102,10 @@
             $(document).on('click', 'a', function() {
                 var index = parseInt($(this).attr("index"));
                 delete list[index];
+                removeItem  = list[index];
+                 list = jQuery.grep(list, function(value) {
+                    return value != removeItem;
+                    });
                 email_inputs.val('');
 
                 var emls = "";
@@ -104,6 +114,7 @@
                 });
                 email_inputs.val(emls);
                 $(this).remove();
+                $(".invited").text("Invited :" + list.length);
             });
             //This clears the previous input when clicking on the input box
             $('input').focus(function() {
