@@ -8,10 +8,11 @@
 
     </nav>
     <!-- End Navbar -->
-    <div class="upcoming">
+    <div class="events">
         <div class="col-md-10 mr-auto ml-auto">
             <!--      Wizard container        -->
-            <h4 class="upcoming-title">Upcoming Events</h4>
+            <div class="upcoming">
+                <div class="alert alert-info" role="alert">Upcoming Events</div>
                 <div class="row">
                 {% for event in upcomingEvents %}
                     <div class="col-md-3">
@@ -37,15 +38,20 @@
                                     <h1 class="title">{{ event.title }}</h1>
                                     <h2 class="sub_title">{{ event.place }}</h2>
                                     <p class="description"><p>{{ event.description }}</p></p>
-                                    <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i></span><span class="comments"><i class=""></i><a href="#"></a></span></div>
+                                    <div class="post-meta">
+                                        <span class="comments"><i class="fa fa-sliders"></i><a href="{{ path('show-event-client', { 'id' : event.id }) }}">Settings</a></span>
+                                        <span class="comments infos"><i class="fa fa-eye"></i><a href="#">More Info</a></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
                 </div>
-
-                <h4 class="upcoming-title">Upcoming Events</h4>
+            </div>
+            
+            <div class="passed">
+                <div class="alert alert-warning" role="alert">Passed Events</div>
                 <div class="row">
                 {% for event in passedEvents %}
                     <div class="col-md-3">
@@ -71,13 +77,14 @@
                                     <h1 class="title">{{ event.title }}</h1>
                                     <h2 class="sub_title">{{ event.place }}</h2>
                                     <p class="description"><p>{{ event.description }}</p></p>
-                                    <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-">o</i></span><span class="comments"><i class=""></i><a href="#"></a></span></div>
+                                    <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-"></i></span><span class="comments"><i class=""></i><a href="#"></a></span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
                 </div>
+            </div>
         </div>
     </div>
 </div>
