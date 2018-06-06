@@ -5,7 +5,7 @@
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
-        
+
       </nav>
       <!-- End Navbar -->
       <div class="panel-header panel-header-lg">
@@ -16,40 +16,40 @@
                 <!--      Wizard container        -->
                 <div class="wizard-container">
                     <div class="card card-wizard active" data-color="primary" id="wizardProfile">
-                            <div class="card-header text-center" data-background-color="orange">
-                                <h5 class="card-title">
-                                    NEW EVENT
-                                </h5>
+                        <div class="card-header text-center" data-background-color="orange">
+                            <h5 class="card-title">
+                                NEW EVENT
+                            </h5>
 
-                                {% include 'client/event/menu_creation.html.twig'  with {'cover': 'active'} %}
-                            </div>
+                            {% include 'client/event/menu_creation.html.twig'  with {'cover': 'active'} %}
+                        </div>
 
-                            <div class="card-body">
-                               {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-                               <div class="event-cover-form">
-                                    <div class="choose-cover-msg">
-                                        <p>You can choose between one video or 3 images for your event cover</p>
-                                    </div>
-                                    <div class="choose-cover-type">
-                                        {{ form_row(form.coverType ,{'attr': {'class': ''}}) }}
-                                    </div>
-                                        <div id="cover-video" style="display:none">
-                                            {{ form_widget(form.videoCover) }}
-                                            {{ form_errors(form.videoCover) }}
-                                            OR :
-                                            {{ form_widget(form.videoYoutubeCover) }}
-                                            {{ form_errors(form.videoYoutubeCover) }}
-                                        </div>
-                                    <div id="cover-images">
-                                        {{ form_widget(form.firstImageCover) }}
-                                        {{ form_errors(form.firstImageCover) }}
-                                        {{ form_widget(form.secondImageCover) }}
-                                        {{ form_errors(form.secondImageCover) }}
-                                        {{ form_widget(form.thirdImageCover) }}
-                                        {{ form_errors(form.thirdImageCover) }}
-                                    </div>
+                        <div class="card-body">
+                            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                            <div class="event-cover-form">
+                                <div class="choose-cover-msg">
+                                    <p>You can choose between one video or 3 images for your event cover</p>
                                 </div>
-                                <div class="card-footer">
+                                <div class="choose-cover-type">
+                                    {{ form_row(form.coverType ,{'attr': {'class': ''}}) }}
+                                </div>
+                                <div id="cover-video" style="display:none">
+                                    {{ form_widget(form.videoCover) }}
+                                    {{ form_errors(form.videoCover) }}
+                                    OR :
+                                    {{ form_widget(form.videoYoutubeCover) }}
+                                    {{ form_errors(form.videoYoutubeCover) }}
+                                </div>
+                                <div id="cover-images">
+                                    {{ form_widget(form.firstImageCover) }}
+                                    {{ form_errors(form.firstImageCover) }}
+                                    {{ form_widget(form.secondImageCover) }}
+                                    {{ form_errors(form.secondImageCover) }}
+                                    {{ form_widget(form.thirdImageCover) }}
+                                    {{ form_errors(form.thirdImageCover) }}
+                                </div>
+                            </div>
+                            <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
                                 </div>
@@ -64,20 +64,20 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <script>
-document.getElementById("appbundle_event_coverType_1").addEventListener("click", ()=>
-        {
-        document.getElementById('cover-video').style.display ='none';
-        document.getElementById('cover-images').style.display ='block';
-        });
-document.getElementById("appbundle_event_coverType_0").addEventListener("click", ()=>{
-        document.getElementById('cover-video').style.display = 'block';
-        document.getElementById('cover-images').style.display = 'none';
-        });
-        </script>
+            document.getElementById("appbundle_event_coverType_1").addEventListener("click", ()=>
+            {
+                document.getElementById('cover-video').style.display ='none';
+                document.getElementById('cover-images').style.display ='block';
+            });
+                document.getElementById("appbundle_event_coverType_0").addEventListener("click", ()=>{
+                document.getElementById('cover-video').style.display = 'block';
+                document.getElementById('cover-images').style.display = 'none';
+            });
+            </script>
 {% endblock %}
