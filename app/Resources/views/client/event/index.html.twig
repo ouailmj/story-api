@@ -38,7 +38,10 @@
                                     <h1 class="title">{{ event.title }}</h1>
                                     <h2 class="sub_title">{{ event.place }}</h2>
                                     <p class="description"><p>{{ event.description }}</p></p>
-                                    <div class="post-meta"><span class="comments"><i class="fa fa-sliders"></i><a href="#">Settings</a></span></div>
+                                    <div class="post-meta">
+                                        <span class="comments"><i class="fa fa-sliders"></i><a href="{{ path('show-event-client', { 'id' : event.id }) }}">Settings</a></span>
+                                        <span class="comments infos"><i class="fa fa-eye"></i><a href="#">More Info</a></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
