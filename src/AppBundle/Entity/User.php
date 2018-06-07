@@ -367,31 +367,6 @@ class User extends BaseUser
         return $this->createdEvents;
     }
 
-    /**
-     * Add eventMemberShips.
-     *
-     * @param MemberShip $memberShip
-     *
-     * @return $this
-     */
-    public function addEventMemberShips(MemberShip $memberShip)
-    {
-        $this->eventMemberShips[] = $memberShip;
-
-        return $this;
-    }
-
-    /**
-     * Remove eventMemberShips.
-     *
-     * @param \AppBundle\Entity\MemberShip $memberShip
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
-     */
-    public function removeEventMemberShips(MemberShip $memberShip)
-    {
-        return $this->eventMemberShips->removeElement($memberShip);
-    }
 
     /**
      * Get eventMemberShips.

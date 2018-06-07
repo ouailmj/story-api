@@ -38,7 +38,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * Class ProfileController.
  *
- * @Security("has_role('ROLE_USER')")
+ * @Security("has_role('ROLE_ADMIN')")
  * @Route("/auth/profile/")
  */
 class ProfileController extends BaseController

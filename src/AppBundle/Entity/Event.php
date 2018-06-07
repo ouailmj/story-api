@@ -573,31 +573,8 @@ class Event
         return $this->eventMemberShips;
     }
 
-    /**
-     * Add eventMemberShips.
-     *
-     * @param MemberShip $eventMemberShip
-     *
-     * @return $this
-     */
-    public function addEventMemberShips(MemberShip $eventMemberShip)
-    {
-        $this->eventMemberShips[] = $eventMemberShip;
 
-        return $this;
-    }
 
-    /**
-     * Remove eventMemberShips.
-     *
-     * @param \AppBundle\Entity\MemberShip $eventMemberShip
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
-     */
-    public function removeEventMemberShips(MemberShip $eventMemberShip)
-    {
-        return $this->eventMemberShips->removeElement($eventMemberShip);
-    }
 
     /**
      * Add invitationRequests.

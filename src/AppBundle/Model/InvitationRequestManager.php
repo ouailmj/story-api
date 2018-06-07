@@ -16,6 +16,7 @@ namespace AppBundle\Model;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\InvitationRequest;
+use AppBundle\Entity\MemberShip;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Doctrine\UserManager as FOSUserManager;
@@ -82,5 +83,36 @@ class InvitationRequestManager
         }
 
         return $invitationRequest;
+    }
+
+    public function getInvitationRequestByStatus(User $user, $isCanceled = false , $isAccepted = false)
+    {
+        return  $this->entityManager->getRepository('AppBundle:InvitationRequest')->findBy([
+            'user' => $user,
+            'isCanceled' => $isCanceled,
+            'isAccepted' => $isAccepted,
+        ]);
+    }
+
+    public function acceptInvitation(User $user, InvitationRequest $invitationRequest, $flush = true)
+    {
+        $invitationRequest->setIsAccepted(true);
+        $memberShip = new MemberShip();
+        $memberShip->setEvent($invitationRequest->getEvent());
+        $memberShip->setMember($user);
+        $memberShip->setCreatedAt(new \DateTime());
+        $invitationRequest->getEvent()->addEventMemberShip($memberShip);
+        $user->addEventMemberShip($memberShip);
+        $this->entityManager->persist($memberShip);
+        if ($flush) {
+            $this->entityManager->flush();
+        }
+    }
+    public function cancelInvitation(InvitationRequest $invitationRequest, $flush = true)
+    {
+        $invitationRequest->setIsCanceled(true);
+        if ($flush) {
+            $this->entityManager->flush();
+        }
     }
 }

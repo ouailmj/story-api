@@ -3,9 +3,112 @@
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
-    <div class="main-panel">
 
-{{ dump(invitations) }}
+
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+
+        </nav>
+        <!-- End Navbar -->
+        <div class="events">
+            <div class="col-md-10 mr-auto ml-auto">
+                <!--      new invitation        -->
+                <div class="upcoming">
+                    <div class="alert alert-info" role="alert">new Invitation</div>
+                    <div class="row">
+                        {% for invitation in newInvitations %}
+                            <div class="col-md-3">
+                                <div class="column">
+                                    <!-- Post-->
+                                    <div class="post-module">
+                                        <!-- Thumbnail-->
+                                        <div class="thumbnail">
+                                            <div class="date">
+                                                <div class="day">{{ invitation.event.startsAt|date('d') }}</div>
+                                                <div class="month">{{ invitation.event.startsAt|date('M') }}</div>
+                                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
+                                        </div>
+                                        <!-- Post Content-->
+                                        <div class="post-content">
+                                            <h1 class="title">{{ invitation.event.title }}</h1>
+                                            <h2 class="sub_title">{{ invitation.event.place }}</h2>
+                                            <p class="description"><p>{{ invitation.event.description }}</p></p>
+                                            <div class="post-meta">
+                                                <p class="">created by :  <i>{{ invitation.event.createdBy }}</i></p>
+                                                {{ form(invitationForms[loop.index-1]) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!--      accepted invitation        -->
+                <div class="upcoming">
+                    <div class="alert alert-info" role="alert">Accepted Invitation</div>
+                    <div class="row">
+                        {% for invitation in acceptedInvitations %}
+                            <div class="col-md-3">
+                                <div class="column">
+                                    <!-- Post-->
+                                    <div class="post-module">
+                                        <!-- Thumbnail-->
+                                        <div class="thumbnail">
+                                            <div class="date">
+                                                <div class="day">{{ invitation.event.startsAt|date('d') }}</div>
+                                                <div class="month">{{ invitation.event.startsAt|date('M') }}</div>
+                                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
+                                        </div>
+                                        <!-- Post Content-->
+                                        <div class="post-content">
+                                            <h1 class="title">{{ invitation.event.title }}</h1>
+                                            <h2 class="sub_title">{{ invitation.event.place }}</h2>
+                                            <p class="description"><p>{{ invitation.event.description }}</p></p>
+                                            <div class="post-meta">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!--      canceled invitation        -->
+                <div class="upcoming">
+                    <div class="alert alert-info" role="alert">Canceled Invitation</div>
+                    <div class="row">
+                        {% for invitation in canceledInvitations %}
+                            <div class="col-md-3">
+                                <div class="column">
+                                    <!-- Post-->
+                                    <div class="post-module">
+                                        <!-- Thumbnail-->
+                                        <div class="thumbnail">
+                                            <div class="date">
+                                                <div class="day">{{ invitation.event.startsAt|date('d') }}</div>
+                                                <div class="month">{{ invitation.event.startsAt|date('M') }}</div>
+                                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
+                                        </div>
+                                        <!-- Post Content-->
+                                        <div class="post-content">
+                                            <h1 class="title">{{ invitation.event.title }}</h1>
+                                            <h2 class="sub_title">{{ invitation.event.place }}</h2>
+                                            <p class="description"><p>{{ invitation.event.description }}</p></p>
+                                            <div class="post-meta">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
