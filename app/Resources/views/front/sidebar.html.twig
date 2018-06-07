@@ -10,25 +10,31 @@
         </a>
       </div>
       <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li class="{{ list|default('') }}">
-            <a href="{{ path('list-event') }}">
-              <i class="now-ui-icons fa fa-calendar-o"></i>
-              <p>Events</p>
-            </a>
-          </li>
-          <li class="{{ creation|default('') }}">
-            <a href="{{ path('add_event_index') }}">
-              <i class="now-ui-icons fa fa-plus"></i>
-              <p>Add Event</p>
-            </a>
-          </li>
-          <li class="">
-            <a href="./upgrade.html">
-              <i class="now-ui-icons fa fa-user"></i>
-              <p>Profile</p>
-            </a>
-          </li>
-        </ul>
+          <ul class="nav">
+              <li class="{{ list|default('') }}">
+                <a href="{{ path('list-event') }}">
+                  <i class="now-ui-icons fa fa-calendar-o"></i>
+                  <p>Events</p>
+                </a>
+              </li>
+              <li class="{{ creation|default('') }}">
+                <a href="{{ path('add_event_index') }}">
+                  <i class="now-ui-icons fa fa-plus"></i>
+                  <p>Add Event</p>
+                </a>
+              </li>
+              <li class="{{ profile|default('') }}">
+                <a href="{{ path('client_profile_edit') }}">
+                  <i class="now-ui-icons fa fa-user"></i>
+                  <p>Profile</p>
+                </a>
+              </li>
+                <li class="{{ invitation|default('') }}">
+                    <a href="{{ path('client_invitation_index') }}">
+                        <i class="now-ui-icons  fa fa-gift"></i>
+                        <p>Event Invitation</p>
+                    </a>
+                </li>
+          </ul>
       </div>
-    </div>
+</div>

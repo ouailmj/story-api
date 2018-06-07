@@ -23,7 +23,6 @@ use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\Event\ChoosePlanType;
 use AppBundle\Form\Event\ConfirmationType;
-use AppBundle\Form\Event\editEventType;
 use AppBundle\Form\Event\EventChallengeType;
 use AppBundle\Form\Event\EventCoverType;
 use AppBundle\Form\Event\EventInformationType;
