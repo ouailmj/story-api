@@ -30,7 +30,7 @@
                                     <div class="row">
                                         <div class="email-input col-md-12">
                                             <input id="add-friend" type="email" name="listItem" placeholder="example@email.com" />
-                                            <button class="btn add-friend-btn" type="button">Add</button>
+                                            <button class="btn add-friend-btn" id="add-email-friend" type="button">Add</button>
                                         </div>
                                         <div class="list-emails col-md-12">
                                             <ol></ol>
@@ -39,7 +39,7 @@
                                     <div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h5 class="invited">Invited :</script></h5>
+                                                <h5 class="invited">Invited :</h5>
                                             </div>
                                             <div class="col-md-6">
                                                 <h5 class="Left">
@@ -71,16 +71,28 @@
             </div>
         </div>
     </div>
+    {{ dump(invitationEmails) }}
     <script>
+        var index = 0;
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
-            var list = [];
-            var email_inputs = $("input[id=appbundle_invitation_request_items]");
-            $('.btn').click(function() {
-                var toAdd = $("input[name=listItem]").val();
+            let list = [];
+             list = {{ invitationEmails|json_encode|raw }};
+            console.log(list);
+            let email_inputs = $("input[id=appbundle_invitation_request_items]");
+
+            list.forEach(function(email){
+
+                 $('ol').append('<a index="'+(index)+'" ><input value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                 email_inputs.val(email_inputs.val() + email + ';');
+                index+=1;
+             });
+
+            $('#add-email-friend').click(function() {
+                let toAdd = $("input[name=listItem]").val();
                 //Email Validation
-                var atpos = toAdd.indexOf("@");
-                var dotpos = toAdd.lastIndexOf(".")
+                let atpos = toAdd.indexOf("@");
+                let dotpos = toAdd.lastIndexOf(".")
                 if (atpos<1 || dotpos<atpos+2 || dotpos+2>=toAdd.length) {
                     $.notify({
                         title: "<strong>Error:</strong> ",
@@ -98,7 +110,7 @@
                         list.push(toAdd);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
-                        $('ol').append('<a><input value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                        $('ol').append('<a index="'+(list.length-1)+'" ><input value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
                         email_inputs.val(email_inputs.val() + toAdd + ';');
                         $("input[name=listItem]").val("");
                     }else if(jQuery.inArray(toAdd,list) === 0){
@@ -119,6 +131,7 @@
             //The following will cross out and remove the list item when clicking on the button or the list item itself
             $(document).on('click', 'a', function() {
                 var index = parseInt($(this).attr("index"));
+
                 delete list[index];
                 removeItem  = list[index];
                  list = jQuery.grep(list, function(value) {
@@ -126,13 +139,22 @@
                     });
                 email_inputs.val('');
 
+                index = 0 ;
+                $('ol').text("");
+
+                list.forEach(function(email){
+                    $('ol').append('<a index="'+(index)+'" ><input value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                    email_inputs.val(email_inputs.val() + email + ';');
+                    index+=1;
+                });
+
                 var emls = "";
                 list.forEach(function(element) {
                     emls += element+";"
                 });
                 email_inputs.val(emls);
                 $(this).remove();
-                $(".invited").text("Invited :" + list.length);
+                $(".invited").text("Invited :" + list.length)
             });
             //This clears the previous input when clicking on the input box
             $('input').focus(function() {

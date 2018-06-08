@@ -72,7 +72,7 @@ class NotificationManager
      *
      * @return InvitationRequestNotification
      */
-    public function createNotificationForInvitationRequest(InvitationRequest $invitationRequest, User $triggeredBy, $deleteOnRead=false)
+    public function createNotificationForInvitationRequest(InvitationRequest $invitationRequest, User $triggeredBy, $deleteOnRead=false, $flush = true)
     {
 
         $notification = new InvitationRequestNotification();
@@ -99,6 +99,7 @@ class NotificationManager
         $invitationRequest->setNotification($notification);
         $this->notificationSender->send($notification);
         $this->em->persist($notification);
+        if($flush)
         $this->em->flush();
 
         return $notification;

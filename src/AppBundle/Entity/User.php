@@ -121,7 +121,7 @@ class User extends BaseUser
 
     /**
      * @var InvitationRequest [] | ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user", cascade={"all"})
      */
     protected $invitationRequests;
 

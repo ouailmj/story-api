@@ -159,7 +159,7 @@ class Event
     /**
      * @var InvitationRequest[] | ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"all"})
      */
     private $invitationRequests;
 

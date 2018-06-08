@@ -18,6 +18,7 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\InvitationRequest;
 use AppBundle\Entity\Payment;
 use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
@@ -470,9 +471,23 @@ class EventController extends BaseController
                     }
                 }
             }
+            /**
+             * @var InvitationRequest $item
+             */
+            foreach ($invitationRequestManager->getInvitationRequestByEvent($event) as  $item)
+            {
+                if (false !== $key = array_search($item->getChannels()['email'], $emails))
+                {
+                    unset($emails[$key]);
+                }
+                else
+                {
+                    $invitationRequestManager->deleteInvitationRequest($item, false);
+                }
+            }
             foreach ($emails as $email) {
                 if (null !== $email && '' !== $email) {
-                    $invitationRequestManager->createInvitationRequest($email, $event, false);
+                  //  $invitationRequestManager->createInvitationRequest($email, $event, false);
                 }
             }
             $event->setCurrentStep('finish');
@@ -481,11 +496,20 @@ class EventController extends BaseController
 
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
+        $invitationEmails = [];
+        /**
+         * @var InvitationRequest $item
+         */
+        foreach ($invitationRequestManager->getInvitationRequestByEvent($event) as  $item)
+        {
+            $invitationEmails [] = $item->getChannels()['email'];
+        }
 
         return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),
             'event' => $event,
             'isPaid' => $paymentManager->isTotalPayed($event),
+            'invitationEmails' =>   $invitationEmails,
         ]);
     }
 
