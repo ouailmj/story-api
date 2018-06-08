@@ -39,14 +39,14 @@
                                     <div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h5 class="invited"></script></h5>
+                                                <h5 class="invited">Invited :</script></h5>
                                             </div>
                                             <div class="col-md-6">
                                                 <h5 class="Left">
                                                     {% if event.eventPurchase.plan.maxGuests == -1 %}
-                                                        Inllimited
+                                                        Invitations : Inllimited
                                                     {% else %}
-                                                        {{ event.eventPurchase.plan.maxGuests }}
+                                                        Invitations : {{ event.eventPurchase.plan.maxGuests }}
                                                     {% endif %}
                                                 </h5>
                                             </div>
@@ -82,17 +82,35 @@
                 var atpos = toAdd.indexOf("@");
                 var dotpos = toAdd.lastIndexOf(".")
                 if (atpos<1 || dotpos<atpos+2 || dotpos+2>=toAdd.length) {
-                    alert("Not a valid e-mail address");
+                    $.notify({
+                        title: "<strong>Error:</strong> ",
+                        message: "Not a valid e-mail address",
+                        offset: {
+                            x: 50,
+                            y: 100
+                        },
+                            type: 'warning'
+                    });
+
                     return false;
                 }else{
                     if(jQuery.inArray(toAdd,list) === -1){
                         list.push(toAdd);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
-                    $('ol').append('<a index="'+(list.length-1)+'"><input value='+toAdd+'><h5>><i class="fa fa-close" aria-hidden="true"></i></h5></a>');
-                    email_inputs.val(email_inputs.val() + toAdd + ';');
+                        $('ol').append('<a><input value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                        email_inputs.val(email_inputs.val() + toAdd + ';');
+                        $("input[name=listItem]").val("");
                     }else if(jQuery.inArray(toAdd,list) === 0){
-                        alert('Already Exist')
+                        $.notify({
+                        title: "<strong>Error:</strong> ",
+                        message: "Already Exist",
+                        offset: {
+                            x: 50,
+                            y: 100
+                        },
+                            type: 'warning'
+                    });
                     }
                     
                 }
