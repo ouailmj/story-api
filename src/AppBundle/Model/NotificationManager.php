@@ -18,6 +18,7 @@ use AppBundle\Entity\Challenge;
 use AppBundle\Entity\ChallengeNotification;
 use AppBundle\Entity\InvitationRequest;
 use AppBundle\Entity\InvitationRequestNotification;
+use AppBundle\Entity\NotificationCenter;
 use AppBundle\Entity\User;
 use AppBundle\NotificationSystem\Sender\NotificationSender;
 use Doctrine\ORM\EntityManager;
@@ -86,8 +87,16 @@ class NotificationManager
             /** @var User $receiver */
             $receiver = $this->fosUserManager->findUserByUsernameOrEmail($notification->getChannels()['email']);
             $receiver->addNotification($notification);
+            if($receiver->getNotificationCenter() === null )
+            {
+                $notificationCenter =  new NotificationCenter();
+                $notificationCenter->addNotification($notification);
+                $notificationCenter->setReceiver($receiver);
+                $receiver->setNotificationCenter($notificationCenter);
+            }
             $notification->setNotificationCenter($receiver->getNotificationCenter());
         }
+        $invitationRequest->setNotification($notification);
         $this->notificationSender->send($notification);
         $this->em->persist($notification);
         $this->em->flush();

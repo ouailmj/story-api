@@ -9,7 +9,7 @@ use Tests\_support\Pages\signup;
 
 class UserTestCest
 {
-
+/*
     public function loginAsUser(\AcceptanceTester $I) //yes
     {
         $I->wantTo("Verify the User login");
@@ -86,6 +86,6 @@ class UserTestCest
 
     }
 
-    
+    */
     
 }

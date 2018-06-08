@@ -32,8 +32,11 @@ class DefaultController extends BaseController
      */
     public function indexAction()
     {
-        if ($this->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_profile_edit');
+        }else if ($this->isGranted('ROLE_USER'))
+        {
+            return $this->redirectToRoute('list-event');
         }
 
         return $this->render('AppBundle:Default:index.html.twig', [

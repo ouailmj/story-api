@@ -50,6 +50,13 @@ class InvitationRequest
     protected $isCanceled = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isAccepted", type="boolean")
+     */
+    protected $isAccepted = false;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="response", type="string", length=255, nullable=true)
@@ -244,4 +251,21 @@ class InvitationRequest
     {
         $this->notification = $notification;
     }
+
+    /**
+     * @return bool
+     */
+    public function isAccepted(): bool
+    {
+        return $this->isAccepted;
+    }
+
+    /**
+     * @param bool $isAccepted
+     */
+    public function setIsAccepted(bool $isAccepted)
+    {
+        $this->isAccepted = $isAccepted;
+    }
+
 }
