@@ -6339,3 +6339,19 @@ h3:after {
 .meta{
   box-shadow:none !important
 }
+
+.profile-img{
+  margin: auto;
+  padding: 10px;
+  text-align: center
+}
+.profile-img img{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  display: block
+}
+
+.profile-img #upload{
+  display:none;
+}

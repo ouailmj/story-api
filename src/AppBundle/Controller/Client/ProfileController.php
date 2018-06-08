@@ -31,4 +31,15 @@ class ProfileController extends BaseController
         ]);
     }
 
+    /**
+     * @Route("change_password", name="client_profile_password")
+     */
+    public function passwordAction()
+    {
+
+        return $this->render('client/profile/change_password.html.twig', [
+
+        ]);
+    }
+
 }
