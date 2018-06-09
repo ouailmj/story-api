@@ -55,7 +55,7 @@ class ProfileController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $user = $this->getUser();
-                if($form->get('avatarIMG') !== null) {
+                if($form->get('avatarIMG')->getData() !== null) {
                     /** @var UploadedFile $uploadedImage */
                     $uploadedImage = $form->get('avatarIMG')->getData();
                     $media = $mediaManager->uploadImage($uploadedImage, $user);
