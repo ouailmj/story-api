@@ -5890,6 +5890,7 @@ select.form-control:not([size]):not([multiple]){
   box-sizing: border-box;
   float: left;
   font-family: 'Poppins', sans-serif;
+  margin: 10px;
 }
 .column .demo-title {
   margin: 0 0 15px;
