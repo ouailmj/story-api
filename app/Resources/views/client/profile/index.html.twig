@@ -39,11 +39,14 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form>
+                           {{ form_start(form) }}
                                 <div class="row">
                                     <div class="profile-img">
-                                        <img id="img-profile" src="http://placehold.it/300" alt="">
-                                        <input onchange="readURL(this);" id="upload" type="file"/>
+                                        {% if  app.user.avatar != null %}
+                                            {% set avatar =  app.user.avatar.downloadLink  %}
+                                        {% endif %}
+                                        <img id="img-profile" src=" {{asset( avatar|default('images/image.png') ) }}" alt="">
+                                        {{ form_widget(form.avatarIMG) }}
                                         <a href="" id="upload_link">Edit image profile</a>​
                                     </div>
                                 </div>
@@ -51,34 +54,40 @@
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Nom Complet</label>
-                                            <input type="text" class="form-control" placeholder="Nom Complet">
+                                            {{ form_widget(form.fullName) }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" placeholder="Username">
+                                            {{ form_widget(form.username) }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="Email">
+                                            {{ form_widget(form.email) }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Time Zone</label>
-                                            <input type="datetime-local" class="form-control" placeholder="Company">
+                                            {{ form_widget(form.timezoneId) }}
                                         </div>
                                     </div>
-                                    <div class="col-md-12 pr-1">
+                                    <div class="col-md-6 pr-1">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            {{ form_widget(form.phoneNumber) }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pr-1">
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input type="password" class="form-control" placeholder="password">
+                                            {{ form_widget(form.current_password) }}
                                         </div>
                                     </div>
                                 </div>
@@ -87,10 +96,10 @@
                                         <button class="btn btn-danger">Delete Account</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <button class="btn btn-success">Enregistrer</button>
+                                        <button type="submit" class="btn btn-success">Enregistrer</button>
                                     </div>
                                 </div>
-                            </form>
+                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
@@ -101,7 +110,7 @@
     $(function(){
         $("#upload_link").on('click', function(e){
             e.preventDefault();
-            $("#upload:hidden").trigger('click');
+            $("#app_user_profile_avatarIMG:hidden").trigger('click');
         });
     });
 

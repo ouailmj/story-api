@@ -487,7 +487,7 @@ class EventController extends BaseController
             }
             foreach ($emails as $email) {
                 if (null !== $email && '' !== $email) {
-                  //  $invitationRequestManager->createInvitationRequest($email, $event, false);
+                    $invitationRequestManager->createInvitationRequest($email, $event, false);
                 }
             }
             $event->setCurrentStep('finish');
