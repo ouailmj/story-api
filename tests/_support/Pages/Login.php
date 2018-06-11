@@ -5,6 +5,7 @@ class Login
 {
     // include url of current page
     public static $URL = '/auth/login';
+    public static $URL_Profile = '/app/profile';
 
     /**
      * Declare UI map for this page here. CSS or XPath allowed.
