@@ -139,6 +139,7 @@ class Event
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 
@@ -169,7 +170,7 @@ class Event
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_media",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      *      )
      */
     private $uploadedMedias;

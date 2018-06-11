@@ -151,8 +151,7 @@ class InvitationRequestManager
     {
         if($invitationRequest->getUser() !== null) $invitationRequest->getUser()->getInvitationRequests()->removeElement($invitationRequest);
         $invitationRequest->getEvent()->getInvitationRequests()->removeElement($invitationRequest);
-        //TODO: Resolve problem SQL
-        //$this->entityManager->remove($invitationRequest);
+        $this->entityManager->remove($invitationRequest);
         if ($flush) {
             $this->entityManager->flush();
         }

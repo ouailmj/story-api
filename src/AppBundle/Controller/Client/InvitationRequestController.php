@@ -48,9 +48,7 @@ class InvitationRequestController extends BaseController
        }
        $acceptedInvitations =  $invitationRequestManager->getInvitationRequestByStatus($this->getUser(), false, true);
        $canceledInvitations =  $invitationRequestManager->getInvitationRequestByStatus($this->getUser(), true, false);
-        dump($this->getUser()->getEventMemberShips());
-        dump($acceptedInvitations);
-        dump($canceledInvitations);
+
        return $this->render('client/invitation/index.html.twig', [
            'newInvitations' => $newInvitations,
            'invitationForms' => $invitationForms,

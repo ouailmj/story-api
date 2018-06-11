@@ -84,7 +84,8 @@ abstract class BaseNotification implements NotificationInterface
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="triggeredNotifications", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="triggeredNotifications")
+     * @ORM\JoinColumn(name="triggered_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $triggeredBy;
 
