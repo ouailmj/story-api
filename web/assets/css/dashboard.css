@@ -5947,7 +5947,6 @@ select.form-control:not([size]):not([multiple]){
 
 
 .blog-card {
-  max-width: 550px;
   width:100%;
   height: 500px;
   position: absolute;
@@ -5962,8 +5961,8 @@ select.form-control:not([size]):not([multiple]){
   box-shadow: 0px 10px 20px -9px rgba(0, 0, 0, 0.5);
   text-align: center;
   transition:all 0.4s;
-  background: url(https://unsplash.it/600/800?image=1061) center no-repeat;
-  background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat
 }
 .blog-card a{ 
 color:#fff;
@@ -5972,7 +5971,7 @@ color:#fff;
 }
 .blog-card .color-overlay {
   background: rgba(64, 84, 94,0.5);
-  width: 550px;
+  width: 100%;
   height: 500px;
   position: absolute;
   z-index: 10;
@@ -5982,7 +5981,7 @@ color:#fff;
 }
 .blog-card .gradient-overlay {  
   background-image: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.6) 21%);
-  width: 550px;
+  width: 100%;
   height: 500px;
   position: absolute;
   top: 350px;
@@ -6041,7 +6040,7 @@ h3:after {
   height: 2px;
   margin: 20px auto;
   border: 0;
-  background: #BDA26B;
+  background: #43c6ac;
   transition:all 0.2s
 }
 
@@ -6094,7 +6093,7 @@ h3:after {
   font-size:0.8em
 }
 .card-info a:hover{
-  background: #8e7c49;
+  background: #43c6ac;
   color:#fff;
 }
 .card-info a:hover span{
@@ -6135,8 +6134,7 @@ h3:after {
   margin: 0 5px 0 0;
   padding: 3px 0 15px 0px;
   display: inline-block;
-  
-  font-size:0.8em
+  font-size:1.8em
 }
 
 .licon{
@@ -6145,6 +6143,7 @@ h3:after {
    height:15px;
    display:inline-block;
    vertical-align:middle;
+   font-size: 16px;
 }
 .licon:before{
   content:"";
@@ -6312,11 +6311,11 @@ h3:after {
     width:100%
 }
 .stats svg {
-    fill: #bda26b;
+    fill: #43c6ac;
 }
 .stats svg, .loves .icon-heart {
     fill: rgba(47, 47, 49, 0) !important;
-    stroke:#ba6 !important;
+    stroke:#43c6ac !important;
     stroke-width:0.1em !important;
 }
 .loves .icon-heart {
@@ -6355,4 +6354,45 @@ h3:after {
 
 .profile-img #upload{
   display:none;
+}
+
+.invitation-msg{
+  text-align: center;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.3em;
+}
+
+.upcoming .card .card-title{
+  color: #161954;
+  font-weight: 500;
+  font-size: 1.5em;
+  font-family: 'Poppins', sans-serif;
+}
+
+.upcoming .card .card-text{
+  font-family: 'Poppins', sans-serif;
+  text-align: justify;
+}
+
+.accepted{
+  height: 20px;
+  background: rgb(30, 85, 30);
+  text-align: center;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  padding: 10px auto;
+  border-radius: 5px 5px 0 0;
+}
+
+.canceled{
+  height: 20px;
+  background: rgb(189, 32, 21);
+  text-align: center;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  padding: 10px auto;
+  border-radius: 5px 5px 0 0;
 }

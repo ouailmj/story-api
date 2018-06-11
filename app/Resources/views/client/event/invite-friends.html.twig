@@ -30,7 +30,7 @@
                                     <div class="row">
                                         <div class="email-input col-md-12">
                                             <input id="add-friend" type="email" name="listItem" placeholder="example@email.com" />
-                                            <button class="btn add-friend-btn" type="button">Add</button>
+                                            <button id="add-friend-btn" class="btn add-friend-btn" type="button">Add</button>
                                         </div>
                                         <div class="list-emails col-md-12">
                                             <ol></ol>
@@ -76,7 +76,7 @@
         $(document).ready(function() {
             var list = [];
             var email_inputs = $("input[id=appbundle_invitation_request_items]");
-            $('.btn').click(function() {
+            $('#add-friend-btn').click(function() {
                 var toAdd = $("input[name=listItem]").val();
                 //Email Validation
                 var atpos = toAdd.indexOf("@");
