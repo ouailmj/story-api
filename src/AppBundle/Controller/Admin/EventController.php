@@ -35,6 +35,11 @@ class EventController extends BaseController
      *
      * @Route("/", name="event_index")
      * @Method("GET")
+     *
+     * @param EventManager $eventManager
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function indexAction(EventManager $eventManager)
     {

@@ -1,110 +1,192 @@
-{% extends "client/event/base_event.html.twig" %}
+{% extends "client/event/base_creation_event.html.twig" %}
 {% block title %}AppBundle:Default:index{% endblock %}
-
 {% block container %}
-<div class="main">
-        <div class="progressbar-container">
-            <ul class="progress-indicator">
-            <li class="completed">
-                <span class="bubble"></span>
-                Choose plan
-            </li>
-            <li class="active">
-                <span class="bubble"></span>
-                Add Challenge
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Event information
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Event Cover
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Payment
-            </li>
-            <li>
-                <span class="bubble"></span>
-                Invite Friends
-            </li>
-        </ul>
+    <div class="main-panel">
+      <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top"></nav>
+      <!-- End Navbar -->
+        <div class="panel-header panel-header-lg">
+            <canvas id="bigDashboardChart"></canvas>
         </div>
-    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
-     {% form_theme form 'Form/Registration/fields.html.twig' %}
-        <div class="event-challenge-form animated zoomInUp">
-                <div class="challange-event">
-                    {{ form_widget(form.challenges)}}
+        <div class="content">
+            <div class="col-md-10 mr-auto ml-auto">
+                <!--      Wizard container        -->
+                <div class="wizard-container">
+                    <div class="card card-wizard active" data-color="primary" id="wizardProfile">
+                            <div class="card-header text-center" data-background-color="orange">
+                                <h5 class="card-title">
+                                    NEW EVENT
+                                </h5>
+                                {% include 'client/event/menu_creation.html.twig'  with {'challenge': 'active'} %}
+                            </div>
+
+                            <div class="card-body">
+                                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                                {% form_theme form 'Form/Registration/fields.html.twig' %}
+                                    <div class="row">
+                                        <div class="event-challenge-form animated zoomInUp">
+                                                <div class="challange-event">
+                                                    {{ form_widget(form.challenges)}}
+                                                </div>
+                                            {{ form_rest(form)}}
+                                        </div>
+                                    </div>
+                                <div class="card-footer">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
+                                </div>
+                                {{ form_end(form) }}
+                                <div class="pull-left">
+                                    <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            </div>
+                    </div>
+
                 </div>
-            {{ form_rest(form)}}
-            <div class="arrows">
-                <ul>
+            </div>
 
-                    <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}"><li class="margin-right previous"><i class="icon-arrow-left12"></i></li></a>
-                    <button type="submit"><li class="next"><i class="icon-arrow-right13"></i></li></button>
-                </ul>
+
+
         </div>
+    </div>
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <select id="propositionSelect" size="6" >
+                        {% for proposition in propositions %}
+                            <option>{{ proposition.description }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="onChooseProposition()">Choose</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
         </div>
-       {{ form_end(form) }}
-</div>
-
-        <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
-        <script type="text/javascript">
-            $('.my-challenge').collection({
-                    name_prefix: "{{ form.challenges.vars.full_name }}",
-                    add_at_the_end: true,
-                    hide_useless_buttons: true,
-                    add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add">Ajouter une challenge</a>',
-                    remove: '<a href="#" class="collection-remove btn btn-warning collection-action">Retirer</a>',
-                    allow_up: false,
-                    allow_down: false,
-                    init_with_n_elements: 0,
-                }
-            );
-
-        </script>
-        <script>
-            function getElementsFinishWithId( id ) {
-                var children = document.body.getElementsByTagName('*');
-                var elements = [], child;
-                for (var i = 0; i < children.length; i++) {
-
-                    child = children[i];
-                    if (child.id.split('_')[4] == id)
-                        elements.push(child);
-                }
-                return elements;
+    </div>
+    <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
+    <script type="text/javascript">
+        $('.my-challenge').collection({
+                name_prefix: "{{ form.challenges.vars.full_name }}",
+                add_at_the_end: true,
+                hide_useless_buttons: true,
+                add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add" id="add_challenge">Ajouter une challenge</a>',
+                remove: '<a href="#" class="collection-remove btn btn-warning collection-action">X</a>',
+                allow_up: false,
+                allow_down: false,
+                init_with_n_elements: 0,
             }
-           elements =  getElementsFinishWithId('randomDate') ;
+        );
 
-            elements.forEach((element)=>{
-                onChangeCheckbox(element)
-            });
-
-            function onChangeCheckbox(element){
-
-               let id = element.id.split('_')[3];
-                let state = false;
-                if( element.checked){
-                    state = true;
-                };
-
-                var nodes = document.getElementById('appbundle_event_challenges_'+id+'_plannedAtHour').getElementsByTagName('*');
-                for(var i = 0; i < nodes.length; i++){
-                    nodes[i].disabled = state;
-                }
+        /**
+         * get all elements by specific id
+         * @param id
+         * @returns {Array}
+         */
+        function getElementsFinishWithId( id ) {
+            var children = document.body.getElementsByTagName('*');
+            var elements = [], child;
+            for (var i = 0; i < children.length; i++) {
+                child = children[i];
+                if (child.id.split('_')[4] === id)
+                    elements.push(child);
             }
-        </script>
-    <script>
+            return elements;
+        }
+
+        elements =  getElementsFinishWithId('randomDate') ;
+        elements.forEach((element)=>{
+            onChangeCheckbox(element)
+        });
+
+        /**
+         *  action on click on the checkbox random
+         * @param element
+         */
+        function onChangeCheckbox(element){
+           let id = element.id.split('_')[3];
+            let state = false;
+            if( element.checked){
+                state = true;
+            };
+             document.getElementById('appbundle_event_challenges_'+id+'_plannedAt').disabled = state;
+
+        }
+
+        /**
+         * on click on the button proposition
+         * @param element
+         */
+        function onClickProposition(element)
+        {
+            let
+                index = element.id.split('_')[3];
+            onClickProposition.identifiantDescription = 'appbundle_event_challenges_'+index+'_description';
+            //
+
+        }
+        onClickProposition.identifiantDescription=0;
+
+        /**
+         * on choose proposition
+         */
+        function onChooseProposition() {
+            $('#'+onClickProposition.identifiantDescription).val($("#propositionSelect option:selected").text())
+        }
+
+        /**
+         * initialize the old challenge date
+         */
+        let plannedAt = null;
         {% for challenge in event.challenges  %}
-            {% set hour = challenge.plannedAt|date('H') %}
-            {% set minute = challenge.plannedAt|date('m') %}
-            {% set idHour = 'appbundle_event_challenges_'~ (loop.index-1) ~'_plannedAtHour_hour' %}
-            {% set idMinute = 'appbundle_event_challenges_'~ (loop.index-1) ~'_plannedAtHour_minute' %}
-        document.getElementById('{{ idHour }}').getElementsByTagName('option')[{{ hour }}].selected = 'selected';
-        document.getElementById('{{ idMinute }}').getElementsByTagName('option')[{{ minute }}].selected = 'selected';
+              plannedAt =moment('{{ challenge.plannedAt|date('Y-m-d H:i') }}','YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+            {% set id = '#appbundle_event_challenges_'~ (loop.index-1) ~'_plannedAt' %}
+            $('{{ id }}').datetimepicker({
+                defaultDate: plannedAt,
+                format: 'YYYY-MM-DD HH:mm',
+                sideBySide: true,
+            })
         {% endfor %}
     </script>
 
+    <script type="text/javascript">
+        $(function () {
+            startDateTimePicker()
+            $('#add_challenge').click(function(){
+                setTimeout( function (){
+                    startDateTimePicker()
+                }, 1)
+            })
+
+            function startDateTimePicker() {
+                let elements = getElementsFinishWithId('plannedAt')
+                elements.forEach((element)=>{
+                    addDatetimePicker(element)
+                });
+            }
+
+            function addDatetimePicker(e)
+            {
+                let startsAt =moment('{{ event.startsAt|date('Y-m-d H:i') }}','YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+                let endsAt =moment('{{ event.endsAt|date('Y-m -d H:i')  }}', 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
+                $(e).datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm',
+                    sideBySide: true,
+                })
+                $(e).data("DateTimePicker").minDate(startsAt)
+                $(e).data("DateTimePicker").maxDate(endsAt)
+            }
+
+        })
+    </script>
 {% endblock %}

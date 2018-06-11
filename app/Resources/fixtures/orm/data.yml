@@ -1,3 +1,7 @@
+parameters:
+    app.alice.private: private
+    app.alice.public: public
+
 AppBundle\Entity\User:
     administrator:
         username: admin
@@ -5,14 +9,6 @@ AppBundle\Entity\User:
         password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
         enabled: true
         roles: ['ROLE_SUPER_ADMIN']
-        fullName: 'admin'
-    developer:
-        username: instantuser
-        email: instantuser@instantapp.com
-        password: '\$2y\$13\$X8i.jsXKdDib97tfshryNuTSLLWnYT8tnWY/vM7sOjtDBDdo7SYuO' # f%/R4Uk#](wUvM'V
-        enabled: true
-        roles: ['ROLE_SUPER_ADMIN']
-        fullName: 'Instant User'
     user:
         username: user
         email: user__email@hotmail.fr
@@ -200,3 +196,26 @@ AppBundle\Entity\InvitationRequest:
     invitationrequest_{51..500}:
         event: '@event_*'
         user: '@user_*'
+
+AppBundle\Entity\PropositionChallenge:
+    challenge_proposition_{1..100}:
+        description: <sentence()>
+        __construct: ['@administrator']
+
+AppBundle\Entity\Category:
+    category_mariage:
+        title (unique): 'Mariage'
+        description: <sentence()>
+        privacy: <{app.alice.private}>
+    category_anniversaire:
+        title (unique): 'Anniversaire'
+        description: <sentence()>
+        privacy: <{app.alice.private}>
+    category_festival‎ :
+        title (unique): 'Festival‎ '
+        description: <sentence()>
+        privacy: <{app.alice.public}>
+    category_fete‎ :
+        title (unique): 'Fête '
+        description: <sentence()>
+        privacy: <{app.alice.public}>

@@ -33,8 +33,21 @@
 
                     <!-- Main -->
                     <li class="navigation-header"><span>Administration</span> <i class="icon-menu" title="Main pages"></i></li>
-                    <li><a href="{{ path('user_index') }}"><i class="icon-users2"></i> <span>Users</span></a></li>
-                    <li><a href="{{ path('event_index') }}"><i class="icon-calendar2"></i> <span>Events</span></a></li>
+                    <li>
+                        <a href="#" class="has-ul legitRipple"><i class="icon-users2"></i> <span>Users</span></a>
+                        <ul class="hidden-ul" style="display: none;">
+                            <li><a href="{{ path('user_index') }}" class="legitRipple">All Users</a></li>
+                            <li><a href="{{ path('user_new') }}" class="legitRipple">Add New</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="has-ul legitRipple"><i class="icon-calendar2"></i> <span>Events</span></a>
+                        <ul class="hidden-ul" style="display: none;">
+                            <li><a href="{{ path('event_index') }}" class="legitRipple">All Events</a></li>
+                            <li><a href="{{ path('category_index') }}" class="legitRipple">Category</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ path('proposition_challenge_index') }}"><i class="icon-ticket"></i> <span>Propositions Challenges</span></a></li>
                     <!-- /main -->
 
                 </ul>

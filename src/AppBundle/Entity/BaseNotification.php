@@ -84,7 +84,8 @@ abstract class BaseNotification implements NotificationInterface
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="triggeredNotifications", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="triggeredNotifications")
+     * @ORM\JoinColumn(name="triggered_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $triggeredBy;
 
@@ -216,8 +217,8 @@ abstract class BaseNotification implements NotificationInterface
 
     public function formatMessageToMail(EngineInterface $templateEngine, UrlGeneratorInterface $router)
     {
-                // TODO: change url ...
-                $url = $router->generate('fos_user_registration_register', array(),  UrlGeneratorInterface::ABSOLUTE_URL );
+
+                $url = $router->generate('client_invitation_index', array(),  UrlGeneratorInterface::ABSOLUTE_URL );
 
                 return $templateEngine->render('mail/notification/invitation_request.html.twig', [
                     'event_creator' => $this->triggeredBy->getUsername(),

@@ -16,9 +16,9 @@ class signup
 
 
 
-    public static $usernameField    = 'input#fos_user_registration_form_username';
-    public static $EmailField    = 'fos_user_registration_form[email]';
-    public static $PassField    = 'fos_user_registration_form[plainPassword]';
+    public static $usernameField    = 'input#app_user_registration_username';
+    public static $EmailField    = 'input#app_user_registration_email';
+    public static $PassField    = 'input#app_user_registration_plainPassword';
     public static $submitButton     = 'create';
 
 

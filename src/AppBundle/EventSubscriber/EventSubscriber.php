@@ -17,22 +17,34 @@ namespace AppBundle\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use AppBundle\DTO\ChoosePlan;
+use AppBundle\DTO\EventChallenge;
+use AppBundle\DTO\EventCover;
 use AppBundle\DTO\EventInformation;
+use AppBundle\DTO\InviteFriends;
+use AppBundle\DTO\Payment;
+use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Plan;
 use AppBundle\Entity\User;
 use AppBundle\Model\EventManager;
+use AppBundle\Model\InvitationRequestManager;
 use AppBundle\Model\PlanManager;
 use Carbon\Carbon;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Serializer\Serializer;
 
-class EventSubscriber implements EventSubscriberInterface
+class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterface
 {
 
+    use ContainerAwareTrait;
     /**
      * @var TokenStorage
      */
@@ -47,6 +59,10 @@ class EventSubscriber implements EventSubscriberInterface
      * @var PlanManager
      */
     private $planManager;
+    /**
+     * @var InvitationRequestManager
+     */
+    private $invitationRequestManager;
 
     /**
      * EventSubscriber constructor.
@@ -54,11 +70,13 @@ class EventSubscriber implements EventSubscriberInterface
      * @param EventManager $eventManager
      * @param PlanManager $planManager
      */
-    public function __construct(TokenStorage $tokenStorage,EventManager $eventManager, PlanManager $planManager)
+    public function __construct(TokenStorage $tokenStorage,EventManager $eventManager, PlanManager $planManager, ContainerInterface $container,InvitationRequestManager $invitationRequestManager )
     {
         $this->tokenStorage = $tokenStorage;
         $this->eventManager = $eventManager;
         $this->planManager = $planManager;
+        $this->container = $container;
+        $this->invitationRequestManager = $invitationRequestManager;
     }
 
     public static function getSubscribedEvents()
@@ -68,6 +86,10 @@ class EventSubscriber implements EventSubscriberInterface
             KernelEvents::VIEW => [
                 ['handleChoosePlanForEvent', EventPriorities::POST_VALIDATE],
                 ['handleEventInformation', EventPriorities::POST_VALIDATE],
+                ['handleEventChallenge', EventPriorities::POST_VALIDATE],
+                ['handleEventPayment', EventPriorities::POST_VALIDATE],
+                ['handleInviteFriends', EventPriorities::POST_VALIDATE],
+                ['handleEventCover', EventPriorities::POST_VALIDATE],
             ],
         ];
     }
@@ -160,6 +182,190 @@ class EventSubscriber implements EventSubscriberInterface
             // TODO: Translate
             $responseData['message'] = 'Your event has been updated successfully';
 
+        }
+
+        $event->setResponse(new JsonResponse($responseData, 200));
+    }
+
+    /**
+     * @param GetResponseForControllerResultEvent $event
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    public function handleEventChallenge(GetResponseForControllerResultEvent $event)
+    {
+        $request = $event->getRequest();
+        $responseData = [];
+        if ('api_event_challenges_post_collection' !== $request->attributes->get('_route'))
+        {
+            return;
+        }
+
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User)
+        {
+            /** @var EventChallenge $eventChallenge */
+            $eventChallenge = $event->getControllerResult();
+            $appEvent = $this->eventManager->findEventById($request->get('id'));
+
+            if($appEvent->getCreatedBy() !== $user) return;
+            foreach ($eventChallenge->challenges as $challengeArray)
+            {
+                $challenge = new Challenge();
+                $challenge->setDescription($challengeArray['description']);
+                $challenge->setPlannedAt(new \DateTime( $challengeArray['plannedAt']));
+                $challenge->setEvent($appEvent);
+                $appEvent->addChallenge($challenge);
+
+                $this->eventManager->getEntityManager()->persist($challenge);
+            }
+
+            $appEvent->setCurrentStep('event-cover');
+            $this->eventManager->getEntityManager()->flush();
+
+            $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
+            // TODO: Translate
+            $responseData['message'] = 'Your event has been updated successfully';
+
+        }
+
+        $event->setResponse(new JsonResponse($responseData, 200));
+    }
+
+    /**
+     * @param GetResponseForControllerResultEvent $event
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    public function handleEventPayment(GetResponseForControllerResultEvent $event)
+    {
+        $request = $event->getRequest();
+        $responseData = [];
+        if ('api_payments_post_collection' !== $request->attributes->get('_route'))
+        {
+            return;
+        }
+
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User)
+        {
+            /** @var Payment $paymentDTO */
+            $paymentDTO = $event->getControllerResult();
+            $appEvent = $this->eventManager->findEventById($request->get('id'));
+
+            if($appEvent->getCreatedBy() !== $user) return;
+
+            $gatewayName = 'offline';
+
+            $storage = $this->container->get('payum')->getStorage('AppBundle\Entity\Payment');
+
+            /**  @var \AppBundle\Entity\Payment $payment  */
+            $payment = $storage->create();
+            $payment->setNumber( $paymentDTO->numberCard );
+            $payment->setCurrencyCode('EUR');
+            $payment->setTotalAmount( $paymentDTO->price * 100);
+            $payment->setUser($user);
+            $payment->setEventPurchase($appEvent->getEventPurchase());
+            $payment->setClientEmail($user->getEmail());
+            $storage->update($payment);
+
+            $appEvent->getEventPurchase()->addPayment($payment);
+
+            $captureToken = $this->container->get('payum')->getTokenFactory()->createCaptureToken(
+                $gatewayName,
+                $payment,
+                'payment_done', ['id' => $appEvent->getId()]// the route to redirect after capture
+            );
+
+            $url =  $captureToken->getTargetUrl() ;
+
+            //$appEvent->setCurrentStep('invite-friends');
+            //$this->eventManager->getEntityManager()->flush();
+
+            $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
+            $responseData['$payment'] =  $url ;
+            // TODO: Translate
+            $responseData['message'] = 'Your event has been updated successfully';
+
+        }
+
+        $event->setResponse(new JsonResponse($responseData, 200));
+    }
+
+    /**
+     * @param GetResponseForControllerResultEvent $event
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function handleInviteFriends(GetResponseForControllerResultEvent $event)
+    {
+        $request = $event->getRequest();
+        $responseData = [];
+        if ('api_invite_friends_post_collection' !== $request->attributes->get('_route'))
+        {
+            return;
+        }
+
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User)
+        {
+            /** @var InviteFriends $inviteFriends */
+            $inviteFriends = $event->getControllerResult();
+            $appEvent = $this->eventManager->findEventById($request->get('id'));
+
+            if($appEvent->getCreatedBy() !== $user) return;
+            foreach ($inviteFriends->emails as $email){
+                if (null !== $email && '' !== $email) {
+                    $this->invitationRequestManager->createInvitationRequest($email, $appEvent, false);
+                }
+            }
+
+            $appEvent->setCurrentStep('finish');
+            $this->eventManager->getEntityManager()->flush();
+
+            $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
+            $responseData['$inviteFriends'] =  $inviteFriends ;
+            // TODO: Translate
+            $responseData['message'] = 'Your event has been updated successfully';
+
+        }
+
+        $event->setResponse(new JsonResponse($responseData, 200));
+    }
+
+    /**
+     * @param GetResponseForControllerResultEvent $event
+     * @throws \Doctrine\ORM\EntityNotFoundException
+     */
+    public function handleEventCover(GetResponseForControllerResultEvent $event)
+    {
+        $request = $event->getRequest();
+        $responseData = [];
+        if ('api_event_covers_post_collection' !== $request->attributes->get('_route'))
+        {
+            return;
+        }
+
+        $token = $this->tokenStorage->getToken();
+
+        if ($token && is_object($user = $token->getUser()) && $user instanceof User)
+        {
+            /** @var EventCover $eventCover */
+            $eventCover = $event->getControllerResult();
+            $appEvent = $this->eventManager->findEventById($request->get('id'));
+
+            if($appEvent->getCreatedBy() !== $user) return;
+
+
+
+
+
+            $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
+            $responseData['$inviteFriends'] =  $eventCover ;
+            // TODO: Translate
+            $responseData['message'] = 'Your event has been updated successfully';
         }
 
         $event->setResponse(new JsonResponse($responseData, 200));

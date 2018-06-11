@@ -17,31 +17,29 @@ class UserTestCest
         $I->FillField(Login::$usernameField , "user");
         $I->FillField(Login::$passwordField, "f%/R4Uk#](wUvM'V");
         $I->click(Login::$submitButton);
-        $I->seeCurrentUrlEquals('/auth/profile/edit');
+        //$I->seeCurrentUrlEquals('/app/events');
     }
 
     public function ModifierInfo(\AcceptanceTester $I)
     {
         $I->wantTo("Modifier les infos d'un utilisateur");
         $this->loginAsUser($I);
-        $I->fillField('input#fos_user_profile_form_phoneNumber', '0645879633');
-        $I->fillField('input#fos_user_profile_form_current_password', "f%/R4Uk#](wUvM'V");
-        $I->click(Profile::$btn_submit);
+        $I->amOnPage(Login::$URL_Profile);
+        $I->fillField('input#app_user_profile_phoneNumber', '0645879633');
+        $I->fillField('input#app_user_profile_phoneNumber', "f%/R4Uk#](wUvM'V");
+        $I->click(Profile::$btn_submit_client);
     }
 
 
     public function Modifier_password(\AcceptanceTester $I) // working
     {
         $I->wantTo("Modifier le mot de passe");
-        $I->amOnPage(Profile::$URL);
-        $I->FillField(Login::$usernameField  , "user_test");
-        $I->FillField(Login::$passwordField , "f%/R4Uk#](wUvM'V");
-        $I->click(Login::$submitButton);
-        $I->amOnPage(Change_Password::$URL);
-        $I->FillField(Change_Password::$CurrentPassField,"f%/R4Uk#](wUvM'V");
-        $I->FillField(Change_Password::$NewPassField,"f%/R4Uk#](wUvM'");
-        $I->FillField(Change_Password::$RepeatPassField,"f%/R4Uk#](wUvM'");
-        $I->click("form[name=\"fos_user_change_password_form\"] button[type=\"submit\"]");
+        $this->loginAsUser($I);
+        $I->amOnPage(Change_Password::$URL_CHANGE_PASS);
+        $I->FillField(Change_Password::$CurrentPassField_CLIENT,"f%/R4Uk#](wUvM'V");
+        $I->FillField(Change_Password::$NewPassField_CLIENT,"f%/R4Uk#](wUvM'");
+        $I->FillField(Change_Password::$RepeatPassField_CLEINT,"f%/R4Uk#](wUvM'");
+        $I->click("form[name=\"app_user_change_password\"] button[type=\"submit\"]");
     }
 
 
@@ -55,13 +53,13 @@ class UserTestCest
         $I->click(signup::$submitButton);
     }
 
-    public function logout_test_user(\AcceptanceTester $I)
+  /*  public function logout_test_user(\AcceptanceTester $I)
     {
         $I->wantTo('test logout user');
         $this->loginAsUser($I);
         $I->click('li:nth-child(3) > a');
         $I->seeCurrentUrlEquals('/auth/login');
-    }
+    }*/
 
     public function Reset_password(\AcceptanceTester $I)
     {
@@ -86,6 +84,5 @@ class UserTestCest
 
     }
 
-    
     
 }

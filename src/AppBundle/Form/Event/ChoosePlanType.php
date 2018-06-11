@@ -34,7 +34,9 @@ class ChoosePlanType extends AbstractType
                 'choice_label' => false,
                 'expanded' => true,
                 'multiple' => false,
-                'attr' => ['class' => 'form-check-input'],
+                'attr' => [
+                    'class' => 'form-check-input',
+                ],
             ])
         ;
     }

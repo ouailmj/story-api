@@ -68,10 +68,20 @@ class EventManager
 
     public function deleteEvent(Event $event)
     {
-
         $this->entityManager->remove($event);
+
+
+        foreach ($event->getImagesGallery() as $img)
+        $this->mediaManager->deleteMedia($img);
+
+        foreach ($event->getUploadedMedias() as $img)
+        $this->mediaManager->deleteMedia($img);
+
+        if ( $event->getVideoGallery() !== null)
+        $this->mediaManager->deleteMedia($event->getVideoGallery());
+
         $this->entityManager->flush();
-        //TODO: delete all uploaded files and delete all scheduler
+        //TODO: delete all scheduler
     }
 
     public function closeEvent(Event $event)
@@ -159,16 +169,19 @@ class EventManager
     /**
      * @param User $user
      *
-     * @return array
+     * @return Event
      */
     public function lastIncompleteEvent(User $user)
     {
         $res = $this->entityManager->getRepository(Event::class)->findBy(['createdBy' => $user->getId()], ['createdAt' => 'desc'], 1, 0);
 
+        /**
+         * @var Event $res
+         */
         $res = empty($res) ? null : $res[0];
         if (null !== $res) {
             $currentStep = $res->getCurrentStep();
-            if ('' === $currentStep) {
+            if ('' === $currentStep || $res->getClosedAt() != null) {
                 return null;
             }
         }
@@ -269,5 +282,36 @@ class EventManager
         return $this->entityManager;
     }
 
+    /**
+     * @param Event $event
+     * @param bool $flush
+     */
+    public function clearCover(Event $event, $flush = true)
+    {
+        /**
+         * delete all covers
+         */
+        foreach ($event->getImagesGallery() as $img)
+            $this->mediaManager->deleteMedia($img);
+
+        if (  $event->getVideoGallery() !== null)
+            $this->mediaManager->deleteMedia($event->getVideoGallery());
+
+        /**
+         * remove all covers from DB
+         */
+        if($event->getVideoGallery() !== null)
+        {
+            $video = $event->getVideoGallery();
+            $event->setVideoGallery(null);
+            $this->entityManager->remove( $video);
+        }
+        foreach ($event->getImagesGallery() as $img){
+            $event->removeImagesGallery($img);
+            $this->entityManager->remove($img);
+        }
+
+        if($flush) $this->entityManager->flush();
+    }
 
 }

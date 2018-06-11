@@ -38,6 +38,10 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *          "route_name"="newEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_incomplete_event"={
+ *          "route_name"="incompleteEventAPI",
+ *          "method"="GET"
+ *      },
  *     }
  * )
  */
@@ -135,6 +139,7 @@ class Event
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 
@@ -155,7 +160,7 @@ class Event
     /**
      * @var InvitationRequest[] | ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"all"})
      */
     private $invitationRequests;
 
@@ -165,7 +170,7 @@ class Event
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_media",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      *      )
      */
     private $uploadedMedias;
@@ -177,6 +182,19 @@ class Event
      * @ORM\JoinColumn(name="video_gallery_id", referencedColumnName="id")
      */
     private $videoGallery;
+
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category"  ).
+     * @ORM\ManyToMany(targetEntity="Category")
+     * @ORM\JoinTable(name="event_category",
+     *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id", unique=true)},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="category_id", referencedColumnName="id")}
+     *      )
+     */
+    private $category ;
 
     /**
      * @var Image [] | ArrayCollection
@@ -192,7 +210,7 @@ class Event
     /**
      * @var EventPurchase
      *
-     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="EventPurchase", inversedBy="event", cascade={"persist"})
      */
     private $eventPurchase;
 
@@ -556,31 +574,8 @@ class Event
         return $this->eventMemberShips;
     }
 
-    /**
-     * Add eventMemberShips.
-     *
-     * @param MemberShip $eventMemberShip
-     *
-     * @return $this
-     */
-    public function addEventMemberShips(MemberShip $eventMemberShip)
-    {
-        $this->eventMemberShips[] = $eventMemberShip;
 
-        return $this;
-    }
 
-    /**
-     * Remove eventMemberShips.
-     *
-     * @param \AppBundle\Entity\MemberShip $eventMemberShip
-     *
-     * @return bool TRUE if this collection contained the specified element, FALSE otherwise
-     */
-    public function removeEventMemberShips(MemberShip $eventMemberShip)
-    {
-        return $this->eventMemberShips->removeElement($eventMemberShip);
-    }
 
     /**
      * Add invitationRequests.
@@ -936,5 +931,36 @@ class Event
     public function removeUploadedMedia(\AppBundle\Entity\Media $uploadedMedia)
     {
         return $this->uploadedMedias->removeElement($uploadedMedia);
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isTotalPayed()
+    {
+        $sum = 0;
+        foreach ($this->eventPurchase->getPayments() as $payment)
+        {
+            $sum += $payment->getTotalAmount();
+        }
+        if($sum >= $this->eventPurchase->getPlan()->getPrice()) return true;
+        return false;
     }
 }

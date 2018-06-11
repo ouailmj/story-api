@@ -1,76 +1,118 @@
-{% extends "::base_user.html.twig" %}
+{% extends "client/event/base_list_event.html.twig" %}
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
-    <div class="main">
+<div class="main-panel">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
 
-        <!-- Upcoming Event Start -->
-        <section>
-            <h4 class="upcoming-title">Upcoming Events</h4>
-            <div class="upcoming-events">
+    </nav>
+    <!-- End Navbar -->
+    <div class="events">
+        <div class="col-md-10 mr-auto ml-auto">
+            <!--      Wizard container        -->
+            <div class="upcoming">
+                <div class="alert alert-info" role="alert">Upcoming Events</div>
+                <div class="row">
                 {% for event in upcomingEvents %}
-
-                    <div class="card-event">
-                        <div class="event-image">
-                            <img src="http://placehold.it/50/ccc" alt="">
-                        </div>
-                        <div class="event-info">
-                            <div class="event-date">
-                                <h5>{{ event.startsAt|date('D, d M Y H:m') }}</h5>
-                            </div>
-                            <div class="event-desc">
-                                <p>{{ event.description }}</p>
-                            </div>
-                            <div class="event-place">
-                                <i class="fa fa-map-marker" aria-hidden="true"></i><p>{{ event.place }}</p>
-                            </div>
-                        </div>
-                        <div class="event-settings">
-                            <div class="edit-event">
-                                <a href="{{ path('show-event-client', { 'id' : event.id }) }}"><i class="fa fa-wrench" aria-hidden="true"></i> </a>
-                            </div>
-                            <div class="pay-status">
-                                {% set paidClass = 'unpaid' %}
-                                {% if isPaidEvent[event.id] %}
-                                    {% set paidClass = 'paid' %}
-                                {% endif %}
-                                <i class="fa fa-usd {{ paidClass }}" aria-hidden="true"></i>
+                    <div class="col-md-3">
+                        <div class="column">
+                                <!-- Post-->
+                                <div class="post-module">
+                                <!-- Thumbnail-->
+                                    <div class="thumbnail">
+                                        <div class="date">
+                                        <div class="day">{{ event.startsAt|date('d') }}</div>
+                                        <div class="month">{{ event.startsAt|date('M') }}</div>
+                                        </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
+                                </div>
+                                <!-- Post Content-->
+                                <div class="post-content">
+                                    <div class="category">
+                                        {% if isPaidEvent[event.id] %}
+                                            PAID
+                                            {% else %}
+                                            UNPAID
+                                        {% endif %}
+                                    </div>
+                                    <h1 class="title">{{ event.title }}</h1>
+                                    <h2 class="sub_title">{{ event.place }}</h2>
+                                    <p class="description"><p>{{ event.description }}</p></p>
+                                    <div class="post-meta">
+                                        <span class="comments"><i class="fa fa-sliders"></i><a href="">Settings</a></span>
+                                        <span class="comments infos"><i class="fa fa-eye"></i><a href="#">More Info</a></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 {% endfor %}
-                <div class="card-event add-event">
-                    <a href="{{ path('add_event_index') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
                 </div>
             </div>
-        </section>
-        <!-- Upcoming Event End -->
-        <!-- Passed Event --->
-        <section>
-            <h4 class="passed-title">passed Events</h4>
-            <div class="passed-events">
+            
+            <div class="passed">
+                <div class="alert alert-warning" role="alert">Passed Events</div>
+                <div class="row">
                 {% for event in passedEvents %}
-
-                <div class="card-event">
-                    <div class="event-image">
-                        <img src="http://placehold.it/50/ccc" alt="">
+                    <div class="col-md-3">
+                        <div class="column">
+                                <!-- Post-->
+                                <div class="post-module">
+                                <!-- Thumbnail-->
+                                    <div class="thumbnail">
+                                        <div class="date">
+                                        <div class="day">{{ event.startsAt|date('d') }}</div>
+                                        <div class="month">{{ event.startsAt|date('M') }}</div>
+                                        </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
+                                </div>
+                                <!-- Post Content-->
+                                <div class="post-content">
+                                    <div class="category">
+                                        {% if isPaidEvent[event.id] %}
+                                            PAID
+                                            {% else %}
+                                            UNPAID
+                                        {% endif %}
+                                    </div>
+                                    <h1 class="title">{{ event.title }}</h1>
+                                    <h2 class="sub_title">{{ event.place }}</h2>
+                                    <p class="description"><p>{{ event.description }}</p></p>
+                                    <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-"></i></span><span class="comments"><i class=""></i><a href="#"></a></span></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="event-info">
-                        <div class="event-date">
-                            <h5>{{ event.startsAt|date('D, d M Y H:m') }}</h5>
-                        </div>
-                        <div class="event-desc">
-                            <p>{{ event.description }}</p>
-                        </div>
-                        <div class="event-place">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i><p>{{ event.place }}</p>
-                        </div>
-                    </div>
-                </div>
-
                 {% endfor %}
-             </div>
-        </section>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
+    <script>
+    (function() {
+
+        $(window).load(function() {
+            $('.post-module').hover(function() {
+                $(this).find('.description').stop().animate({
+                height: "toggle",
+                opacity: "toggle"
+                }, 300);
+            });
+        });
+        var button, buttonStyles, materialIcons;
+
+        materialIcons = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
+
+        buttonStyles = '<link href="https://codepen.io/andytran/pen/vLmRVp.css" rel="stylesheet">';
+
+        button = '<a href="{{ path('add_event_index') }}" class="at-button"><i class="material-icons">clear</i></a>';
+
+        document.body.innerHTML += materialIcons + buttonStyles + button;
+
+        }).call(this);
+
+        //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiPGFub255bW91cz4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQSxNQUFBLE1BQUEsRUFBQSxZQUFBLEVBQUE7O0VBQUEsYUFBQSxHQUFnQjs7RUFDaEIsWUFBQSxHQUFlOztFQUVmLE1BQUEsR0FBUzs7RUFFVCxRQUFRLENBQUMsSUFBSSxDQUFDLFNBQWQsSUFBMkIsYUFBQSxHQUFnQixZQUFoQixHQUErQjtBQUwxRCIsInNvdXJjZXNDb250ZW50IjpbIm1hdGVyaWFsSWNvbnMgPSAnPGxpbmsgaHJlZj1cImh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vaWNvbj9mYW1pbHk9TWF0ZXJpYWwrSWNvbnNcIiByZWw9XCJzdHlsZXNoZWV0XCI+J1xuYnV0dG9uU3R5bGVzID0gJzxsaW5rIGhyZWY9XCJodHRwczovL2NvZGVwZW4uaW8vYW5keXRyYW4vcGVuL3ZMbVJWcC5jc3NcIiByZWw9XCJzdHlsZXNoZWV0XCI+J1xuXG5idXR0b24gPSAnPGEgaHJlZj1cImh0dHA6Ly9hbmR5dHJhbi5tZVwiIGNsYXNzPVwiYXQtYnV0dG9uXCI+PGkgY2xhc3M9XCJtYXRlcmlhbC1pY29uc1wiPmxpbms8L2k+PC9hPidcblxuZG9jdW1lbnQuYm9keS5pbm5lckhUTUwgKz0gbWF0ZXJpYWxJY29ucyArIGJ1dHRvblN0eWxlcyArIGJ1dHRvbiJdfQ==
+        //# sourceURL=coffeescript
+    </script>
 {% endblock %}

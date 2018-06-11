@@ -39,13 +39,17 @@ class MemberShip
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="Event", inversedBy="eventMemberShips")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id", onDelete="CASCADE")
+     *
      */
     private $event;
 
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMemberShips"  )
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMemberShips" )
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="SET NULL")
+     *
      */
     private $member;
 

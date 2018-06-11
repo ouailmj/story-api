@@ -7,20 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Instan't</title>
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" sizes="16x16">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
 
-    <!-- Global stylesheets -->
+    <!--Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+
+
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('build/css/front/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/progress-wizard.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/js//plugins/ui/photoswip/photoswip.js') }}">
-    <link rel="stylesheet" href="{{ asset('assets/js//plugins/ui/photoswip/default-skin//default-skin.css') }}">
+    <link rel="stylesheet" type="text/css" media="screen" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/icons/fontawesome/styles.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/css/bootstrap-notify.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-notify@3.1.3/bootstrap-notify.js"></script>
+    
     {% block stylesheet %}{% endblock %}
 
 
@@ -28,14 +37,18 @@
 {% block body %}
  <body>
     <!-- Main navbar -->
+    <div class="wrapper ">
     {% block sidebar %}
-        {% include 'front/sidebar.html.twig' %}
     {% endblock %}
+
     {% block container %}
+
     {% endblock %}
-    {% block javascripts %}   
-  
+    </div>
+    {% block javascripts %}
+
      {% endblock %}
+
     </body>
 {% endblock %}
 
