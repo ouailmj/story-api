@@ -22,6 +22,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class InvitationRequestController
+ * @package AppBundle\Controller\Client.
+ *
+ * @Route("app/")
+ */
+
 class InvitationRequestController extends BaseController
 {
     /**

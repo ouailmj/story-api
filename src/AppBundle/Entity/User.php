@@ -103,13 +103,13 @@ class User extends BaseUser
 
     /**
      * @var MemberShip [] | ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberShip", mappedBy="member")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\MemberShip", mappedBy="member", cascade={"persist", "remove"})
      */
     protected $eventMemberShips;
 
     /**
      * @var Event[] | ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="createdBy", cascade={"persist", "remove"})
      */
     protected $createdEvents;
 
@@ -121,13 +121,13 @@ class User extends BaseUser
 
     /**
      * @var InvitationRequest [] | ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $invitationRequests;
 
     /**
      * @var Media [] | ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Media", mappedBy="createdBy")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Media", mappedBy="createdBy", cascade={"persist", "remove"})
      */
     protected $medias;
 
@@ -138,7 +138,7 @@ class User extends BaseUser
 
     /**
      * @var BaseNotification[] | ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BaseNotification", mappedBy="triggeredBy")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\BaseNotification", mappedBy="triggeredBy", cascade={"persist", "remove"})
      */
     protected $triggeredNotifications;
 

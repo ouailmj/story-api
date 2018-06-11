@@ -24,13 +24,13 @@
                             <div class="wizard-navigation">
                                 <ul class="nav nav-pills">
                                     <li class="nav-item active" style="width: 50%;">
-                                        <a class="nav-link" href="">
+                                        <a class="nav-link" href="{{ path('client_profile_edit') }}">
                                             <i class="now-ui-icons fa fa-tag"></i>
                                             Modifier Mon profile
                                         </a>
                                     </li>
                                     <li class= "nav-item" style="width: 50%;">
-                                        <a class="nav-link" href="">
+                                        <a class="nav-link" href="{{ path('client_profile_password') }}">
                                             <i class="now-ui-icons fa fa-tag"></i>
                                             Change de mot de passe
                                         </a>
@@ -101,13 +101,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <a class="btn btn-danger text-white">Delete Account</a>
-                                    </div>
-                                    <div class="col-md-6">
                                         <button type="submit" class="btn btn-success">Enregistrer</button>
                                     </div>
+                           {{ form_end(form) }}
+
+                                {{ form_start(delete_form) }}
+                                    <div class="col-md-6">
+                                        <button class="btn btn-danger" type="submit">Delete Account</button>
+                                    </div>
+                                {{ form_end(delete_form) }}
                                 </div>
-                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
