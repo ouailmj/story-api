@@ -97,7 +97,7 @@
         var index = 0;
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
-<<<<<<< HEAD
+
             let list = [];
              list = {{ invitationEmails|json_encode|raw }};
             console.log(list);
@@ -110,14 +110,8 @@
                 index+=1;
              });
 
-            $('#add-email-friend').click(function() {
-                let toAdd = $("input[name=listItem]").val();
-=======
-            var list = [];
-            var email_inputs = $("input[id=appbundle_invitation_request_items]");
             $('#add-friend-btn').click(function() {
-                var toAdd = $("input[name=listItem]").val();
->>>>>>> aebd4712296006867adfc74783f18e6de4690777
+                let toAdd = $("input[name=listItem]").val();
                 //Email Validation
                 let atpos = toAdd.indexOf("@");
                 let dotpos = toAdd.lastIndexOf(".")
@@ -138,11 +132,9 @@
                         list.push(toAdd);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
-<<<<<<< HEAD
-                        $('ol').append('<a index="'+(list.length-1)+'" ><input value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
-=======
+
                         $('ol').append('<a><input disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
->>>>>>> aebd4712296006867adfc74783f18e6de4690777
+
                         email_inputs.val(email_inputs.val() + toAdd + ';');
                         $("input[name=listItem]").val("");
                     }else if(jQuery.inArray(toAdd,list) === 0){
