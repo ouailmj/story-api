@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="email-input col-md-12">
                                             <input id="add-friend" type="email" name="listItem" placeholder="example@email.com" />
-                                            <button class="btn add-friend-btn" id="add-email-friend" type="button">Add</button>
+                                            <button id="add-friend-btn" class="btn add-friend-btn" type="button">Add</button>
                                         </div>
                                         <div class="list-emails col-md-12">
                                             <ol></ol>
@@ -97,6 +97,7 @@
         var index = 0;
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
+<<<<<<< HEAD
             let list = [];
              list = {{ invitationEmails|json_encode|raw }};
             console.log(list);
@@ -111,6 +112,12 @@
 
             $('#add-email-friend').click(function() {
                 let toAdd = $("input[name=listItem]").val();
+=======
+            var list = [];
+            var email_inputs = $("input[id=appbundle_invitation_request_items]");
+            $('#add-friend-btn').click(function() {
+                var toAdd = $("input[name=listItem]").val();
+>>>>>>> aebd4712296006867adfc74783f18e6de4690777
                 //Email Validation
                 let atpos = toAdd.indexOf("@");
                 let dotpos = toAdd.lastIndexOf(".")
@@ -131,7 +138,11 @@
                         list.push(toAdd);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
+<<<<<<< HEAD
                         $('ol').append('<a index="'+(list.length-1)+'" ><input value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+=======
+                        $('ol').append('<a><input disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+>>>>>>> aebd4712296006867adfc74783f18e6de4690777
                         email_inputs.val(email_inputs.val() + toAdd + ';');
                         $("input[name=listItem]").val("");
                     }else if(jQuery.inArray(toAdd,list) === 0){
@@ -150,7 +161,7 @@
 
             });
             //The following will cross out and remove the list item when clicking on the button or the list item itself
-            $(document).on('click', 'a', function() {
+            $(document).on('dblclick', 'a', function() {
                 var index = parseInt($(this).attr("index"));
 
                 delete list[index];

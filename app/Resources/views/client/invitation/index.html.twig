@@ -15,30 +15,21 @@
             <div class="col-md-10 mr-auto ml-auto">
                 <!--      new invitation        -->
                 <div class="upcoming">
-                    <div class="alert alert-info" role="alert">new Invitation</div>
+                    <div class="alert alert-info" role="alert">New Invitation</div>
                     <div class="row">
+                    {% if newInvitations|length == 0 %}
+                               <p class="invitation-msg">You Don't Have Any Invitation</p>
+                    {% endif %}
                         {% for invitation in newInvitations %}
                             <div class="col-md-3">
-                                <div class="column">
-                                    <!-- Post-->
-                                    <div class="post-module">
-                                        <!-- Thumbnail-->
-                                        <div class="thumbnail">
-                                            <div class="date">
-                                                <div class="day">{{ invitation.event.startsAt|date('d') }}</div>
-                                                <div class="month">{{ invitation.event.startsAt|date('M') }}</div>
-                                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
-                                        </div>
-                                        <!-- Post Content-->
-                                        <div class="post-content">
-                                            <h1 class="title">{{ invitation.event.title }}</h1>
-                                            <h2 class="sub_title">{{ invitation.event.place }}</h2>
-                                            <p class="description"><p>{{ invitation.event.description }}</p></p>
-                                            <div class="post-meta">
-                                                <p class="">created by :  <i>{{ invitation.event.createdBy }}</i></p>
-                                                {{ form(invitationForms[loop.index-1]) }}
-                                            </div>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ invitation.event.title }}</h5>
+                                        <p class="card-text">{{ invitation.event.description }}</p>
+                                        {{ form_start( invitationForms[loop.index-1]) }}
+                                            {{ form_widget(invitationForms[loop.index-1].accept) }}
+                                            {{ form_widget(invitationForms[loop.index-1].denied) }} 
+                                        {{ form_end(invitationForms[loop.index-1]) }}
                                     </div>
                                 </div>
                             </div>
@@ -50,26 +41,18 @@
                 <div class="upcoming">
                     <div class="alert alert-info" role="alert">Accepted Invitation</div>
                     <div class="row">
+                    {% if acceptedInvitations|length == 0 %}
+                               <p class="invitation-msg">You Don't Have Any Invitation</p>
+                            {% endif %}
                         {% for invitation in acceptedInvitations %}
                             <div class="col-md-3">
-                                <div class="column">
-                                    <!-- Post-->
-                                    <div class="post-module">
-                                        <!-- Thumbnail-->
-                                        <div class="thumbnail">
-                                            <div class="date">
-                                                <div class="day">{{ invitation.event.startsAt|date('d') }}</div>
-                                                <div class="month">{{ invitation.event.startsAt|date('M') }}</div>
-                                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
-                                        </div>
-                                        <!-- Post Content-->
-                                        <div class="post-content">
-                                            <h1 class="title">{{ invitation.event.title }}</h1>
-                                            <h2 class="sub_title">{{ invitation.event.place }}</h2>
-                                            <p class="description"><p>{{ invitation.event.description }}</p></p>
-                                            <div class="post-meta">
-                                            </div>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ invitation.event.title }}</h5>
+                                        <p class="card-text">{{ invitation.event.description }}</p>
+                                    </div>
+                                    <div class="accepted">
+                                        more info
                                     </div>
                                 </div>
                             </div>
@@ -81,26 +64,18 @@
                 <div class="upcoming">
                     <div class="alert alert-info" role="alert">Canceled Invitation</div>
                     <div class="row">
+                            {% if canceledInvitations|length == 0 %}
+                               <p class="invitation-msg">No Invitation is Canceled</p>
+                            {% endif %}
                         {% for invitation in canceledInvitations %}
                             <div class="col-md-3">
-                                <div class="column">
-                                    <!-- Post-->
-                                    <div class="post-module">
-                                        <!-- Thumbnail-->
-                                        <div class="thumbnail">
-                                            <div class="date">
-                                                <div class="day">{{ invitation.event.startsAt|date('d') }}</div>
-                                                <div class="month">{{ invitation.event.startsAt|date('M') }}</div>
-                                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
-                                        </div>
-                                        <!-- Post Content-->
-                                        <div class="post-content">
-                                            <h1 class="title">{{ invitation.event.title }}</h1>
-                                            <h2 class="sub_title">{{ invitation.event.place }}</h2>
-                                            <p class="description"><p>{{ invitation.event.description }}</p></p>
-                                            <div class="post-meta">
-                                            </div>
-                                        </div>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ invitation.event.title }}</h5>
+                                        <p class="card-text">{{ invitation.event.description }}</p>
+                                    </div>
+                                    <div class="cenceled">
+                                        more info
                                     </div>
                                 </div>
                             </div>
