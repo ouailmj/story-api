@@ -1,6 +1,14 @@
 {% extends "client/event/base_creation_event.html.twig" %}
 {% block title %}AppBundle:Default:index{% endblock %}
 
+    {% block facebook_partage %}
+        <!-- partage facebook -->
+        <meta property="og:url"           content="http://127.0.0.1:8000/app/event/invite-friends/121" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Your Website Title" />
+        <meta property="og:description"   content="Your description" />
+        <meta property="og:image"         content="https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/lWB96Z8sFtt.png" />
+    {% endblock %}
 {% block container %}
     <div class="main-panel">
       <!-- Navbar -->
@@ -38,10 +46,16 @@
                                     </div>
                                     <div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-4">
                                                 <h5 class="invited">Invited :</h5>
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- //TODO :  change URL to share  -->
+                                            <div class="col-md-4">
+                                                <div class="fb-share-button" data-href="{{ url('app_default_galleryexample2') }}" data-layout="button" data-size="large" data-mobile-iframe="true">
+                                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_default_galleryexample2')}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
                                                 <h5 class="Left">
                                                     {% if event.eventPurchase.plan.maxGuests == -1 %}
                                                         Invitations : Inllimited
@@ -71,6 +85,14 @@
             </div>
         </div>
     </div>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.0';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     <script>
         var index = 0;
         //add a variable called toAdd as the value of the input
