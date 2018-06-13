@@ -18,6 +18,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use AppBundle\Action\EventCoverImageAction;
 
 /**
  * Event.
@@ -42,6 +43,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *          "route_name"="incompleteEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_event_cover" = {
+ *         "method"="POST",
+ *         "path"="/event/event-cover/{id}",
+ *         "controller"=EventCoverImageAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
  *     }
  * )
  */

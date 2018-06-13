@@ -154,19 +154,20 @@ class MediaManager
 
     /**
      * @param UploadedFile $file
-     * @param User|null    $by
-     * @param bool         $andSave
-     *
-     * @throws FileNotAuthorizedException
+     * @param User|null $by
+     * @param bool $andSave
+     * @param string $type
      *
      * @return Media
+     *
+     * @throws FileNotAuthorizedException
      */
-    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
+    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true, $type = Image::class)
     {
         if ($this->isImage($file)) {
             $file = $this->uploadManager->upload($file);
 
-            return $this->createMediaFromFile($file, $by, $andSave, Image::class);
+            return $this->createMediaFromFile($file, $by, $andSave, $type);
         }
         throw new FileNotAuthorizedException();
     }
