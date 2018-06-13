@@ -225,22 +225,10 @@ class EventController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $startsAt = Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) ;
-            $endsAt = Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) ;
-
             foreach ($form->get('challenges') as $item)
             {
                 /**  @var $challenge Challenge */
                 $challenge = $item->getData();
-
-                if($item->get('randomDate')->getData()){
-                    $int= mt_rand((int) $startsAt->getTimestamp(),(int) $endsAt->getTimestamp());
-                    $string = date("Y-m-d H:i:s",$int);
-                    $plannedAt = new Carbon($string);
-                }else{
-                    $plannedAt = new Carbon($item->get('plannedAt')->getData());
-                }
-                $challenge->setPlannedAt($plannedAt);
                 $challenge->setEvent($event);
             }
 
