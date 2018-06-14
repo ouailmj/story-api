@@ -17,7 +17,7 @@ namespace AppBundle\Action;
 
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
 use AppBundle\Exception\FileNotAuthorizedException;
-use AppBundle\Form\Type\AvatarType;
+use AppBundle\Form\API\AvatarAPIType;
 use AppBundle\Model\MediaManager;
 use AppBundle\Model\UserManager;
 use Doctrine\ORM\ORMException;
@@ -51,15 +51,32 @@ class UploadAvatarAction extends BaseAction
      * @param MediaManager $mediaManager
      * @param UserManager $userManager
      * @return array
+     * @throws FileNotAuthorizedException
+     * @throws ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function __invoke(Request $request, MediaManager $mediaManager, UserManager $userManager)
     {
         $user = $this->getUser();
-       // $form = $this->factory->create(AvatarType::class, $user);
-       // $form->handleRequest($request);
-   dump($user);die;
+        $form = $this->factory->create(AvatarAPIType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var UploadedFile $uploadedImage */
+            $uploadedImage = $form->get('avatar')->getData();
+            $media = $mediaManager->uploadImage($uploadedImage, $user);
+            $userManager->updateAvatar($this->getUser(), $media, false);
+            $userManager->updateUser($user);
+
+            $responseData = [];
+            $responseData['message'] = 'Your event has been updated successfully';
+            $responseData['status'] = true;
+            return $responseData;
+
+
+        }
         // This will be handled by API Platform and returns a validation error.
-      //  throw new ValidationException($this->validator->validate($form));
+        throw new ValidationException($this->validator->validate($form));
     }
 
 }
