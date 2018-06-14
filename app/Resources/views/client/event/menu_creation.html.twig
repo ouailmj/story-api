@@ -10,14 +10,14 @@
         <li class="nav-item" style="width: 16.666667%;">
             <a class="nav-link {{ information|default('') }}" href="{{ path('add_event_event_information' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-info"></i>
-                Event Informations
+                Informations
             </a>
         </li>
         {% if event.eventPurchase.plan.planKey|default('free') != 'free' %}
         <li class="nav-item" style="width: 16.666667%;">
             <a class="nav-link {{ challenge|default('') }}" href="{{ path('add_event_event_challenge' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-gamepad"></i>
-                Add Challenges
+                Défi
             </a>
         </li>
         {% endif %}
@@ -25,7 +25,7 @@
         <li class="nav-item" style="width: 16.666667%;">
             <a class="nav-link {{ cover|default('') }}" href="{{ path('add_event_event_cover' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-picture-o"></i>
-                Event Cover
+                Cover
             </a>
         </li>
 
@@ -41,7 +41,7 @@
         <li class="nav-item" style="width: 16.666667%;">
             <a class="nav-link {{ invite|default('') }}" href="{{ path('add_event_invite_friends' , { 'id' : event.id}) }}">
                 <i class="now-ui-icons fa fa-users"></i>
-                Invite Friends
+                Invitation
             </a>
         </li>
     </ul>

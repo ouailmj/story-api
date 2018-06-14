@@ -2432,7 +2432,7 @@
   .navbar .navbar-nav .nav-item .nav-link:not(.btn):focus,
   .navbar .navbar-nav .nav-item .nav-link:not(.btn):hover,
   .navbar .navbar-nav .nav-item .nav-link:not(.btn):active {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(44, 44, 44, 0.5);
     border-radius: 0.1875rem;
     color: #FFFFFF;
   }
@@ -5405,7 +5405,7 @@ Below is the form for the confirm order table
     padding-left: 150px;
     padding-right: 150px;
     padding-top: 30px;
-    width: 996px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -5432,7 +5432,7 @@ Below is the form for the confirm order table
     text-indent: 10px;
     float: left;
 }
-
+ 
 .invite-friends-form .list-friends .add-friend-btn{
     height: 100%;
     border: none;
@@ -6219,10 +6219,6 @@ h3:after {
 }
 }
 
-
-/*  ================  */
-
-/* ignore this bit :P */
 
 .profile-header{ background:#333 url(https://images.unsplash.com/photo-1435783099294-283725c37230?dpr=1&auto=compress,format&fit=crop&w=1376&h=635&q=80&cs=tinysrgb&crop=&bg=) top center no-repeat; background-size:cover; font-size:3em;position:relative}
 .profile-header:after{

@@ -40,6 +40,7 @@ let frontJs = [
     './web/assets/js/bootstrap.min.js',
     './web/assets/js/transitions.js',
     './web/assets/js/bootstrap-datetimepicker.js',
+    './web/assets/js/plugins/notifications/sweet_alert.min.js'
 
 ];
 
