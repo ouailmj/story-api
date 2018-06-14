@@ -18,6 +18,7 @@ namespace AppBundle\Entity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Class PropositionChallenge
@@ -25,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="proposition_challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PropositionChallengeRepository")
+ * @ApiResource()
  */
 class PropositionChallenge
 {

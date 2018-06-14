@@ -20,6 +20,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Action\UploadAvatarAction;
 
 /**
  * User.
@@ -42,6 +43,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "method"="GET"
  *      },
  *     "api_sign_up"={"route_name"="signUpAPI"},
+ *     "api_avatar_upload" = {
+ *         "method"="POST",
+ *         "path"="/upload-avatar",
+ *         "controller"=UploadAvatarAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
  *     }
  *)
  */

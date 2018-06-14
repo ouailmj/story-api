@@ -102,6 +102,7 @@ class EventCoverImageAction extends BaseAction
 
             $responseData = [];
             $responseData['message'] = 'Your event has been updated successfully';
+            $responseData['status'] = true;
             return $responseData;
         }
         // This will be handled by API Platform and returns a validation error.

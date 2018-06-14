@@ -17,6 +17,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Class NotificationCenter.
@@ -24,6 +25,7 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  * @ORM\Table(name="notification_center")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationCenterRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ApiResource()
  */
 class NotificationCenter
 {
