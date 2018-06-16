@@ -104,13 +104,10 @@
                                         <button type="submit" class="btn btn-success">Enregistrer</button>
                                     </div>
                            {{ form_end(form) }}
-
-                                {{ form_start(delete_form, {'attr': {'id':'formid1'} } )  }}
-                                    {% set  confirm =  'user.delete_account'|trans %}
                                     <div class="col-md-6">
-                                        <button class="btn btn-danger" onclick="send=confirm('{{ confirm }}');if(send)document.getElementById('formid1').submit();" type="button">Delete Account</button>
+                                        <button class="btn btn-danger" id="deleteBtn" type="button">Delete Account</button>
                                     </div>
-                                {{ form_end(delete_form) }}
+
                                 </div>
                         </div>
                     </div>
@@ -118,7 +115,85 @@
             </div>
         </div>
 </div>
-<script>
+    <div id="deleteModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="Box-header">
+                <span id="close" class="close">&times;</span>
+                <h4><strong>Are you sure you want to do this?</strong></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="alert  bg-danger-800" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    This is extremely important.
+                </div>
+                <p>
+                    We will immediately delete all of your events, along with all of your medias, and purshases.
+
+                    You will no longer be billed, and your username will be available to anyone on Instan't.
+                </p>
+
+                {{ form_start(delete_form) }}
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12 pr-1">
+                        <div class="form-group">
+                            <label> Your email: </label>
+                            {{ form_widget(delete_form.email) }}
+                            {{ form_errors(delete_form.email) }}
+                        </div>
+                    </div>
+                    <div class="col-md-12 pr-1">
+                        <div class="form-group">
+                            <label>Confirm your password:</label>
+                            {{ form_widget(delete_form.password) }}
+                            {{ form_errors(delete_form.password) }}
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="form-control btn btn-default text-danger-400 " ><strong>Delete this account</strong></button>
+
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById('deleteModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("deleteBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("close");
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
     $(function(){
         $("#upload_link").on('click', function(e){
             e.preventDefault();

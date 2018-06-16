@@ -29,10 +29,13 @@ use FOS\UserBundle\FOSUserEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class ProfileController
@@ -71,7 +74,7 @@ class ProfileController extends BaseController
                 ],
             ]);
 
-        $delete_form = $this->deleteClient();
+        $delete_form = $this->deleteClientForm();
 
         $delete_form->handleRequest($request);
         $form= $form->handleRequest($request);
@@ -142,13 +145,25 @@ class ProfileController extends BaseController
      * @param UserManager $userManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, UserManager $userManager)
+    public function deleteAction(Request $request, UserManager $userManager, UserPasswordEncoderInterface $encoder)
     {
-        $form = $this->deleteClient();
+        $form = $this->deleteClientForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $userManager->deleteUser($this->getUser());
-            $this->addSuccessFlash();
+            /**
+             * @var User $user
+             */
+            $user = $this->getUser();
+            $password = $form->get('password')->getData();
+            $email = $form->get('email')->getData();
+            if($user->getEmail() === $email && $encoder->isPasswordValid($user, $password) )
+            {
+                $userManager->deleteUser($this->getUser());
+                $this->addSuccessFlash();
+            }
+
+            $this->addErrorFlash();
+
         }
 
         return $this->redirectToRoute('client_profile_edit');
@@ -157,12 +172,14 @@ class ProfileController extends BaseController
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    private function deleteClient()
+    private function deleteClientForm()
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('client_profile_delete_account'))
             ->setMethod('DELETE')
             ->getForm()
+            ->add('email', EmailType::class)
+            ->add('password', PasswordType::class)
             ;
     }
 
