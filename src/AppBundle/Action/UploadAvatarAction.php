@@ -64,8 +64,8 @@ class UploadAvatarAction extends BaseAction
 
             /** @var UploadedFile $uploadedImage */
             $uploadedImage = $form->get('avatar')->getData();
-            $media = $mediaManager->uploadImage($uploadedImage, $user);
-            $userManager->updateAvatar($this->getUser(), $media, false, $user->getAvatar());
+            $media = $mediaManager->uploadAvatar($uploadedImage, $user,false, $user->getAvatar());
+            $userManager->updateAvatar($this->getUser(), $media, false);
             $userManager->updateUser($user);
 
             $responseData = [];
