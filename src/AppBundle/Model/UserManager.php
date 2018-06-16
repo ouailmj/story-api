@@ -192,11 +192,11 @@ class UserManager
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updatePassword(User $user, $sendMail = true)
+    public function updatePassword(User $user, $sendMail = true, $flush = true)
     {
         $plainPassword = $user->getPlainPassword();
         $this->fosUserManager->updatePassword($user);
-        $this->em->flush();
+        if($flush) $this->em->flush();
         $user->setPlainPassword($plainPassword);
         if ($sendMail) {
             $this->mailer->sendPasswordUpdatedMessage($user);
