@@ -93,6 +93,7 @@ class Media implements Trashable
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 

@@ -388,15 +388,9 @@ class UserManager
     public function updateAvatar(User $user, Media $media, $flush = true)
     {
 
-        if($user->getAvatar() !== null )
+        if($user->getAvatar() === null )
         {
 
-            $this->mediaManager->deleteMedia($user->getAvatar());
-
-            $user->getAvatar()->setSrc($media->getSrc());
-            $user->getAvatar()->setDownloadLink($media->getDownloadLink());
-            $user->getAvatar()->setUploadedAt($media->getUploadedAt());
-        }else{
             $user->setAvatar($media);
         }
 

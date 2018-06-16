@@ -23,7 +23,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
- * @ApiResource()
+ *
  *
  */
 class Image extends Media

@@ -16,6 +16,7 @@ namespace AppBundle\Controller\Client;
 
 
 use AppBundle\Controller\BaseController;
+use AppBundle\Entity\User;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\Type\ChangePasswordType;
 use AppBundle\Form\Type\ProfileType;
@@ -77,12 +78,15 @@ class ProfileController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                /**
+                 * @var User $user
+                 */
                 $user = $this->getUser();
                 if($form->get('avatarIMG')->getData() !== null) {
                     /** @var UploadedFile $uploadedImage */
                     $uploadedImage = $form->get('avatarIMG')->getData();
-                    $media = $mediaManager->uploadImage($uploadedImage, $user);
-                    $user->setAvatar($media);
+                    $media = $mediaManager->uploadAvatar($uploadedImage, $user,false, $user->getAvatar());
+                    $userManager->updateAvatar($this->getUser(), $media, false);
                 }
                 $userManager->updateUser($user);
                 $this->addSuccessFlash();

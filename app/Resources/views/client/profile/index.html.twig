@@ -105,9 +105,10 @@
                                     </div>
                            {{ form_end(form) }}
 
-                                {{ form_start(delete_form) }}
+                                {{ form_start(delete_form, {'attr': {'id':'formid1'} } )  }}
+                                    {% set  confirm =  'user.delete_account'|trans %}
                                     <div class="col-md-6">
-                                        <button class="btn btn-danger" type="submit">Delete Account</button>
+                                        <button class="btn btn-danger" onclick="send=confirm('{{ confirm }}');if(send)document.getElementById('formid1').submit();" type="button">Delete Account</button>
                                     </div>
                                 {{ form_end(delete_form) }}
                                 </div>
