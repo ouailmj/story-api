@@ -44,7 +44,7 @@ class ListEventJoinedAction extends BaseAction
          */
         $user = $this->getUser();
 
-        $eventJoined = $user->getCreatedEvents();
+        $eventJoined = new ArrayCollection();//$user->getCreatedEvents();
         /**
          * @var $eventMemberShip MemberShip
          */

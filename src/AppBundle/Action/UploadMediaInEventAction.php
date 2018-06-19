@@ -78,6 +78,8 @@ class UploadMediaInEventAction extends BaseAction
 
             $this->getDoctrine()->getManager()->flush();
 
+            //TODO: Call service websocket to send image in sockets
+
             $responseData = [];
             $responseData['message'] = 'Your image has been uploaded successfully';
             $responseData['status'] = true;
