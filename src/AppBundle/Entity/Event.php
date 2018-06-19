@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use AppBundle\Action\EventCoverImageAction;
+use AppBundle\Action\UploadMediaInEventAction;
 
 /**
  * Event.
@@ -47,6 +48,12 @@ use AppBundle\Action\EventCoverImageAction;
  *         "method"="POST",
  *         "path"="/event/event-cover/{id}",
  *         "controller"=EventCoverImageAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
+ *     "api_event_cover" = {
+ *         "method"="POST",
+ *         "path"="/event/upload-media/{id}",
+ *         "controller"=UploadMediaInEventAction::class,
  *         "defaults"={"_api_receive"=false},
  *     },
  *     "api_event_joined" = {

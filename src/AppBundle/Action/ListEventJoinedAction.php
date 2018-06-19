@@ -22,7 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ListEventJoined extends BaseAction
+class ListEventJoinedAction extends BaseAction
 {
     /**
      * @Route(
