@@ -15,12 +15,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Class InvitationRequestNotification.
  *
  * @ORM\Table(name="invitation_request_notification")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\InvitationRequestNotificationRepository")
+ * @ApiResource()
  */
 class InvitationRequestNotification extends BaseNotification
 {

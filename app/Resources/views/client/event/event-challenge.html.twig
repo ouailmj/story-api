@@ -34,53 +34,49 @@
                                 <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
+
                                 </div>
                                 {{ form_end(form) }}
                                 <div class="pull-left">
                                     <a href="{{ path('add_event_event_information' , { 'id' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                                 </div>
                                 <div class="clearfix"></div>
-                            </div>
+                                </div>
                             </div>
                     </div>
-
                 </div>
             </div>
-
-
-
         </div>
     </div>
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+    !-- Modal -->
+        <div id="myModal" class="modal">
 
-            <!-- Modal content-->
+            <!-- Modal content -->
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <select id="propositionSelect" size="6" >
-                        {% for proposition in propositions %}
-                            <option>{{ proposition.description }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                <span class="close">&times;</span>
+                <p>choisir une proposition :</p>
+                <select id="propositionSelect" size="10" >
+                    {% for proposition in propositions %}
+                        <option>{{ proposition.description }}</option>
+                    {% endfor %}
+                </select>
+
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="onChooseProposition()">Choose</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="form-control btn btn-primary" onclick="onChooseProposition()">Choose</button>
                 </div>
             </div>
+
+
         </div>
-    </div>
+    <!-- Modal -->
+
     <script src="{{ asset('assets/js/plugins/symfony_collectionjs/jquery.collection.js') }}"></script>
     <script type="text/javascript">
         $('.my-challenge').collection({
                 name_prefix: "{{ form.challenges.vars.full_name }}",
                 add_at_the_end: true,
                 hide_useless_buttons: true,
-                add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add" id="add_challenge">Ajouter une challenge</a>',
+                add: '<a href="#" class="collection-action btn btn-info btn-small collection-rescue-add" id="add_challenge">Ajouter un défi</a>',
                 remove: '<a href="#" class="collection-remove btn btn-warning collection-action">X</a>',
                 allow_up: false,
                 allow_down: false,
@@ -132,6 +128,7 @@
             let
                 index = element.id.split('_')[3];
             onClickProposition.identifiantDescription = 'appbundle_event_challenges_'+index+'_description';
+             document.getElementById('myModal').style.display = "block";
             //
 
         }
@@ -142,51 +139,36 @@
          */
         function onChooseProposition() {
             $('#'+onClickProposition.identifiantDescription).val($("#propositionSelect option:selected").text())
+             document.getElementById('myModal').style.display = "none";
         }
-
-        /**
-         * initialize the old challenge date
-         */
-        let plannedAt = null;
-        {% for challenge in event.challenges  %}
-              plannedAt =moment('{{ challenge.plannedAt|date('Y-m-d H:i') }}','YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
-            {% set id = '#appbundle_event_challenges_'~ (loop.index-1) ~'_plannedAt' %}
-            $('{{ id }}').datetimepicker({
-                defaultDate: plannedAt,
-                format: 'YYYY-MM-DD HH:mm',
-                sideBySide: true,
-            })
-        {% endfor %}
     </script>
 
-    <script type="text/javascript">
-        $(function () {
-            startDateTimePicker()
-            $('#add_challenge').click(function(){
-                setTimeout( function (){
-                    startDateTimePicker()
-                }, 1)
-            })
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
 
-            function startDateTimePicker() {
-                let elements = getElementsFinishWithId('plannedAt')
-                elements.forEach((element)=>{
-                    addDatetimePicker(element)
-                });
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function() {
+                modal.style.display = "block";
             }
 
-            function addDatetimePicker(e)
-            {
-                let startsAt =moment('{{ event.startsAt|date('Y-m-d H:i') }}','YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
-                let endsAt =moment('{{ event.endsAt|date('Y-m -d H:i')  }}', 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')
-                $(e).datetimepicker({
-                    format: 'YYYY-MM-DD HH:mm',
-                    sideBySide: true,
-                })
-                $(e).data("DateTimePicker").minDate(startsAt)
-                $(e).data("DateTimePicker").maxDate(endsAt)
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
             }
 
-        })
-    </script>
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+
 {% endblock %}

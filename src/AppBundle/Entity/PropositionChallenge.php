@@ -18,6 +18,7 @@ namespace AppBundle\Entity;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Class PropositionChallenge
@@ -25,6 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="proposition_challenge")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PropositionChallengeRepository")
+ * @ApiResource()
  */
 class PropositionChallenge
 {
@@ -50,7 +52,7 @@ class PropositionChallenge
      * @var User
      *
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 

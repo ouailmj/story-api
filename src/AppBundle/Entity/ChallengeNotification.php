@@ -15,6 +15,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Class ChallengeNotification.
@@ -22,6 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="challenge_notification")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ChallengeNotificationRepository")
+ * @ApiResource()
  */
 class ChallengeNotification extends BaseNotification
 {

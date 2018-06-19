@@ -111,17 +111,21 @@ class UserController extends BaseController
     public function editAction(Request $request, UserManager $userManager, User $user)
     {
         $deleteForm = $this->createDeleteForm($user);
-        $editForm = $this->createForm(UserType::class, $user);
+        $editForm = $this->createForm(UserType::class, $user, ['data_role'=>$user->getRoles()[0]]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+
             if (!empty($plainPassword = $editForm->get('new_password')->getData())) {
                 $user->setPlainPassword($plainPassword);
-                $userManager->updatePassword($user);
-                $this->addSuccessFlash();
+                $userManager->updatePassword($user, true, false);
             }
-
+            if (!empty($role = $editForm->get('role')->getData())) {
+                $user->setRoles([]);
+                $user->addRole($role);
+            }
+            $this->getDoctrine()->getManager()->flush();
+            $this->addSuccessFlash();
             return $this->redirectToRoute('user_edit', ['id' => $user->getId()]);
         }
 

@@ -11,21 +11,18 @@
         <div class="events">
             <div class="col-md-10 mr-auto ml-auto">
                 <div class="row">
-                    <div class="blog-card spring-fever">
+                    <div style="background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg)" class="blog-card spring-fever">
                         <div class="title-content">
-                            <h3><a href="#">10 inspiring photos</a></h3>
-                            <div class="intro"> <a href="#">Inspiration</a> </div>
+                            <h3><a href="#">{{ event.title }}</a></h3>
+                            <div class="intro"> <a href="#">{{ event.place }}</a> </div>
                         </div>
                         <div class="card-info">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim... 
-                            <a href="#">Read Article<span class="licon icon-arr icon-black"></span></a>
+                            {{ event.description }}
+                            <a href="{{ path('add_event_choose_plan',{'event': event.id}) }}">Edit Event</a>
                         </div>
                         <div class="utility-info">
                             <ul class="utility-list">
-                            <li><span class="licon icon-like"></span><a href="#">2</a></li>
-                            <li><span class="licon icon-com"></span><a href="#">12</a></li>
-                            <li><span class="licon icon-dat"></span>03 jun 2017</li>
-                            <li><span class="licon icon-tag"></span><a href="#">Photos</a>, <a href="#">Nice</a></li>
+                            <li></span>{{ event.startsAt|date("F j, Y, g:i a") }}</li>
                             </ul>
                         </div>
                         <div class="gradient-overlay"></div>
@@ -35,4 +32,5 @@
             </div>
         </div>
     </div>
+    
 {% endblock %}

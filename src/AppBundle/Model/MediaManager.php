@@ -71,17 +71,19 @@ class MediaManager
     /**
      * Creates a media from a Gaufrette file.
      *
-     * @param File   $file
-     * @param User   $by
-     * @param bool   $andSave
+     * @param File $file
+     * @param User $by
+     * @param bool $andSave
      * @param string $type
+     * @param null $media
      *
-     * @return Media
+     * @return Media|null
      */
-    public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class)
+    public function createMediaFromFile(File $file, User $by, $andSave = true, $type = Media::class, $media = null)
     {
         /** @var Media $media * */
-        $media = new $type();
+        if($media === null)  $media = new $type();
+
         $media->setSrc($file->getKey());
         $media->setDownloadLink($this->requestStack->getCurrentRequest()->getUriForPath('/uploads/'.$file->getKey()));
         $media->setUploadedAt(new \DateTime());
@@ -154,19 +156,20 @@ class MediaManager
 
     /**
      * @param UploadedFile $file
-     * @param User|null    $by
-     * @param bool         $andSave
-     *
-     * @throws FileNotAuthorizedException
+     * @param User|null $by
+     * @param bool $andSave
+     * @param string $type
      *
      * @return Media
+     *
+     * @throws FileNotAuthorizedException
      */
-    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true)
+    public function uploadImage(UploadedFile $file, User $by = null, $andSave = true, $type = Image::class)
     {
         if ($this->isImage($file)) {
             $file = $this->uploadManager->upload($file);
 
-            return $this->createMediaFromFile($file, $by, $andSave, Image::class);
+            return $this->createMediaFromFile($file, $by, $andSave, $type);
         }
         throw new FileNotAuthorizedException();
     }
@@ -212,5 +215,25 @@ class MediaManager
         $type = explode('/',$mimeType)[0];
         if( 'video' === $type ) return true;
         return false;
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @param User|null $by
+     * @param bool $andSave
+     * @param Media|null $media
+     *
+     * @return Media
+     *
+     * @throws FileNotAuthorizedException
+     */
+    public function uploadAvatar(UploadedFile $file, User $by = null, $andSave = true, $media = null)
+    {
+        if ($this->isImage($file)) {
+            $file = $this->uploadManager->upload($file);
+
+            return $this->createMediaFromFile($file, $by, $andSave, Image::class, $media);
+        }
+        throw new FileNotAuthorizedException();
     }
 }

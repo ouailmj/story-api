@@ -156,8 +156,8 @@ class ProfileController extends BaseController
             try {
                 /** @var UploadedFile $uploadedImage */
                 $uploadedImage = $form->get('avatarIMG')->getData();
-                $media = $mediaManager->uploadImage($uploadedImage, $user);
-                $user->setAvatar($media);
+                $media = $mediaManager->uploadAvatar($uploadedImage, $user,false, $user->getAvatar());
+                $userManager->updateAvatar($this->getUser(), $media, false);
                 $userManager->updateUser($user);
                 $this->addSuccessFlash();
 

@@ -12,15 +12,16 @@
  *
  */
 
-namespace AppBundle\Form\Type;
+namespace AppBundle\Form\API;
 
+use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AvatarType extends AbstractType
+class AvatarAPIType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -28,12 +29,12 @@ class AvatarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('avatarIMG', FileType::class, [
-                'label' => 'user.fields.avatar',
-                'required' => false,
+            ->add('avatar', FileType::class, [
+
+                'required' => true,
                 'mapped' => false,
-                'attr' => [
-                    'class' => 'file-input',
+                'constraints' => [
+                    new NotBlank(),
                 ],
             ])
             ;
@@ -45,7 +46,8 @@ class AvatarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\User',
+            'data_class' => User::class,
+            'csrf_protection' => false,
         ]);
     }
 
@@ -54,6 +56,6 @@ class AvatarType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_user';
+        return '';
     }
 }
