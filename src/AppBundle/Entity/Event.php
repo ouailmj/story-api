@@ -49,6 +49,10 @@ use AppBundle\Action\EventCoverImageAction;
  *         "controller"=EventCoverImageAction::class,
  *         "defaults"={"_api_receive"=false},
  *     },
+ *     "api_event_joined" = {
+ *         "method"="GET",
+ *          "route_name"="eventJoinedAPI",
+ *     },
  *     }
  * )
  */

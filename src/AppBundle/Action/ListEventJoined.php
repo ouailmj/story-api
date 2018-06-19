@@ -1,0 +1,59 @@
+<?php
+
+/*
+ * This file is part of the Instan't App project.
+ *
+ * (c) Instan't App <contact@instant-app.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * Developed by MIT <contact@mit-agency.com>
+ *
+ */
+
+namespace AppBundle\Action;
+
+use AppBundle\Entity\Event;
+use AppBundle\Entity\MemberShip;
+use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Routing\Annotation\Route;
+
+class ListEventJoined extends BaseAction
+{
+    /**
+     * @Route(
+     *     name="eventJoinedAPI",
+     *     path="/event-joined",
+     *     defaults={
+     *          "_api_resource_class"=Event::class,
+     *          "_api_collection_operation_name"="api_event_joined"
+     *     },
+     *
+     * )
+     * @Method({"GET"})
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function __invoke()
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        $eventJoined = $user->getCreatedEvents();
+        /**
+         * @var $eventMemberShip MemberShip
+         */
+       foreach ( $user->getEventMemberShips() as $eventMemberShip)
+       {
+           $eventJoined->add($eventMemberShip->getEvent());
+       }
+
+       return $eventJoined;
+    }
+
+}
