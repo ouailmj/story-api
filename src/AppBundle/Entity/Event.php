@@ -183,9 +183,9 @@ class Event
     private $invitationRequests;
 
     /**
-     * @var Media [] | ArrayCollection
+     * @var Image [] | ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_media",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
@@ -634,11 +634,11 @@ class Event
     /**
      * Add uploadedMedias.
      *
-     * @param Media $media
+     * @param Image $media
      *
      * @return $this
      */
-    public function addUploadedMedias(Media $media)
+    public function addUploadedMedias(Image $media)
     {
         $this->uploadedMedias[] = $media;
 
@@ -648,11 +648,11 @@ class Event
     /**
      * Remove uploadedMedias.
      *
-     * @param \AppBundle\Entity\Media $media
+     * @param \AppBundle\Entity\Image $media
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
-    public function removeUploadedMedias(Media $media)
+    public function removeUploadedMedias(Image $media)
     {
         return $this->uploadedMedias->removeElement($media);
     }
@@ -660,7 +660,7 @@ class Event
     /**
      * Get uploadedMedias.
      *
-     * @return Media[]|ArrayCollection
+     * @return Image[]|ArrayCollection
      */
     public function getUploadedMedias()
     {

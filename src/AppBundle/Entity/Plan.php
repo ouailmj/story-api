@@ -32,12 +32,8 @@ class Plan
     const LUXURY_PLAN_KEY = 'luxury';
     const PREMIUM_PLAN_KEY = 'premium';
 
-    public static $supportedPlanKeys = [
-        self::FREE_PLAN_KEY => self::FREE_PLAN_KEY,
-        self::STARTER_PLAN_KEY => self::STARTER_PLAN_KEY,
-        self::LUXURY_PLAN_KEY => self::LUXURY_PLAN_KEY,
-        self::PREMIUM_PLAN_KEY => self::PREMIUM_PLAN_KEY,
-    ];
+
+
 
     /**
      * @var int
@@ -474,5 +470,20 @@ class Plan
     public function removeEventPurchase(\AppBundle\Entity\EventPurchase $eventPurchase)
     {
         return $this->eventPurchases->removeElement($eventPurchase);
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function  supportedPlanKeys() {
+        return
+            [
+                self::FREE_PLAN_KEY => self::FREE_PLAN_KEY,
+                self::STARTER_PLAN_KEY => self::STARTER_PLAN_KEY,
+                self::LUXURY_PLAN_KEY => self::LUXURY_PLAN_KEY,
+                self::PREMIUM_PLAN_KEY => self::PREMIUM_PLAN_KEY,
+            ];
+
     }
 }
