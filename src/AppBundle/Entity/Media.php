@@ -17,7 +17,6 @@ namespace AppBundle\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use AppBundle\Model\Trashable;
-use AppBundle\Controller\CreateMediaObjectAction;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
