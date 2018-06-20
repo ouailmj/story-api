@@ -33,7 +33,7 @@ class PlanRepository extends BaseRepository
      */
     private function findOneByKey($key)
     {
-        if (in_array($key, Plan::$supportedPlanKeys, true)) {
+        if (in_array($key, Plan::supportedPlanKeys(), true)) {
             return $this->findOneBy(['planKey' => $key]);
         }
 
