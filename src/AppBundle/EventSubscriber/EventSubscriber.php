@@ -22,6 +22,7 @@ use AppBundle\DTO\EventCover;
 use AppBundle\DTO\EventInformation;
 use AppBundle\DTO\InviteFriends;
 use AppBundle\DTO\Payment;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Plan;
 use AppBundle\Entity\User;
@@ -168,6 +169,7 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
             $appEvent->setPlace($eventInformation->place);
             $appEvent->setExpiresAt(Carbon::parse( $appEvent->getEndsAt()->format('Y-m-d H:m'))->addRealSeconds($appEvent->getEventPurchase()->getPlan()->getMaxAlbumLifeTime()));
 
+            $appEvent->setCategory($this->eventManager->getEntityManager()->getRepository(Category::class)->find($eventInformation->idCat));
             if($appEvent->getEventPurchase()->getPlan()->getEnableChallenges())
             {
                 $appEvent->setCurrentStep('event-challenge');
