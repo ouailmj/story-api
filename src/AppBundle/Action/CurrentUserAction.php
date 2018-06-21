@@ -34,7 +34,7 @@ class CurrentUserAction extends BaseAction
      * @Method({"GET"})
      * @Security("has_role('ROLE_USER')")
      */
-    public function __invoke(): User
+    public function __invoke()
     {
         return $this->getUser();
     }

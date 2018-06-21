@@ -15,6 +15,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * Image.
@@ -22,6 +23,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ImageRepository")
+ * @ApiResource()
  *
  */
 class Image extends Media

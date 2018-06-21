@@ -14,8 +14,10 @@
 
 namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use AppBundle\Model\Trashable;
+use AppBundle\Controller\CreateMediaObjectAction;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,7 +34,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  *
  * @ORM\HasLifecycleCallbacks()
- * @ApiResource()
+ *
  */
 class Media implements Trashable
 {
@@ -339,7 +341,7 @@ class Media implements Trashable
             $tz = ($this->getCreatedBy() instanceof User)
                 ? $this->getCreatedBy()->getTimeZoneInstance()
                 : new \DateTimeZone(date_default_timezone_get());
-            $this->uploadedAt = new \DateTime($tz);
+            $this->uploadedAt = new \DateTime('now' , $tz);
         }
     }
 }

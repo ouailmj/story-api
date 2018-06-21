@@ -21,6 +21,7 @@ class Profile
     public static $emailField = "input#fos_user_profile_form_email";
     public static $PhoneNumberField = "input#fos_user_profile_form_phoneNumber";
     public static $btn_submit = "form[name=\"fos_user_profile_form\"] button[type=\"submit\"]";
+    public static $btn_submit_client = "form[name=\"app_user_profile\"] button[type=\"submit\"]";
 
     //pour modifier un user
     public static $username = "user";

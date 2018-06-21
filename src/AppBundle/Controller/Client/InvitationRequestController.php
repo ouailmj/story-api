@@ -22,6 +22,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class InvitationRequestController
+ * @package AppBundle\Controller\Client.
+ *
+ * @Route("app/")
+ */
+
 class InvitationRequestController extends BaseController
 {
     /**
@@ -41,7 +48,7 @@ class InvitationRequestController extends BaseController
        }
        $acceptedInvitations =  $invitationRequestManager->getInvitationRequestByStatus($this->getUser(), false, true);
        $canceledInvitations =  $invitationRequestManager->getInvitationRequestByStatus($this->getUser(), true, false);
-       
+
        return $this->render('client/invitation/index.html.twig', [
            'newInvitations' => $newInvitations,
            'invitationForms' => $invitationForms,

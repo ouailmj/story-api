@@ -89,7 +89,6 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
                 ['handleEventChallenge', EventPriorities::POST_VALIDATE],
                 ['handleEventPayment', EventPriorities::POST_VALIDATE],
                 ['handleInviteFriends', EventPriorities::POST_VALIDATE],
-                ['handleEventCover', EventPriorities::POST_VALIDATE],
             ],
         ];
     }
@@ -330,42 +329,6 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
             // TODO: Translate
             $responseData['message'] = 'Your event has been updated successfully';
 
-        }
-
-        $event->setResponse(new JsonResponse($responseData, 200));
-    }
-
-    /**
-     * @param GetResponseForControllerResultEvent $event
-     * @throws \Doctrine\ORM\EntityNotFoundException
-     */
-    public function handleEventCover(GetResponseForControllerResultEvent $event)
-    {
-        $request = $event->getRequest();
-        $responseData = [];
-        if ('api_event_covers_post_collection' !== $request->attributes->get('_route'))
-        {
-            return;
-        }
-
-        $token = $this->tokenStorage->getToken();
-
-        if ($token && is_object($user = $token->getUser()) && $user instanceof User)
-        {
-            /** @var EventCover $eventCover */
-            $eventCover = $event->getControllerResult();
-            $appEvent = $this->eventManager->findEventById($request->get('id'));
-
-            if($appEvent->getCreatedBy() !== $user) return;
-
-
-
-
-
-            $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
-            $responseData['$inviteFriends'] =  $eventCover ;
-            // TODO: Translate
-            $responseData['message'] = 'Your event has been updated successfully';
         }
 
         $event->setResponse(new JsonResponse($responseData, 200));

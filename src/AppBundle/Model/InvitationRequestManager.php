@@ -75,7 +75,7 @@ class InvitationRequestManager
             $user->addInvitationRequest($invitationRequest);
         }
 
-        $this->notificationManager->createNotificationForInvitationRequest($invitationRequest, $event->getCreatedBy());
+        $this->notificationManager->createNotificationForInvitationRequest($invitationRequest, $event->getCreatedBy(), false, false);
 
         $this->entityManager->persist($invitationRequest);
         if ($flush) {
@@ -85,6 +85,12 @@ class InvitationRequestManager
         return $invitationRequest;
     }
 
+    /**
+     * @param User $user
+     * @param bool $isCanceled
+     * @param bool $isAccepted
+     * @return array
+     */
     public function getInvitationRequestByStatus(User $user, $isCanceled = false , $isAccepted = false)
     {
         return  $this->entityManager->getRepository('AppBundle:InvitationRequest')->findBy([
@@ -94,6 +100,11 @@ class InvitationRequestManager
         ]);
     }
 
+    /**
+     * @param User $user
+     * @param InvitationRequest $invitationRequest
+     * @param bool $flush
+     */
     public function acceptInvitation(User $user, InvitationRequest $invitationRequest, $flush = true)
     {
         $invitationRequest->setIsAccepted(true);
@@ -108,9 +119,39 @@ class InvitationRequestManager
             $this->entityManager->flush();
         }
     }
+
+    /**
+     * @param InvitationRequest $invitationRequest
+     * @param bool $flush
+     */
     public function cancelInvitation(InvitationRequest $invitationRequest, $flush = true)
     {
         $invitationRequest->setIsCanceled(true);
+        if ($flush) {
+            $this->entityManager->flush();
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @return array
+     */
+    public function getInvitationRequestByEvent(Event $event)
+    {
+        return  $this->entityManager->getRepository('AppBundle:InvitationRequest')->findBy([
+            'event' => $event,
+        ]);
+    }
+
+    /**
+     * @param InvitationRequest $invitationRequest
+     * @param bool $flush
+     */
+    public function deleteInvitationRequest(InvitationRequest $invitationRequest, $flush = true)
+    {
+        if($invitationRequest->getUser() !== null) $invitationRequest->getUser()->getInvitationRequests()->removeElement($invitationRequest);
+        $invitationRequest->getEvent()->getInvitationRequests()->removeElement($invitationRequest);
+        $this->entityManager->remove($invitationRequest);
         if ($flush) {
             $this->entityManager->flush();
         }

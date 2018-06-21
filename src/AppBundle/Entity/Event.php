@@ -18,6 +18,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use AppBundle\Action\EventCoverImageAction;
 
 /**
  * Event.
@@ -42,6 +43,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  *          "route_name"="incompleteEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_event_cover" = {
+ *         "method"="POST",
+ *         "path"="/event/event-cover/{id}",
+ *         "controller"=EventCoverImageAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
  *     }
  * )
  */
@@ -139,6 +146,7 @@ class Event
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="createdEvents")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 
@@ -159,7 +167,7 @@ class Event
     /**
      * @var InvitationRequest[] | ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\InvitationRequest", mappedBy="event", cascade={"all"})
      */
     private $invitationRequests;
 
@@ -169,7 +177,7 @@ class Event
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_media",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
      *      )
      */
     private $uploadedMedias;

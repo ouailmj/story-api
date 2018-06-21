@@ -18,6 +18,7 @@ use AppBundle\Controller\BaseController;
 use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Image;
+use AppBundle\Entity\InvitationRequest;
 use AppBundle\Entity\Payment;
 use AppBundle\Entity\Video;
 use AppBundle\Exception\FileNotAuthorizedException;
@@ -39,7 +40,6 @@ use Doctrine\ORM\ORMException;
 use Payum\Core\Request\GetHumanStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -50,7 +50,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * User controller.
  *
- * @Security("has_role('ROLE_USER')")
+ * @Route("app/")
  */
 class EventController extends BaseController
 {
@@ -225,22 +225,10 @@ class EventController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $startsAt = Carbon::parse( $event->getStartsAt()->format('Y-m-d H:m')) ;
-            $endsAt = Carbon::parse( $event->getEndsAt()->format('Y-m-d H:m')) ;
-
             foreach ($form->get('challenges') as $item)
             {
                 /**  @var $challenge Challenge */
                 $challenge = $item->getData();
-
-                if($item->get('randomDate')->getData()){
-                    $int= mt_rand((int) $startsAt->getTimestamp(),(int) $endsAt->getTimestamp());
-                    $string = date("Y-m-d H:i:s",$int);
-                    $plannedAt = new Carbon($string);
-                }else{
-                    $plannedAt = new Carbon($item->get('plannedAt')->getData());
-                }
-                $challenge->setPlannedAt($plannedAt);
                 $challenge->setEvent($event);
             }
 
@@ -470,6 +458,20 @@ class EventController extends BaseController
                     }
                 }
             }
+            /**
+             * @var InvitationRequest $item
+             */
+            foreach ($invitationRequestManager->getInvitationRequestByEvent($event) as  $item)
+            {
+                if (false !== $key = array_search($item->getChannels()['email'], $emails))
+                {
+                    unset($emails[$key]);
+                }
+                else
+                {
+                    $invitationRequestManager->deleteInvitationRequest($item, false);
+                }
+            }
             foreach ($emails as $email) {
                 if (null !== $email && '' !== $email) {
                     $invitationRequestManager->createInvitationRequest($email, $event, false);
@@ -481,16 +483,25 @@ class EventController extends BaseController
 
             return $this->redirectToRoute('add_event_index', ['id' => $event->getId()]);
         }
+        $invitationEmails = [];
+        /**
+         * @var InvitationRequest $item
+         */
+        foreach ($invitationRequestManager->getInvitationRequestByEvent($event) as  $item)
+        {
+            $invitationEmails [] = $item->getChannels()['email'];
+        }
 
         return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),
             'event' => $event,
             'isPaid' => $paymentManager->isTotalPayed($event),
+            'invitationEmails' =>   $invitationEmails,
         ]);
     }
 
     /**
-     * @Route("/events" ,  name="list-event")
+     * @Route("events" ,  name="list-event")
      *
      * @param EventManager $eventManager
      * @return Response
@@ -509,7 +520,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("/event/{id}" ,  name="show-event-client")
+     * @Route("event/{id}" ,  name="show-event-client")
      * @Method("GET")
      *
      * @param Request $request
@@ -530,7 +541,7 @@ class EventController extends BaseController
     /**
      * Deletes a user entity.
      *
-     * @Route("/event/{id}", name="event_delete")
+     * @Route("event/{id}", name="event_delete")
      * @Method("DELETE")
      *
      * @param Request $request
@@ -554,7 +565,7 @@ class EventController extends BaseController
     }
 
     /**
-     * @Route("/event/close/{id}", name="event_close")
+     * @Route("event/close/{id}", name="event_close")
      * @Method({"GET", "POST"})
      *
      * @param Request $request

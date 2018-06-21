@@ -40,20 +40,7 @@ class ChallengeType extends AbstractType
             ->add('proposition', ButtonType::class,[
                 'attr'=>[
                     'onClick' => 'onClickProposition(this)',
-                    'data-toggle' => 'modal',
-                    'data-target' => '#myModal'
                 ],
-            ])
-
-            ->add('randomDate',CheckboxType::class,[
-                'attr'=>[
-                    'onchange' => 'onChangeCheckbox(this)',
-                    'class'=>''
-                ],
-            ])
-            ->add('plannedAt', TextType::class, [
-                'mapped'=>false,
-                'label' =>false,
             ])
         ;
     }

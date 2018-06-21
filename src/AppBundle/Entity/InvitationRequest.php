@@ -74,6 +74,7 @@ class InvitationRequest
      * @var Event
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="invitationRequests")
+     * @ORM\JoinColumn(name="event_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $event;
 
@@ -81,6 +82,7 @@ class InvitationRequest
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="invitationRequests")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $user;
 

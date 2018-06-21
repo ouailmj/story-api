@@ -48,12 +48,6 @@ class Challenge implements Timestampable
      */
     private $description = '';
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="plannedAt", type="datetime", nullable=true)
-     */
-    private $plannedAt;
 
     /**
      * @var bool
@@ -115,31 +109,6 @@ class Challenge implements Timestampable
     {
         return $this->description;
     }
-
-    /**
-     * Set plannedAt.
-     *
-     * @param \DateTime $plannedAt
-     *
-     * @return Challenge
-     */
-    public function setPlannedAt($plannedAt)
-    {
-        $this->plannedAt = $plannedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get plannedAt.
-     *
-     * @return \DateTime
-     */
-    public function getPlannedAt()
-    {
-        return $this->plannedAt;
-    }
-
     /**
      * Set isLaunched.
      *
