@@ -6420,7 +6420,8 @@ h3:after {
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 31px !important;
+  padding: 2px;
   font-weight: bold;
 }
 
@@ -6429,4 +6430,15 @@ h3:after {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.Box-header {
+  padding: 16px;
+  margin: -20px -20px 0 -20px !important;
+  background-color: #f6f8fa;
+  border-color: #d1d5da;
+  border-style: solid;
+  border-width: 1px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }

@@ -28,14 +28,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
  */
 class Image extends Media
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var MemberShip
@@ -45,15 +37,7 @@ class Image extends Media
      */
     private $uploadedBy = null;
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+
 
     /**
      * Set uploadedBy.

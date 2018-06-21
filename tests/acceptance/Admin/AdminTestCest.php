@@ -66,7 +66,7 @@ class AdminTestCest
     {
         $I->wantTo('test logout');
         $this->loginAsAdmin($I);
-        $I->click('li:nth-child(4) > a');
+        $I->click('#logoutBtn');
         $I->seeCurrentUrlEquals('/auth/login');
     }
 

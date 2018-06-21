@@ -17,7 +17,6 @@ namespace AppBundle\Entity;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use AppBundle\Model\Trashable;
-use AppBundle\Controller\CreateMediaObjectAction;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -93,6 +92,7 @@ class Media implements Trashable
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="medias")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 

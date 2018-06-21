@@ -69,15 +69,12 @@ AppBundle\Entity\EventPurchase:
 AppBundle\Entity\Challenge:
     challenge_starter_{1..100}:
         description: <sentence()>
-        plannedAt: <dateTime('+8 days')>
         event: "@event_starter_*"
     challenge_luxury_{1..100}:
         description: <sentence()>
-        plannedAt: <dateTime('+8 days')>
         event: "@event_luxury_*"
     challenge_premium_{1..100}:
         description: <sentence()>
-        plannedAt: <dateTime('+8 days')>
         event: "@event_premium_*"
 
 AppBundle\Entity\Event:

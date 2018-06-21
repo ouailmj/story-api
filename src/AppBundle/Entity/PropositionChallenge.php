@@ -52,7 +52,7 @@ class PropositionChallenge
      * @var User
      *
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="created_by_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $createdBy;
 

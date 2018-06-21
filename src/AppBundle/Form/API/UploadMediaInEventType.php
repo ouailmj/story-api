@@ -12,48 +12,39 @@
  *
  */
 
-namespace AppBundle\Form\Type;
+namespace AppBundle\Form\API;
 
+
+use AppBundle\Entity\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
-class AvatarType extends AbstractType
+class UploadMediaInEventType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('avatarIMG', FileType::class, [
-                'label' => 'user.fields.avatar',
+
+            ->add('imageUpload', FileType::class, [
                 'required' => false,
-                'mapped' => false,
-                'attr' => [
-                    'class' => 'file-input',
-                ],
+                'mapped' => false
             ])
-            ;
+        ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\User',
+            'data_class' => Event::class,
+            'csrf_protection' => false,
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getBlockPrefix()
     {
-        return 'appbundle_user';
+        return '';
     }
+
 }

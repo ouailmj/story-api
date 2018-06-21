@@ -36,6 +36,6 @@ class CurrentUserAction extends BaseAction
      */
     public function __invoke()
     {
-        return $this->getUser();
+        return  $this->getUser() ;
     }
 }

@@ -14,6 +14,7 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
 use AppBundle\Mailer\Mailer;
 use Doctrine\ORM\EntityManager;
@@ -191,11 +192,11 @@ class UserManager
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function updatePassword(User $user, $sendMail = true)
+    public function updatePassword(User $user, $sendMail = true, $flush = true)
     {
         $plainPassword = $user->getPlainPassword();
         $this->fosUserManager->updatePassword($user);
-        $this->em->flush();
+        if($flush) $this->em->flush();
         $user->setPlainPassword($plainPassword);
         if ($sendMail) {
             $this->mailer->sendPasswordUpdatedMessage($user);
@@ -374,5 +375,25 @@ class UserManager
             return 0;
         }
         return $res['NB_USERS'];
+    }
+
+
+    /**
+     * @param User $user
+     * @param Media $media
+     * @param bool $flush
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function updateAvatar(User $user, Media $media, $flush = true)
+    {
+
+        if($user->getAvatar() === null )
+        {
+
+            $user->setAvatar($media);
+        }
+
+        if($flush) $this->em->flush();
     }
 }

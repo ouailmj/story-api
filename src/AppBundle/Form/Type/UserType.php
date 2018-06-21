@@ -72,6 +72,7 @@ class UserType extends AbstractType
             ->add('role', ChoiceType::class, [
                 'label' => 'user.fields.role',
                 'attr' => ['class' => 'select-search'],
+                'data' => $options['data_role'],
                 'choices' => $permissions,
                 'multiple' => false,
                 'expanded' => false,
@@ -87,6 +88,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\User',
+            'data_role' => 'ROLE_USER',
         ]);
     }
 
