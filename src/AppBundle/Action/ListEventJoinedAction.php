@@ -44,13 +44,33 @@ class ListEventJoinedAction extends BaseAction
          */
         $user = $this->getUser();
 
-        $eventJoined = $user->getCreatedEvents();
+        $eventJoined = [];
+
+        /**
+         * @var $event Event
+         */
+         foreach ( $user->getCreatedEvents() as $event)
+         {
+             $eventJoined [] =  [
+                     'user' => $event->getCreatedBy(),
+                     'videoGallery' => $event->getVideoGallery(),
+                     'imagesGallery' => $event->getImagesGallery(),
+                     'description' => $event->getDescription(),
+                 ];
+         }
         /**
          * @var $eventMemberShip MemberShip
          */
        foreach ( $user->getEventMemberShips() as $eventMemberShip)
        {
-           $eventJoined->add($eventMemberShip->getEvent());
+           $event =$eventMemberShip->getEvent();
+           $eventJoined [] =  [
+                       'user' => $event->getCreatedBy(),
+                       'event' => $event,
+                       'videoGallery' => $event->getVideoGallery(),
+                       'imagesGallery' => $event->getImagesGallery(),
+                       'description' => $event->getDescription(),
+                   ];
        }
 
        return $eventJoined;
