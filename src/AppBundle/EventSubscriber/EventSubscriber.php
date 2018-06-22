@@ -322,7 +322,7 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
                 }
             }
 
-            $appEvent->setCurrentStep('finish');
+            $appEvent->setCurrentStep('');
             $this->eventManager->getEntityManager()->flush();
 
             $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;

@@ -44,6 +44,10 @@ use AppBundle\Action\UploadMediaInEventAction;
  *          "route_name"="incompleteEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_is_total_payed"={
+ *          "route_name"="isTotalPayedAPI",
+ *          "method"="GET"
+ *      },
  *     "api_event_cover" = {
  *         "method"="POST",
  *         "path"="/event/event-cover/{id}",
