@@ -210,11 +210,10 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
             $appEvent = $this->eventManager->findEventById($request->get('id'));
 
             if($appEvent->getCreatedBy() !== $user) return;
-            foreach ($eventChallenge->challenges as $challengeArray)
+            foreach ($eventChallenge->challenges as $description)
             {
                 $challenge = new Challenge();
-                $challenge->setDescription($challengeArray['description']);
-                $challenge->setPlannedAt(new \DateTime( $challengeArray['plannedAt']));
+                $challenge->setDescription($description);
                 $challenge->setEvent($appEvent);
                 $appEvent->addChallenge($challenge);
 
@@ -280,11 +279,11 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
 
             $url =  $captureToken->getTargetUrl() ;
 
-            //$appEvent->setCurrentStep('invite-friends');
-            //$this->eventManager->getEntityManager()->flush();
+            $appEvent->setCurrentStep('invite-friends');
+            $this->eventManager->getEntityManager()->flush();
 
             $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
-            $responseData['$payment'] =  $url ;
+            $responseData['payment'] =  $url ;
             // TODO: Translate
             $responseData['message'] = 'Your event has been updated successfully';
 

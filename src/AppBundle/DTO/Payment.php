@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * * @ApiResource(
  *      collectionOperations={
  *          "post"={
- *              "path"="/event/payment/{id}",
+ *              "path"="/event/add-payment/{id}",
  *          },},
  *      itemOperations={
  *     },
