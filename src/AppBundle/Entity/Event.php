@@ -64,6 +64,10 @@ use AppBundle\Action\UploadMediaInEventAction;
  *         "method"="GET",
  *          "route_name"="eventJoinedAPI",
  *     },
+ *     "api_show_event" = {
+ *         "method"="GET",
+ *          "route_name"="showEventAPI",
+ *     },
  *     }
  * )
  */
