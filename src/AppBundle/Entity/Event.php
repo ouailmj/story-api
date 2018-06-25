@@ -44,6 +44,10 @@ use AppBundle\Action\UploadMediaInEventAction;
  *          "route_name"="incompleteEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_is_total_payed"={
+ *          "route_name"="isTotalPayedAPI",
+ *          "method"="GET"
+ *      },
  *     "api_event_cover" = {
  *         "method"="POST",
  *         "path"="/event/event-cover/{id}",
@@ -59,6 +63,10 @@ use AppBundle\Action\UploadMediaInEventAction;
  *     "api_event_joined" = {
  *         "method"="GET",
  *          "route_name"="eventJoinedAPI",
+ *     },
+ *     "api_show_event" = {
+ *         "method"="GET",
+ *          "route_name"="showEventAPI",
  *     },
  *     }
  * )
