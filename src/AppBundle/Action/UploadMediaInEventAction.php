@@ -82,6 +82,7 @@ class UploadMediaInEventAction extends BaseAction
 
             $responseData = [];
             $responseData['message'] = 'Your image has been uploaded successfully';
+            $responseData['url'] = $media->getDownloadLink();;
             $responseData['status'] = true;
             return $responseData;
 
