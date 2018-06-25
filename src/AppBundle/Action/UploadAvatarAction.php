@@ -16,6 +16,7 @@ namespace AppBundle\Action;
 
 
 use ApiPlatform\Core\Bridge\Symfony\Validator\Exception\ValidationException;
+use AppBundle\Entity\User;
 use AppBundle\Exception\FileNotAuthorizedException;
 use AppBundle\Form\API\AvatarAPIType;
 use AppBundle\Model\MediaManager;
@@ -57,6 +58,9 @@ class UploadAvatarAction extends BaseAction
      */
     public function __invoke(Request $request, MediaManager $mediaManager, UserManager $userManager)
     {
+        /**
+         * @var User $user
+         */
         $user = $this->getUser();
         $form = $this->factory->create(AvatarAPIType::class, $user);
         $form->handleRequest($request);
@@ -70,6 +74,7 @@ class UploadAvatarAction extends BaseAction
 
             $responseData = [];
             $responseData['message'] = 'Your event has been updated successfully';
+            $responseData['url'] = $media->getDownloadLink();
             $responseData['status'] = true;
             return $responseData;
 
