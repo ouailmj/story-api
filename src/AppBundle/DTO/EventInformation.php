@@ -62,4 +62,9 @@ final class EventInformation
      */
     public $endsAt;
 
+    /**
+     * @var int
+     */
+    public $idCat;
+
 }

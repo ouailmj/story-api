@@ -22,6 +22,7 @@ use AppBundle\DTO\EventCover;
 use AppBundle\DTO\EventInformation;
 use AppBundle\DTO\InviteFriends;
 use AppBundle\DTO\Payment;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Challenge;
 use AppBundle\Entity\Plan;
 use AppBundle\Entity\User;
@@ -168,6 +169,7 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
             $appEvent->setPlace($eventInformation->place);
             $appEvent->setExpiresAt(Carbon::parse( $appEvent->getEndsAt()->format('Y-m-d H:m'))->addRealSeconds($appEvent->getEventPurchase()->getPlan()->getMaxAlbumLifeTime()));
 
+            $appEvent->setCategory($this->eventManager->getEntityManager()->getRepository(Category::class)->find($eventInformation->idCat));
             if($appEvent->getEventPurchase()->getPlan()->getEnableChallenges())
             {
                 $appEvent->setCurrentStep('event-challenge');
@@ -208,11 +210,10 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
             $appEvent = $this->eventManager->findEventById($request->get('id'));
 
             if($appEvent->getCreatedBy() !== $user) return;
-            foreach ($eventChallenge->challenges as $challengeArray)
+            foreach ($eventChallenge->challenges as $description)
             {
                 $challenge = new Challenge();
-                $challenge->setDescription($challengeArray['description']);
-                $challenge->setPlannedAt(new \DateTime( $challengeArray['plannedAt']));
+                $challenge->setDescription($description);
                 $challenge->setEvent($appEvent);
                 $appEvent->addChallenge($challenge);
 
@@ -278,11 +279,11 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
 
             $url =  $captureToken->getTargetUrl() ;
 
-            //$appEvent->setCurrentStep('invite-friends');
-            //$this->eventManager->getEntityManager()->flush();
+            $appEvent->setCurrentStep('invite-friends');
+            $this->eventManager->getEntityManager()->flush();
 
             $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
-            $responseData['$payment'] =  $url ;
+            $responseData['payment'] =  $url ;
             // TODO: Translate
             $responseData['message'] = 'Your event has been updated successfully';
 
@@ -321,7 +322,7 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
                 }
             }
 
-            $appEvent->setCurrentStep('finish');
+            $appEvent->setCurrentStep('');
             $this->eventManager->getEntityManager()->flush();
 
             $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;

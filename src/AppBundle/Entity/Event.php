@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use AppBundle\Action\EventCoverImageAction;
+use AppBundle\Action\UploadMediaInEventAction;
 
 /**
  * Event.
@@ -43,11 +44,29 @@ use AppBundle\Action\EventCoverImageAction;
  *          "route_name"="incompleteEventAPI",
  *          "method"="GET"
  *      },
+ *     "api_is_total_payed"={
+ *          "route_name"="isTotalPayedAPI",
+ *          "method"="GET"
+ *      },
  *     "api_event_cover" = {
  *         "method"="POST",
  *         "path"="/event/event-cover/{id}",
  *         "controller"=EventCoverImageAction::class,
  *         "defaults"={"_api_receive"=false},
+ *     },
+ *     "api_event_cover" = {
+ *         "method"="POST",
+ *         "path"="/event/upload-media/{id}",
+ *         "controller"=UploadMediaInEventAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
+ *     "api_event_joined" = {
+ *         "method"="GET",
+ *          "route_name"="eventJoinedAPI",
+ *     },
+ *     "api_show_event" = {
+ *         "method"="GET",
+ *          "route_name"="showEventAPI",
  *     },
  *     }
  * )
@@ -172,9 +191,9 @@ class Event
     private $invitationRequests;
 
     /**
-     * @var Media [] | ArrayCollection
+     * @var Image [] | ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Media", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinTable(name="event_media",
      *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="media_id", referencedColumnName="id", unique=true, onDelete="CASCADE")}
@@ -623,11 +642,11 @@ class Event
     /**
      * Add uploadedMedias.
      *
-     * @param Media $media
+     * @param Image $media
      *
      * @return $this
      */
-    public function addUploadedMedias(Media $media)
+    public function addUploadedMedias(Image $media)
     {
         $this->uploadedMedias[] = $media;
 
@@ -637,11 +656,11 @@ class Event
     /**
      * Remove uploadedMedias.
      *
-     * @param \AppBundle\Entity\Media $media
+     * @param \AppBundle\Entity\Image $media
      *
      * @return bool TRUE if this collection contained the specified element, FALSE otherwise
      */
-    public function removeUploadedMedias(Media $media)
+    public function removeUploadedMedias(Image $media)
     {
         return $this->uploadedMedias->removeElement($media);
     }
@@ -649,7 +668,7 @@ class Event
     /**
      * Get uploadedMedias.
      *
-     * @return Media[]|ArrayCollection
+     * @return Image[]|ArrayCollection
      */
     public function getUploadedMedias()
     {

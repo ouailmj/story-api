@@ -87,7 +87,7 @@ class MemberShip
     /**
      * Get event.
      *
-     * @return string
+     * @return Event
      */
     public function getEvent()
     {
