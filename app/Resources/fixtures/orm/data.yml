@@ -31,7 +31,7 @@ AppBundle\Entity\User:
         roles: ['ROLE_USER']
         fullName: Super <firstName()>
 
-AppBundle\Entity\Media:
+AppBundle\Entity\Image:
     media{1..120}:
         downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
         file: ''
