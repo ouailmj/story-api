@@ -54,7 +54,7 @@ use AppBundle\Action\UploadMediaInEventAction;
  *         "controller"=EventCoverImageAction::class,
  *         "defaults"={"_api_receive"=false},
  *     },
- *     "api_event_cover" = {
+ *     "api_upload_media" = {
  *         "method"="POST",
  *         "path"="/event/upload-media/{id}",
  *         "controller"=UploadMediaInEventAction::class,
