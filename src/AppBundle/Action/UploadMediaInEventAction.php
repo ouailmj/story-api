@@ -65,7 +65,7 @@ class UploadMediaInEventAction extends BaseAction
             $isEventJoined = false;
             $isEventCreated = false;
             foreach ($event->getEventMemberShips() as $memberShip ){
-                $memberShip->setMember() === $user;
+                $memberShip->getMember() === $user;
                 $isEventJoined = true;
             }
             if($event->getCreatedBy() === $user) $isEventCreated = true;
