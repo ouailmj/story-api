@@ -45,18 +45,35 @@ class ListEventJoinedAction extends BaseAction
         $user = $this->getUser();
 
         $eventJoined = [];
-
+        
+                
         /**
          * @var $event Event
          */
          foreach ( $user->getCreatedEvents() as $event)
          {
              $eventJoined [] =  [
-                     'user' => $event->getCreatedBy(),
-                     'event' => $event,
-                     'videoGallery' => $event->getVideoGallery(),
-                     'imagesGallery' => $event->getImagesGallery(),
-                     'description' => $event->getDescription(),
+                     
+                     'event'=>[
+                        "id" => $event->getId(),
+                        'CreatedBy' => [
+                            "firstName" =>  $event->getCreatedBy()->getfirstName(),
+                            "lastName"=> $event->getCreatedBy()->getlastName(),
+                            "fullName"=>$event->getCreatedBy()->getfullName(),
+                            "avatar"=> $event->getCreatedBy()->getavatar(),
+                            "email"=> $event->getCreatedBy()->getemail(),
+                          ],
+                         
+                         "startsAt"=> $event->getstartsAt(),
+                         "endsAt"=> $event->getendsAt(),
+                         "place"=> $event->getPlace(),
+                         "description"=> $event->getDescription(),
+                         'videoGallery' => $event->getVideoGallery(),
+                         'imagesGallery' => $event->getImagesGallery(),
+                     ],
+                     
+                     
+                     
                  ];
          }
         /**
@@ -66,11 +83,24 @@ class ListEventJoinedAction extends BaseAction
        {
            $event =$eventMemberShip->getEvent();
            $eventJoined [] =  [
-                       'user' => $event->getCreatedBy(),
-                       'event' => $event,
-                       'videoGallery' => $event->getVideoGallery(),
-                       'imagesGallery' => $event->getImagesGallery(),
-                       'description' => $event->getDescription(),
+            'event'=>[
+                "id" => $event->getId(),
+                'CreatedBy' => [
+                    "firstName" =>  $event->getCreatedBy()->getfirstName(),
+                    "lastName"=> $event->getCreatedBy()->getlastName(),
+                    "fullName"=>$event->getCreatedBy()->getfullName(),
+                    "avatar"=> $event->getCreatedBy()->getavatar(),
+                    "email"=> $event->getCreatedBy()->getemail(),
+                  ],
+                 
+                 "startsAt"=> $event->getstartsAt(),
+                 "endsAt"=> $event->getendsAt(),
+                 "place"=> $event->getPlace(),
+                 "description"=> $event->getDescription(),
+                 'videoGallery' => $event->getVideoGallery(),
+                 'imagesGallery' => $event->getImagesGallery(),
+             ],
+             
                    ];
        }
 
