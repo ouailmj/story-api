@@ -314,4 +314,27 @@ class EventManager
         if($flush) $this->entityManager->flush();
     }
 
+
+    /**
+     * @param Event $event
+     * @param $step
+     * @param bool $flush
+     *
+     * @return bool
+     */
+    public function clearCoverByStep(Event $event, $step, $flush = true)
+    {
+        $img = $event->getImagesGallery()[$step];
+
+        if($img != null){
+            $this->mediaManager->deleteMedia($img);
+            $event->removeImagesGallery($img);
+            $this->entityManager->remove($img);
+
+            if($flush) $this->entityManager->flush();
+            return true;
+        }
+        return false;
+    }
+
 }
