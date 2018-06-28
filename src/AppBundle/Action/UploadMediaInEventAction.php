@@ -81,8 +81,9 @@ class UploadMediaInEventAction extends BaseAction
             //TODO: Call service websocket to send image in sockets
 
             $responseData = [];
-            $responseData['message'] = 'Your image has been uploaded successfully';
-            $responseData['url'] = $media->getDownloadLink();
+            $responseData['data']['imgUp'] = $media;
+            $responseData['data']['user']['FullName'] = $user->getFullName();
+            $responseData['data']['user']['avatar'] = $user->getAvatar();
             $responseData['status'] = true;
             return $responseData;
 
