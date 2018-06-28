@@ -53,6 +53,7 @@ class ListEventJoinedAction extends BaseAction
          {
              $eventJoined [] =  [
                      'user' => $event->getCreatedBy(),
+                     'event' => $event,
                      'videoGallery' => $event->getVideoGallery(),
                      'imagesGallery' => $event->getImagesGallery(),
                      'description' => $event->getDescription(),

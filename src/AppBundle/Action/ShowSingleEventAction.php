@@ -38,11 +38,13 @@ class ShowSingleEventAction extends BaseAction
     public function __invoke(Event $event)
     {
         $eventData =   [
+            [
             'user' => $event->getCreatedBy(),
             'videoGallery' => $event->getVideoGallery(),
             'imagesGallery' => $event->getImagesGallery(),
             'description' => $event->getDescription(),
             'uploadedMedia' => $event->getUploadedMedias(),
+                ]
         ];
 
         return $eventData;
