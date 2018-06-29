@@ -54,6 +54,9 @@ class ShowSingleEventAction extends BaseAction
                  "description"=> $event->getDescription(),
                  'videoGallery' => $event->getVideoGallery(),
                  'imagesGallery' => $event->getImagesGallery(),
+                 'imagesGallery' => $event->getImagesGallery(),
+                 'loadedMedias' => $event->getuploadedMedias()
+                 
              ],
         ];
 
