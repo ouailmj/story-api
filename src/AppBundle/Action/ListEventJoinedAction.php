@@ -69,7 +69,11 @@ class ListEventJoinedAction extends BaseAction
                          "place"=> $event->getPlace(),
                          "description"=> $event->getDescription(),
                          'videoGallery' => $event->getVideoGallery(),
-                         'imagesGallery' => $event->getImagesGallery(),
+                         'imagesGallery' =>  [
+                            "img1" =>  $event->getImagesGallery()[0] !== null ?  $event->getImagesGallery()[0]->getDownloadLink() : null,
+                            "img2" => $event->getImagesGallery()[1] !== null  ?  $event->getImagesGallery()[1]->getDownloadLink() : null,
+                            "img3" => $event->getImagesGallery()[2] !== null ?  $event->getImagesGallery()[2]->getDownloadLink() : null,
+                        ]
                      ],
                      
                      
@@ -92,14 +96,19 @@ class ListEventJoinedAction extends BaseAction
                     "avatar"=> $event->getCreatedBy()->getavatar(),
                     "email"=> $event->getCreatedBy()->getemail(),
                   ],
-                 
-                 "startsAt"=> $event->getstartsAt(),
-                 "endsAt"=> $event->getendsAt(),
-                 "place"=> $event->getPlace(),
-                 "description"=> $event->getDescription(),
-                 'videoGallery' => $event->getVideoGallery(),
-                 'imagesGallery' => $event->getImagesGallery(),
-             ],
+                    
+                    "startsAt"=> $event->getstartsAt(),
+                    "endsAt"=> $event->getendsAt(),
+                    "place"=> $event->getPlace(),
+                    "description"=> $event->getDescription(),
+                    'videoGallery' => $event->getVideoGallery(),
+                    'imagesGallery' => 
+                    [
+                        "img1" =>  $event->getImagesGallery()[0] !== null ?  $event->getImagesGallery()[0]->getDownloadLink() : null,
+                        "img2" => $event->getImagesGallery()[1] !== null  ?  $event->getImagesGallery()[1]->getDownloadLink() : null,
+                        "img3" => $event->getImagesGallery()[2] !== null ?  $event->getImagesGallery()[2]->getDownloadLink() : null,
+                    ]
+                 ],
              
                    ];
        }

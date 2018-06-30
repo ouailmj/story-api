@@ -37,6 +37,23 @@ class ShowSingleEventAction extends BaseAction
      */
     public function __invoke(Event $event)
     {
+
+      
+
+            $loadedMedias=[];
+            
+            foreach($event->getuploadedMedias() as $uploadMedia){
+
+                $loadedMedias[] = [
+                    "postImageUrl" => $uploadMedia->getdownloadLink(),
+                    "date" =>  $uploadMedia->getuploadedAt(),
+                    "avatar" => $uploadMedia->getcreatedBy()->getavatar() === null ? null : $uploadMedia->getcreatedBy()->getavatar()->getdownloadLink(),
+                    "userName" => $uploadMedia->getcreatedBy()->getfullName(),
+                ];
+
+            }
+        
+
         $eventData =   [
             'event'=>[
                 "id" => $event->getId(),
@@ -54,6 +71,8 @@ class ShowSingleEventAction extends BaseAction
                  "description"=> $event->getDescription(),
                  'videoGallery' => $event->getVideoGallery(),
                  'imagesGallery' => $event->getImagesGallery(),
+                 'loadedMedias' => $loadedMedias
+                 
              ],
         ];
 
