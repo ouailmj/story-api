@@ -255,6 +255,18 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
 
             if($appEvent->getCreatedBy() !== $user) return;
 
+            if($paymentDTO->isFakePayment){
+
+                $appEvent->setCurrentStep('invite-friends');
+                $this->eventManager->getEntityManager()->flush();
+
+                $responseData['eventURI'] =  "/api/events/".$appEvent->getId() ;
+                // TODO: Translate
+                $responseData['message'] = 'Your event has been updated successfully';
+
+                $event->setResponse(new JsonResponse($responseData, 200));
+            }else{
+
             $gatewayName = 'offline';
 
             $storage = $this->container->get('payum')->getStorage('AppBundle\Entity\Payment');
@@ -287,6 +299,7 @@ class EventSubscriber implements EventSubscriberInterface, ContainerAwareInterfa
             // TODO: Translate
             $responseData['message'] = 'Your event has been updated successfully';
 
+            }
         }
 
         $event->setResponse(new JsonResponse($responseData, 200));

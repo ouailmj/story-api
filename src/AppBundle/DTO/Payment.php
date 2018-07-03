@@ -79,4 +79,10 @@ final class Payment
      * @Assert\NotBlank
      */
     public $price;
+
+    //TODO: delete this when implement payment
+    /**
+     * @var boolean
+     */
+    public $isFakePayment = true;
 }
