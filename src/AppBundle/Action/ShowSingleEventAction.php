@@ -61,7 +61,9 @@ class ShowSingleEventAction extends BaseAction
                     "firstName" =>  $event->getCreatedBy()->getfirstName(),
                     "lastName"=> $event->getCreatedBy()->getlastName(),
                     "fullName"=>$event->getCreatedBy()->getfullName(),
-                    "avatar"=> $event->getCreatedBy()->getavatar(),
+                    "avatar"=> [
+                       "downloadLink" =>  $event->getCreatedBy()->getavatar() !== null ?  $event->getCreatedBy()->getavatar()->getDownloadLink() : null
+                    ],
                     "email"=> $event->getCreatedBy()->getemail(),
                   ],
                  
@@ -70,7 +72,11 @@ class ShowSingleEventAction extends BaseAction
                  "place"=> $event->getPlace(),
                  "description"=> $event->getDescription(),
                  'videoGallery' => $event->getVideoGallery(),
-                 'imagesGallery' => $event->getImagesGallery(),
+                 'imagesGallery' =>  [
+                    "img1" =>  $event->getImagesGallery()[0] !== null ?  $event->getImagesGallery()[0]->getDownloadLink() : null,
+                    "img2" => $event->getImagesGallery()[1] !== null  ?  $event->getImagesGallery()[1]->getDownloadLink() : null,
+                    "img3" => $event->getImagesGallery()[2] !== null ?  $event->getImagesGallery()[2]->getDownloadLink() : null,
+                 ],
                  'loadedMedias' => $loadedMedias
                  
              ],
