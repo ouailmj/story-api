@@ -30,8 +30,6 @@ class AppEventSubscriber implements EventSubscriberInterface
 
     /** @var MediaManager */
     private $mediaManager;
-    /** @var GalleryPublisher */
-    private $gal;
 
     /**
      * @var GalleryPublisher
@@ -45,11 +43,11 @@ class AppEventSubscriber implements EventSubscriberInterface
      * @param MediaManager     $mediaManager
      * @param GalleryPublisher $galleryPublisher
      */
-    public function __construct(EventManager $eventManager, MediaManager $mediaManager, GalleryPublisher $gal)
+    public function __construct(EventManager $eventManager, MediaManager $mediaManager, GalleryPublisher $galleryPublisher)
     {
         $this->eventManager = $eventManager;
         $this->mediaManager = $mediaManager;
-        $this->gal = $gal;
+        $this->galleryPublisher = $galleryPublisher;
     }
 
     /**
@@ -88,7 +86,7 @@ class AppEventSubscriber implements EventSubscriberInterface
      */
     public function notifyWSServerForNewMedia(NewMediaUploadedEvent $event)
     {
-        $this->gal->publishMedia($event->getEvent(), $event->getMedia());
+        $this->galleryPublisher->publishMedia($event->getEvent(), $event->getMedia());
         // TODO: This is where we should notify the socket server that a new media has been uploaded.
         $this->galleryPublisher->publishMedia($event->getEvent(), $event->getMedia());
     }

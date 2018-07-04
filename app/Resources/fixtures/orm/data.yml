@@ -40,7 +40,7 @@ AppBundle\Entity\Image:
         expiresAt: <dateTime('+4 years')>
         hasBeenDownloaded: true
         uploadedAt: <dateTime('+2 years')>
-        src: 'https://www.argospetinsurance.co.uk/assets/uploads/2017/12/cat-pet-animal-domestic-104827.jpeg'
+        src: 'a3fe3e94d0d085e1cd758f6c61eafb790ceb39ea68fbe8ee477ea5fe19d0d36e.jpg'
 
 AppBundle\Entity\Payment:
     payment_{1..120}:
