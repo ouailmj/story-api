@@ -114,22 +114,11 @@ class DefaultController extends BaseController
      */
     public function galleryTestAction(Event $event)
     {
-        $listMemberShips = $event->getEventMemberShips()->toArray();
-        $createdBy       = $event->getCreatedBy();
 
-        $per = $this->getUser()->getId() == $createdBy->getId() ;
-
-
-
-
-        dump($listMemberShips);// $event->isMemberShips(39));
-        dump($this->getUser());// $event->isMemberShips(39));
-        dump( $event->isMemberShips($this->getUser()));
-        die();
-//        throw $this->createAccessDeniedException();
-//        return $this->render('AppBundle:Events:gallerytest.html.twig', [
-//            'event' => $event,
-//        ]);
+        if(!$event->isCreatorOrMemberShips($this->getUser())) throw $this->createAccessDeniedException();
+        return $this->render('AppBundle:Events:gallerytest.html.twig', [
+            'event' => $event,
+        ]);
     }
 
 

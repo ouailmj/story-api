@@ -1004,15 +1004,18 @@ class Event
 
     public function isMemberShips($user){
         $listMemberShips = $this->getEventMemberShips()->toArray();
-        $listuser = [];
-
         foreach ($listMemberShips as $memberships){
-            $listuser[]= $memberships->getMember();
+            if($user === $memberships->getMember()) return true;
         }
+        return false;
+    }
 
+    public  function  isCreator($user){
+        return $this->createdBy === $user;
+    }
 
-
-        return $listMemberShips;
+    public function isCreatorOrMemberShips($user){
+        return $this->isCreator($user) || $this->isMemberShips($user);
     }
 
 

@@ -33,7 +33,7 @@ AppBundle\Entity\User:
 
 AppBundle\Entity\Image:
     media{1..120}:
-        downloadLink: "http://www.skilesdonnelly.biz/aut-accusantium-ut-architecto-sit-et.html"
+        downloadLink: "/assets/imgs/profile_image_1488952985.6978.png"
         file: ''
         createdBy: '@user*'
         type: '---'
