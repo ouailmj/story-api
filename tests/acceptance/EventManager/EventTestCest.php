@@ -26,28 +26,28 @@ class EventTestCest
 
     public function Add_event_free(\AcceptanceTester $I)
     {
-        $this->loginAsAdmin($I);
-        $I->wantTo("Verification d'ajout d'un event");
-        $I->amOnPage(Event_test::$URL);
-        $I->click(Event_test::$Plan);
-        $I->click('button[type="submit"]:nth-child(2) > li');
-        $I->seeInCurrentUrl('/event-information/');
-        $I->fillField(Event_test::$Description, 'hello');
-        $I->fillField(Event_test::$event_name, 'title ');
-        $I->fillField(Event_test::$Place, 'Marrakech');
-        $I->fillField(Event_test::$StartDateField, '2018-10-23T10:00');
-        $I->fillField(Event_test::$EndDateField, '2018-10-23T12:00');
-        $I->selectOption('appbundle_event[privacy]', 'privé');
-        $I->click(Event_test::$Next2);
-        $I->seeInCurrentUrl('/event-cover/');
-        $I->click(Event_test::$Next1);
-        $I->click(Event_test::$true);
+        // $this->loginAsAdmin($I);
+        // $I->wantTo("Verification d'ajout d'un event");
+        // $I->amOnPage(Event_test::$URL);
+        // $I->click(Event_test::$Plan);
+        // $I->click('button[type="submit"]:nth-child(2) > li');
+        // $I->seeInCurrentUrl('/event-information/');
+        // $I->fillField(Event_test::$Description, 'hello');
+        // $I->fillField(Event_test::$event_name, 'title ');
+        // $I->fillField(Event_test::$Place, 'Marrakech');
+        // $I->fillField(Event_test::$StartDateField, '2018-10-23T10:00');
+        // $I->fillField(Event_test::$EndDateField, '2018-10-23T12:00');
+        // $I->selectOption('appbundle_event[privacy]', 'privé');
+        // $I->click(Event_test::$Next2);
+        // $I->seeInCurrentUrl('/event-cover/');
+        // $I->click(Event_test::$Next1);
+        // $I->click(Event_test::$true);
     }
 
    public function delete_event(\AcceptanceTester $I)
     {
-        $this->loginAsAdmin($I);
-        $I->amOnPage("/event/269");
-        $I->click("form[name=\"form\"] > a");
+        // $this->loginAsAdmin($I);
+        // $I->amOnPage("/event/269");
+        // $I->click("form[name=\"form\"] > a");
     }
 }

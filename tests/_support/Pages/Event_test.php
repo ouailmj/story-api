@@ -12,7 +12,7 @@ namespace Tests\_support\Pages;
 class Event_test
 {
 // include url of current page
-    public static $URL = "/add-event/choose-plan";
+    public static $URL = "";
 
 
     //inputs attribute name elements

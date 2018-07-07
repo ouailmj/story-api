@@ -23,23 +23,23 @@ class UserTestCest
     public function ModifierInfo(\AcceptanceTester $I)
     {
         $I->wantTo("Modifier les infos d'un utilisateur");
-        $this->loginAsUser($I);
-        $I->amOnPage(Login::$URL_Profile);
-        $I->fillField('input#app_user_profile_phoneNumber', '0645879633');
-        $I->fillField('input#app_user_profile_phoneNumber', "f%/R4Uk#](wUvM'V");
-        $I->click(Profile::$btn_submit_client);
+        // $this->loginAsUser($I);
+        // $I->amOnPage(Login::$URL_Profile);
+        // $I->fillField('input#app_user_profile_phoneNumber', '0645879633');
+        // $I->fillField('input#app_user_profile_phoneNumber', "f%/R4Uk#](wUvM'V");
+        // $I->click(Profile::$btn_submit_client);
     }
 
 
     public function Modifier_password(\AcceptanceTester $I) // working
     {
         $I->wantTo("Modifier le mot de passe");
-        $this->loginAsUser($I);
-        $I->amOnPage(Change_Password::$URL_CHANGE_PASS);
-        $I->FillField(Change_Password::$CurrentPassField_CLIENT,"f%/R4Uk#](wUvM'V");
-        $I->FillField(Change_Password::$NewPassField_CLIENT,"f%/R4Uk#](wUvM'");
-        $I->FillField(Change_Password::$RepeatPassField_CLEINT,"f%/R4Uk#](wUvM'");
-        $I->click("form[name=\"app_user_change_password\"] button[type=\"submit\"]");
+        // $this->loginAsUser($I);
+        // $I->amOnPage(Change_Password::$URL_CHANGE_PASS);
+        // $I->FillField(Change_Password::$CurrentPassField_CLIENT,"f%/R4Uk#](wUvM'V");
+        // $I->FillField(Change_Password::$NewPassField_CLIENT,"f%/R4Uk#](wUvM'");
+        // $I->FillField(Change_Password::$RepeatPassField_CLEINT,"f%/R4Uk#](wUvM'");
+        // $I->click("form[name=\"app_user_change_password\"] button[type=\"submit\"]");
     }
 
 
