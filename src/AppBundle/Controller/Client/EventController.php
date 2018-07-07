@@ -563,7 +563,6 @@ class EventController extends BaseController
 
         return $this->redirectToRoute('list-event');
     }
-
     /**
      * @Route("event/close/{id}", name="event_close")
      * @Method({"GET", "POST"})
@@ -595,6 +594,7 @@ class EventController extends BaseController
         ]);
     }
 
+
     /**
      * @param Event $event
      * @return \Symfony\Component\Form\FormInterface
@@ -608,3 +608,4 @@ class EventController extends BaseController
             ;
     }
 }
+

@@ -53,6 +53,7 @@ class EventManager
      * @param PaymentManager         $paymentManager
      */
     public function __construct(EntityManagerInterface $entityManager, MediaManager $mediaManager, UserManager $userManager, PaymentManager $paymentManager, EventDispatcher $eventDispatcher)
+
     {
         $this->entityManager = $entityManager;
         $this->mediaManager = $mediaManager;

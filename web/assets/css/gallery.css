@@ -385,25 +385,6 @@ a:focus {
     5%, 20%, 30%, 45%, 55%, 70%, 80%, 95%		{ bottom: 5px;		}
 }
 
-#slideshow figcaption {
-    position:absolute;
-    padding: 20px 20px; margin:0;
-    left:0; right:0; bottom: 5px;
-    text-align:center;
-    letter-spacing: 0.05em;
-    word-spacing: 0.05em;
-    font-family: Georgia, Times, serif;
-    background: #000;
-    background: rgba(255,255,255,0.7);
-    border-top: 1px solid rgb(225,225,225);
-    color: #555;
-    text-shadow: -1px -1px 0 rgba(255,255,255,0.3);
-
-    -webkit-animation: figcaptionner 32s infinite;
-    -moz-animation: figcaptionner 32s infinite;
-    animation: figcaptionner 32s infinite;
-}
-
 @-webkit-keyframes timeliner {
     0%, 25%, 50%, 75%, 100%	{ width: 0;		}
     20%, 45%, 70%, 90%		{ width: 640px;	}

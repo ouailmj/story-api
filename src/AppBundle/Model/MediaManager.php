@@ -14,6 +14,7 @@
 
 namespace AppBundle\Model;
 
+use AppBundle\Entity\Event;
 use AppBundle\Entity\Image;
 use AppBundle\Entity\Media;
 use AppBundle\Entity\User;
@@ -112,7 +113,7 @@ class MediaManager
             $file = $this->fileManager
                 ->createFile(new SymfonyFile($filePath));
 
-            return $this->createMediaFromFile($file, $by, $andSave);
+            return $this->createMediaFromFile($file, $by, $andSave, Image::class);
         }
         throw new FileNotFoundException($filePath);
     }
@@ -235,5 +236,19 @@ class MediaManager
             return $this->createMediaFromFile($file, $by, $andSave, Image::class, $media);
         }
         throw new FileNotAuthorizedException();
+    }
+
+    
+    public function mediaUploadedFifteenMinutes(Event $event)
+    {
+        $medias = $event->getUploadedMedias();
+        $now = new \DateTime();
+        $media=[];
+        foreach ($medias as $value){
+            if($value->getUploadedAt()->format('U')- $now->format('U')<900){
+                $media[]=$value;
+            }
+        }
+        return $media;
     }
 }

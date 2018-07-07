@@ -1001,4 +1001,23 @@ class Event
         if($sum >= $this->eventPurchase->getPlan()->getPrice()) return true;
         return false;
     }
+
+    public function isMemberShips($user){
+        $listMemberShips = $this->getEventMemberShips()->toArray();
+        foreach ($listMemberShips as $memberships){
+            if($user === $memberships->getMember()) return true;
+        }
+        return false;
+    }
+
+    public  function  isCreator($user){
+        return $this->createdBy === $user;
+    }
+
+    public function isCreatorOrMemberShips($user){
+        return $this->isCreator($user) || $this->isMemberShips($user);
+    }
+
+
+
 }
