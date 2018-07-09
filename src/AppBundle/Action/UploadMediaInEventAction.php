@@ -94,7 +94,7 @@ class UploadMediaInEventAction extends BaseAction
             $responseData = [];
             $responseData['data']['imgUp'] = $media;
             $responseData['data']['user']['FullName'] = $user->getFullName();
-            $responseData['data']['user']['avatar'] = $user->getAvatar();
+            $responseData['data']['user']['avatar'] = $user->getAvatar() === null  ? '' : $user->getAvatar()->getDownloadLink()  ;
             $responseData['status'] = true;
             return $responseData;
 
