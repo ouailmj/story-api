@@ -2,6 +2,8 @@
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
@@ -26,48 +28,98 @@
                             <div class="card-body">
                                 {{ form_start(form, {'attr': {'class': 'form-horizontal payment'}}) }}
                                 {% form_theme form 'Form/Registration/fields.html.twig' %}
-                                    <div class="panel panel-default credit-card-box">
-                                        <div class="panel-heading display-table">
-                                            <div class="row display-tr">
-                                                <h3 class="panel-title display-td">
-                                                    {{ event.eventPurchase.plan.name }} plan :</span>
-                                                    {% set price = (event.eventPurchase.plan.price/100)|split('.') %}
-                                                    <span class="plan-price">
-                                                        {% if price[0] is defined %}
-                                                            {{ price[0] }}
-                                                        {% else %}0{% endif %}.
-                                                        {% if price[1] is defined %}
-                                                        {{ price[1] }}
-                                                    {% else %}00{% endif %}€
-                                                    </span>
-                                                    <span class="plan-name">Montant payé :</span>
-                                                    {% set price = (sumPayed/100)|split('.') %}
-                                                    <span class="plan-price">
-                                                        {% if price[0] is defined %}
-                                                            {{ price[0] }}
-                                                        {% else %}0{% endif %}.
-                                                    {% if price[1] is defined %}
-                                                        {{ price[1] }}
-                                                    {% else %}00{% endif %}€
-                                                    </span>
-                                                </h3>
-
+                                    <div class="card-row-icon">
+                                        <img class="icones" src="{{ asset('assets/images/visa.png') }}" alt="">
+                                        <img class="icones" src="{{ asset('assets/images/master.png') }}" alt="">
+                                        <img class="icones" src="{{ asset('assets/images/am.png') }}" alt="">
+                                        <img class="icones" src="{{ asset('assets/images/disc.png') }}" alt="">
+                                    </div>
+                                    <br />
+                                    <div class="payment-cost">
+                                        <div class="panel panel-default credit-card-box" id="payment-cost-total">
+                                            <div class="panel-heading display-table">
+                                                <div class="row display-tr" id="row-exeption">
+                                                    <table id="payment-form">
+                                                        <tr>
+                                                            <td>
+                                                                <h4 class="panel-title display-td">Payement amount :</h4>
+                                                            </td>
+                                                            <td>
+                                                                <span class="plan-price">
+                                                                    {% if price[0] is defined %}
+                                                                        {{ price[0] }}
+                                                                    {% else %}0{% endif %}.
+                                                                    {% if price[1] is defined %}
+                                                                        {{ price[1] }}
+                                                                    {% else %}00{% endif %}€
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div><br>
+                                        <div class="panel panel-default credit-card-box" id="payment-cost-total">
+                                            <div class="panel-heading display-table">
+                                                <div class="row display-tr" id="row-exeption">
+                                                    <table id="payment-form">
+                                                        <tr>
+                                                            <td id="plan">
+                                                                <h4 class="panel-title display-td">
+                                                                    Plan :
+                                                                </h4>
+                                                            </td>
+                                                            <td>
+                                                                <span class="plan-price">{{ event.eventPurchase.plan.name }} plan</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <label for="cardNumber">CARD NUMBER</label>
                                         {{ form_row(form.numberCard) }}
+                                    <br />
                                     <label for="cardExpir">EXPIRATION DATE</label>
+                                    <div class="expiration-form-payment">
                                         {{ form_row(form.expireAtMonth) }}
                                         {{ form_row(form.expireAtYear) }}
-                                    <label for="cardCVC">CV CODE</label>
-                                        {{ form_row(form.cvv) }}
-                                    <label for="couponCode">Price</label>
-                                        {{ form_row(form.price) }}
+                                    </div>
+                                    <div class="code-price">
+                                        <div class="cv-code cod-price">
+                                            <label for="cardCVC">CV CODE</label>
+                                            {{ form_row(form.cvv) }}
+                                        </div>
+                                        <div class="price cod-price">
+                                            <label for="couponCode">Price</label>
+                                            {{ form_row(form.price) }}
+                                        </div>
+                                    </div>
                                     <br>
-                                    <label for="couponCode">DISCOUNT CODE</label>
-                                        <input class="form-control" name="couponCode" type="text"><br>
+                                    <button type="button" id="code-boutt" class="btn btn-previous btn-fill btn-default btn-wd" data-toggle="modal" data-target="#coupon">
+                                        Code coupon
+                                    </button>
+                                    <div class="modal fade" id="coupon">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Code</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Veuiller inserer votre code dans le champs ci-dessous.</p>
+                                                    <input type="text" placeholder="inserez votre code ..." />
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <br>
+
                                 <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>

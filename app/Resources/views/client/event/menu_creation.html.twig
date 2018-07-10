@@ -1,20 +1,20 @@
 
 <div class="wizard-navigation">
     <ul class="nav nav-pills">
-        <li class="nav-item" style="width: 16.666667%;">
-            <a class="nav-link {{ plan|default('') }}" href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}">
-                <i class="now-ui-icons fa fa-tag"></i>
+        <li class="nav-item" id="nav-item-exeption" style="width: 16.666667%; height:100%">
+            <a id="choose-plan" class="nav-link {{ plan|default('') }}" href="{{ path('add_event_choose_plan' , { 'event' : event.id}) }}">
+                <i class="now-ui-icons fa fa-tag" ></i>
                 Choose plan
             </a>
         </li>
-        <li class="nav-item" style="width: 16.666667%;">
+        <li class="nav-item" style="width: 16.666667%;height:100%">
             <a class="nav-link {{ information|default('') }}" href="{{ path('add_event_event_information' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-info"></i>
                 Event Informations
             </a>
         </li>
         {% if event.eventPurchase.plan.planKey|default('free') != 'free' %}
-        <li class="nav-item" style="width: 16.666667%;">
+        <li class="nav-item" style="width: 16.666667%;height:100%">
             <a class="nav-link {{ challenge|default('') }}" href="{{ path('add_event_event_challenge' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-gamepad"></i>
                 Add Challenges
@@ -22,7 +22,7 @@
         </li>
         {% endif %}
 
-        <li class="nav-item" style="width: 16.666667%;">
+        <li class="nav-item" style="width: 16%">
             <a class="nav-link {{ cover|default('') }}" href="{{ path('add_event_event_cover' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-picture-o"></i>
                 Event Cover
@@ -30,15 +30,15 @@
         </li>
 
         {% if event.eventPurchase.plan.planKey|default('free') != 'free' and  not event.isTotalPayed() %}
-        <li class="nav-item" style="width: 16.666667%;">
-            <a class="nav-link {{ payment|default('') }}" href="{{ path('add_event_payment' , { 'id' : event.id}) }}" >
+        <li class="nav-item" style="width: 16.666667%;height: 100%">
+            <a style="padding-top: 15px;padding-bottom: 25px;" class="nav-link link-event {{ payment|default('') }}" href="{{ path('add_event_payment' , { 'id' : event.id}) }}" >
                 <i class="now-ui-icons fa fa-money"></i>
                 Payment
             </a>
         </li>
         {% endif %}
 
-        <li class="nav-item" style="width: 16.666667%;">
+        <li class="nav-item" style="width: 16.666667%;height: 100%">
             <a class="nav-link {{ invite|default('') }}" href="{{ path('add_event_invite_friends' , { 'id' : event.id}) }}">
                 <i class="now-ui-icons fa fa-users"></i>
                 Invite Friends
