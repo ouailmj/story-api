@@ -10,10 +10,10 @@
 
       </nav>
       <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
+      <div id="panel-header" class="panel-header panel-header-lg">
         <canvas id="bigDashboardChart"></canvas>
       </div>
-        <div class="content">
+        <div id="content" class="content">
             <div class="col-md-10 mr-auto ml-auto">
                 <!--      Wizard container        -->
                 <div class="wizard-container">
@@ -35,7 +35,7 @@
                                         <img class="icones" src="{{ asset('assets/images/disc.png') }}" alt="">
                                     </div>
                                     <br />
-                                    <div class="payment-cost">
+                                    <div class="payment-cost" id="cost">
                                         <div class="panel panel-default credit-card-box" id="payment-cost-total">
                                             <div class="panel-heading display-table">
                                                 <div class="row display-tr" id="row-exeption">
