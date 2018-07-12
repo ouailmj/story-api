@@ -51,7 +51,7 @@
                                             <button id="add-friend-btn" class="btn add-friend-btn" type="button">Add</button>
                                         </div>
                                         <div class="list-emails col-md-12">
-                                            <ol></ol>
+                                            <ol id="olListe"></ol>
                                         </div>
                                     </div>
                                     <div>
@@ -105,6 +105,9 @@
         }(document, 'script', 'facebook-jssdk'));</script>
     <script>
         var index = 0;
+        var listEmail =  JSON.parse('{{ listEmailMember|raw}}');
+        let list2 = listEmail;
+        let list3 = [];
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
 
@@ -114,8 +117,7 @@
             let email_inputs = $("input[id=appbundle_invitation_request_items]");
 
             list.forEach(function(email){
-
-                 $('ol').append('<a index="'+(index)+'" ><input value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                 $('ol').append('<a index="'+(index)+'" ><input class="olListe" value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
                  email_inputs.val(email_inputs.val() + email + ';');
                 index+=1;
              });
@@ -140,10 +142,14 @@
                 }else{
                     if(jQuery.inArray(toAdd,list) === -1){
                         list.push(toAdd);
+                        list3.push(toAdd);
+                        list4 = JSON.stringify(list3);
+
+                        console.log(list4);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
 
-                        $('ol').append('<a><input disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                        $('ol').append('<a><input style="background-color: white" disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
 
                         email_inputs.val(email_inputs.val() + toAdd + ';');
                         $("input[name=listItem]").val("");
