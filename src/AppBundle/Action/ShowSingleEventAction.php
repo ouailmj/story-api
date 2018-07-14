@@ -67,6 +67,7 @@ class ShowSingleEventAction extends BaseAction
                     "email"=> $event->getCreatedBy()->getemail(),
                   ],
                  
+                 "title"=> $event->getTitle(),
                  "startsAt"=> $event->getstartsAt(),
                  "endsAt"=> $event->getendsAt(),
                  "place"=> $event->getPlace(),
