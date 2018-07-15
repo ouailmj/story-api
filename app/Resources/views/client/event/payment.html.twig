@@ -24,6 +24,7 @@
                             </div>
 
                             <div class="card-body">
+
                                 {{ form_start(form, {'attr': {'class': 'form-horizontal payment'}}) }}
                                 {% form_theme form 'Form/Registration/fields.html.twig' %}
                                     <div class="panel panel-default credit-card-box">
@@ -77,7 +78,10 @@
                                 <div class="pull-left">
                                     <a href="{{ path('add_event_event_cover' , { 'id' : event.id}) }}" class="btn btn-previous btn-fill btn-default btn-wd" name="previous" value="Previous">Previous</a>
                                 </div>
-                                <div class="clearfix"></div>
+                                <div class="clearfix">
+                                <a href="{{ urlpay }}" >pay</a>
+
+                                </div>
                             </div>
                             </div>
                     </div>

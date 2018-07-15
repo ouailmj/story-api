@@ -46,6 +46,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Omnipay\Omnipay;
 
 /**
  * User controller.
@@ -128,6 +129,9 @@ class EventController extends BaseController
      */
     public function choosePlanAction(Request $request, Event $event, EventManager  $eventManager, PlanManager $planManager)
     {
+
+
+
         if($event->getCreatedBy() != $this->getUser()) return $this->redirectToRoute('add_event_index');
 
         $options = ['plan_data' => (null !== $event->getEventPurchase()) ? $event->getEventPurchase()->getPlan() : null];
@@ -137,6 +141,7 @@ class EventController extends BaseController
             $event->setCurrentStep('event-information');
             $plan = $form->getData()['plan'];
             $eventManager->createEvent($plan, $event, $this->getUser());
+
 
             $this->addSuccessFlash();
 
@@ -343,6 +348,53 @@ class EventController extends BaseController
      */
     public function PaymentAction(Request $request, Event $event, PaymentManager $paymentManager)
     {
+
+        
+        $gateway = Omnipay::create('PayPal_Express');
+		$gateway->setUsername('ibrahim.debar-facilitator_api1.gmail.com');
+		$gateway->setPassword('87ENL9S49GFF23WS');
+
+		$gateway->setSignature("Aw-hoBjK5vCB7NBs-sT.atT7LSJIADBTtvh7DxQpR.HiEfh4RGI3vHEu");
+        $gateway->setTestMode(true);
+        
+      
+
+
+		
+        $response='';
+        $urlPay='';
+        $isSuccessfulPay=false;
+
+        if($request->get('PayerID')){
+          $response = $gateway->completePurchase(array(
+            'cancelUrl' => $request->getUri(),
+            'returnUrl' => $request->getUri(),
+            'amount' => ($event->getEventPurchase()->getPlan()->getPrice()/100),
+            'currency' => 'EUR',
+            'clientIp'=>$request->get('PayerID')
+          ))->send();
+
+           $isSuccessfulPay = $response->isSuccessful();
+           if ($isSuccessfulPay)    return $this->redirectToRoute('add_event_invite_friends', ['id' => $event->getId()]);
+
+        }
+        else{
+
+            $response = $gateway->purchase(
+			array(
+                'cancelUrl' => $request->getUri(),
+                'returnUrl' => $request->getUri(),
+                'amount' => ($event->getEventPurchase()->getPlan()->getPrice()/100),
+                'currency' => 'EUR'
+			)
+        )->send();
+        $urlPay = $response->getRedirectUrl();
+
+        }
+        // dump($response);die;
+        
+    
+
         if ($paymentManager->isTotalPayed($event)) {
             $event->setCurrentStep('invite-friends');
             $this->getDoctrine()->getManager()->flush();
@@ -353,6 +405,8 @@ class EventController extends BaseController
         $form->handleRequest($request);
         $sumPayed = $paymentManager->TotalPayed($event);
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($event->getEventPurchase()->getPlan()->getPrice());die;
+
             if($form->get('price')->getData() * 100 > $event->getEventPurchase()->getPlan()->getPrice()){
                 //TODO: translate
                 $form->get('price')->addError(new FormError('  invalid price'));
@@ -391,6 +445,8 @@ class EventController extends BaseController
             'form' => $form->createView(),
             'event' => $event,
             'sumPayed' => $sumPayed,
+            'urlpay' => $urlPay,
+            'isSuccessfulPay'=> $isSuccessfulPay
         ]);
     }
 
@@ -405,6 +461,7 @@ class EventController extends BaseController
      */
     public function doneAction(Request $request, Event $event, PaymentManager $paymentManager)
     {
+        dump($paymentManager);die();
         $token = $this->get('payum')->getHttpRequestVerifier()->verify($request);
 
         $gateway = $this->get('payum')->getGateway($token->getGatewayName());
