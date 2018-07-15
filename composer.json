@@ -48,7 +48,13 @@
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.4.*",
-        "twig/twig": "^1.0 || ^2.0"
+        "twig/twig": "^1.0 || ^2.0",
+        "omnipay/common": "^3",
+        "league/omnipay": "^3",
+        "omnipay/dummy": "^3.0",
+        "omnipay/paypal": "^3.0",
+        "omnipay/stripe": "^3.0"
+
     },
     "require-dev": {
         "api-platform/schema-generator": "^1.0 || ^2.0",
