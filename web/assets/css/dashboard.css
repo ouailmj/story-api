@@ -5084,7 +5084,7 @@
     font-size: 2.5em;
   }
   .pricing-palden .pricing-price {
-    font-size: 5em;
+    font-size: 4em;
     font-weight: bold;
     padding: 0;
     color: #fff;
@@ -6581,6 +6581,18 @@ width: 16%;
 .boutt{
   display: none;
 }
+
+@media all and (max-width: 1080px ){
+  .pricing-palden .pricing-price {
+    font-size: 3.8em;
+  }
+  #price-row-item{
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0px;
+  }
+}
+
 @media all and (max-width: 1000px){
     #cost{
         display: block;
