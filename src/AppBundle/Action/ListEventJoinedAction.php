@@ -63,7 +63,8 @@ class ListEventJoinedAction extends BaseAction
                             "avatar"=> $event->getCreatedBy()->getavatar(),
                             "email"=> $event->getCreatedBy()->getemail(),
                           ],
-                         
+                          "title"=> $event->getTitle(),
+                          "category"=> $event->getCategory() !== null ? $event->getCategory()->getTitle() : 'category',
                          "startsAt"=> $event->getstartsAt(),
                          "endsAt"=> $event->getendsAt(),
                          "place"=> $event->getPlace(),
@@ -96,7 +97,9 @@ class ListEventJoinedAction extends BaseAction
                     "avatar"=> $event->getCreatedBy()->getavatar(),
                     "email"=> $event->getCreatedBy()->getemail(),
                   ],
-                    
+
+                    "category"=> $event->getCategory() !== null ? $event->getCategory()->getTitle() : 'category',
+                    "title"=> $event->getTitle(),
                     "startsAt"=> $event->getstartsAt(),
                     "endsAt"=> $event->getendsAt(),
                     "place"=> $event->getPlace(),
