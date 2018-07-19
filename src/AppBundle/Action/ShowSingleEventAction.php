@@ -37,12 +37,49 @@ class ShowSingleEventAction extends BaseAction
      */
     public function __invoke(Event $event)
     {
+
+      
+
+            $loadedMedias=[];
+            
+            foreach($event->getuploadedMedias() as $uploadMedia){
+
+                $loadedMedias[] = [
+                    "postImageUrl" => $uploadMedia->getdownloadLink(),
+                    "date" =>  $uploadMedia->getuploadedAt(),
+                    "avatar" => $uploadMedia->getcreatedBy()->getavatar() === null ? null : $uploadMedia->getcreatedBy()->getavatar()->getdownloadLink(),
+                    "userName" => $uploadMedia->getcreatedBy()->getfullName(),
+                ];
+
+            }
+        
+
         $eventData =   [
-            'user' => $event->getCreatedBy(),
-            'videoGallery' => $event->getVideoGallery(),
-            'imagesGallery' => $event->getImagesGallery(),
-            'description' => $event->getDescription(),
-            'uploadedMedia' => $event->getUploadedMedias(),
+            'event'=>[
+                "id" => $event->getId(),
+                'CreatedBy' => [
+                    "firstName" =>  $event->getCreatedBy()->getfirstName(),
+                    "lastName"=> $event->getCreatedBy()->getlastName(),
+                    "fullName"=>$event->getCreatedBy()->getfullName(),
+                    "avatar"=> [
+                       "downloadLink" =>  $event->getCreatedBy()->getavatar() !== null ?  $event->getCreatedBy()->getavatar()->getDownloadLink() : null
+                    ],
+                    "email"=> $event->getCreatedBy()->getemail(),
+                  ],
+                 
+                 "startsAt"=> $event->getstartsAt(),
+                 "endsAt"=> $event->getendsAt(),
+                 "place"=> $event->getPlace(),
+                 "description"=> $event->getDescription(),
+                 'videoGallery' => $event->getVideoGallery(),
+                 'imagesGallery' =>  [
+                    "img1" =>  $event->getImagesGallery()[0] !== null ?  $event->getImagesGallery()[0]->getDownloadLink() : null,
+                    "img2" => $event->getImagesGallery()[1] !== null  ?  $event->getImagesGallery()[1]->getDownloadLink() : null,
+                    "img3" => $event->getImagesGallery()[2] !== null ?  $event->getImagesGallery()[2]->getDownloadLink() : null,
+                 ],
+                 'loadedMedias' => $loadedMedias
+                 
+             ],
         ];
 
         return $eventData;

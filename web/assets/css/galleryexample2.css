@@ -8,5 +8,22 @@
     font-family: "Poppins", sans-serif;
 }
 .w3-opacity, .w3-hover-opacity:hover{
-    opacity: 0.8;
+    opacity: 0.8 !important;
 }
+p{
+    font-family: "Poppins", sans-serif;
+    font-size: 20px !important;
+}
+html, body{
+    line-height: 0.5 !important;
+}
+.w3-content{
+    max-width: 100% !important;
+}
+
+.w3-round-large{
+    width: -moz-max-content;
+}
+.mySlides {display:none}
+.w3-left, .w3-right, .w3-badge {cursor:pointer}
+.w3-badge {height:13px;width:13px;padding:0}

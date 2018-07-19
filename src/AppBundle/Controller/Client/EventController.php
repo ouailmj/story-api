@@ -492,11 +492,24 @@ class EventController extends BaseController
             $invitationEmails [] = $item->getChannels()['email'];
         }
 
+        $listEmailMember = [];
+        $listMember = $event->getEventMemberShips()->toArray();
+
+        foreach ($listMember as $meber){
+
+           $listEmailMember[] = $meber->getMember()->getEmail();
+        }
+
+        $listEmailMember = json_encode($listEmailMember);
+
+//       dump($listEmailMember); die;
+//
         return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),
             'event' => $event,
             'isPaid' => $paymentManager->isTotalPayed($event),
             'invitationEmails' =>   $invitationEmails,
+            'listEmailMember' => $listEmailMember
         ]);
     }
 
@@ -563,7 +576,6 @@ class EventController extends BaseController
 
         return $this->redirectToRoute('list-event');
     }
-
     /**
      * @Route("event/close/{id}", name="event_close")
      * @Method({"GET", "POST"})
@@ -595,6 +607,7 @@ class EventController extends BaseController
         ]);
     }
 
+
     /**
      * @param Event $event
      * @return \Symfony\Component\Form\FormInterface
@@ -608,3 +621,4 @@ class EventController extends BaseController
             ;
     }
 }
+

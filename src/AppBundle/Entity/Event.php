@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use AppBundle\Action\EventCoverImageAction;
 use AppBundle\Action\UploadMediaInEventAction;
+use AppBundle\Action\EventCoverOneImageAction;
 
 /**
  * Event.
@@ -54,7 +55,13 @@ use AppBundle\Action\UploadMediaInEventAction;
  *         "controller"=EventCoverImageAction::class,
  *         "defaults"={"_api_receive"=false},
  *     },
- *     "api_event_cover" = {
+ *     "api_upload_img_cover" = {
+ *         "method"="POST",
+ *         "path"="/event/upload-image/{id}/{step}",
+ *         "controller"=EventCoverOneImageAction::class,
+ *         "defaults"={"_api_receive"=false},
+ *     },
+ *     "api_upload_media" = {
  *         "method"="POST",
  *         "path"="/event/upload-media/{id}",
  *         "controller"=UploadMediaInEventAction::class,
@@ -738,15 +745,20 @@ class Event
     }
 
     /**
-     * Add imagesGallery.
+     * Add
      *
      * @param Image $image
+     * @param null $key
      *
      * @return $this
      */
-    public function addImagesGallery(Image $image)
+    public function addImagesGallery(Image $image, $key=null)
     {
-        $this->imagesGallery[] = $image;
+        if($key != null){
+            $this->imagesGallery[$key] = $image;
+        }else{
+            $this->imagesGallery[] = $image;
+        }
 
         return $this;
     }
@@ -989,4 +1001,23 @@ class Event
         if($sum >= $this->eventPurchase->getPlan()->getPrice()) return true;
         return false;
     }
+
+    public function isMemberShips($user){
+        $listMemberShips = $this->getEventMemberShips()->toArray();
+        foreach ($listMemberShips as $memberships){
+            if($user === $memberships->getMember()) return true;
+        }
+        return false;
+    }
+
+    public  function  isCreator($user){
+        return $this->createdBy === $user;
+    }
+
+    public function isCreatorOrMemberShips($user){
+        return $this->isCreator($user) || $this->isMemberShips($user);
+    }
+
+
+
 }

@@ -10,6 +10,16 @@
         <meta property="og:image"         content="https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/lWB96Z8sFtt.png" />
     {% endblock %}
 {% block container %}
+    <style>
+        .invite-friends-form{
+            width: 100%;
+            padding: 10px;
+        }
+        .nav{
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
     <div class="main-panel">
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
@@ -41,7 +51,7 @@
                                             <button id="add-friend-btn" class="btn add-friend-btn" type="button">Add</button>
                                         </div>
                                         <div class="list-emails col-md-12">
-                                            <ol></ol>
+                                            <ol id="olListe"></ol>
                                         </div>
                                     </div>
                                     <div>
@@ -51,9 +61,9 @@
                                             </div>
                                             <!-- //TODO :  change URL to share  -->
                                             <div class="col-md-4">
-                                                <div class="fb-share-button" data-href="{{ url('app_default_galleryexample2') }}" data-layout="button" data-size="large" data-mobile-iframe="true">
-                                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_default_galleryexample2')}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>
-                                                </div>
+                                                {#<div class="fb-share-button" data-href="{{ url('app_default_galleryexample2') }}" data-layout="button" data-size="large" data-mobile-iframe="true">#}
+                                                    {#<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_default_galleryexample2')}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>#}
+                                                {#</div>#}
                                             </div>
                                             <div class="col-md-4">
                                                 <h5 class="Left">
@@ -95,6 +105,9 @@
         }(document, 'script', 'facebook-jssdk'));</script>
     <script>
         var index = 0;
+        var listEmail =  JSON.parse('{{ listEmailMember|raw}}');
+        let list2 = listEmail;
+        let list3 = [];
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
 
@@ -104,8 +117,7 @@
             let email_inputs = $("input[id=appbundle_invitation_request_items]");
 
             list.forEach(function(email){
-
-                 $('ol').append('<a index="'+(index)+'" ><input value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                 $('ol').append('<a index="'+(index)+'" ><input class="olListe" value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
                  email_inputs.val(email_inputs.val() + email + ';');
                 index+=1;
              });
@@ -130,10 +142,14 @@
                 }else{
                     if(jQuery.inArray(toAdd,list) === -1){
                         list.push(toAdd);
+                        list3.push(toAdd);
+                        list4 = JSON.stringify(list3);
+
+                        console.log(list4);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
 
-                        $('ol').append('<a><input disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                        $('ol').append('<a><input style="background-color: white" disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
 
                         email_inputs.val(email_inputs.val() + toAdd + ';');
                         $("input[name=listItem]").val("");
@@ -148,7 +164,7 @@
                             type: 'warning'
                     });
                     }
-                    
+
                 }
 
             });
