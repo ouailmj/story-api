@@ -10,64 +10,74 @@
         <meta property="og:image"         content="https://static.xx.fbcdn.net/rsrc.php/v3/ye/r/lWB96Z8sFtt.png" />
     {% endblock %}
 {% block container %}
+    <style>
+        .invite-friends-form{
+            width: 100%;
+            padding: 10px;
+        }
+        .nav{
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
     <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
 
-      </nav>
-      <!-- End Navbar -->
-      <div class="panel-header panel-header-lg">
-        <canvas id="bigDashboardChart"></canvas>
-      </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="panel-header panel-header-lg">
+            <canvas id="bigDashboardChart"></canvas>
+        </div>
         <div class="content">
             <div class="col-md-10 mr-auto ml-auto">
                 <!--      Wizard container        -->
                 <div class="wizard-container">
                     <div class="card card-wizard active" data-color="primary" id="wizardProfile">
-                            <div class="card-header text-center" data-background-color="orange">
-                                <h5 class="card-title">
-                                    NEW EVENT
-                                </h5>
-                                {% include 'client/event/menu_creation.html.twig'  with {'invite': 'active'} %}
-                            </div>
+                        <div class="card-header text-center" data-background-color="orange">
+                            <h5 class="card-title">
+                                NEW EVENT
+                            </h5>
+                            {% include 'client/event/menu_creation.html.twig'  with {'invite': 'active'} %}
+                        </div>
 
-                            <div class="card-body">
-                                <div class="invite-friends-form">
+                        <div class="card-body">
+                            <div class="invite-friends-form">
                                 {{ form_start(form, {'attr': {'class': 'list-friends'}}) }}
                                 {{ form_widget(form) }}
-                                    <div class="row">
-                                        <div class="email-input col-md-12">
-                                            <input id="add-friend" type="email" name="listItem" placeholder="example@email.com" />
-                                            <button id="add-friend-btn" class="btn add-friend-btn" type="button">Add</button>
-                                        </div>
-                                        <div class="list-emails col-md-12">
-                                            <ol></ol>
-                                        </div>
+                                <div class="row">
+                                    <div class="email-input col-md-12">
+                                        <input id="add-friend" type="email" name="listItem" placeholder="example@email.com" />
+                                        <button id="add-friend-btn" class="btn add-friend-btn" type="button">Add</button>
                                     </div>
-                                    <div>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <h5 class="invited">Invited :</h5>
-                                            </div>
-                                            <!-- //TODO :  change URL to share  -->
-                                            <div class="col-md-4">
-                                                {#<div class="fb-share-button" data-href="{{ url('app_default_galleryexample2') }}" data-layout="button" data-size="large" data-mobile-iframe="true">#}
-                                                    {#<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_default_galleryexample2')}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>#}
-                                                {#</div>#}
-                                            </div>
-                                            <div class="col-md-4">
-                                                <h5 class="Left">
-                                                    {% if event.eventPurchase.plan.maxGuests == -1 %}
-                                                        Invitations : Inllimited
-                                                    {% else %}
-                                                        Invitations : {{ event.eventPurchase.plan.maxGuests }}
-                                                    {% endif %}
-                                                </h5>
-                                            </div>
+                                    <div class="list-emails col-md-12">
+                                        <ol id="olListe"></ol>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h5 class="invited">Invited :</h5>
+                                        </div>
+                                        <!-- //TODO :  change URL to share  -->
+                                        <div class="col-md-4">
+                                            {#<div class="fb-share-button" data-href="{{ url('app_default_galleryexample2') }}" data-layout="button" data-size="large" data-mobile-iframe="true">#}
+                                            {#<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_default_galleryexample2')}}%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Partager</a>#}
+                                            {#</div>#}
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5 class="Left">
+                                                {% if event.eventPurchase.plan.maxGuests == -1 %}
+                                                    Invitations : Inllimited
+                                                {% else %}
+                                                    Invitations : {{ event.eventPurchase.plan.maxGuests }}
+                                                {% endif %}
+                                            </h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer">
+                            </div>
+                            <div class="card-footer">
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">Next</button>
                                 </div>
@@ -79,7 +89,7 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,21 +105,22 @@
         }(document, 'script', 'facebook-jssdk'));</script>
     <script>
         var index = 0;
+        var listEmail =  JSON.parse('{{ listEmailMember|raw}}');
+        let list2 = listEmail;
+        let list3 = [];
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
-
+            var x = window.sessionStorage.getItem("email");
+            if(x.length != 0)
+            console.log(x);
             let list = [];
-             list = {{ invitationEmails|json_encode|raw }};
-            console.log(list);
+            list = {{ invitationEmails|json_encode|raw }};
             let email_inputs = $("input[id=appbundle_invitation_request_items]");
-
             list.forEach(function(email){
-
-                 $('ol').append('<a index="'+(index)+'" ><input value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
-                 email_inputs.val(email_inputs.val() + email + ';');
+                $('ol').append('<a index="'+(index)+'" ><input class="olListe" value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
+                email_inputs.val(email_inputs.val() + email + ';');
                 index+=1;
-             });
-
+            });
             $('#add-friend-btn').click(function() {
                 let toAdd = $("input[name=listItem]").val();
                 //Email Validation
@@ -123,55 +134,49 @@
                             x: 50,
                             y: 100
                         },
-                            type: 'warning'
+                        type: 'warning'
                     });
-
                     return false;
                 }else{
                     if(jQuery.inArray(toAdd,list) === -1){
                         list.push(toAdd);
+                        list3.push(toAdd);
+                        list4 = JSON.stringify(list3);
                         $(".invited").text("Invited :" + list.length);
                         //Append the ordered list to add in a list item with the variable toAdd and a 'done' button
-
-                        $('ol').append('<a><input disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
-
+                        $('ol').append('<a><input style="background-color: white" disabled value='+toAdd+'><h5><i index="'+(list.length-1)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
                         email_inputs.val(email_inputs.val() + toAdd + ';');
                         $("input[name=listItem]").val("");
                     }else if(jQuery.inArray(toAdd,list) === 0){
                         $.notify({
-                        title: "<strong>Error:</strong> ",
-                        message: "Already Exist",
-                        offset: {
-                            x: 50,
-                            y: 100
-                        },
+                            title: "<strong>Error:</strong> ",
+                            message: "Already Exist",
+                            offset: {
+                                x: 50,
+                                y: 100
+                            },
                             type: 'warning'
-                    });
+                        });
                     }
-
                 }
-
+                window.sessionStorage.setItem("email",list3);
             });
             //The following will cross out and remove the list item when clicking on the button or the list item itself
             $(document).on('dblclick', 'a', function() {
                 var index = parseInt($(this).attr("index"));
-
                 delete list[index];
                 removeItem  = list[index];
-                 list = jQuery.grep(list, function(value) {
+                list = jQuery.grep(list, function(value) {
                     return value != removeItem;
-                    });
+                });
                 email_inputs.val('');
-
                 index = 0 ;
                 $('ol').text("");
-
                 list.forEach(function(email){
                     $('ol').append('<a index="'+(index)+'" ><input value='+email+'><h5><i index="'+(index)+'" class="fa fa-close" aria-hidden="true"></i></h5></a>');
                     email_inputs.val(email_inputs.val() + email + ';');
                     index+=1;
                 });
-
                 var emls = "";
                 list.forEach(function(element) {
                     emls += element+";"
@@ -185,6 +190,5 @@
                 $(this).val('');
             });
         });
-
     </script>
 {% endblock %}
