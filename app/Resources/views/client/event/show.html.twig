@@ -2,15 +2,54 @@
 {% block title %}AppBundle:Default:index{% endblock %}
 
 {% block container %}
+    <script>
+        function openModal() {
+            document.getElementById('myModal').style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+        }
+    </script>
+
     <div class="main-panel">
-    <!-- Navbar -->
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
 
         </nav>
         <!-- End Navbar -->
         <div class="events">
             <div class="col-md-10 mr-auto ml-auto">
-                <div class="row">
+                <div class="row-modal">
                     <div style="background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg)" class="blog-card spring-fever">
                         <div class="title-content">
                             <h3><a href="#">{{ event.title }}</a></h3>
@@ -22,7 +61,7 @@
                         </div>
                         <div class="utility-info">
                             <ul class="utility-list">
-                            <li></span>{{ event.startsAt|date("F j, Y, g:i a") }}</li>
+                                <li></span>{{ event.startsAt|date("F j, Y, g:i a") }}</li>
                             </ul>
                         </div>
                         <div class="gradient-overlay"></div>
@@ -30,7 +69,50 @@
                     </div>
                 </div>
             </div>
+            <div class="row-modal" id="row-modal">
+                <div class="column">
+                    <div id="row-mod" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                        <button type="button" id="butt1" class="btn btn-prev">download</button>
+                        <button type="button" id="butt2" class="btn btn-prev" >preview</button>
+                    </div>
+                </div>
+                <div class="column">
+                    <div id="row-mod" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+                        <button type="button" id="butt1" class="btn btn-prev">download</button>
+                        <button type="button" id="butt2" class="btn btn-prev" >preview</button>
+                    </div>
+                </div>
+                <div class="column">
+                    <div id="row-mod" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+                        <button type="button" id="butt1" class="btn btn-prev">download</button>
+                        <button type="button" id="butt2" class="btn btn-prev" >preview</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="myModal" class="modal">
+                <span id="close" class="close cursor" onclick="closeModal()">&times;</span>
+                <div class="modal-content" style="top: -88px;">
+
+                    <div class="mySlides">
+                        <div class="numbertext">1 / 4</div>
+                        <img src="{{ asset('assets/images/backgrounds/boxed_bg.png') }}" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">2 / 4</div>
+                        <img src="{{ asset('assets/images/backgrounds/boxed_bg.png') }}" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <div class="numbertext">3 / 4</div>
+                        <img src="{{ asset('assets/images/backgrounds/boxed_bg.png') }}" style="width:100%">
+                    </div>
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                </div>
+            </div>
+
         </div>
     </div>
-    
 {% endblock %}

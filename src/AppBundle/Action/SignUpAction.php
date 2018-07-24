@@ -45,9 +45,11 @@ class SignUpAction extends BaseAction
     public function __invoke(User $data, UserManager $userManager)
     {
 
-        $user = $userManager->createUser($data,true ,true, true);
+        $user = $userManager->createUser($data,false ,true, true);
         $jwtManager = $this->container->get('lexik_jwt_authentication.jwt_manager');
 
-        return new JsonResponse(['token' => $jwtManager->create($user)]);
+        return new JsonResponse([
+            'token' => $jwtManager->create($user),
+        ]);
     }
 }

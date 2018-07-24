@@ -27,6 +27,7 @@ class PaymentController extends BaseController
     public function prepareAction()
     {
 
+
         $gatewayName = 'offline';
 
         $storage = $this->get('payum')->getStorage('AppBundle\Entity\Payment');

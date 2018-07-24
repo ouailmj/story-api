@@ -352,17 +352,12 @@ class EventController extends BaseController
     public function PaymentAction(Request $request, Event $event, PaymentManager $paymentManager)
     {
 
-
         $gateway = Omnipay::create('PayPal_Express');
 		$gateway->setUsername('ibrahim.debar-facilitator_api1.gmail.com');
 		$gateway->setPassword('87ENL9S49GFF23WS');
 
 		$gateway->setSignature("Aw-hoBjK5vCB7NBs-sT.atT7LSJIADBTtvh7DxQpR.HiEfh4RGI3vHEu");
         $gateway->setTestMode(true);
-
-
-
-
 
         $response='';
         $urlPay='';
@@ -395,8 +390,6 @@ class EventController extends BaseController
 
         }
         // dump($response);die;
-
-
 
         if ($paymentManager->isTotalPayed($event)) {
             $event->setCurrentStep('invite-friends');
@@ -556,11 +549,24 @@ class EventController extends BaseController
             $invitationEmails [] = $item->getChannels()['email'];
         }
 
+        $listEmailMember = [];
+        $listMember = $event->getEventMemberShips()->toArray();
+
+        foreach ($listMember as $meber){
+
+           $listEmailMember[] = $meber->getMember()->getEmail();
+        }
+
+        $listEmailMember = json_encode($listEmailMember);
+
+//       dump($listEmailMember); die;
+//
         return $this->render('client/event/invite-friends.html.twig', [
             'form' => $form->createView(),
             'event' => $event,
             'isPaid' => $paymentManager->isTotalPayed($event),
             'invitationEmails' =>   $invitationEmails,
+            'listEmailMember' => $listEmailMember
         ]);
     }
 
