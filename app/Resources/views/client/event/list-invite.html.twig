@@ -1,0 +1,117 @@
+{% extends "client/event/base_list_event.html.twig" %}
+{% block title %}AppBundle:Default:index{% endblock %}
+
+{% block container %}
+    <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
+        </nav>
+        <!-- End Navbar -->
+        <div class="events">
+            <div class="col-md-10 mr-auto ml-auto">
+
+                <div class="upcoming">
+                    <div class="row">
+                        {{ form_start(form,{ 'attr': {'class': 'form-inline'} } ) }}
+                            <div class="form-group">
+                                <div class="col-sm-10 col-md-8">
+                                    {{ form_widget(form.email,{ 'attr': {'class': 'form-control','placeholder':'ex@gmail.com'} }) }}
+                                </div>
+                                {{ form_errors(form.email) }}
+                            </div>
+                            <button type="submit" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Next">add</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="upcoming">
+                    <div class="alert alert-info" role="alert">Invitation</div>
+                    <div class="row">
+                        {% if invitesListe|length == 0 %}
+                            <p class="invitation-msg">You Don't Have Any Invitation</p>
+                        {% endif %}
+                        {% for invite in invitesListe %}
+
+                        {% if (invite.etat == -1) %}
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ invite.email }}</h5>
+                                        <i class="fa fa-spinner " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="upcoming">
+                    <div class="alert alert-info" role="alert">Accepted Invitation</div>
+                    <div class="row">
+                        {% for invite in invitesListe %}
+
+                            {% if (invite.etat == 1) %}
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ invite.email }}</h5>
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="upcoming">
+                    <div class="alert alert-info" role="alert">Canceled Invitation</div>
+                    <div class="row">
+                        {% for invite in invitesListe %}
+
+                            {% if (invite.etat == 0) %}
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ invite.email }}</h5>
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+
+            $(window).load(function() {
+                $('.post-module').hover(function() {
+                    $(this).find('.description').stop().animate({
+                        height: "toggle",
+                        opacity: "toggle"
+                    }, 300);
+                });
+            });
+            var button, buttonStyles, materialIcons;
+
+            materialIcons = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
+
+            buttonStyles = '<link href="https://codepen.io/andytran/pen/vLmRVp.css" rel="stylesheet">';
+
+            button = '<a href="{{ path('add_event_index') }}" class="at-button"><i class="material-icons">clear</i></a>';
+
+            document.body.innerHTML += materialIcons + buttonStyles + button;
+
+        }).call(this);
+
+        //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiPGFub255bW91cz4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQSxNQUFBLE1BQUEsRUFBQSxZQUFBLEVBQUE7O0VBQUEsYUFBQSxHQUFnQjs7RUFDaEIsWUFBQSxHQUFlOztFQUVmLE1BQUEsR0FBUzs7RUFFVCxRQUFRLENBQUMsSUFBSSxDQUFDLFNBQWQsSUFBMkIsYUFBQSxHQUFnQixZQUFoQixHQUErQjtBQUwxRCIsInNvdXJjZXNDb250ZW50IjpbIm1hdGVyaWFsSWNvbnMgPSAnPGxpbmsgaHJlZj1cImh0dHBzOi8vZm9udHMuZ29vZ2xlYXBpcy5jb20vaWNvbj9mYW1pbHk9TWF0ZXJpYWwrSWNvbnNcIiByZWw9XCJzdHlsZXNoZWV0XCI+J1xuYnV0dG9uU3R5bGVzID0gJzxsaW5rIGhyZWY9XCJodHRwczovL2NvZGVwZW4uaW8vYW5keXRyYW4vcGVuL3ZMbVJWcC5jc3NcIiByZWw9XCJzdHlsZXNoZWV0XCI+J1xuXG5idXR0b24gPSAnPGEgaHJlZj1cImh0dHA6Ly9hbmR5dHJhbi5tZVwiIGNsYXNzPVwiYXQtYnV0dG9uXCI+PGkgY2xhc3M9XCJtYXRlcmlhbC1pY29uc1wiPmxpbms8L2k+PC9hPidcblxuZG9jdW1lbnQuYm9keS5pbm5lckhUTUwgKz0gbWF0ZXJpYWxJY29ucyArIGJ1dHRvblN0eWxlcyArIGJ1dHRvbiJdfQ==
+        //# sourceURL=coffeescript
+    </script>
+{% endblock %}
