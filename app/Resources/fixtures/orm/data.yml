@@ -31,97 +31,97 @@ AppBundle\Entity\User:
         roles: ['ROLE_USER']
         fullName: Super <firstName()>
 
-AppBundle\Entity\Image:
-    media{1..120}:
-        downloadLink: "/assets/imgs/profile_image_1488952985.6978.png"
-        file: ''
-        createdBy: '@user*'
-        type: '---'
-        expiresAt: <dateTime('+4 years')>
-        hasBeenDownloaded: true
-        uploadedAt: <dateTime('+2 years')>
-        src: 'a3fe3e94d0d085e1cd758f6c61eafb790ceb39ea68fbe8ee477ea5fe19d0d36e.jpg'
+#AppBundle\Entity\Image:
+#    media{1..120}:
+#        downloadLink: "/assets/imgs/profile_image_1488952985.6978.png"
+#        file: ''
+#        createdBy: '@user*'
+#        type: '---'
+#        expiresAt: <dateTime('+4 years')>
+#        hasBeenDownloaded: true
+#        uploadedAt: <dateTime('+2 years')>
+#        src: 'a3fe3e94d0d085e1cd758f6c61eafb790ceb39ea68fbe8ee477ea5fe19d0d36e.jpg'
 
-AppBundle\Entity\Payment:
-    payment_{1..120}:
-         totalAmount: <randomFloat(2, 0, 15)>
-         description: <sentence()>
-         eventPurchase: '@eventpurchase_*'
+#AppBundle\Entity\Payment:
+#    payment_{1..120}:
+#         totalAmount: <randomFloat(2, 0, 15)>
+#         description: <sentence()>
+#         eventPurchase: '@eventpurchase_*'
 
-AppBundle\Entity\EventPurchase:
-    eventpurchase_free_{1..30}:
-        quota: '@plan_free->maxUploads'
-        currencyCode: 'EUR'
-        plan: '@plan_free'
-    eventpurchase_starter_{31..60}:
-        quota: '@plan_starter->maxUploads'
-        currencyCode: 'EUR'
-        plan: '@plan_starter'
-    eventpurchase_luxury_{61..90}:
-        quota: '@plan_luxury->maxUploads'
-        currencyCode: 'EUR'
-        plan: '@plan_luxury'
-    eventpurchase_premium_{91..120}:
-        quota: '@plan_premium->maxUploads'
-        currencyCode: 'EUR'
-        plan: '@plan_premium'
+#AppBundle\Entity\EventPurchase:
+#    eventpurchase_free_{1..30}:
+#        quota: '@plan_free->maxUploads'
+#        currencyCode: 'EUR'
+#        plan: '@plan_free'
+#    eventpurchase_starter_{31..60}:
+#        quota: '@plan_starter->maxUploads'
+#        currencyCode: 'EUR'
+#        plan: '@plan_starter'
+#    eventpurchase_luxury_{61..90}:
+#        quota: '@plan_luxury->maxUploads'
+#        currencyCode: 'EUR'
+#        plan: '@plan_luxury'
+#    eventpurchase_premium_{91..120}:
+#        quota: '@plan_premium->maxUploads'
+#        currencyCode: 'EUR'
+#        plan: '@plan_premium'
 
-AppBundle\Entity\Challenge:
-    challenge_starter_{1..100}:
-        description: <sentence()>
-        event: "@event_starter_*"
-    challenge_luxury_{1..100}:
-        description: <sentence()>
-        event: "@event_luxury_*"
-    challenge_premium_{1..100}:
-        description: <sentence()>
-        event: "@event_premium_*"
-
-AppBundle\Entity\Event:
-    event_free_{1..30}:
-        title: 'Event_<current()>'
-        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
-        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
-        description: <sentence()>
-        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
-        privacy: <randomElement(['private', 'public'])>
-        place: <sentence()>
-        createdBy: '@user*'
-        uploadedMedias: ['@media<current()>']
-        eventPurchase: '@eventpurchase_free_<current()>'
-    event_starter_{31..60}:
-        title: 'Event_<current()>'
-        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
-        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
-        description: <sentence()>
-        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
-        privacy: <randomElement(['private', 'public'])>
-        place: <sentence()>
-        createdBy: '@user*'
-        uploadedMedias: ['@media<current()>']
-        eventPurchase: '@eventpurchase_starter_<current()>'
-    event_luxury_{61..90}:
-        title: 'Event_<current()>'
-        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
-        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
-        description: <sentence()>
-        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
-        privacy: <randomElement(['private', 'public'])>
-        place: <sentence()>
-        createdBy: '@user*'
-        uploadedMedias: ['@media<current()>']
-        eventPurchase: '@eventpurchase_luxury_<current()>'
-    event_premium_{91..120}:
-        title: 'Event_<current()>'
-        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
-        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
-        description: <sentence()>
-        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
-        privacy: <randomElement(['private', 'public'])>
-        place: <sentence()>
-        createdBy: '@user*'
-        uploadedMedias: ['@media<current()>']
-        eventPurchase: '@eventpurchase_premium_<current()>'
+#AppBundle\Entity\Challenge:
+#    challenge_starter_{1..100}:
+#        description: <sentence()>
+#        event: "@event_starter_*"
+#    challenge_luxury_{1..100}:
+#        description: <sentence()>
+#        event: "@event_luxury_*"
+#    challenge_premium_{1..100}:
+#        description: <sentence()>
+#        event: "@event_premium_*"
+#
+#AppBundle\Entity\Event:
+#    event_free_{1..30}:
+#        title: 'Event_<current()>'
+#        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+#        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+#        description: <sentence()>
+#        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+#        privacy: <randomElement(['private', 'public'])>
+#        place: <sentence()>
+#        createdBy: '@user*'
+#        uploadedMedias: ['@media<current()>']
+#        eventPurchase: '@eventpurchase_free_<current()>'
+#    event_starter_{31..60}:
+#        title: 'Event_<current()>'
+#        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+#        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+#        description: <sentence()>
+#        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+#        privacy: <randomElement(['private', 'public'])>
+#        place: <sentence()>
+#        createdBy: '@user*'
+#        uploadedMedias: ['@media<current()>']
+#        eventPurchase: '@eventpurchase_starter_<current()>'
+#    event_luxury_{61..90}:
+#        title: 'Event_<current()>'
+#        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+#        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+#        description: <sentence()>
+#        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+#        privacy: <randomElement(['private', 'public'])>
+#        place: <sentence()>
+#        createdBy: '@user*'
+#        uploadedMedias: ['@media<current()>']
+#        eventPurchase: '@eventpurchase_luxury_<current()>'
+#    event_premium_{91..120}:
+#        title: 'Event_<current()>'
+#        startsAt: <dateTimeInInterval("-200 days", "+200 days")>
+#        endsAt: <dateTimeInInterval($startsAt, "+20 days")>
+#        description: <sentence()>
+#        expiresAt: <dateTimeInInterval($endsAt, "+7 days")>
+#        privacy: <randomElement(['private', 'public'])>
+#        place: <sentence()>
+#        createdBy: '@user*'
+#        uploadedMedias: ['@media<current()>']
+#        eventPurchase: '@eventpurchase_premium_<current()>'
 
 AppBundle\Entity\Plan:
     plan_free:
@@ -173,31 +173,31 @@ AppBundle\Entity\Plan:
          planKey: 'premium'
          description: <sentence()>
 
-AppBundle\Entity\Link:
-    link:
-         path: ''
-         password: '123456'
-         expiresAt: <dateTime('+3 years')>
-         enabledAt: <dateTime('+1 years')>
+#AppBundle\Entity\Link:
+#    link:
+#         path: ''
+#         password: '123456'
+#         expiresAt: <dateTime('+3 years')>
+#         enabledAt: <dateTime('+1 years')>
 
-AppBundle\Entity\MemberShip:
-    membership_{@event_free_*}:
-       event: '<current()>'
-       createdAt: <dateTime('+2 years')>
-       member: '@user*'
+#AppBundle\Entity\MemberShip:
+#    membership_{@event_free_*}:
+#       event: '<current()>'
+#       createdAt: <dateTime('+2 years')>
+#       member: '@user*'
 
-AppBundle\Entity\InvitationRequest:
-    invitationrequest_{1..50}:
-        channels['email']: <email()>
-        event: '@event_*'
-    invitationrequest_{51..500}:
-        event: '@event_*'
-        user: '@user_*'
-
-AppBundle\Entity\PropositionChallenge:
-    challenge_proposition_{1..100}:
-        description: <sentence()>
-        __construct: ['@administrator']
+#AppBundle\Entity\InvitationRequest:
+#    invitationrequest_{1..50}:
+#        channels['email']: <email()>
+#        event: '@event_*'
+#    invitationrequest_{51..500}:
+#        event: '@event_*'
+#        user: '@user_*'
+#
+#AppBundle\Entity\PropositionChallenge:
+#    challenge_proposition_{1..100}:
+#        description: <sentence()>
+#        __construct: ['@administrator']
 
 AppBundle\Entity\Category:
     category_mariage:

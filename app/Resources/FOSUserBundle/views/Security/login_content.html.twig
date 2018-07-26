@@ -54,9 +54,9 @@
 
             <ul class="list-inline form-group list-inline-condensed text-center">
 
-                {#{% for owner in hwi_oauth_resource_owners() %}#}
-                    <li><a href="{{ hwi_oauth_login_url(hwi_oauth_resource_owners()[0]) }}" class="btn bg-{{ hwi_oauth_resource_owners()[0] }} text-white btn-flat btn-icon btn-rounded"><i class="icon-{{ hwi_oauth_resource_owners()[0] }}"></i></a></li>
-                {#{% endfor %}#}
+                {% for owner in hwi_oauth_resource_owners() %}
+                    <li><a href="{{ hwi_oauth_login_url(owner) }}" class="btn bg-{{ owner }} text-white btn-flat btn-icon btn-rounded"><i class="icon-{{ owner }}"></i></a></li>
+                {% endfor %}
             </ul>
         </form>
     </div>
