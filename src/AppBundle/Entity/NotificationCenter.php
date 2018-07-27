@@ -48,7 +48,7 @@ class NotificationCenter
 
     /**
      * @var User
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User",  inversedBy="notificationCenter", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User",  inversedBy="notificationCenter", cascade={"persist"})
      */
     protected $receiver;
 
