@@ -61,5 +61,4 @@ hwi_oauth_login:
 
 _liip_imagine:
     resource: "@LiipImagineBundle/Resources/config/routing.xml"
-
     

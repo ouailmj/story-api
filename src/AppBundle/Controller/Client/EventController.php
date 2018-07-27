@@ -41,6 +41,9 @@ use Payum\Core\Request\GetHumanStatus;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -349,18 +352,13 @@ class EventController extends BaseController
     public function PaymentAction(Request $request, Event $event, PaymentManager $paymentManager)
     {
 
-        
         $gateway = Omnipay::create('PayPal_Express');
 		$gateway->setUsername('ibrahim.debar-facilitator_api1.gmail.com');
 		$gateway->setPassword('87ENL9S49GFF23WS');
 
 		$gateway->setSignature("Aw-hoBjK5vCB7NBs-sT.atT7LSJIADBTtvh7DxQpR.HiEfh4RGI3vHEu");
         $gateway->setTestMode(true);
-        
-      
 
-
-		
         $response='';
         $urlPay='';
         $isSuccessfulPay=false;
@@ -392,8 +390,6 @@ class EventController extends BaseController
 
         }
         // dump($response);die;
-        
-    
 
         if ($paymentManager->isTotalPayed($event)) {
             $event->setCurrentStep('invite-friends');
@@ -493,7 +489,11 @@ class EventController extends BaseController
     public function InviteFriendsAction(Request $request, Event $event, InvitationRequestManager $invitationRequestManager, PaymentManager $paymentManager)
     {
         if(!$paymentManager->isTotalPayed($event)) return $this->redirectToRoute('add_event_index');
+//        $form = $this->createForm(InviteFriendsType::class);
+
         $form = $this->createForm(InviteFriendsType::class);
+
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -582,10 +582,92 @@ class EventController extends BaseController
         $upcomingEvents = $eventManager->getUpcomingEvents($this->getUser());
         $isPaidEvent = $eventManager->getIsPaidEvents($this->getUser());
 
+
+
         return $this->render('client/event/index.html.twig', [
             'passedEvents' => $passedEvents,
             'upcomingEvents' => $upcomingEvents,
             'isPaidEvent' => $isPaidEvent,
+        ]);
+    }
+
+    /**
+     * @Route("event-invites/{id}" ,  name="list_invites_event_client")
+     *
+     * @param Request $request
+     * @param Event $event
+     * @return Response
+     */
+    public function listInvitesEventAction(Request $request,Event $event,InvitationRequestManager $invitationRequestManager, PaymentManager $paymentManager){
+        if($event->getCreatedBy() !== $this->getUser()) throw new AccessDeniedException();
+
+
+        $form = $this->createForm(InviteFriendsType::class,null,['des_email'=>true]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+
+            $items = $form->get('email')->getData();
+            $emails = explode(';', $items);
+
+
+            if($event->getEventPurchase()->getPlan()->getPlanKey() === 'free')
+            {
+                $nbInvite = $event->getEventPurchase()->getPlan()->getMaxGuests() ;
+                $res = count($emails) + $event->getInvitationRequests()->count();
+                if($res > $nbInvite){
+                    $diff = count($emails) - $event->getInvitationRequests()->count();
+                    foreach ($emails as $key=>$email)
+                    {
+                        if($key > $diff) unset($emails[$key]);
+                    }
+                }
+            }
+
+            foreach ($emails as $email) {
+                if (null !== $email && '' !== $email) {
+                    $invitationRequestManager->createInvitationRequest($email, $event, false);
+                }
+            }
+            $this->getDoctrine()->getManager()->flush();
+            $this->addSuccessFlash();
+
+            return $this->redirectToRoute('list_invites_event_client', ['id' => $event->getId()]);
+        }
+
+
+//        dump($event->getInvitationRequests()->toArray());die;
+
+        $listInvites =  [];
+
+        foreach ($event->getInvitationRequests()->toArray() as $Invite) {
+
+
+            $etat = -1;
+            $isCanceled = $Invite->getIsCanceled();
+            $isAccepted = $Invite->isAccepted();
+
+            if( $isCanceled)
+                $etat = 0; // canceled invite
+            elseif($isAccepted)
+                $etat = 1; //  Accepted invite
+
+            $listInvites[] = [
+                'etat' => $etat ,
+                'email' =>  $Invite->getUser() !== null ? $Invite->getUser()->getEmail() : '?????',
+            ];
+        }
+
+
+
+//   dump($listInvites);die;
+
+
+
+        return $this->render('client/event/list-invite.html.twig', [
+            'invitesListe' => $listInvites,
+            'form' => $form->createView()
         ]);
     }
 

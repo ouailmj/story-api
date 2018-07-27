@@ -15,8 +15,6 @@
 namespace AppBundle\Form\Event;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,12 +27,11 @@ class InviteFriendsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('items', HiddenType::class, [
-                'mapped' => false,
-            ]
-            )
-        ;
+
+        if($options['dsp_items'])
+        $builder->add('items', HiddenType::class, ['mapped' => false,]);
+        if($options['des_email'])
+        $builder->add('email', EmailType::class,['mapped' => false,]);
     }
 
     /**
@@ -44,6 +41,8 @@ class InviteFriendsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\InvitationRequest',
+            'dsp_items' => true,
+            'des_email' => false,
         ]);
     }
 
