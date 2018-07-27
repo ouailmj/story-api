@@ -51,8 +51,8 @@ namespace :deploy do
     on "multiinfo@51.136.31.137" do
         execute "cd #{fetch(:deploy_to)}/ && sudo chown multiinfo:www-data shared/web -R"
         execute "cd #{fetch(:deploy_to)}/ && sudo chmod 0775 shared/web -R"
-        execute "cd #{fetch(:deploy_to)}/current && sudo chown multiinfo:www-data var/ -R"
-        execute "cd #{fetch(:deploy_to)}/current && sudo chmod 0775 var/ -R"
+        execute "cd #{fetch(:deploy_to)}/ && sudo chown multiinfo:www-data releases/ -R"
+        execute "cd #{fetch(:deploy_to)}/ && sudo chmod 0775 releases/ -R"
     end
   end
 end
