@@ -58,6 +58,10 @@
                         <div class="card-info">
                             {{ event.description }}
                             <a href="{{ path('add_event_choose_plan',{'event': event.id}) }}">Edit Event</a>
+                            {{form_start(delete_form)}}
+                               <input class="btn btn-danger" type="submit" value="Delete" />
+                            {{ form_end(delete_form, {'render_rest': false}) }}
+
                         </div>
                         <div class="utility-info">
                             <ul class="utility-list">

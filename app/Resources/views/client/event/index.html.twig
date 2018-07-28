@@ -39,9 +39,24 @@
                                     <h2 class="sub_title">{{ event.place }}</h2>
                                     <p class="description"><p>{{ event.description }}</p></p>
                                     <div class="post-meta">
-                                        <span class="comments"><i class="fa fa-sliders"></i><a href="">Settings</a></span>
-                                        <span class="comments infos"><i class="fa fa-eye"></i><a href="{{ path('show-event-client', { 'id' : event.id }) }}">More Info</a></span>
-                                        <span class="comments infos"><i class="fa fa-users" aria-hidden="true"></i><a href="{{ path('list_invites_event_client', { 'id' : event.id }) }}">list invitation</a></span>
+                                        <div class="row">
+                                           <div class="col-md-6">
+                                               <span class="comments"><i class="fa fa-sliders"></i><a href="">Settings</a></span>
+                                           </div>
+                                           <div class="col-md-6">
+                                               <span class="comments infos"><i class="fa fa-eye"></i><a href="{{ path('show-event-client', { 'id' : event.id }) }}">More Info</a></span>
+                                           </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                           <div class="col-md-6">
+                                               <span class="comments"><i class="fa fa-users" aria-hidden="true"></i><a href="{{ path('list_invites_event_client', { 'id' : event.id }) }}">list invitation</a></span>
+                                           </div>
+
+
+
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

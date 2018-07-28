@@ -48,7 +48,7 @@ class MemberShip
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="eventMemberShips" )
-     * @ORM\JoinColumn(name="member_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="member_id", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      *
      */
     private $member;

@@ -111,7 +111,7 @@
         //add a variable called toAdd as the value of the input
         $(document).ready(function() {
             var x = window.sessionStorage.getItem("email");
-            if(x.length != 0)
+            // if(x.length != 0)
             console.log(x);
             let list = [];
             list = {{ invitationEmails|json_encode|raw }};

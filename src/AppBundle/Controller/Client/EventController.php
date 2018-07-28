@@ -587,8 +587,8 @@ class EventController extends BaseController
         return $this->render('client/event/index.html.twig', [
             'passedEvents' => $passedEvents,
             'upcomingEvents' => $upcomingEvents,
-            'isPaidEvent' => $isPaidEvent,
-        ]);
+            'isPaidEvent' => $isPaidEvent
+            ]);
     }
 
     /**
@@ -682,7 +682,7 @@ class EventController extends BaseController
     public function showEventAction(Request $request,Event $event){
         if($event->getCreatedBy() !== $this->getUser()) throw new AccessDeniedException();
 
-        $form_delete =$this->createDeleteForm($event);
+        $form_delete = $this->createDeleteForm($event);
 
         return $this->render('client/event/show.html.twig', [
             'event' => $event,
@@ -691,9 +691,9 @@ class EventController extends BaseController
     }
 
     /**
-     * Deletes a user entity.
+     * Deletes a Event entity.
      *
-     * @Route("event/{id}", name="event_delete")
+     * @Route("event-delete/{id}", name="event_delete")
      * @Method("DELETE")
      *
      * @param Request $request
@@ -714,6 +714,7 @@ class EventController extends BaseController
         }
 
         return $this->redirectToRoute('list-event');
+
     }
     /**
      * @Route("event/close/{id}", name="event_close")
@@ -756,8 +757,7 @@ class EventController extends BaseController
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('event_delete', ['id' => $event->getId()]))
             ->setMethod('DELETE')
-            ->getForm()
-            ;
+            ->getForm();
     }
 }
 
