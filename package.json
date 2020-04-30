@@ -17,7 +17,7 @@
   "dependencies": {
     "autobahn": "^18.3.2",
     "fullcalendar": "2.9.1",
-    "jquery": "1",
+    "jquery": "3",
     "moment": "2.17.1",
     "pace-js": "^1.0.2",
     "popper.js": "^1.14.3",
